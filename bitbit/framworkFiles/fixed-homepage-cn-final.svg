@@ -1,0 +1,287 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2000">
+  <!-- 背景 -->
+  <rect width="1200" height="2000" fill="#F9F9FB" />
+  
+  <!-- 状态栏 -->
+  <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" />
+  <text x="600" y="30" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222" text-anchor="middle">BitBit 首页设计</text>
+  
+  <!-- 标题栏 -->
+  <rect x="0" y="50" width="1200" height="70" fill="#FFFFFF" filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))" />
+  <text x="30" y="92" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="700" fill="#4E6FFF">BitBit</text>
+  <circle cx="1120" cy="85" r="24" fill="#F3F3F7" />
+  <text x="1120" y="92" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">ZL</text>
+  
+  <circle cx="1060" cy="85" r="24" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1060" y="92" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999" text-anchor="middle">🔔</text>
+  
+  <!-- 单一的创建活动按钮 - 顶栏位置 -->
+  <rect x="800" y="68" width="140" height="44" rx="22" fill="#4E6FFF" filter="drop-shadow(0px 2px 4px rgba(78, 111, 255, 0.25))" />
+  <text x="845" y="95" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">创建活动</text>
+  <text x="900" y="95" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 搜索栏 -->
+  <rect x="30" y="150" width="1140" height="60" rx="30" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <circle cx="70" cy="180" r="16" fill="transparent" stroke="#999999" stroke-width="2" />
+  <text x="100" y="185" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999">搜索活动、话题或用户...</text>
+  
+  <!-- 精选横幅 -->
+  <rect x="30" y="240" width="1140" height="300" rx="20" fill="#F3F3F7" />
+  <rect x="30" y="240" width="1140" height="300" rx="20" fill="url(#gradient1)" opacity="0.3" />
+  <text x="80" y="300" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#222222">周末音乐节</text>
+  <text x="80" y="340" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="400" fill="#222222">6月25-26日 | 湖畔音乐广场</text>
+  <text x="80" y="370" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#222222">10+ 乐队现场表演，美食摊位，创意市集...</text>
+  
+  <rect x="80" y="400" width="160" height="50" rx="25" fill="#4E6FFF" />
+  <text x="160" y="430" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">立即报名</text>
+  
+  <rect x="260" y="400" width="160" height="50" rx="25" fill="rgba(255, 255, 255, 0.7)" />
+  <text x="340" y="430" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">详情</text>
+  
+  <!-- 分类导航 -->
+  <text x="30" y="590" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#222222">探索分类</text>
+  
+  <rect x="30" y="610" width="120" height="120" rx="16" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <circle cx="90" cy="650" r="24" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="90" y="657" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#4E6FFF" text-anchor="middle">🏃</text>
+  <text x="90" y="700" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">运动</text>
+  
+  <rect x="170" y="610" width="120" height="120" rx="16" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <circle cx="230" cy="650" r="24" fill="rgba(255, 107, 139, 0.2)" />
+  <text x="230" y="657" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#FF6B8B" text-anchor="middle">🎭</text>
+  <text x="230" y="700" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">艺术</text>
+  
+  <rect x="310" y="610" width="120" height="120" rx="16" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <circle cx="370" cy="650" r="24" fill="rgba(101, 209, 170, 0.2)" />
+  <text x="370" y="657" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#65D1AA" text-anchor="middle">🍳</text>
+  <text x="370" y="700" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">美食</text>
+  
+  <rect x="450" y="610" width="120" height="120" rx="16" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <circle cx="510" cy="650" r="24" fill="rgba(255, 185, 81, 0.2)" />
+  <text x="510" y="657" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#FFB951" text-anchor="middle">📚</text>
+  <text x="510" y="700" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">学习</text>
+  
+  <rect x="590" y="610" width="120" height="120" rx="16" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <circle cx="650" cy="650" r="24" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="650" y="657" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#8F7CFF" text-anchor="middle">🧠</text>
+  <text x="650" y="700" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">心理</text>
+  
+  <rect x="730" y="610" width="120" height="120" rx="16" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <circle cx="790" cy="650" r="24" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="790" y="657" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#4E6FFF" text-anchor="middle">🌳</text>
+  <text x="790" y="700" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">户外</text>
+  
+  <!-- 热门活动 -->
+  <text x="30" y="780" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#222222">热门活动</text>
+  <text x="1110" y="780" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="end">查看全部</text>
+  
+  <!-- 活动卡片1 -->
+  <rect x="30" y="800" width="270" height="320" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="30" y="800" width="270" height="160" rx="16" fill="#F3F3F7" />
+  <rect x="30" y="800" width="270" height="160" rx="16" fill="url(#gradient2)" opacity="0.3" />
+  <circle cx="260" cy="830" r="20" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.12))" />
+  <text x="260" y="836" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="500" fill="#FF6B8B" text-anchor="middle">♡</text>
+  <rect x="50" y="850" width="90" height="24" rx="12" fill="rgba(255, 107, 139, 0.2)" />
+  <text x="95" y="867" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#FF6B8B" text-anchor="middle">音乐表演</text>
+  
+  <text x="50" y="990" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">爵士乐现场演出</text>
+  <text x="50" y="1020" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">6月15日 周三 20:00-22:00</text>
+  <text x="50" y="1045" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">蓝调酒吧</text>
+  <text x="50" y="1080" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF">42人参加</text>
+  
+  <!-- 活动卡片2 -->
+  <rect x="320" y="800" width="270" height="320" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="320" y="800" width="270" height="160" rx="16" fill="#F3F3F7" />
+  <rect x="320" y="800" width="270" height="160" rx="16" fill="url(#gradient3)" opacity="0.3" />
+  <circle cx="550" cy="830" r="20" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.12))" />
+  <text x="550" y="836" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="500" fill="#4E6FFF" text-anchor="middle">♡</text>
+  <rect x="340" y="850" width="80" height="24" rx="12" fill="rgba(101, 209, 170, 0.2)" />
+  <text x="380" y="867" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#65D1AA" text-anchor="middle">美食</text>
+  
+  <text x="340" y="990" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">咖啡品鉴工作坊</text>
+  <text x="340" y="1020" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">6月16日 周四 14:00-16:00</text>
+  <text x="340" y="1045" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">星空咖啡馆</text>
+  <text x="340" y="1080" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF">18人参加</text>
+  
+  <!-- 活动卡片3 -->
+  <rect x="610" y="800" width="270" height="320" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="610" y="800" width="270" height="160" rx="16" fill="#F3F3F7" />
+  <rect x="610" y="800" width="270" height="160" rx="16" fill="url(#gradient4)" opacity="0.3" />
+  <circle cx="840" cy="830" r="20" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.12))" />
+  <text x="840" y="836" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="500" fill="#4E6FFF" text-anchor="middle">♡</text>
+  <rect x="630" y="850" width="90" height="24" rx="12" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="675" y="867" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">户外活动</text>
+  
+  <text x="630" y="990" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">周末爬山活动</text>
+  <text x="630" y="1020" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">6月18日 周六 09:00-15:00</text>
+  <text x="630" y="1045" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">莫干山风景区</text>
+  <text x="630" y="1080" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF">24人参加</text>
+  
+  <!-- 活动卡片4 -->
+  <rect x="900" y="800" width="270" height="320" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="900" y="800" width="270" height="160" rx="16" fill="#F3F3F7" />
+  <rect x="900" y="800" width="270" height="160" rx="16" fill="url(#gradient5)" opacity="0.3" />
+  <circle cx="1130" cy="830" r="20" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.12))" />
+  <text x="1130" y="836" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="500" fill="#4E6FFF" text-anchor="middle">♡</text>
+  <rect x="920" y="850" width="100" height="24" rx="12" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="970" y="867" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#8F7CFF" text-anchor="middle">读书会</text>
+  
+  <text x="920" y="990" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">文学作品赏析</text>
+  <text x="920" y="1020" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">6月19日 周日 14:00-16:30</text>
+  <text x="920" y="1045" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">城市图书馆</text>
+  <text x="920" y="1080" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF">15人参加</text>
+  
+  <!-- 社区精选 - 修复溢出问题 -->
+  <text x="30" y="1170" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#222222">社区精选</text>
+  <text x="1110" y="1170" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="end">查看全部</text>
+  
+  <!-- 社区卡片1 - 确保内容不溢出 -->
+  <rect x="30" y="1190" width="550" height="230" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 用户信息区 -->
+  <rect x="50" y="1210" width="40" height="40" rx="20" fill="#F3F3F7" />
+  <text x="70" y="1230" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">JL</text>
+  <text x="100" y="1220" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">嘉丽</text>
+  <text x="100" y="1240" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">2小时前</text>
+  
+  <!-- 内容区 - 限制适当宽度以避免溢出 -->
+  <text x="50" y="1275" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#222222">有没有喜欢摄影的朋友？周末一起去西湖拍照呀，顺便可以交流后期技巧~</text>
+  
+  <!-- 背景区块 - 与卡片保持边距 -->
+  <rect x="50" y="1300" width="480" height="70" rx="8" fill="#F3F3F7" />
+  <text x="70" y="1340" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">有兴趣的朋友可以+1，我加了一个微信群，方便大家交流。</text>
+  
+  <!-- 交互按钮区 - 与卡片底部保持边距 -->
+  <rect x="50" y="1380" width="70" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="85" y="1400" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">赞 15</text>
+  
+  <rect x="130" y="1380" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="172" y="1400" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">评论 8</text>
+  
+  <!-- 社区卡片2 - 确保内容不溢出 -->
+  <rect x="600" y="1190" width="570" height="230" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 用户信息区 -->
+  <rect x="620" y="1210" width="40" height="40" rx="20" fill="#FFB951" />
+  <text x="640" y="1230" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <text x="670" y="1220" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">文轩</text>
+  <text x="670" y="1240" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">5小时前</text>
+  
+  <!-- 内容区 - 限制宽度和行数 -->
+  <text x="620" y="1275" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#222222">推荐一本最近看的书《深度工作》，讲述如何在信息爆炸的时代保持专注。</text>
+  
+  <!-- 背景区块 - 与卡片保持边距 -->
+  <rect x="620" y="1300" width="530" height="70" rx="8" fill="#F3F3F7" />
+  <text x="640" y="1340" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">下周日下午2点，城市图书馆三楼，已预约讨论室，感兴趣的朋友可以报名~</text>
+  
+  <!-- 交互按钮区 - 与卡片底部保持边距 -->
+  <rect x="620" y="1380" width="70" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="655" y="1400" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">赞 23</text>
+  
+  <rect x="700" y="1380" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="742" y="1400" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">评论 12</text>
+  
+  <!-- 二手好物 - 恢复此模块 -->
+  <text x="30" y="1460" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#222222">二手好物</text>
+  <text x="1110" y="1460" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="end">查看全部</text>
+  
+  <!-- 二手卡片1 -->
+  <rect x="30" y="1480" width="270" height="200" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="1500" width="60" height="60" rx="8" fill="#F3F3F7" />
+  <text x="80" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="500" fill="#666666" text-anchor="middle">📚</text>
+  
+  <text x="120" y="1515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">二手书籍</text>
+  <text x="120" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">90%新 | 文学类</text>
+  <text x="120" y="1565" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#FF6B8B">¥50</text>
+  
+  <rect x="50" y="1590" width="110" height="40" rx="20" fill="#4E6FFF" />
+  <text x="105" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">交换</text>
+  
+  <rect x="170" y="1590" width="110" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="225" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">详情</text>
+  
+  <!-- 二手卡片2 -->
+  <rect x="320" y="1480" width="270" height="200" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="340" y="1500" width="60" height="60" rx="8" fill="#F3F3F7" />
+  <text x="370" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="500" fill="#666666" text-anchor="middle">📱</text>
+  
+  <text x="410" y="1515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">iPhone 12</text>
+  <text x="410" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">95%新 | 128GB</text>
+  <text x="410" y="1565" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#FF6B8B">¥3200</text>
+  
+  <rect x="340" y="1590" width="110" height="40" rx="20" fill="#4E6FFF" />
+  <text x="395" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">交换</text>
+  
+  <rect x="460" y="1590" width="110" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="515" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">详情</text>
+  
+  <!-- 二手卡片3 -->
+  <rect x="610" y="1480" width="270" height="200" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="630" y="1500" width="60" height="60" rx="8" fill="#F3F3F7" />
+  <text x="660" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="500" fill="#666666" text-anchor="middle">🎸</text>
+  
+  <text x="700" y="1515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">民谣吉他</text>
+  <text x="700" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">85%新 | 初学者适用</text>
+  <text x="700" y="1565" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#FF6B8B">¥280</text>
+  
+  <rect x="630" y="1590" width="110" height="40" rx="20" fill="#4E6FFF" />
+  <text x="685" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">交换</text>
+  
+  <rect x="750" y="1590" width="110" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="805" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">详情</text>
+  
+  <!-- 二手卡片4 -->
+  <rect x="900" y="1480" width="270" height="200" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="920" y="1500" width="60" height="60" rx="8" fill="#F3F3F7" />
+  <text x="950" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="500" fill="#666666" text-anchor="middle">🎮</text>
+  
+  <text x="990" y="1515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">Switch游戏卡</text>
+  <text x="990" y="1540" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">99%新 | 塞尔达传说</text>
+  <text x="990" y="1565" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#FF6B8B">¥180</text>
+  
+  <rect x="920" y="1590" width="110" height="40" rx="20" fill="#4E6FFF" />
+  <text x="975" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">交换</text>
+  
+  <rect x="1040" y="1590" width="110" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="1095" y="1615" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">详情</text>
+  
+  <!-- 底部导航栏 - 增强高亮效果 -->
+  <rect x="0" y="1720" width="1200" height="80" fill="white" filter="drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.05))" />
+  
+  <!-- 增强首页Tab高亮效果 -->
+  <circle cx="90" cy="1760" r="30" fill="rgba(78, 111, 255, 0.1)" />
+  <text x="90" y="1765" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#4E6FFF" text-anchor="middle">首页</text>
+  <rect x="60" y="1800" width="60" height="4" rx="2" fill="#4E6FFF" />
+  
+  <text x="340" y="1765" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">活动</text>
+  
+  <text x="600" y="1765" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">社区</text>
+  
+  <text x="850" y="1765" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">二手</text>
+  
+  <text x="1100" y="1765" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">我的</text>
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#FF6B8B;stop-opacity:0.5" />
+    </linearGradient>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B8B;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#FFB951;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#65D1AA;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#8F7CFF;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="gradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8F7CFF;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2800">
+  <!-- 背景 -->
+  <rect width="1200" height="2800" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit UI 设计系统</text>
+  <text x="50" y="110" font-family="Inter, sans-serif" font-size="18" fill="#666666">现代、友好、灵活的社交活动平台设计系统</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 品牌色彩系统 -->
+  <text x="50" y="190" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 品牌色彩系统</text>
+  
+  <!-- 1.1 主品牌色 -->
+  <text x="50" y="240" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.1 主品牌色</text>
+  
+  <!-- 主色 -->
+  <rect x="50" y="260" width="180" height="100" rx="8" fill="#4E6FFF" />
+  <text x="50" y="380" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">主色 - 活力蓝</text>
+  <text x="50" y="405" font-family="Inter, sans-serif" font-size="14" fill="#666666">#4E6FFF</text>
+  <text x="50" y="425" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于主按钮、强调元素、品牌标识</text>
+  
+  <!-- 主色变体 -->
+  <rect x="250" y="260" width="100" height="100" rx="8" fill="#7D95FF" />
+  <text x="250" y="380" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">主色浅</text>
+  <text x="250" y="405" font-family="Inter, sans-serif" font-size="14" fill="#666666">#7D95FF</text>
+  
+  <rect x="370" y="260" width="100" height="100" rx="8" fill="#3050E0" />
+  <text x="370" y="380" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">主色深</text>
+  <text x="370" y="405" font-family="Inter, sans-serif" font-size="14" fill="#666666">#3050E0</text>
+
+  <rect x="490" y="260" width="100" height="100" rx="8" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="490" y="380" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">主色背景</text>
+  <text x="490" y="405" font-family="Inter, sans-serif" font-size="14" fill="#666666">20% 透明度</text>
+
+  <rect x="610" y="260" width="100" height="100" rx="8" fill="rgba(78, 111, 255, 0.1)" />
+  <text x="610" y="380" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">主色背景淡</text>
+  <text x="610" y="405" font-family="Inter, sans-serif" font-size="14" fill="#666666">10% 透明度</text>
+  
+  <!-- 1.2 辅助色 -->
+  <text x="50" y="470" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.2 辅助色</text>
+  
+  <!-- 辅助色-珊瑚色 -->
+  <rect x="50" y="490" width="140" height="100" rx="8" fill="#FF6B8B" />
+  <text x="50" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">珊瑚色</text>
+  <text x="50" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">#FF6B8B</text>
+  <text x="50" y="655" font-family="Inter, sans-serif" font-size="14" fill="#666666">音乐、艺术类活动</text>
+
+  <rect x="200" y="490" width="70" height="100" rx="8" fill="rgba(255, 107, 139, 0.2)" />
+  <text x="200" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">珊瑚背景</text>
+  <text x="200" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">20%</text>
+  
+  <!-- 辅助色-薄荷绿 -->
+  <rect x="290" y="490" width="140" height="100" rx="8" fill="#65D1AA" />
+  <text x="290" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">薄荷绿</text>
+  <text x="290" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">#65D1AA</text>
+  <text x="290" y="655" font-family="Inter, sans-serif" font-size="14" fill="#666666">美食、健康类活动</text>
+
+  <rect x="440" y="490" width="70" height="100" rx="8" fill="rgba(101, 209, 170, 0.2)" />
+  <text x="440" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">薄荷背景</text>
+  <text x="440" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">20%</text>
+  
+  <!-- 辅助色-向日葵 -->
+  <rect x="530" y="490" width="140" height="100" rx="8" fill="#FFB951" />
+  <text x="530" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">向日葵</text>
+  <text x="530" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">#FFB951</text>
+  <text x="530" y="655" font-family="Inter, sans-serif" font-size="14" fill="#666666">学习、技能类活动</text>
+
+  <rect x="680" y="490" width="70" height="100" rx="8" fill="rgba(255, 185, 81, 0.2)" />
+  <text x="680" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">向日葵背景</text>
+  <text x="680" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">20%</text>
+  
+  <!-- 辅助色-淡紫色 -->
+  <rect x="770" y="490" width="140" height="100" rx="8" fill="#8F7CFF" />
+  <text x="770" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">淡紫色</text>
+  <text x="770" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">#8F7CFF</text>
+  <text x="770" y="655" font-family="Inter, sans-serif" font-size="14" fill="#666666">读书、心理类活动</text>
+
+  <rect x="920" y="490" width="70" height="100" rx="8" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="920" y="610" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">淡紫背景</text>
+  <text x="920" y="635" font-family="Inter, sans-serif" font-size="14" fill="#666666">20%</text>
+  
+  <!-- 1.3 中性色 -->
+  <text x="50" y="700" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.3 中性色</text>
+  
+  <rect x="50" y="720" width="100" height="80" rx="8" fill="#222222" />
+  <text x="50" y="820" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">文本主色</text>
+  <text x="50" y="845" font-family="Inter, sans-serif" font-size="14" fill="#666666">#222222</text>
+  
+  <rect x="170" y="720" width="100" height="80" rx="8" fill="#666666" />
+  <text x="170" y="820" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">次要文本</text>
+  <text x="170" y="845" font-family="Inter, sans-serif" font-size="14" fill="#666666">#666666</text>
+  
+  <rect x="290" y="720" width="100" height="80" rx="8" fill="#999999" />
+  <text x="290" y="820" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">辅助文本</text>
+  <text x="290" y="845" font-family="Inter, sans-serif" font-size="14" fill="#666666">#999999</text>
+
+  <rect x="410" y="720" width="100" height="80" rx="8" fill="#E0E0E6" />
+  <text x="410" y="820" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">边框色</text>
+  <text x="410" y="845" font-family="Inter, sans-serif" font-size="14" fill="#666666">#E0E0E6</text>
+  
+  <rect x="530" y="720" width="100" height="80" rx="8" fill="#F3F3F7" />
+  <text x="530" y="820" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">背景淡</text>
+  <text x="530" y="845" font-family="Inter, sans-serif" font-size="14" fill="#666666">#F3F3F7</text>
+  
+  <rect x="650" y="720" width="100" height="80" rx="8" fill="#F9F9FB" stroke="#E0E0E6" stroke-width="1" />
+  <text x="650" y="820" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">背景白</text>
+  <text x="650" y="845" font-family="Inter, sans-serif" font-size="14" fill="#666666">#F9F9FB</text>
+  
+  <!-- 1.4 状态色 -->
+  <text x="50" y="900" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.4 状态色</text>
+  
+  <rect x="50" y="920" width="120" height="80" rx="8" fill="#FF5252" />
+  <text x="50" y="1020" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">错误红</text>
+  <text x="50" y="1045" font-family="Inter, sans-serif" font-size="14" fill="#666666">#FF5252</text>
+  
+  <rect x="190" y="920" width="120" height="80" rx="8" fill="#12B76A" />
+  <text x="190" y="1020" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">成功绿</text>
+  <text x="190" y="1045" font-family="Inter, sans-serif" font-size="14" fill="#666666">#12B76A</text>
+  
+  <rect x="330" y="920" width="120" height="80" rx="8" fill="#FFC107" />
+  <text x="330" y="1020" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">警告黄</text>
+  <text x="330" y="1045" font-family="Inter, sans-serif" font-size="14" fill="#666666">#FFC107</text>
+  
+  <rect x="470" y="920" width="120" height="80" rx="8" fill="#0096FF" />
+  <text x="470" y="1020" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">信息蓝</text>
+  <text x="470" y="1045" font-family="Inter, sans-serif" font-size="14" fill="#666666">#0096FF</text>
+  
+  <rect x="50" y="1070" width="540" height="70" rx="8" fill="#F9F9FB" stroke="#E0E0E6" stroke-width="1" />
+  <text x="70" y="1110" font-family="Inter, sans-serif" font-size="14" fill="#666666">配色原则：以活力蓝为主色，搭配各辅助色表达不同活动性质，确保色彩既鲜明活泼又保持专业一致性</text>
+  
+  <!-- 2. 排版系统 -->
+  <text x="50" y="1190" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">2. 排版系统</text>
+  
+  <!-- 2.1 字体 -->
+  <text x="50" y="1240" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.1 字体</text>
+  
+  <text x="50" y="1280" font-family="Inter, sans-serif" font-size="16" fill="#222222">主要字体 (拉丁文): Inter</text>
+  <text x="50" y="1310" font-family="Inter, sans-serif" font-size="16" fill="#222222">中文字体: PingFang SC (iOS/Mac), Microsoft YaHei (Windows)</text>
+  <text x="50" y="1340" font-family="Inter, sans-serif" font-size="16" fill="#222222">备选字体: SF Pro, Helvetica Neue, Arial, sans-serif</text>
+  
+  <!-- 2.2 字体层级 -->
+  <text x="50" y="1390" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.2 字体层级</text>
+  
+  <text x="50" y="1440" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="#222222">标题一 (32px Bold)</text>
+  <text x="650" y="1440" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于页面主标题、欢迎页标题</text>
+  
+  <text x="50" y="1490" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">标题二 (28px Bold)</text>
+  <text x="650" y="1490" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于主要内容标题、重要区块标题</text>
+  
+  <text x="50" y="1540" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#222222">标题三 (24px SemiBold)</text>
+  <text x="650" y="1540" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于卡片标题、次级页面标题</text>
+  
+  <text x="50" y="1590" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">标题四 (20px SemiBold)</text>
+  <text x="650" y="1590" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于内容分区标题、弹窗标题</text>
+  
+  <text x="50" y="1640" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="#222222">副标题 (18px Medium)</text>
+  <text x="650" y="1640" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于卡片内标题、活动名称</text>
+  
+  <text x="50" y="1690" font-family="Inter, sans-serif" font-size="16" font-weight="400" fill="#222222">正文大 (16px Regular)</text>
+  <text x="650" y="1690" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于主要内容文本、按钮文本</text>
+  
+  <text x="50" y="1740" font-family="Inter, sans-serif" font-size="14" font-weight="400" fill="#666666">正文标准 (14px Regular)</text>
+  <text x="650" y="1740" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于次要文本、辅助信息</text>
+  
+  <text x="50" y="1790" font-family="Inter, sans-serif" font-size="12" font-weight="400" fill="#999999">辅助文本 (12px Regular)</text>
+  <text x="650" y="1790" font-family="Inter, sans-serif" font-size="14" fill="#666666">用于标签、注释、时间戳</text>
+  
+  <!-- 2.3 行高与间距 -->
+  <text x="50" y="1850" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.3 行高与间距</text>
+  
+  <text x="50" y="1890" font-family="Inter, sans-serif" font-size="16" fill="#222222">标题行高: 1.3倍行高</text>
+  <text x="500" y="1890" font-family="Inter, sans-serif" font-size="16" fill="#666666">例: 32px字体 × 1.3 = 42px行高</text>
+  
+  <text x="50" y="1930" font-family="Inter, sans-serif" font-size="16" fill="#222222">正文行高: 1.5倍行高</text>
+  <text x="500" y="1930" font-family="Inter, sans-serif" font-size="16" fill="#666666">例: 16px字体 × 1.5 = 24px行高</text>
+  
+  <text x="50" y="1970" font-family="Inter, sans-serif" font-size="16" fill="#222222">段落间距: 1.5倍行高</text>
+  <text x="500" y="1970" font-family="Inter, sans-serif" font-size="16" fill="#666666">例: 24px行高 × 1.5 = 36px段落间距</text>
+  
+  <text x="50" y="2010" font-family="Inter, sans-serif" font-size="16" fill="#222222">间距单位基础: 4px</text>
+  <text x="500" y="2010" font-family="Inter, sans-serif" font-size="16" fill="#666666">所有间距为4的倍数: 4, 8, 12, 16, 20, 24...</text>
+  
+  <rect x="50" y="2040" width="540" height="70" rx="8" fill="#F9F9FB" stroke="#E0E0E6" stroke-width="1" />
+  <text x="70" y="2080" font-family="Inter, sans-serif" font-size="14" fill="#666666">排版原则：保持一致的字体层级，确保良好的可读性和视觉层次，便于用户快速获取信息</text>
+  
+  <!-- 3. 组件设计规范 -->
+  <text x="50" y="2160" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">3. 组件设计规范</text>
+  
+  <!-- 3.1 圆角规范 -->
+  <text x="50" y="2210" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">3.1 圆角规范</text>
+  
+  <rect x="50" y="2240" width="200" height="60" rx="4" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="270" y="2280" font-family="Inter, sans-serif" font-size="16" fill="#222222">小圆角: 4px (表单元素、小型组件)</text>
+  
+  <rect x="50" y="2320" width="200" height="60" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="270" y="2360" font-family="Inter, sans-serif" font-size="16" fill="#222222">中圆角: 8px (卡片、面板、模态框)</text>
+  
+  <rect x="50" y="2400" width="200" height="60" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="270" y="2440" font-family="Inter, sans-serif" font-size="16" fill="#222222">大圆角: 16px (主要卡片、内容区块)</text>
+  
+  <rect x="50" y="2480" width="200" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="270" y="2510" font-family="Inter, sans-serif" font-size="16" fill="#222222">全圆角: 高度的50% (按钮、标签、徽章)</text>
+  
+  <!-- 3.2 阴影效果 -->
+  <text x="50" y="2560" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">3.2 阴影效果</text>
+  
+  <rect x="50" y="2590" width="200" height="80" rx="8" fill="white" filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))" />
+  <text x="270" y="2640" font-family="Inter, sans-serif" font-size="16" fill="#222222">浅阴影: 0px 1px 2px rgba(0,0,0,0.05) - 用于导航栏、底部栏</text>
+  
+  <rect x="50" y="2690" width="200" height="80" rx="8" fill="white" filter="drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.08))" />
+  <text x="270" y="2740" font-family="Inter, sans-serif" font-size="16" fill="#222222">中阴影: 0px 4px 8px rgba(0,0,0,0.08) - 用于卡片、面板</text>
+  
+  <rect x="600" y="2590" width="200" height="80" rx="8" fill="white" filter="drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.12))" />
+  <text x="820" y="2640" font-family="Inter, sans-serif" font-size="16" fill="#222222">深阴影: 0px 8px 24px rgba(0,0,0,0.12) - 用于模态框、弹出菜单</text>
+  
+  <rect x="600" y="2690" width="200" height="80" rx="8" fill="white" filter="drop-shadow(0px 12px 32px rgba(0, 0, 0, 0.16))" />
+  <text x="820" y="2740" font-family="Inter, sans-serif" font-size="16" fill="#222222">强阴影: 0px 12px 32px rgba(0,0,0,0.16) - 用于重点弹窗、引导层</text>
+</svg>

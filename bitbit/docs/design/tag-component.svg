@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1800">
+  <!-- 背景 -->
+  <rect width="1200" height="1800" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit 头像和标签组件</text>
+  <text x="50" y="110" font-family="Inter, sans-serif" font-size="18" fill="#666666">社交活动平台头像与标签展示组件系统</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 用户头像 -->
+  <text x="50" y="190" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 用户头像</text>
+  
+  <!-- 1.1 头像尺寸 -->
+  <text x="50" y="240" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.1 头像尺寸</text>
+  
+  <!-- 超大头像 -->
+  <circle cx="120" cy="320" r="70" fill="#8F7CFF" />
+  <text x="120" y="335" font-family="Inter, sans-serif" font-size="36" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  <text x="120" y="420" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">超大头像</text>
+  <text x="120" y="445" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">70px</text>
+  
+  <!-- 大头像 -->
+  <circle cx="280" cy="320" r="50" fill="#65D1AA" />
+  <text x="280" y="335" font-family="Inter, sans-serif" font-size="24" font-weight="500" fill="white" text-anchor="middle">QT</text>
+  <text x="280" y="420" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">大头像</text>
+  <text x="280" y="445" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">50px</text>
+  
+  <!-- 中头像 -->
+  <circle cx="420" cy="320" r="36" fill="#FFB951" />
+  <text x="420" y="330" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <text x="420" y="420" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">中头像</text>
+  <text x="420" y="445" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">36px</text>
+  
+  <!-- 小头像 -->
+  <circle cx="540" cy="320" r="24" fill="#F3F3F7" />
+  <text x="540" y="330" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#666666" text-anchor="middle">JL</text>
+  <text x="540" y="420" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">小头像</text>
+  <text x="540" y="445" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">24px</text>
+  
+  <!-- 迷你头像 -->
+  <circle cx="650" cy="320" r="16" fill="#FF6B8B" />
+  <text x="650" y="326" font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="white" text-anchor="middle">XM</text>
+  <text x="650" y="420" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">迷你头像</text>
+  <text x="650" y="445" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">16px</text>
+  
+  <!-- 1.2 头像变体 -->
+  <text x="50" y="500" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.2 头像变体</text>
+  
+  <!-- 默认文字头像 -->
+  <circle cx="120" cy="570" r="36" fill="#8F7CFF" />
+  <text x="120" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  <text x="120" y="640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">文字头像</text>
+  
+  <!-- 图片头像 -->
+  <circle cx="220" cy="570" r="36" fill="#E0E0E6" />
+  <text x="220" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="#999999" text-anchor="middle">🖼️</text>
+  <text x="220" y="640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">图片头像</text>
+  
+  <!-- 带边框头像 -->
+  <circle cx="320" cy="570" r="36" fill="#F3F3F7" stroke="#4E6FFF" stroke-width="3" />
+  <text x="320" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="#4E6FFF" text-anchor="middle">TY</text>
+  <text x="320" y="640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">带边框头像</text>
+  
+  <!-- 带标记头像 -->
+  <circle cx="420" cy="570" r="36" fill="#FFB951" />
+  <text x="420" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <circle cx="450" cy="540" r="12" fill="#FF6B8B" stroke="white" stroke-width="2" />
+  <text x="450" y="545" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="white" text-anchor="middle">3</text>
+  <text x="420" y="640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">带标记头像</text>
+  
+  <!-- 禁用态头像 -->
+  <circle cx="520" cy="570" r="36" fill="#F3F3F7" />
+  <text x="520" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="#999999" text-anchor="middle">--</text>
+  <text x="520" y="640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">禁用态头像</text>
+  
+  <!-- 组合头像 -->
+  <circle cx="650" cy="570" r="36" fill="#65D1AA" />
+  <text x="650" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">QT</text>
+  <circle cx="690" cy="570" r="36" fill="#FFB951" />
+  <text x="690" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <circle cx="730" cy="570" r="36" fill="#FF6B8B" />
+  <text x="730" y="580" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">XM</text>
+  <text x="690" y="640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">组合头像</text>
+  
+  <!-- 1.3 头像使用规则 -->
+  <rect x="50" y="680" width="1100" height="130" rx="8" fill="#F3F3F7" />
+  <text x="70" y="705" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 文字头像：当用户无头像时使用，通常展示用户名拼音首字母，背景色应使用系统配色</text>
+  <text x="70" y="730" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 尺寸选择：超大(70px)用于个人资料页，大(50px)用于详情页面，中(36px)用于列表页面，小(24px)用于评论区，迷你(16px)用于参与者展示</text>
+  <text x="70" y="755" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 带边框头像：用于特殊身份标识，如官方认证、活动组织者等；带标记：用于显示未读消息、新状态等</text>
+  <text x="70" y="780" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 组合头像：展示多位用户时使用，建议最多显示3个头像，超出则显示+N</text>
+  <text x="70" y="805" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 颜色规则：不同用户应使用不同的背景色，增强识别度，提升用户体验</text>
+  
+  <!-- 2. 标签系统 -->
+  <text x="50" y="860" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">2. 标签系统</text>
+  
+  <!-- 2.1 基础标签 -->
+  <text x="50" y="910" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.1 基础标签</text>
+  
+  <!-- 普通标签 -->
+  <rect x="50" y="940" width="100" height="32" rx="16" fill="#F3F3F7" />
+  <text x="100" y="961" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">运动</text>
+  <text x="100" y="990" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">普通标签</text>
+  
+  <!-- 主色标签 -->
+  <rect x="180" y="940" width="120" height="32" rx="16" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="240" y="961" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF" text-anchor="middle">户外活动</text>
+  <text x="240" y="990" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">主色标签</text>
+  
+  <!-- 珊瑚色标签 -->
+  <rect x="330" y="940" width="120" height="32" rx="16" fill="rgba(255, 107, 139, 0.2)" />
+  <text x="390" y="961" font-family="Inter, sans-serif" font-size="14" fill="#FF6B8B" text-anchor="middle">音乐表演</text>
+  <text x="390" y="990" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">珊瑚色标签</text>
+  
+  <!-- 薄荷绿标签 -->
+  <rect x="480" y="940" width="100" height="32" rx="16" fill="rgba(101, 209, 170, 0.2)" />
+  <text x="530" y="961" font-family="Inter, sans-serif" font-size="14" fill="#65D1AA" text-anchor="middle">美食</text>
+  <text x="530" y="990" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">薄荷绿标签</text>
+  
+  <!-- 向日葵标签 -->
+  <rect x="610" y="940" width="110" height="32" rx="16" fill="rgba(255, 185, 81, 0.2)" />
+  <text x="665" y="961" font-family="Inter, sans-serif" font-size="14" fill="#FFB951" text-anchor="middle">咖啡馆</text>
+  <text x="665" y="990" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">向日葵标签</text>
+  
+  <!-- 淡紫色标签 -->
+  <rect x="750" y="940" width="110" height="32" rx="16" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="805" y="961" font-family="Inter, sans-serif" font-size="14" fill="#8F7CFF" text-anchor="middle">读书会</text>
+  <text x="805" y="990" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">淡紫色标签</text>
+  
+  <!-- 2.2 标签尺寸 -->
+  <text x="50" y="1040" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.2 标签尺寸</text>
+  
+  <!-- 大标签 -->
+  <rect x="50" y="1070" width="140" height="36" rx="18" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="120" y="1093" font-family="Inter, sans-serif" font-size="16" fill="#4E6FFF" text-anchor="middle">大标签</text>
+  
+  <!-- 中标签 -->
+  <rect x="220" y="1072" width="120" height="32" rx="16" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="280" y="1093" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF" text-anchor="middle">中标签</text>
+  
+  <!-- 小标签 -->
+  <rect x="370" y="1074" width="90" height="28" rx="14" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="415" y="1093" font-family="Inter, sans-serif" font-size="12" fill="#4E6FFF" text-anchor="middle">小标签</text>
+  
+  <!-- 迷你标签 -->
+  <rect x="490" y="1076" width="70" height="24" rx="12" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="525" y="1093" font-family="Inter, sans-serif" font-size="10" fill="#4E6FFF" text-anchor="middle">迷你标签</text>
+  
+  <!-- 2.3 特殊标签 -->
+  <text x="50" y="1140" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.3 特殊标签</text>
+  
+  <!-- 实心标签 -->
+  <rect x="50" y="1170" width="120" height="36" rx="18" fill="#4E6FFF" />
+  <text x="110" y="1193" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">已报名</text>
+  <text x="110" y="1220" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">实心标签</text>
+  
+  <!-- 状态标签 -->
+  <rect x="200" y="1170" width="120" height="36" rx="18" fill="#F3F3F7" />
+  <text x="260" y="1193" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">已结束</text>
+  <text x="260" y="1220" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">状态标签</text>
+  
+  <!-- 组合标签 -->
+  <rect x="350" y="1170" width="150" height="36" rx="18" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="390" y="1193" font-family="Inter, sans-serif" font-size="14" fill="#8F7CFF" text-anchor="middle">Lv.3</text>
+  <text x="450" y="1193" font-family="Inter, sans-serif" font-size="14" fill="#8F7CFF" text-anchor="middle">专业读者</text>
+  <text x="425" y="1220" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">组合标签</text>
+  
+  <!-- 带图标标签 -->
+  <rect x="530" y="1170" width="130" height="36" rx="18" fill="rgba(101, 209, 170, 0.2)" />
+  <text x="560" y="1193" font-family="Inter, sans-serif" font-size="14" fill="#65D1AA" text-anchor="middle">★</text>
+  <text x="595" y="1193" font-family="Inter, sans-serif" font-size="14" fill="#65D1AA" text-anchor="middle">新手友好</text>
+  <text x="595" y="1220" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">带图标标签</text>
+  
+  <!-- 可删除标签 -->
+  <rect x="690" y="1170" width="130" height="36" rx="18" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="735" y="1193" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF" text-anchor="middle">摄影</text>
+  <circle cx="785" cy="1188" r="10" fill="rgba(78, 111, 255, 0.4)" />
+  <text x="785" y="1193" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">×</text>
+  <text x="755" y="1220" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="middle">可删除标签</text>
+  
+  <!-- 2.4 标签使用规则 -->
+  <rect x="50" y="1270" width="1100" height="130" rx="8" fill="#F3F3F7" />
+  <text x="70" y="1295" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 活动类型标签：使用对应分类的主题色，如户外活动使用蓝色、美食使用绿色、音乐使用珊瑚色等</text>
+  <text x="70" y="1320" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 状态标签：用于表示活动状态，如已报名(实心蓝)、已结束(灰色)、即将开始(实心绿)等</text>
+  <text x="70" y="1345" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 尺寸选择：大标签(36px)用于主要筛选条件，中标签(32px)用于内容分类，小标签(28px)用于次要信息，迷你标签(24px)用于辅助标记</text>
+  <text x="70" y="1370" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 可删除标签：用于多选筛选、用户兴趣标签等场景，点击"×"可移除标签</text>
+  <text x="70" y="1395" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 标签布局：同类标签应保持水平或垂直对齐，多行时保持良好的视觉节奏</text>
+  
+  <!-- 3. 头像和标签组合实例 -->
+  <text x="50" y="1450" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">3. 头像和标签组合实例</text>
+  
+  <!-- 用户信息组合 -->
+  <rect x="50" y="1500" width="400" height="80" rx="8" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <circle cx="90" cy="1540" r="30" fill="#8F7CFF" />
+  <text x="90" y="1550" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  <text x="140" y="1530" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">子龙</text>
+  <rect x="140" y="1542" width="80" height="24" rx="12" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="180" y="1559" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#8F7CFF" text-anchor="middle">Lv.3</text>
+  <text x="250" y="1554" font-family="Inter, sans-serif" font-size="14" fill="#666666">音乐爱好者</text>
+  
+  <!-- 参与者列表 -->
+  <rect x="500" y="1500" width="400" height="80" rx="8" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <text x="520" y="1530" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">参与者 (24/30)</text>
+  <circle cx="550" cy="1560" r="16" fill="#F3F3F7" />
+  <text x="550" y="1565" font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="#666666" text-anchor="middle">JL</text>
+  <circle cx="590" cy="1560" r="16" fill="#FFB951" />
+  <text x="590" y="1565" font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <circle cx="630" cy="1560" r="16" fill="#8F7CFF" />
+  <text x="630" y="1565" font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  <circle cx="670" cy="1560" r="16" fill="#FF6B8B" />
+  <text x="670" y="1565" font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="white" text-anchor="middle">XM</text>
+  <circle cx="710" cy="1560" r="16" fill="#65D1AA" />
+  <text x="710" y="1565" font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="white" text-anchor="middle">QT</text>
+  <circle cx="750" cy="1560" r="16" fill="#F3F3F7" />
+  <text x="750" y="1565" font-family="Inter, sans-serif" font-size="8" font-weight="500" fill="#666666" text-anchor="middle">+19</text>
+  
+  <!-- 活动标签组 -->
+  <rect x="50" y="1600" width="850" height="80" rx="8" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <text x="70" y="1630" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">活动标签</text>
+  <rect x="70" y="1640" width="130" height="32" rx="16" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="135" y="1661" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF" text-anchor="middle">户外活动</text>
+  <rect x="210" y="1640" width="110" height="32" rx="16" fill="rgba(101, 209, 170, 0.2)" />
+  <text x="265" y="1661" font-family="Inter, sans-serif" font-size="14" fill="#65D1AA" text-anchor="middle">适合新手</text>
+  <rect x="330" y="1640" width="120" height="32" rx="16" fill="rgba(255, 185, 81, 0.2)" />
+  <text x="390" y="1661" font-family="Inter, sans-serif" font-size="14" fill="#FFB951" text-anchor="middle">周末活动</text>
+  <rect x="460" y="1640" width="110" height="32" rx="16" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="515" y="1661" font-family="Inter, sans-serif" font-size="14" fill="#8F7CFF" text-anchor="middle">团建</text>
+  <rect x="580" y="1640" width="110" height="32" rx="16" fill="#4E6FFF" />
+  <text x="635" y="1661" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">已报名</text>
+  <rect x="700" y="1640" width="180" height="32" rx="16" fill="#F3F3F7" />
+  <text x="790" y="1661" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">6月18日 周六</text>
+  
+  <!-- 组件规则 -->
+  <rect x="50" y="1700" width="1100" height="80" rx="8" fill="#F3F3F7" />
+  <text x="70" y="1725" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 组合使用原则：头像和标签组合使用时，应保持视觉层次分明，头像>姓名>标签>描述</text>
+  <text x="70" y="1750" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 间距规则：相关元素之间保持8px或12px的间距，组件间保持16px或24px的间距</text>
+  <text x="70" y="1775" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 响应式调整：移动端可将横向布局调整为纵向，确保在小屏设备上的可用性</text>
+  
+</svg>

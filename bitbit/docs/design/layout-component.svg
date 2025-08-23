@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2000">
+  <!-- 背景 -->
+  <rect width="1200" height="2000" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit 导航和布局组件</text>
+  <text x="50" y="110" font-family="Inter, sans-serif" font-size="18" fill="#666666">社交活动平台导航与布局组件系统</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 顶部导航栏 -->
+  <text x="50" y="190" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 顶部导航栏</text>
+  
+  <!-- 1.1 主导航栏 -->
+  <text x="50" y="240" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.1 主导航栏</text>
+  
+  <!-- 标准顶部导航栏 -->
+  <rect x="50" y="270" width="1100" height="70" fill="white" filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))" />
+  <text x="80" y="312" font-family="Inter, sans-serif" font-size="24" font-weight="700" fill="#4E6FFF">BitBit</text>
+  <rect x="800" y="285" width="140" height="40" rx="20" fill="#4E6FFF" />
+  <text x="845" y="312" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">创建活动</text>
+  <text x="900" y="312" font-family="Inter, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">+</text>
+  <circle cx="1000" cy="305" r="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1000" y="312" font-family="Inter, sans-serif" font-size="16" fill="#999999" text-anchor="middle">🔔</text>
+  <circle cx="1060" cy="305" r="20" fill="#F3F3F7" />
+  <text x="1060" y="312" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#666666" text-anchor="middle">ZL</text>
+  
+  <!-- 带标题导航栏 -->
+  <rect x="50" y="360" width="1100" height="70" fill="white" filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))" />
+  <text x="80" y="402" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#222222">社区</text>
+  <circle cx="1060" cy="395" r="20" fill="#F3F3F7" />
+  <text x="1060" y="402" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#666666" text-anchor="middle">ZL</text>
+  <circle cx="1000" cy="395" r="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1000" y="402" font-family="Inter, sans-serif" font-size="16" fill="#999999" text-anchor="middle">🔔</text>
+  
+  <!-- 返回导航栏 -->
+  <rect x="50" y="450" width="1100" height="70" fill="white" filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))" />
+  <text x="120" y="492" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">活动详情</text>
+  <circle cx="80" cy="485" r="20" fill="#F3F3F7" />
+  <text x="80" y="492" font-family="Inter, sans-serif" font-size="20" fill="#222222" text-anchor="middle">←</text>
+  <circle cx="1060" cy="485" r="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1060" y="492" font-family="Inter, sans-serif" font-size="16" fill="#999999" text-anchor="middle">↗</text>
+  
+  <!-- 1.2 搜索栏 -->
+  <text x="50" y="550" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.2 搜索栏</text>
+  
+  <!-- 全宽搜索栏 -->
+  <rect x="50" y="580" width="1100" height="60" rx="30" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <circle cx="80" cy="610" r="12" fill="none" stroke="#999999" stroke-width="1.5" />
+  <text x="110" y="615" font-family="Inter, sans-serif" font-size="16" fill="#999999">搜索活动、话题或用户...</text>
+  
+  <!-- 导航规则 -->
+  <rect x="50" y="660" width="1100" height="130" rx="8" fill="#F3F3F7" />
+  <text x="70" y="685" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 顶部导航栏：固定在页面顶部，高度70px，包含品牌标识、页面标题、操作按钮和用户头像</text>
+  <text x="70" y="710" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 主导航栏：用于首页、主要页面，显示品牌名称和"创建活动"按钮</text>
+  <text x="70" y="735" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 带标题导航栏：用于分类页面，突出显示当前页面标题</text>
+  <text x="70" y="760" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 返回导航栏：用于详情页面，提供返回上级页面和分享功能</text>
+  <text x="70" y="785" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 搜索栏：通常位于导航栏下方，全宽展示，圆角30px，增强可见性</text>
+  
+  <!-- 2. 底部导航栏 -->
+  <text x="50" y="840" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">2. 底部导航栏</text>
+  
+  <!-- 2.1 主底部导航 -->
+  <text x="50" y="890" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.1 主底部导航</text>
+  
+  <!-- 底部标签栏 -->
+  <rect x="50" y="920" width="1100" height="80" fill="white" filter="drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.05))" />
+  
+  <!-- 选中的Tab带圆形高亮背景 -->
+  <circle cx="170" cy="950" r="30" fill="rgba(78, 111, 255, 0.1)" />
+  <text x="170" y="940" font-family="Inter, sans-serif" font-size="20" fill="#4E6FFF" text-anchor="middle">🏠</text>
+  <text x="170" y="970" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#4E6FFF" text-anchor="middle">首页</text>
+  <rect x="140" y="980" width="60" height="4" rx="2" fill="#4E6FFF" />
+  
+  <text x="370" y="940" font-family="Inter, sans-serif" font-size="20" fill="#666666" text-anchor="middle">🎪</text>
+  <text x="370" y="970" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">活动</text>
+  
+  <text x="570" y="940" font-family="Inter, sans-serif" font-size="20" fill="#666666" text-anchor="middle">👥</text>
+  <text x="570" y="970" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">社区</text>
+  
+  <text x="770" y="940" font-family="Inter, sans-serif" font-size="20" fill="#666666" text-anchor="middle">🔄</text>
+  <text x="770" y="970" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">二手</text>
+  
+  <text x="970" y="940" font-family="Inter, sans-serif" font-size="20" fill="#666666" text-anchor="middle">👤</text>
+  <text x="970" y="970" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">我的</text>
+  
+  <!-- 2.2 操作底部栏 -->
+  <text x="50" y="1030" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.2 操作底部栏</text>
+  
+  <!-- 详情页底部栏 -->
+  <rect x="50" y="1060" width="1100" height="80" fill="white" filter="drop-shadow(0px -1px 8px rgba(0, 0, 0, 0.08))" />
+  
+  <rect x="80" y="1080" width="50" height="40" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="105" y="1107" font-family="Inter, sans-serif" font-size="20" fill="#666666" text-anchor="middle">💬</text>
+  
+  <!-- 优化主按钮宽度，更符合内容长度 -->
+  <rect x="150" y="1080" width="550" height="40" rx="20" fill="#4E6FFF" />
+  <text x="425" y="1107" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">立即报名 (¥50)</text>
+  
+  <!-- 优化次按钮宽度，更符合内容长度 -->
+  <rect x="720" y="1080" width="200" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="820" y="1107" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">创建同类活动</text>
+  
+  <!-- 添加新的按钮示意不同宽度选项 -->
+  <rect x="940" y="1080" width="120" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1000" y="1107" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666" text-anchor="middle">收藏</text>
+  
+  <rect x="1080" y="1080" width="40" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1100" y="1107" font-family="Inter, sans-serif" font-size="18" fill="#666666" text-anchor="middle">↗</text>
+  
+  <!-- 底部导航规则 -->
+  <rect x="50" y="1160" width="1100" height="130" rx="8" fill="#F3F3F7" />
+  <text x="70" y="1185" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 主底部导航：固定在移动端页面底部，提供主要页面导航，高度80px，包含5个选项</text>
+  <text x="70" y="1210" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 当前选中项：使用蓝色背景圆圈(10%透明度)、主色图标和文字以及指示条，增强视觉辨识度</text>
+  <text x="70" y="1235" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 操作底部栏：用于详情页，提供主要操作按钮和辅助功能，按钮宽度应根据文本长度合理设置</text>
+  <text x="70" y="1260" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 主要操作按钮：宽度适中，通常占据35%-50%的可用空间；辅助按钮：宽度更小，根据内容长度设计</text>
+  <text x="70" y="1285" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 底部栏阴影：使用轻微阴影区分内容区域，增强用户体验</text>
+  
+  <!-- 3. 内容布局 -->
+  <text x="50" y="1320" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">3. 内容布局</text>
+  
+  <!-- 3.1 卡片网格布局 -->
+  <text x="50" y="1370" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">3.1 卡片网格布局</text>
+  
+  <!-- 网格示意 -->
+  <rect x="50" y="1400" width="1100" height="300" rx="0" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  
+  <rect x="70" y="1420" width="260" height="260" rx="16" fill="#F3F3F7" />
+  <rect x="350" y="1420" width="260" height="260" rx="16" fill="#F3F3F7" />
+  <rect x="630" y="1420" width="260" height="260" rx="16" fill="#F3F3F7" />
+  <rect x="910" y="1420" width="220" height="260" rx="16" fill="#F3F3F7" />
+  
+  <!-- 3.2 列表布局 -->
+  <text x="50" y="1750" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">3.2 列表布局</text>
+  
+  <!-- 列表示意 -->
+  <rect x="50" y="1780" width="1100" height="200" rx="0" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  
+  <rect x="70" y="1800" width="1060" height="80" rx="16" fill="#F3F3F7" />
+  <rect x="70" y="1890" width="1060" height="80" rx="16" fill="#F3F3F7" />
+  
+  <line x1="70" y1="1880" x2="1130" y2="1880" stroke="#E0E0E6" stroke-width="1" />
+  
+  <!-- 布局规则 -->
+  <rect x="50" y="2000" width="1100" height="150" rx="8" fill="#F3F3F7" />
+  <text x="70" y="2025" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 网格布局：适用于卡片展示，如活动列表、二手交易等，根据屏幕宽度自适应显示1-4列</text>
+  <text x="70" y="2050" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 列表布局：适用于详细信息展示，如活动详情、社区帖子等，通常全宽展示，项之间使用分割线或间距分隔</text>
+  <text x="70" y="2075" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 间距规则：网格布局卡片间距20px，列表布局项间距10px或使用1px分割线</text>
+  <text x="70" y="2100" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 响应式原则：移动端优先设计，桌面端扩展为多列，保持内容区域最大宽度1200px，居中展示</text>
+  <text x="70" y="2125" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 内容区域留白：页面边距在移动端保持20px，桌面端增加至40px以上，提升可读性</text>
+  
+</svg>

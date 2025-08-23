@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600">
+  <!-- 背景 -->
+  <rect width="1200" height="1600" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit 按钮组件</text>
+  <text x="50" y="110" font-family="Inter, sans-serif" font-size="18" fill="#666666">社交活动平台按钮组件系统</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 按钮系统 -->
+  <text x="50" y="190" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 按钮尺寸</text>
+  
+  <!-- 大按钮 -->
+  <rect x="50" y="230" width="180" height="56" rx="28" fill="#4E6FFF" />
+  <text x="140" y="267" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">大按钮 (56px)</text>
+  
+  <!-- 默认按钮 -->
+  <rect x="250" y="234" width="160" height="48" rx="24" fill="#4E6FFF" />
+  <text x="330" y="267" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">标准按钮 (48px)</text>
+  
+  <!-- 中等按钮 -->
+  <rect x="430" y="238" width="140" height="40" rx="20" fill="#4E6FFF" />
+  <text x="500" y="266" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">中按钮 (40px)</text>
+  
+  <!-- 小按钮 -->
+  <rect x="590" y="242" width="100" height="32" rx="16" fill="#4E6FFF" />
+  <text x="640" y="264" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">小按钮 (32px)</text>
+  
+  <!-- 按钮尺寸使用指南 -->
+  <rect x="50" y="300" width="900" height="70" rx="8" fill="#F3F3F7" />
+  <text x="70" y="335" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 大按钮 (56px): 用于页面主要操作按钮，如登录注册、提交表单</text>
+  <text x="70" y="360" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 标准按钮 (48px): 用于常规操作，如页面内主要按钮</text>
+  <text x="500" y="335" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 中按钮 (40px): 用于次要操作，如表单内按钮</text>
+  <text x="500" y="360" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 小按钮 (32px): 用于辅助操作，如卡片内操作</text>
+  
+  <!-- 2. 按钮类型 -->
+  <text x="50" y="420" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">2. 按钮类型</text>
+  
+  <!-- 主要按钮 -->
+  <rect x="50" y="460" width="180" height="48" rx="24" fill="#4E6FFF" />
+  <text x="140" y="493" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">主要按钮</text>
+  
+  <!-- 次要按钮 -->
+  <rect x="250" y="460" width="180" height="48" rx="24" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="340" y="493" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">次要按钮</text>
+  
+  <!-- 文本按钮 -->
+  <rect x="450" y="460" width="180" height="48" rx="24" fill="transparent" />
+  <text x="540" y="493" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">文本按钮</text>
+  
+  <!-- 特殊操作按钮 -->
+  <rect x="650" y="460" width="180" height="48" rx="24" fill="#FF6B8B" />
+  <text x="740" y="493" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">特殊操作按钮</text>
+  
+  <!-- 按钮类型使用指南 -->
+  <rect x="50" y="520" width="900" height="90" rx="8" fill="#F3F3F7" />
+  <text x="70" y="545" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 主要按钮: 用于页面主要操作，一个页面通常只有一个主要按钮，如"创建活动"、"立即报名"</text>
+  <text x="70" y="570" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 次要按钮: 用于辅助操作，强调度低于主要按钮，如"取消"、"详情"</text>
+  <text x="70" y="595" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 文本按钮: 用于轻量操作，不需要过度强调，如"查看更多"、"编辑"</text>
+  
+  <!-- 3. 按钮状态 -->
+  <text x="50" y="660" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">3. 按钮状态</text>
+  
+  <!-- 普通状态 -->
+  <rect x="50" y="700" width="160" height="48" rx="24" fill="#4E6FFF" />
+  <text x="130" y="733" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">普通状态</text>
+  
+  <!-- 悬停状态 -->
+  <rect x="230" y="700" width="160" height="48" rx="24" fill="#3050E0" />
+  <text x="310" y="733" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">悬停状态</text>
+  
+  <!-- 按下状态 -->
+  <rect x="410" y="700" width="160" height="48" rx="24" fill="#2040C0" />
+  <text x="490" y="733" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">按下状态</text>
+  
+  <!-- 禁用状态 -->
+  <rect x="590" y="700" width="160" height="48" rx="24" fill="#E0E0E6" />
+  <text x="670" y="733" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#999999" text-anchor="middle">禁用状态</text>
+  
+  <!-- 加载状态 -->
+  <rect x="770" y="700" width="160" height="48" rx="24" fill="#4E6FFF" />
+  <text x="850" y="733" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">加载中...</text>
+  
+  <!-- 次要按钮状态 -->
+  <rect x="50" y="770" width="160" height="48" rx="24" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="130" y="803" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">普通状态</text>
+  
+  <rect x="230" y="770" width="160" height="48" rx="24" fill="rgba(78, 111, 255, 0.1)" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="310" y="803" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">悬停状态</text>
+  
+  <rect x="410" y="770" width="160" height="48" rx="24" fill="rgba(78, 111, 255, 0.2)" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="490" y="803" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">按下状态</text>
+  
+  <rect x="590" y="770" width="160" height="48" rx="24" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="670" y="803" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#999999" text-anchor="middle">禁用状态</text>
+  
+  <!-- 4. 图标按钮 -->
+  <text x="50" y="870" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">4. 图标按钮</text>
+  
+  <!-- 图标按钮带文字 -->
+  <rect x="50" y="910" width="180" height="48" rx="24" fill="#4E6FFF" />
+  <text x="120" y="943" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">创建活动</text>
+  <text x="160" y="943" font-family="Inter, sans-serif" font-size="20" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 圆形图标按钮-大 -->
+  <circle cx="270" cy="934" r="24" fill="#4E6FFF" />
+  <text x="270" y="942" font-family="Inter, sans-serif" font-size="20" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 圆形图标按钮-中 -->
+  <circle cx="340" cy="934" r="20" fill="#4E6FFF" />
+  <text x="340" y="940" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 圆形图标按钮-小 -->
+  <circle cx="400" cy="934" r="16" fill="#4E6FFF" />
+  <text x="400" y="939" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 图标边框按钮 -->
+  <circle cx="460" cy="934" r="24" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="460" y="942" font-family="Inter, sans-serif" font-size="20" font-weight="500" fill="#4E6FFF" text-anchor="middle">❤</text>
+  
+  <!-- 浮动操作按钮 -->
+  <circle cx="530" cy="934" r="30" fill="#4E6FFF" filter="drop-shadow(0px 2px 8px rgba(78, 111, 255, 0.25))" />
+  <text x="530" y="942" font-family="Inter, sans-serif" font-size="24" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 方形图标按钮 -->
+  <rect x="580" y="910" width="48" height="48" rx="8" fill="#4E6FFF" />
+  <text x="604" y="942" font-family="Inter, sans-serif" font-size="20" font-weight="500" fill="white" text-anchor="middle">✉</text>
+  
+  <!-- 图标按钮使用指南 -->
+  <rect x="50" y="970" width="900" height="110" rx="8" fill="#F3F3F7" />
+  <text x="70" y="995" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 带文字图标按钮: 用于强调图标按钮的功能，更容易理解</text>
+  <text x="70" y="1020" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 圆形图标按钮: 用于简洁的操作，如点赞、收藏等</text>
+  <text x="70" y="1045" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 浮动操作按钮(FAB): 用于页面主要操作，悬浮在内容上方，如创建新内容</text>
+  <text x="70" y="1070" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 方形图标按钮: 用于工具栏或紧凑型界面中的操作</text>
+  
+  <!-- 5. 按钮组 -->
+  <text x="50" y="1130" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">5. 按钮组</text>
+  
+  <!-- 水平按钮组 -->
+  <rect x="50" y="1170" width="130" height="48" rx="0" fill="#4E6FFF" />
+  <text x="115" y="1203" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">天</text>
+  
+  <rect x="180" y="1170" width="130" height="48" rx="0" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="245" y="1203" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">周</text>
+  
+  <rect x="310" y="1170" width="130" height="48" rx="0" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="375" y="1203" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">月</text>
+  
+  <!-- 分段控制器 -->
+  <rect x="50" y="1240" width="390" height="40" rx="20" fill="#F3F3F7" />
+  <rect x="50" y="1240" width="130" height="40" rx="20" fill="#4E6FFF" />
+  <text x="115" y="1268" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">即将开始</text>
+  <text x="245" y="1268" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">进行中</text>
+  <text x="375" y="1268" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">已结束</text>
+  
+  <!-- 按钮组规则 -->
+  <rect x="50" y="1300" width="900" height="110" rx="8" fill="#F3F3F7" />
+  <text x="70" y="1325" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 水平按钮组: 用于关联但互斥的选项，如日期筛选、视图切换</text>
+  <text x="70" y="1350" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 分段控制器: 用于状态筛选，内容较多时使用</text>
+  <text x="70" y="1375" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 设计原则: 同组按钮保持相同高度和对齐方式，突出显示当前选中状态</text>
+  <text x="70" y="1400" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 使用场景: 筛选条件、切换视图、分页导航</text>
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#8F7CFF;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B8B;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#FFB951;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+</svg>

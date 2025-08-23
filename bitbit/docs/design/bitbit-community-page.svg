@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2000">
+  <!-- 背景 -->
+  <rect width="1200" height="2000" fill="#F9F9FB" />
+  
+  <!-- 状态栏 -->
+  <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" />
+  <text x="600" y="30" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222" text-anchor="middle">BitBit 社区页设计</text>
+  
+  <!-- 标题栏 -->
+  <rect x="0" y="50" width="1200" height="70" fill="#FFFFFF" filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))" />
+  <text x="30" y="92" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#222222">社区</text>
+  <circle cx="1120" cy="85" r="24" fill="#F3F3F7" />
+  <text x="1120" y="92" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">ZL</text>
+  
+  <circle cx="1060" cy="85" r="24" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1060" y="92" font-family="Inter, sans-serif" font-size="16" fill="#999999" text-anchor="middle">🔔</text>
+  
+  <!-- 话题标签滚动区域 -->
+  <rect x="0" y="120" width="1200" height="80" fill="white" />
+  
+  <rect x="30" y="140" width="80" height="40" rx="20" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="70" y="165" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">全部</text>
+  
+  <rect x="120" y="140" width="100" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="170" y="165" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">热门</text>
+  
+  <rect x="230" y="140" width="100" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="280" y="165" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">户外</text>
+  
+  <rect x="340" y="140" width="100" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="390" y="165" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">摄影</text>
+  
+  <rect x="450" y="140" width="100" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="500" y="165" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">美食</text>
+  
+  <rect x="560" y="140" width="100" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="610" y="165" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">读书</text>
+  
+  <rect x="670" y="140" width="100" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="720" y="165" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">音乐</text>
+  
+  <rect x="780" y="140" width="100" height="40" rx="20" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="830" y="165" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">电影</text>
+  
+  <!-- 发布按钮 -->
+  <circle cx="1120" cy="160" r="30" fill="#4E6FFF" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.12))" />
+  <text x="1120" y="167" font-family="Inter, sans-serif" font-size="24" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 内容区 -->
+  <!-- 社区卡片1 -->
+  <rect x="30" y="220" width="1140" height="320" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="240" width="40" height="40" rx="20" fill="#F3F3F7" />
+  <text x="70" y="270" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">JL</text>
+  <text x="100" y="255" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">嘉丽</text>
+  <text x="100" y="275" font-family="Inter, sans-serif" font-size="14" fill="#999999">2小时前</text>
+  
+  <rect x="1090" y="240" width="60" height="32" rx="16" fill="rgba(78, 111, 255, 0.15)" />
+  <text x="1120" y="262" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF" text-anchor="middle">摄影</text>
+  
+  <text x="50" y="320" font-family="Inter, sans-serif" font-size="16" line-height="1.5" fill="#222222">有没有喜欢摄影的朋友？周末一起去西湖拍照呀，顺便可以交流后期技巧~春天的西湖应该很美，樱花也开了，可以拍人像也可以拍风景。</text>
+  
+  <rect x="50" y="390" width="1100" height="90" rx="8" fill="#F3F3F7" />
+  <text x="70" y="445" font-family="Inter, sans-serif" font-size="14" fill="#666666">有兴趣的朋友可以+1，我加了一个微信群，方便大家交流。我们计划这周六上午9点莲花广场集合。</text>
+  
+  <rect x="50" y="500" width="70" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="85" y="520" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">赞 15</text>
+  
+  <rect x="130" y="500" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="172" y="520" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">评论 8</text>
+  
+  <rect x="225" y="500" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="267" y="520" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">收藏</text>
+  
+  <rect x="320" y="500" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="362" y="520" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">分享</text>
+  
+  <!-- 社区卡片2 -->
+  <rect x="30" y="560" width="1140" height="390" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="580" width="40" height="40" rx="20" fill="#FFB951" />
+  <text x="70" y="610" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <text x="100" y="595" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">文轩</text>
+  <text x="100" y="615" font-family="Inter, sans-serif" font-size="14" fill="#999999">5小时前</text>
+  
+  <rect x="1090" y="580" width="60" height="32" rx="16" fill="rgba(143, 124, 255, 0.15)" />
+  <text x="1120" y="602" font-family="Inter, sans-serif" font-size="14" fill="#8F7CFF" text-anchor="middle">读书</text>
+  
+  <text x="50" y="660" font-family="Inter, sans-serif" font-size="16" line-height="1.5" fill="#222222">推荐一本最近看的书《深度工作》，讲述如何在信息爆炸的时代保持专注。下周读书会我们可以一起讨论。这是一本关于如何在充满干扰的世界中培养专注力的指南，作者提出了"深度工作"的理念。</text>
+  
+  <rect x="50" y="730" width="1100" height="150" rx="8" fill="#F3F3F7" />
+  <rect x="70" y="750" width="200" height="110" rx="8" fill="#E0E0E6" />
+  <text x="170" y="815" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">📚</text>
+  
+  <text x="290" y="780" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">下周日下午2点，城市图书馆三楼</text>
+  <text x="290" y="810" font-family="Inter, sans-serif" font-size="14" fill="#666666">我已经预约了讨论室，感兴趣的朋友可以报名参加~</text>
+  <text x="290" y="840" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF">点击报名参加读书会 →</text>
+  
+  <rect x="50" y="900" width="70" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="85" y="920" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">赞 23</text>
+  
+  <rect x="130" y="900" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="172" y="920" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">评论 12</text>
+  
+  <rect x="225" y="900" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="267" y="920" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">收藏</text>
+  
+  <rect x="320" y="900" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="362" y="920" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">分享</text>
+  
+  <!-- 社区卡片3 -->
+  <rect x="30" y="970" width="1140" height="260" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="990" width="40" height="40" rx="20" fill="#65D1AA" />
+  <text x="70" y="1020" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">QT</text>
+  <text x="100" y="1005" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">青藤</text>
+  <text x="100" y="1025" font-family="Inter, sans-serif" font-size="14" fill="#999999">昨天</text>
+  
+  <rect x="1090" y="990" width="60" height="32" rx="16" fill="rgba(101, 209, 170, 0.15)" />
+  <text x="1120" y="1012" font-family="Inter, sans-serif" font-size="14" fill="#65D1AA" text-anchor="middle">美食</text>
+  
+  <text x="50" y="1070" font-family="Inter, sans-serif" font-size="16" line-height="1.5" fill="#222222">分享一个自制面包的小技巧：在面团中加入少量的蜂蜜，可以让面包更加松软香甜。大家有没有其他烘焙小妙招可以分享的？</text>
+  
+  <rect x="50" y="1140" width="70" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="85" y="1160" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">赞 45</text>
+  
+  <rect x="130" y="1140" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="172" y="1160" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">评论 26</text>
+  
+  <rect x="225" y="1140" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="267" y="1160" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">收藏</text>
+  
+  <rect x="320" y="1140" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="362" y="1160" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">分享</text>
+  
+  <!-- 社区卡片4 -->
+  <rect x="30" y="1250" width="1140" height="400" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="1270" width="40" height="40" rx="20" fill="#8F7CFF" />
+  <text x="70" y="1300" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  <text x="100" y="1285" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">子龙</text>
+  <text x="100" y="1305" font-family="Inter, sans-serif" font-size="14" fill="#999999">3天前</text>
+  
+  <rect x="1090" y="1270" width="60" height="32" rx="16" fill="rgba(255, 107, 139, 0.15)" />
+  <text x="1120" y="1292" font-family="Inter, sans-serif" font-size="14" fill="#FF6B8B" text-anchor="middle">音乐</text>
+  
+  <text x="50" y="1350" font-family="Inter, sans-serif" font-size="16" line-height="1.5" fill="#222222">上周末去看了一场爵士音乐会，太震撼了！分享几张照片，希望下次可以组织大家一起去听。现场的互动环节特别棒，乐手们的即兴发挥让人惊叹。</text>
+  
+  <rect x="50" y="1400" width="1100" height="180" rx="8" fill="#F3F3F7" />
+  
+  <rect x="70" y="1420" width="340" height="140" rx="8" fill="#E0E0E6" />
+  <text x="240" y="1495" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">🎷</text>
+  
+  <rect x="430" y="1420" width="340" height="140" rx="8" fill="#E0E0E6" />
+  <text x="600" y="1495" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">🎺</text>
+  
+  <rect x="790" y="1420" width="340" height="140" rx="8" fill="#E0E0E6" />
+  <text x="960" y="1495" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">🎹</text>
+  
+  <rect x="50" y="1600" width="70" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="85" y="1620" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">赞 67</text>
+  
+  <rect x="130" y="1600" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="172" y="1620" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">评论 18</text>
+  
+  <rect x="225" y="1600" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="267" y="1620" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">收藏</text>
+  
+  <rect x="320" y="1600" width="85" height="30" rx="15" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="362" y="1620" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">分享</text>
+  
+  <!-- 底部导航栏 -->
+  <rect x="0" y="1750" width="1200" height="80" fill="white" filter="drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.05))" />
+  
+  <text x="90" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">首页</text>
+  
+  <text x="340" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">活动</text>
+  
+  <text x="600" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#4E6FFF" text-anchor="middle">社区</text>
+  <rect x="570" y="1770" width="60" height="4" rx="2" fill="#4E6FFF" />
+  
+  <text x="850" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">二手</text>
+  
+  <text x="1100" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">我的</text>
+  </svg>

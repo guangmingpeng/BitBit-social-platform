@@ -4,37 +4,106 @@ import {
   Routes,
   Route,
   NavLink,
+  useLocation,
 } from "react-router-dom";
-import { routes } from "./config/routes";
+import { routes } from "@/shared/config/routes";
+import Header from "@/components/layout/Header";
+import SearchBar from "@/components/ui/SearchBar";
+import ComponentShowcase from "@/components/ComponentShowcase";
 import "./App.css";
+
+const AppContent = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
+  return (
+    <div className="app-container bg-gray-50 min-h-screen">
+      <Header />
+      {isHomePage && <SearchBar />}
+      <main className="main-content flex-1">
+        <Suspense
+          fallback={
+            <div className="container-main py-8 text-center text-body text-text-secondary">
+              Loading...
+            </div>
+          }
+        >
+          <Routes>
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<route.element />}
+              />
+            ))}
+            <Route path="/components" element={<ComponentShowcase />} />
+          </Routes>
+        </Suspense>
+      </main>
+      <nav className="bg-white shadow-light px-4 py-6 relative">
+        <div className="container-main">
+          <div className="flex justify-center space-x-8">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
+              }
+            >
+              首页
+            </NavLink>
+            <NavLink
+              to="/activities"
+              className={({ isActive }) =>
+                `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
+              }
+            >
+              活动
+            </NavLink>
+            <NavLink
+              to="/community"
+              className={({ isActive }) =>
+                `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
+              }
+            >
+              社区
+            </NavLink>
+            <NavLink
+              to="/exchange"
+              className={({ isActive }) =>
+                `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
+              }
+            >
+              二手
+            </NavLink>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
+              }
+            >
+              我的
+            </NavLink>
+          </div>
+        </div>
+        {/* 用于开发调试的组件页面链接 */}
+        <div className="fixed bottom-20 right-4 z-50">
+          <NavLink
+            to="/components"
+            className="bg-gray-800 text-white px-3 py-1 rounded text-xs hover:bg-gray-700 transition-colors"
+          >
+            组件
+          </NavLink>
+        </div>
+      </nav>
+    </div>
+  );
+};
 
 function App() {
   return (
     <Router>
-      <div className="app-container">
-        <main className="main-content">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              {routes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={<route.element />}
-                />
-              ))}
-            </Routes>
-          </Suspense>
-        </main>
-
-        <nav className="bottom-nav">
-          <NavLink to="/" end>
-            首页
-          </NavLink>
-          <NavLink to="/activities">活动</NavLink>
-          <NavLink to="/community">社区</NavLink>
-          <NavLink to="/profile">我的</NavLink>
-        </nav>
-      </div>
+      <AppContent />
     </Router>
   );
 }

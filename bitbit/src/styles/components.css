@@ -1,0 +1,273 @@
+/* BitBit 设计系统 - 组件样式 */
+
+@layer components {
+  /* ============ 按钮组件 ============ */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white text-body-lg font-medium px-6 py-3 rounded-full shadow-card transition-colors duration-250 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-50 hover:bg-gray-100 text-text-primary text-body-lg font-medium px-6 py-3 rounded-full border border-gray-200 transition-colors duration-250 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline {
+    @apply bg-transparent hover:bg-primary-50 text-primary-500 text-body-lg font-medium px-6 py-3 rounded-full border-2 border-primary-500 transition-colors duration-250 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-gray-100 text-text-primary text-body-lg font-medium px-4 py-2 rounded transition-colors duration-250 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* ============ 表单组件 ============ */
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-xs text-body-lg text-text-primary placeholder:text-text-tertiary focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-colors duration-250;
+  }
+
+  .input-error {
+    @apply border-error focus:border-error focus:ring-red-100;
+  }
+
+  /* ============ 卡片组件 ============ */
+  .card {
+    @apply bg-white rounded-lg shadow-card p-6;
+  }
+
+  .card-hover {
+    @apply bg-white rounded-lg shadow-card p-6 hover:shadow-modal transition-shadow duration-250 cursor-pointer;
+  }
+
+  /* ============ 活动标签组件 ============ */
+  .tag {
+    @apply inline-block text-caption px-3 py-1 rounded-full font-medium;
+  }
+
+  .tag-music {
+    @apply inline-block text-caption px-3 py-1 rounded-full font-medium bg-coral-100 text-coral-500;
+  }
+
+  .tag-food {
+    @apply inline-block text-caption px-3 py-1 rounded-full font-medium bg-mint-100 text-mint-500;
+  }
+
+  .tag-learning {
+    @apply inline-block text-caption px-3 py-1 rounded-full font-medium bg-sunflower-100 text-sunflower-500;
+  }
+
+  .tag-reading {
+    @apply inline-block text-caption px-3 py-1 rounded-full font-medium bg-lavender-100 text-lavender-500;
+  }
+
+  /* ============ 状态提示组件 ============ */
+  .status-success {
+    @apply bg-green-50 text-success border border-green-200 rounded px-3 py-2 text-body;
+  }
+
+  .status-error {
+    @apply bg-red-50 text-error border border-red-200 rounded px-3 py-2 text-body;
+  }
+
+  .status-warning {
+    @apply bg-yellow-50 text-warning border border-yellow-200 rounded px-3 py-2 text-body;
+  }
+
+  .status-info {
+    @apply bg-blue-50 text-info border border-blue-200 rounded px-3 py-2 text-body;
+  }
+
+  /* ============ 导航组件 ============ */
+  .nav-item {
+    @apply text-body-lg text-text-secondary hover:text-text-primary px-4 py-2 rounded transition-colors duration-250;
+  }
+
+  .nav-item-active {
+    @apply text-body-lg text-primary-500 bg-primary-50 px-4 py-2 rounded transition-colors duration-250;
+  }
+
+  /* 底部Tab导航 */
+  .nav-tab-item {
+    @apply relative flex flex-col items-center justify-center px-3 py-2 text-sm font-medium text-text-tertiary transition-all duration-250;
+    min-width: 60px;
+    position: relative;
+  }
+
+  .nav-tab-active {
+    @apply text-primary-500 font-semibold;
+    position: relative;
+  }
+
+  /* 激活状态的圆形背景 */
+  .nav-tab-active::before {
+    content: "";
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(78, 111, 255, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  /* 底部指示条 */
+  .nav-tab-active::after {
+    content: "";
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: #4e6fff;
+    border-radius: 2px;
+  }
+
+  /* ============ 布局组件 ============ */
+  .container-main {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ============ 网格布局 ============ */
+  .grid-cards {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .grid-activities {
+    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6;
+  }
+
+  /* ============ 分隔线 ============ */
+  .divider {
+    @apply border-0 border-t border-gray-200 my-6;
+  }
+
+  /* ============ 加载状态 ============ */
+  .loading {
+    @apply animate-pulse;
+  }
+
+  .loading-skeleton {
+    @apply loading bg-gray-200 rounded;
+  }
+
+  /* ============ 文本处理 ============ */
+  .text-truncate {
+    @apply truncate;
+  }
+
+  .text-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .text-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ============ 滚动条样式 ============ */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #e0e0e6 transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #e0e0e6;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: #ccccdd;
+  }
+
+  /* ============ 焦点可见性 ============ */
+  .focus-visible {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
+  }
+}
+
+/* ============ 自定义动画 ============ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  /* ============ 辅助功能 ============ */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}

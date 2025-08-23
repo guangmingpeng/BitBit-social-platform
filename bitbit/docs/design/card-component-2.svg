@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <!-- 背景 -->
+  <rect width="1200" height="800" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit 内容区块组件</text>
+  <text x="50" y="110" font-family="Inter, sans-serif" font-size="18" fill="#666666">社交活动平台内容区块补充组件</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 内容区块 -->
+  <text x="50" y="190" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 内容区块</text>
+  
+  <!-- 1.1 信息区块 -->
+  <text x="50" y="240" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.1 信息区块</text>
+  
+  <!-- 活动信息区块 -->
+  <rect x="50" y="270" width="500" height="170" rx="16" fill="#F9F9FB" stroke="#E0E0E6" stroke-width="1.5" />
+  
+  <text x="90" y="305" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666">📅 时间</text>
+  <text x="90" y="335" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">6月18日 09:00-15:00</text>
+  
+  <text x="90" y="375" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666">📍 地点</text>
+  <text x="90" y="405" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">莫干山 (北门入口)</text>
+  
+  <line x1="300" y1="290" x2="300" y2="420" stroke="#E0E0E6" stroke-width="1" />
+  
+  <text x="340" y="305" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666">👥 人数</text>
+  <text x="340" y="335" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">30人 (已报24人)</text>
+  
+  <text x="340" y="375" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666">💰 费用</text>
+  <text x="340" y="405" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">¥50/人 (含门票)</text>
+  
+  <!-- 1.2 组织者信息 -->
+  <text x="600" y="240" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.2 组织者信息</text>
+  
+  <!-- 组织者卡片 -->
+  <rect x="600" y="270" width="550" height="100" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <circle cx="650" cy="320" r="30" fill="#4E6FFF" />
+  <text x="650" y="328" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">TY</text>
+  
+  <text x="700" y="310" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#222222">天宇户外俱乐部</text>
+  <text x="700" y="340" font-family="Inter, sans-serif" font-size="14" fill="#666666">已组织32次活动 | 4.9★</text>
+  
+  <rect x="1000" y="300" width="100" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="1050" y="325" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">关注</text>
+  
+  <!-- 1.3 页面分隔区块 -->
+  <text x="50" y="490" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.3 页面分隔区块</text>
+  
+  <!-- 分隔线 -->
+  <line x1="50" y1="520" x2="1150" y2="520" stroke="#E0E0E6" stroke-width="1" />
+  
+  <!-- 带标题分隔 -->
+  <text x="50" y="570" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#222222">活动详情</text>
+  <line x1="50" y1="590" x2="1150" y2="590" stroke="#E0E0E6" stroke-width="1" />
+  
+  <!-- 分割卡片 -->
+  <rect x="50" y="620" width="1100" height="60" rx="8" fill="#F9F9FB" />
+  <text x="600" y="655" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">查看更多活动</text>
+  
+  <!-- 组件设计规范 -->
+  <rect x="50" y="700" width="1100" height="80" rx="8" fill="#F3F3F7" />
+  <text x="70" y="725" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 信息区块：使用图标增强可读性，文本应简洁不溢出容器，使用分隔线区分不同信息组</text>
+  <text x="70" y="750" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 组织者信息：展示头像、名称和简要信息，文字大小应适应内容，避免溢出或显示不完整</text>
+  <text x="70" y="775" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 分隔元素：使用分隔线或卡片分隔内容区域，可带标题或操作按钮，提升页面层次感</text>
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#8F7CFF;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+</svg>

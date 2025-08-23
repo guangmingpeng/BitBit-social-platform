@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1100">
+  <!-- 背景 -->
+  <rect width="1200" height="1100" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit 功能性内容组件</text>
+  <text x="50" y="110" font-family="Inter, sans-serif" font-size="18" fill="#666666">社交活动平台功能性内容组件补充</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 消息通知组件 -->
+  <text x="50" y="190" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 消息通知组件</text>
+  
+  <!-- 1.1 通知卡片 -->
+  <text x="50" y="240" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">1.1 通知卡片</text>
+  
+  <!-- 系统通知 -->
+  <rect x="50" y="270" width="500" height="80" rx="8" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <rect x="50" y="270" width="8" height="80" rx="0" fill="#4E6FFF" />
+  <text x="80" y="305" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">活动提醒</text>
+  <text x="80" y="330" font-family="Inter, sans-serif" font-size="14" fill="#666666">您报名的"周末爬山活动"将于明天开始</text>
+  <text x="490" y="330" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="end">5分钟前</text>
+  
+  <!-- 互动通知 -->
+  <rect x="600" y="270" width="500" height="80" rx="8" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <rect x="600" y="270" width="8" height="80" rx="0" fill="#FF6B8B" />
+  <circle cx="630" cy="305" r="20" fill="#FFB951" />
+  <text x="630" y="310" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <text x="660" y="305" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">文轩评论了你的帖子</text>
+  <text x="660" y="330" font-family="Inter, sans-serif" font-size="14" fill="#666666">我很感兴趣，已加群，期待活动！</text>
+  <text x="1040" y="330" font-family="Inter, sans-serif" font-size="12" fill="#999999" text-anchor="end">1小时前</text>
+  
+  <!-- 2. 进度与状态组件 -->
+  <text x="50" y="390" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">2. 进度与状态组件</text>
+  
+  <!-- 2.1 步骤指示器 -->
+  <text x="50" y="440" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.1 步骤指示器</text>
+  
+  <!-- 横向步骤条 -->
+  <rect x="50" y="470" width="1100" height="100" rx="0" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  
+  <circle cx="150" cy="510" r="20" fill="#4E6FFF" />
+  <text x="150" y="515" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="white" text-anchor="middle">1</text>
+  <text x="150" y="550" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">填写信息</text>
+  
+  <line x1="170" y1="510" x2="320" y2="510" stroke="#4E6FFF" stroke-width="2" />
+  
+  <circle cx="340" cy="510" r="20" fill="#4E6FFF" />
+  <text x="340" y="515" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="white" text-anchor="middle">2</text>
+  <text x="340" y="550" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">缴费确认</text>
+  
+  <line x1="360" y1="510" x2="510" y2="510" stroke="#E0E0E6" stroke-width="2" />
+  
+  <circle cx="530" cy="510" r="20" fill="#F3F3F7" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="530" y="515" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#999999" text-anchor="middle">3</text>
+  <text x="530" y="550" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#999999" text-anchor="middle">确认报名</text>
+  
+  <line x1="550" y1="510" x2="700" y2="510" stroke="#E0E0E6" stroke-width="2" />
+  
+  <circle cx="720" cy="510" r="20" fill="#F3F3F7" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="720" y="515" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#999999" text-anchor="middle">4</text>
+  <text x="720" y="550" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#999999" text-anchor="middle">报名成功</text>
+  
+  <!-- 2.2 进度指示器 -->
+  <text x="50" y="610" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">2.2 进度指示器</text>
+  
+  <!-- 进度条 -->
+  <rect x="50" y="640" width="500" height="80" rx="8" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <text x="70" y="670" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">活动报名进度</text>
+  <text x="70" y="695" font-family="Inter, sans-serif" font-size="14" fill="#666666">已报名24人，限额30人</text>
+  <rect x="250" y="680" width="220" height="8" rx="4" fill="#F3F3F7" />
+  <rect x="250" y="680" width="176" height="8" rx="4" fill="#4E6FFF" />
+  <text x="500" y="670" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="end">80%</text>
+  
+  <!-- 徽章等级 -->
+  <rect x="600" y="640" width="500" height="80" rx="8" fill="white" filter="drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.05))" />
+  <text x="620" y="670" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">参与度等级</text>
+  <text x="620" y="695" font-family="Inter, sans-serif" font-size="14" fill="#666666">再参与2次活动升级到Lv.4</text>
+  <rect x="830" y="680" width="190" height="8" rx="4" fill="#F3F3F7" />
+  <rect x="830" y="680" width="133" height="8" rx="4" fill="#8F7CFF" />
+  <text x="1050" y="670" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#8F7CFF" text-anchor="end">Lv.3 (70%)</text>
+  
+  <!-- 3. 数据展示组件 -->
+  <text x="50" y="760" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#222222">3. 数据展示组件</text>
+  
+  <!-- 3.1 数据卡片 -->
+  <text x="50" y="810" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">3.1 数据卡片</text>
+  
+  <!-- 数据统计卡片 -->
+  <rect x="50" y="840" width="340" height="140" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <text x="70" y="870" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666">本月参与活动次数</text>
+  <text x="70" y="920" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#4E6FFF">12</text>
+  <text x="130" y="920" font-family="Inter, sans-serif" font-size="16" fill="#666666">次</text>
+  <text x="70" y="950" font-family="Inter, sans-serif" font-size="14" fill="#999999">较上月增长 40%</text>
+  
+  <!-- 积分卡片 -->
+  <rect x="430" y="840" width="340" height="140" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <text x="450" y="870" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666">当前积分</text>
+  <text x="450" y="920" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#FFB951">2,580</text>
+  <text x="560" y="920" font-family="Inter, sans-serif" font-size="16" fill="#666666">积分</text>
+  <text x="450" y="950" font-family="Inter, sans-serif" font-size="14" fill="#999999">排名前 10%</text>
+  
+  <!-- 活动评分卡片 -->
+  <rect x="810" y="840" width="340" height="140" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <text x="830" y="870" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#666666">活动平均评分</text>
+  <text x="830" y="920" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#65D1AA">4.8</text>
+  <text x="900" y="920" font-family="Inter, sans-serif" font-size="20" fill="#65D1AA">★</text>
+  <text x="830" y="950" font-family="Inter, sans-serif" font-size="14" fill="#999999">基于32次活动</text>
+  
+  <!-- 组件设计规范 -->
+  <rect x="50" y="1000" width="1100" height="80" rx="8" fill="#F3F3F7" />
+  <text x="70" y="1025" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 通知组件：左侧彩色条区分类型，内容简洁易读，右侧显示时间，适当阴影突出层次</text>
+  <text x="70" y="1050" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 进度组件：百分比和状态文本与进度条分开显示，避免重叠，使用明显的色彩区分完成与未完成</text>
+  <text x="70" y="1075" font-family="Inter, sans-serif" font-size="14" fill="#666666">• 数据展示：突出核心数字，使用不同颜色区分数据类别，文字简洁，确保内容不溢出容器</text>
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#8F7CFF;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,6 +1,7 @@
 import React from "react";
 import Card, { CardContent } from "../Card";
 import Avatar from "../Avatar";
+import Icon from "../Icon";
 import { cn } from "@/shared/utils/cn";
 
 export interface CommunityPostProps {
@@ -63,14 +64,14 @@ const CommunityPost: React.FC<CommunityPostProps> = ({
               onLike?.();
             }}
             className={cn(
-              "flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-colors",
+              "flex items-center space-x-2 px-3 py-1 rounded-full text-sm transition-colors",
               "border border-gray-200 hover:bg-gray-50",
               isLiked
                 ? "text-coral-500 border-coral-200 bg-coral-50"
                 : "text-text-tertiary"
             )}
           >
-            <span>{isLiked ? "❤️" : "🤍"}</span>
+            <Icon name={isLiked ? "heart-filled" : "heart-outline"} size="sm" />
             <span>赞 {likes}</span>
           </button>
 
@@ -79,9 +80,9 @@ const CommunityPost: React.FC<CommunityPostProps> = ({
               e.stopPropagation();
               onComment?.();
             }}
-            className="flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-colors border border-gray-200 hover:bg-gray-50 text-text-tertiary"
+            className="flex items-center space-x-2 px-3 py-1 rounded-full text-sm transition-colors border border-gray-200 hover:bg-gray-50 text-text-tertiary"
           >
-            <span>💬</span>
+            <Icon name="comment" size="sm" />
             <span>评论 {comments}</span>
           </button>
         </div>

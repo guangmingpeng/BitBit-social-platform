@@ -22,3 +22,37 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Development documentation
+docs/development/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Test coverage
+coverage/
+*.lcov
+
+# Temporary files
+*.tmp
+*.temp
+*_temp.*
+*_backup.*
+*_old.*
+
+# Build artifacts
+build/
+out/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+
+# OS generated files
+Thumbs.db
+*.DS_Store

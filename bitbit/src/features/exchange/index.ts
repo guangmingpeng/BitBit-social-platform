@@ -1,5 +1,19 @@
 // exchange 功能模块导出
-export * from './components'
-export * from './hooks'
-export * from './types'
-export * from './services'
+
+// 组件导出
+export { default as PublishWizard } from "./components/PublishWizard";
+export { default as ExchangeList } from "./components/ExchangeList";
+export { default as ExchangeFiltersComponent } from "./components/ExchangeFilters";
+export { ExchangeCard } from "./components/ExchangeCard";
+
+// 步骤组件
+export * from "./components/PublishSteps";
+
+// hooks导出
+export * from "./hooks/index";
+
+// 类型导出
+export * from "./types/index";
+
+// 常量导出
+export * from "./constants";

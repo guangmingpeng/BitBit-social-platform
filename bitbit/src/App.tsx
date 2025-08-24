@@ -87,12 +87,18 @@ const AppContent = () => {
           </div>
         </div>
         {/* 用于开发调试的组件页面链接 */}
-        <div className="fixed bottom-20 right-4 z-50">
+        <div className="fixed bottom-20 right-4 z-50 flex gap-2">
           <NavLink
             to="/components"
             className="bg-gray-800 text-white px-3 py-1 rounded text-xs hover:bg-gray-700 transition-colors"
           >
             组件
+          </NavLink>
+          <NavLink
+            to="/exchange-showcase"
+            className="bg-primary-500 text-white px-3 py-1 rounded text-xs hover:bg-primary-600 transition-colors"
+          >
+            交换卡片
           </NavLink>
         </div>
       </nav>

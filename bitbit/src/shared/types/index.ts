@@ -33,15 +33,23 @@ export interface Activity {
   id: string;
   title: string;
   description: string;
+  category: "music" | "food" | "learning" | "reading";
+  date: string;
+  time: string;
   location: string;
   startTime: string;
   endTime: string;
   capacity: number;
   currentParticipants: number;
+  maxParticipants: number;
   organizer: User;
   status: "draft" | "published" | "cancelled" | "completed";
   tags: string[];
+  images?: string[];
   coverImage?: string;
+  price?: number;
+  isFree?: boolean;
+  detailContent?: string;
   createdAt: string;
   updatedAt: string;
 }

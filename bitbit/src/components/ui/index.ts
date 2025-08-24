@@ -15,7 +15,8 @@ export type { CardProps } from "./Card/index";
 export { default as Tag } from "./Tag/index";
 export type { TagProps } from "./Tag/index";
 
-export { default as Input } from "./Input/index";
+export { default as Icon } from "./Icon";
+export { default as Input } from "./Input";
 export type { InputProps } from "./Input/index";
 
 export { default as Avatar } from "./Avatar/index";
@@ -66,8 +67,17 @@ export type { ActivityCardProps } from "../../features/activities/components/Act
 export { default as CommunityPost } from "./CommunityPost/index";
 export type { CommunityPostProps } from "./CommunityPost/index";
 
-export { default as ExchangeItem } from "./ExchangeItem/index";
-export type { ExchangeItemProps } from "./ExchangeItem/index";
+export { default as ExchangeModal } from "./ExchangeModal/index";
+export type {
+  ExchangeModalProps,
+  ExchangeFormData,
+} from "./ExchangeModal/index";
+
+export { default as PurchaseModal } from "./PurchaseModal/index";
+export type {
+  PurchaseModalProps,
+  PurchaseFormData,
+} from "./PurchaseModal/index";
 
 export { default as CategoryItem } from "./CategoryItem/index";
 export type { CategoryItemProps } from "./CategoryItem/index";

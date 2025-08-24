@@ -6,7 +6,11 @@ const Login = lazy(() => import("@/pages/Login"));
 const Register = lazy(() => import("@/pages/Register"));
 const ActivityList = lazy(() => import("@/pages/ActivityList"));
 const ActivityDetail = lazy(() => import("@/pages/ActivityDetail"));
+const ActivityRegistration = lazy(() => import("@/pages/ActivityRegistration"));
+const PublishActivity = lazy(() => import("@/pages/PublishActivity"));
 const Exchange = lazy(() => import("@/pages/Exchange"));
+const ExchangeDetail = lazy(() => import("@/pages/ExchangeDetail"));
+const PublishItem = lazy(() => import("@/pages/PublishItem"));
 const Community = lazy(() => import("@/pages/Community"));
 const Profile = lazy(() => import("@/pages/Profile"));
 
@@ -33,8 +37,24 @@ export const routes = [
     element: ActivityDetail,
   },
   {
+    path: "/activities/:id/register",
+    element: ActivityRegistration,
+  },
+  {
+    path: "/publish-activity",
+    element: PublishActivity,
+  },
+  {
     path: "/exchange",
     element: Exchange,
+  },
+  {
+    path: "/exchange/:id",
+    element: ExchangeDetail,
+  },
+  {
+    path: "/exchange/publish",
+    element: PublishItem,
   },
   {
     path: "/community",

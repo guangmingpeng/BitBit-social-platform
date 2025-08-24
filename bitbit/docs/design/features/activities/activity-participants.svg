@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1400">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="gradientPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7D95FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientMint" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#65D1AA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A8E6CF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="1400" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit 活动参与者组件</text>
+  <text x="50" y="110" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#666666">活动参与者列表和用户信息展示组件设计</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 参与者统计概览 -->
+  <text x="50" y="190" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 参与者统计概览</text>
+  
+  <rect x="50" y="220" width="1100" height="120" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 统计数据 -->
+  <text x="80" y="255" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">参与情况</text>
+  
+  <text x="80" y="285" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#65D1AA">24</text>
+  <text x="140" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">/ 30人</text>
+  <text x="80" y="315" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">已报名参与</text>
+  
+  <!-- 进度条 -->
+  <rect x="250" y="270" width="300" height="8" rx="4" fill="#F3F3F7" />
+  <rect x="250" y="270" width="240" height="8" rx="4" fill="#65D1AA" />
+  <text x="250" y="300" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">80% 完成</text>
+  
+  <!-- 性别分布 -->
+  <text x="600" y="255" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">性别分布</text>
+  <circle cx="630" cy="290" r="16" fill="#4E6FFF" />
+  <text x="660" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">男 14人</text>
+  <circle cx="750" cy="290" r="16" fill="#FF6B8B" />
+  <text x="780" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">女 10人</text>
+  
+  <!-- 年龄分布 -->
+  <text x="900" y="255" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">年龄分布</text>
+  <text x="900" y="285" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">18-25岁: 8人</text>
+  <text x="900" y="305" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">26-35岁: 16人</text>
+  
+  <!-- 2. 参与者头像列表 -->
+  <text x="50" y="390" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">2. 参与者头像列表</text>
+  
+  <rect x="50" y="420" width="1100" height="200" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <text x="80" y="455" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">已报名参与者 (24人)</text>
+  
+  <!-- 组织者 -->
+  <circle cx="110" cy="500" r="32" fill="#4E6FFF" />
+  <text x="110" y="510" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">TY</text>
+  <rect x="85" y="470" width="50" height="20" rx="10" fill="#FFB951" />
+  <text x="110" y="485" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" font-weight="500" fill="white" text-anchor="middle">组织者</text>
+  <text x="110" y="550" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">天宇</text>
+  
+  <!-- 参与者头像 -->
+  <circle cx="190" cy="500" r="28" fill="#65D1AA" />
+  <text x="190" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  <text x="190" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">张亮</text>
+  
+  <circle cx="260" cy="500" r="28" fill="#FF6B8B" />
+  <text x="260" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">XM</text>
+  <text x="260" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">小美</text>
+  
+  <circle cx="330" cy="500" r="28" fill="#8F7CFF" />
+  <text x="330" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">LS</text>
+  <text x="330" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">李摄</text>
+  
+  <circle cx="400" cy="500" r="28" fill="#FFB951" />
+  <text x="400" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <text x="400" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">文轩</text>
+  
+  <circle cx="470" cy="500" r="28" fill="#4E6FFF" />
+  <text x="470" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">JL</text>
+  <text x="470" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">嘉丽</text>
+  
+  <circle cx="540" cy="500" r="28" fill="#65D1AA" />
+  <text x="540" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">CY</text>
+  <text x="540" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">晨阳</text>
+  
+  <circle cx="610" cy="500" r="28" fill="#FF6B8B" />
+  <text x="610" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">YN</text>
+  <text x="610" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">雨诺</text>
+  
+  <circle cx="680" cy="500" r="28" fill="#8F7CFF" />
+  <text x="680" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">MH</text>
+  <text x="680" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">明辉</text>
+  
+  <!-- 更多参与者指示器 -->
+  <circle cx="750" cy="500" r="28" fill="#F3F3F7" stroke="#E0E0E6" stroke-width="2" />
+  <text x="750" y="508" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">+15</text>
+  <text x="750" y="545" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">更多</text>
+  
+  <!-- 查看全部按钮 -->
+  <rect x="950" y="480" width="120" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="1010" y="505" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">查看全部</text>
+  
+  <!-- 3. 详细参与者卡片 -->
+  <text x="50" y="670" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">3. 详细参与者卡片</text>
+  
+  <!-- 参与者卡片1 -->
+  <rect x="50" y="700" width="540" height="140" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <circle cx="110" cy="750" r="32" fill="#4E6FFF" />
+  <text x="110" y="760" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  
+  <text x="160" y="735" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">张亮</text>
+  <text x="160" y="758" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">软件工程师 · 28岁 · 杭州</text>
+  <text x="160" y="780" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">参与过5次活动 · 组织过2次活动</text>
+  
+  <!-- 兴趣标签 -->
+  <rect x="160" y="790" width="60" height="24" rx="12" fill="rgba(78, 111, 255, 0.15)" />
+  <text x="190" y="807" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#4E6FFF" text-anchor="middle">摄影</text>
+  
+  <rect x="230" y="790" width="60" height="24" rx="12" fill="rgba(101, 209, 170, 0.15)" />
+  <text x="260" y="807" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#65D1AA" text-anchor="middle">户外</text>
+  
+  <!-- 操作按钮 -->
+  <rect x="420" y="730" width="80" height="36" rx="18" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="460" y="752" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">关注</text>
+  
+  <rect x="420" y="775" width="80" height="36" rx="18" fill="#4E6FFF" />
+  <text x="460" y="797" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">私信</text>
+  
+  <!-- 参与者卡片2 -->
+  <rect x="610" y="700" width="540" height="140" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <circle cx="670" cy="750" r="32" fill="#FF6B8B" />
+  <text x="670" y="760" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">XM</text>
+  
+  <text x="720" y="735" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">小美</text>
+  <text x="720" y="758" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">UI设计师 · 25岁 · 上海</text>
+  <text x="720" y="780" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">参与过8次活动 · 新人</text>
+  
+  <!-- 兴趣标签 -->
+  <rect x="720" y="790" width="60" height="24" rx="12" fill="rgba(255, 107, 139, 0.15)" />
+  <text x="750" y="807" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#FF6B8B" text-anchor="middle">设计</text>
+  
+  <rect x="790" y="790" width="60" height="24" rx="12" fill="rgba(143, 124, 255, 0.15)" />
+  <text x="820" y="807" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#8F7CFF" text-anchor="middle">读书</text>
+  
+  <!-- 操作按钮 -->
+  <rect x="980" y="730" width="80" height="36" rx="18" fill="rgba(78, 111, 255, 0.15)" />
+  <text x="1020" y="752" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">已关注</text>
+  
+  <rect x="980" y="775" width="80" height="36" rx="18" fill="#4E6FFF" />
+  <text x="1020" y="797" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">私信</text>
+  
+  <!-- 4. 在线状态指示器 -->
+  <text x="50" y="890" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">4. 在线状态指示器</text>
+  
+  <!-- 在线状态示例 -->
+  <circle cx="100" cy="940" r="28" fill="#65D1AA" />
+  <text x="100" y="948" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  <circle cx="120" cy="920" r="6" fill="#12B76A" stroke="white" stroke-width="2" />
+  <text x="100" y="975" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">在线</text>
+  
+  <circle cx="200" cy="940" r="28" fill="#FFB951" />
+  <text x="200" y="948" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">WX</text>
+  <circle cx="220" cy="920" r="6" fill="#FFC107" stroke="white" stroke-width="2" />
+  <text x="200" y="975" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">忙碌</text>
+  
+  <circle cx="300" cy="940" r="28" fill="#8F7CFF" />
+  <text x="300" y="948" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">LS</text>
+  <circle cx="320" cy="920" r="6" fill="#999999" stroke="white" stroke-width="2" />
+  <text x="300" y="975" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">离线</text>
+  
+  <!-- 5. 筛选和排序 -->
+  <text x="50" y="1030" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">5. 筛选和排序选项</text>
+  
+  <rect x="50" y="1060" width="1100" height="80" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 筛选选项 -->
+  <text x="80" y="1085" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">筛选:</text>
+  
+  <rect x="140" y="1070" width="80" height="32" rx="16" fill="#4E6FFF" />
+  <text x="180" y="1091" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">全部</text>
+  
+  <rect x="240" y="1070" width="80" height="32" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="280" y="1091" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">在线</text>
+  
+  <rect x="340" y="1070" width="80" height="32" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="380" y="1091" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">新人</text>
+  
+  <!-- 排序选项 -->
+  <text x="500" y="1085" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">排序:</text>
+  
+  <rect x="560" y="1070" width="120" height="32" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="600" y="1091" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">报名时间</text>
+  <text x="660" y="1091" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">▼</text>
+  
+  <!-- 搜索框 -->
+  <rect x="750" y="1070" width="200" height="32" rx="16" fill="#F3F3F7" />
+  <text x="770" y="1091" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">搜索参与者...</text>
+  
+  <!-- 设计说明 -->
+  <rect x="50" y="1180" width="1100" height="80" rx="12" fill="rgba(78, 111, 255, 0.05)" stroke="#4E6FFF" stroke-width="1" stroke-dasharray="5,5" />
+  <text x="80" y="1210" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#4E6FFF">设计规范:</text>
+  <text x="80" y="1235" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">• 头像尺寸: 64px(组织者)/56px(普通)/40px(列表) • 在线状态点: 12px直径 • 卡片间距: 20px</text>
+  <text x="80" y="1255" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">• 统计区高度: 120px • 进度条高度: 8px • 标签高度: 24px • 按钮高度: 36px</text>
+</svg>

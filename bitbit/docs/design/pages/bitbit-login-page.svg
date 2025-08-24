@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2000">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7D95FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientBackground" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0F4FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#CCE1FF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="2000" fill="url(#gradientBackground)" />
+  
+  <!-- 状态栏 -->
+  <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" />
+  <text x="600" y="30" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222" text-anchor="middle">BitBit 登录</text>
+  
+  <!-- Logo区域 -->
+  <circle cx="600" cy="300" r="80" fill="white" filter="drop-shadow(0px 8px 24px rgba(78, 111, 255, 0.15))" />
+  <text x="600" y="320" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="48" font-weight="700" fill="#4E6FFF" text-anchor="middle">BB</text>
+  
+  <text x="600" y="420" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#222222" text-anchor="middle">BitBit</text>
+  <text x="600" y="460" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#666666" text-anchor="middle">连接你我，分享精彩</text>
+  
+  <!-- 登录表单容器 -->
+  <rect x="60" y="530" width="1080" height="620" rx="24" fill="white" filter="drop-shadow(0px 8px 32px rgba(0, 0, 0, 0.08))" />
+  
+  <text x="600" y="590" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="600" fill="#222222" text-anchor="middle">欢迎回来</text>
+  <text x="600" y="620" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">登录您的BitBit账户</text>
+  
+  <!-- 手机号输入 -->
+  <text x="120" y="685" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">手机号</text>
+  <rect x="120" y="700" width="960" height="60" rx="12" fill="#F9F9FB" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="150" y="740" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#222222">138****8888</text>
+  
+  <!-- 验证码输入 -->
+  <text x="120" y="795" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">验证码</text>
+  <rect x="120" y="810" width="640" height="60" rx="12" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="150" y="850" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#999999">请输入验证码</text>
+  
+  <!-- 获取验证码按钮 -->
+  <rect x="780" y="810" width="300" height="60" rx="12" fill="#4E6FFF" />
+  <text x="930" y="850" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">获取验证码</text>
+  
+  <!-- 记住我选项 -->
+  <circle cx="140" cy="905" r="12" fill="white" stroke="#E0E0E6" stroke-width="2" />
+  <circle cx="140" cy="905" r="6" fill="#4E6FFF" />
+  <text x="170" y="912" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">记住我</text>
+  
+  <!-- 忘记密码链接 -->
+  <text x="1080" y="912" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="end">忘记密码？</text>
+  
+  <!-- 登录按钮 -->
+  <rect x="120" y="950" width="960" height="60" rx="30" fill="url(#gradientBlue)" filter="drop-shadow(0px 4px 12px rgba(78, 111, 255, 0.25))" />
+  <text x="600" y="990" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="white" text-anchor="middle">登录</text>
+  
+  <!-- 分割线 -->
+  <line x1="120" y1="1050" x2="480" y2="1050" stroke="#E0E0E6" stroke-width="1" />
+  <text x="600" y="1057" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999" text-anchor="middle">或</text>
+  <line x1="720" y1="1050" x2="1080" y2="1050" stroke="#E0E0E6" stroke-width="1" />
+  
+  <!-- 第三方登录 -->
+  <rect x="120" y="1080" width="960" height="60" rx="30" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="540" y="1115" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#1AAD19" text-anchor="middle">💬</text>
+  <text x="660" y="1120" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">微信登录</text>
+  
+  <!-- 注册提示 -->
+  <text x="450" y="1260" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">还没有账户？</text>
+  <text x="750" y="1260" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">立即注册</text>
+  
+  <!-- 服务条款 -->
+  <text x="600" y="1320" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999" text-anchor="middle">登录即表示您同意我们的</text>
+  <text x="480" y="1350" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">《用户服务协议》</text>
+  <text x="600" y="1350" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999" text-anchor="middle">和</text>
+  <text x="720" y="1350" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">《隐私政策》</text>
+  
+  <!-- 底部装饰 -->
+  <circle cx="150" cy="1600" r="40" fill="rgba(255, 107, 139, 0.1)" />
+  <circle cx="1050" cy="1700" r="60" fill="rgba(101, 209, 170, 0.1)" />
+  <circle cx="300" cy="1800" r="30" fill="rgba(255, 185, 81, 0.1)" />
+  <circle cx="900" cy="1850" r="45" fill="rgba(143, 124, 255, 0.1)" />
+  
+  <!-- 版本信息 -->
+  <text x="600" y="1950" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999" text-anchor="middle">BitBit v1.0.0</text>
+</svg>

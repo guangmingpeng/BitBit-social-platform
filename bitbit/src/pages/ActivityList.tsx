@@ -1,6 +1,12 @@
 import { type FC, useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Container, Breadcrumb, Button, ActivityCard } from "@/components/ui";
+import { Container, Breadcrumb, Button } from "@/components/ui";
+import { ActivityCard } from "@/features/activities";
+import {
+  getAllActivities,
+  searchActivities,
+  getActivitiesByCategory,
+} from "@/shared/data/activities";
 import { useNavigationFilters } from "@/shared/hooks/useNavigationStore";
 
 const ActivityList: FC = () => {
@@ -34,45 +40,24 @@ const ActivityList: FC = () => {
     });
   }, [searchTerm, selectedCategory, sortBy, setActivityFilters]);
 
-  // 模拟活动数据
-  const activities = [
-    {
-      id: "1",
-      title: "周末徒步活动",
-      description: "享受自然风光，结识新朋友",
-      category: "learning" as const,
-      date: "8月25日",
-      time: "09:00-17:00",
-      location: "香山公园",
-      currentParticipants: 12,
-      maxParticipants: 20,
-      organizer: {
-        name: "户外俱乐部",
-        avatar: "https://picsum.photos/40/40?random=5",
-      },
-      images: ["https://picsum.photos/300/200?random=hiking"],
-      price: 0,
-      isFree: true,
-    },
-    {
-      id: "2",
-      title: "音乐分享会",
-      description: "来分享你喜欢的音乐",
-      category: "music" as const,
-      date: "8月26日",
-      time: "19:00-21:00",
-      location: "咖啡厅",
-      currentParticipants: 8,
-      maxParticipants: 15,
-      organizer: {
-        name: "音乐爱好者",
-        avatar: "https://picsum.photos/40/40?random=6",
-      },
-      images: ["https://picsum.photos/300/200?random=music"],
-      price: 25,
-    },
-    // 可以添加更多活动数据
-  ];
+  // 获取活动数据
+  const getFilteredActivities = () => {
+    let activities = getAllActivities();
+
+    // 应用分类筛选
+    if (selectedCategory) {
+      activities = getActivitiesByCategory(selectedCategory);
+    }
+
+    // 应用搜索
+    if (searchTerm) {
+      activities = searchActivities(searchTerm);
+    }
+
+    return activities;
+  };
+
+  const activities = getFilteredActivities();
 
   const breadcrumbItems = [
     { label: "首页", href: "/" },
@@ -174,7 +159,9 @@ const ActivityList: FC = () => {
             <ActivityCard
               key={activity.id}
               {...activity}
+              layout="horizontal"
               onClick={() => navigate(`/activities/${activity.id}`)}
+              onJoin={() => console.log(`参加活动: ${activity.title}`)}
             />
           ))
         ) : (

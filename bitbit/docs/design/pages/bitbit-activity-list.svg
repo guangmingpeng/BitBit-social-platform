@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="430" height="932" viewBox="0 0 430 932" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="430" height="932" fill="#F9F9FB"/>
+  
+  <!-- 顶部导航栏 -->
+  <g id="navbar">
+    <rect width="430" height="92" fill="#FFFFFF"/>
+    <rect x="0" y="91" width="430" height="1" fill="#E0E0E6"/>
+    
+    <!-- 返回按钮 -->
+    <g id="back-button" transform="translate(20, 54)">
+      <circle cx="12" cy="12" r="12" fill="#F3F3F7"/>
+      <path d="M13 8L9 12L13 16" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    
+    <!-- 标题 -->
+    <text x="215" y="70" font-family="system-ui" font-size="20" font-weight="600" fill="#222222" text-anchor="middle">活动</text>
+    
+    <!-- 发布按钮 -->
+    <g transform="translate(370, 54)">
+      <circle cx="12" cy="12" r="12" fill="#4E6FFF"/>
+      <path d="M8 12H16M12 8V16" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- 搜索和筛选栏 -->
+  <g id="search-filter" transform="translate(20, 112)">
+    <!-- 搜索框 -->
+    <rect width="310" height="40" rx="20" fill="#FFFFFF" stroke="#E0E0E6" stroke-width="1"/>
+    <g transform="translate(16, 12)">
+      <circle cx="8" cy="8" r="6" stroke="#999999" stroke-width="1.5" fill="none"/>
+      <path d="M12 12L16 16" stroke="#999999" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <text x="48" y="25" font-family="system-ui" font-size="14" font-weight="400" fill="#999999">搜索活动</text>
+    
+    <!-- 筛选按钮 -->
+    <g transform="translate(330, 8)">
+      <rect width="60" height="24" rx="12" fill="#F0F4FF"/>
+      <text x="30" y="16" font-family="system-ui" font-size="12" font-weight="500" fill="#4E6FFF" text-anchor="middle">筛选</text>
+    </g>
+  </g>
+
+  <!-- 分类标签栏 -->
+  <g id="category-tabs" transform="translate(20, 172)">
+    <!-- 全部 -->
+    <g transform="translate(0, 0)">
+      <rect width="50" height="32" rx="16" fill="#4E6FFF"/>
+      <text x="25" y="20" font-family="system-ui" font-size="14" font-weight="500" fill="#FFFFFF" text-anchor="middle">全部</text>
+    </g>
+    
+    <!-- 学习 -->
+    <g transform="translate(60, 0)">
+      <rect width="50" height="32" rx="16" fill="#F3F3F7"/>
+      <text x="25" y="20" font-family="system-ui" font-size="14" font-weight="400" fill="#666666" text-anchor="middle">学习</text>
+    </g>
+    
+    <!-- 运动 -->
+    <g transform="translate(120, 0)">
+      <rect width="50" height="32" rx="16" fill="#F3F3F7"/>
+      <text x="25" y="20" font-family="system-ui" font-size="14" font-weight="400" fill="#666666" text-anchor="middle">运动</text>
+    </g>
+    
+    <!-- 美食 -->
+    <g transform="translate(180, 0)">
+      <rect width="50" height="32" rx="16" fill="#F3F3F7"/>
+      <text x="25" y="20" font-family="system-ui" font-size="14" font-weight="400" fill="#666666" text-anchor="middle">美食</text>
+    </g>
+    
+    <!-- 娱乐 -->
+    <g transform="translate(240, 0)">
+      <rect width="50" height="32" rx="16" fill="#F3F3F7"/>
+      <text x="25" y="20" font-family="system-ui" font-size="14" font-weight="400" fill="#666666" text-anchor="middle">娱乐</text>
+    </g>
+  </g>
+
+  <!-- 活动列表 -->
+  <g id="activity-list" transform="translate(20, 224)">
+    
+    <!-- 活动卡片1 - 推荐活动 -->
+    <g id="activity-card-1">
+      <rect width="390" height="180" rx="16" fill="#FFFFFF"/>
+      <rect x="0" y="0" width="390" height="180" rx="16" stroke="#E0E0E6" stroke-width="1"/>
+      
+      <!-- 推荐标签 -->
+      <g transform="translate(16, 16)">
+        <rect width="40" height="20" rx="10" fill="#FF6B8B"/>
+        <text x="20" y="14" font-family="system-ui" font-size="10" font-weight="600" fill="#FFFFFF" text-anchor="middle">推荐</text>
+      </g>
+      
+      <!-- 活动封面 -->
+      <rect x="16" y="44" width="80" height="80" rx="8" fill="#FFB951"/>
+      <circle cx="56" cy="84" r="16" fill="#FFFFFF" fill-opacity="0.2"/>
+      <path d="M48 80L52 84L64 72" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- 活动信息 -->
+      <text x="112" y="60" font-family="system-ui" font-size="18" font-weight="600" fill="#222222">周末徒步活动</text>
+      <text x="112" y="80" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">8月25日 09:00-17:00</text>
+      <text x="112" y="100" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">香山公园</text>
+      
+      <!-- 参与信息和价格 -->
+      <g transform="translate(112, 108)">
+        <rect width="60" height="20" rx="10" fill="#F0F4FF"/>
+        <text x="30" y="14" font-family="system-ui" font-size="12" font-weight="500" fill="#4E6FFF" text-anchor="middle">12/20人</text>
+        
+        <!-- 价格标签 -->
+        <text x="80" y="14" font-family="system-ui" font-size="16" font-weight="600" fill="#4E6FFF">¥35</text>
+      </g>
+      
+      <!-- 组织者头像 -->
+      <circle cx="350" cy="60" r="16" fill="#65D1AA"/>
+      <text x="350" y="64" font-family="system-ui" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">户</text>
+      <text x="350" y="90" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">户外俱乐部</text>
+      
+      <!-- 立即参加按钮 -->
+      <g transform="translate(280, 140)">
+        <rect width="94" height="32" rx="16" fill="#4E6FFF"/>
+        <text x="47" y="20" font-family="system-ui" font-size="14" font-weight="500" fill="#FFFFFF" text-anchor="middle">立即参加</text>
+      </g>
+    </g>
+
+    <!-- 活动卡片2 -->
+    <g id="activity-card-2" transform="translate(0, 200)">
+      <rect width="390" height="160" rx="16" fill="#FFFFFF"/>
+      <rect x="0" y="0" width="390" height="160" rx="16" stroke="#E0E0E6" stroke-width="1"/>
+      
+      <!-- 活动封面 -->
+      <rect x="16" y="16" width="80" height="80" rx="8" fill="#8F7CFF"/>
+      <circle cx="56" cy="56" r="16" fill="#FFFFFF" fill-opacity="0.2"/>
+      <path d="M48 52L52 56L64 44" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- 活动信息 -->
+      <text x="112" y="32" font-family="system-ui" font-size="18" font-weight="600" fill="#222222">读书分享会</text>
+      <text x="112" y="52" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">8月26日 14:00-16:00</text>
+      <text x="112" y="72" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">三里屯书店</text>
+      
+      <!-- 参与信息和价格 -->
+      <g transform="translate(112, 80)">
+        <rect width="48" height="20" rx="10" fill="#F9F0FF"/>
+        <text x="24" y="14" font-family="system-ui" font-size="12" font-weight="500" fill="#8F7CFF" text-anchor="middle">8/15人</text>
+        
+        <!-- 免费标签 -->
+        <rect x="60" y="0" width="32" height="20" rx="10" fill="#F0FFF7"/>
+        <text x="76" y="14" font-family="system-ui" font-size="12" font-weight="500" fill="#12B76A" text-anchor="middle">免费</text>
+      </g>
+      
+      <!-- 组织者头像 -->
+      <circle cx="350" cy="40" r="16" fill="#4E6FFF"/>
+      <text x="350" y="44" font-family="system-ui" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">书</text>
+      <text x="350" y="70" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">读书会</text>
+      
+      <!-- 立即参加按钮 -->
+      <g transform="translate(280, 120)">
+        <rect width="94" height="32" rx="16" fill="#4E6FFF"/>
+        <text x="47" y="20" font-family="system-ui" font-size="14" font-weight="500" fill="#FFFFFF" text-anchor="middle">立即参加</text>
+      </g>
+    </g>
+
+    <!-- 活动卡片3 -->
+    <g id="activity-card-3" transform="translate(0, 380)">
+      <rect width="390" height="160" rx="16" fill="#FFFFFF"/>
+      <rect x="0" y="0" width="390" height="160" rx="16" stroke="#E0E0E6" stroke-width="1"/>
+      
+      <!-- 活动封面 -->
+      <rect x="16" y="16" width="80" height="80" rx="8" fill="#65D1AA"/>
+      <circle cx="56" cy="56" r="16" fill="#FFFFFF" fill-opacity="0.2"/>
+      <path d="M48 52L52 56L64 44" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- 活动信息 -->
+      <text x="112" y="32" font-family="system-ui" font-size="18" font-weight="600" fill="#222222">美食制作课堂</text>
+      <text x="112" y="52" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">8月27日 10:00-12:00</text>
+      <text x="112" y="72" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">美食工作室</text>
+      
+      <!-- 参与信息和价格 -->
+      <g transform="translate(112, 80)">
+        <rect width="54" height="20" rx="10" fill="#F0FFF7"/>
+        <text x="27" y="14" font-family="system-ui" font-size="12" font-weight="500" fill="#65D1AA" text-anchor="middle">15/20人</text>
+        
+        <!-- 价格标签 -->
+        <text x="80" y="14" font-family="system-ui" font-size="16" font-weight="600" fill="#4E6FFF">¥128</text>
+      </g>
+      
+      <!-- 组织者头像 -->
+      <circle cx="350" cy="40" r="16" fill="#FF6B8B"/>
+      <text x="350" y="44" font-family="system-ui" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">美</text>
+      <text x="350" y="70" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">美食达人</text>
+      
+      <!-- 立即参加按钮 -->
+      <g transform="translate(280, 120)">
+        <rect width="94" height="32" rx="16" fill="#4E6FFF"/>
+        <text x="47" y="20" font-family="system-ui" font-size="14" font-weight="500" fill="#FFFFFF" text-anchor="middle">立即参加</text>
+      </g>
+    </g>
+
+    <!-- 活动卡片4 -->
+    <g id="activity-card-4" transform="translate(0, 560)">
+      <rect width="390" height="160" rx="16" fill="#FFFFFF"/>
+      <rect x="0" y="0" width="390" height="160" rx="16" stroke="#E0E0E6" stroke-width="1"/>
+      
+      <!-- 已满标签 -->
+      <g transform="translate(16, 16)">
+        <rect width="32" height="20" rx="10" fill="#FF5252"/>
+        <text x="16" y="14" font-family="system-ui" font-size="10" font-weight="600" fill="#FFFFFF" text-anchor="middle">已满</text>
+      </g>
+      
+      <!-- 活动封面 -->
+      <rect x="16" y="44" width="80" height="80" rx="8" fill="#CCE1FF"/>
+      <circle cx="56" cy="84" r="16" fill="#4E6FFF"/>
+      <path d="M48 80L52 84L64 72" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- 活动信息 -->
+      <text x="112" y="60" font-family="system-ui" font-size="18" font-weight="600" fill="#222222">技术分享沙龙</text>
+      <text x="112" y="80" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">8月28日 19:00-21:00</text>
+      <text x="112" y="100" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">科技园会议室</text>
+      
+      <!-- 参与信息和价格 -->
+      <g transform="translate(112, 108)">
+        <rect width="54" height="20" rx="10" fill="#FFF2F2"/>
+        <text x="27" y="14" font-family="system-ui" font-size="12" font-weight="500" fill="#FF5252" text-anchor="middle">30/30人</text>
+        
+        <!-- 价格标签 -->
+        <text x="80" y="14" font-family="system-ui" font-size="16" font-weight="600" fill="#4E6FFF">¥68</text>
+      </g>
+      
+      <!-- 组织者头像 -->
+      <circle cx="350" cy="60" r="16" fill="#FFB951"/>
+      <text x="350" y="64" font-family="system-ui" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">技</text>
+      <text x="350" y="90" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">技术社区</text>
+      
+      <!-- 已满按钮 -->
+      <g transform="translate(280, 140)">
+        <rect width="94" height="32" rx="16" fill="#F3F3F7" stroke="#E0E0E6" stroke-width="1"/>
+        <text x="47" y="20" font-family="system-ui" font-size="14" font-weight="500" fill="#999999" text-anchor="middle">已满员</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- 加载更多提示 -->
+  <g id="load-more" transform="translate(195, 740)">
+    <circle cx="20" cy="20" r="8" stroke="#CCE1FF" stroke-width="2" fill="none"/>
+    <path d="M12 20L16 16L20 20L24 16" stroke="#4E6FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="20" y="48" font-family="system-ui" font-size="12" font-weight="400" fill="#999999" text-anchor="middle">加载更多活动</text>
+  </g>
+
+  <!-- 底部导航栏 -->
+  <g id="bottom-nav" transform="translate(0, 832)">
+    <rect width="430" height="80" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="430" height="1" fill="#E0E0E6"/>
+    
+    <!-- 导航项 -->
+    <g transform="translate(43, 20)">
+      <!-- 首页 -->
+      <g transform="translate(0, 0)">
+        <circle cx="20" cy="16" r="12" fill="#F3F3F7"/>
+        <text x="20" y="36" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">首页</text>
+      </g>
+      
+      <!-- 活动 -->
+      <g transform="translate(86, 0)">
+        <circle cx="20" cy="16" r="12" fill="#4E6FFF"/>
+        <text x="20" y="36" font-family="system-ui" font-size="10" font-weight="500" fill="#4E6FFF" text-anchor="middle">活动</text>
+      </g>
+      
+      <!-- 交换 -->
+      <g transform="translate(172, 0)">
+        <circle cx="20" cy="16" r="12" fill="#F3F3F7"/>
+        <text x="20" y="36" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">交换</text>
+      </g>
+      
+      <!-- 社区 -->
+      <g transform="translate(258, 0)">
+        <circle cx="20" cy="16" r="12" fill="#F3F3F7"/>
+        <text x="20" y="36" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">社区</text>
+      </g>
+      
+      <!-- 我的 -->
+      <g transform="translate(344, 0)">
+        <circle cx="20" cy="16" r="12" fill="#F3F3F7"/>
+        <text x="20" y="36" font-family="system-ui" font-size="10" font-weight="400" fill="#999999" text-anchor="middle">我的</text>
+      </g>
+    </g>
+  </g>
+</svg>

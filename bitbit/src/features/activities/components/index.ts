@@ -1,2 +1,3 @@
 // activities 组件导出
-// 根据实际组件添加导出
+export { default as ActivityCard } from "./ActivityCard";
+export type { ActivityCardProps } from "./ActivityCard";

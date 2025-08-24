@@ -1,0 +1,187 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="primary-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3050E0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="page-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F9F9FB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F3F3F7;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  
+  <!-- Page Background -->
+  <rect width="1200" height="800" fill="url(#page-gradient)"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="80" fill="#FFFFFF" filter="url(#card-shadow)"/>
+  
+  <!-- Header Content -->
+  <text x="60" y="48" font-family="Inter, sans-serif" font-size="24" font-weight="700" fill="#4E6FFF">BitBit</text>
+  
+  <!-- Breadcrumb -->
+  <text x="200" y="45" font-family="Inter, sans-serif" font-size="14" fill="#999999">首页</text>
+  <text x="240" y="45" font-family="Inter, sans-serif" font-size="14" fill="#999999">/</text>
+  <text x="255" y="45" font-family="Inter, sans-serif" font-size="14" fill="#999999">二手交换</text>
+  <text x="315" y="45" font-family="Inter, sans-serif" font-size="14" fill="#999999">/</text>
+  <text x="330" y="45" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF">发布物品</text>
+  
+  <!-- User Avatar -->
+  <circle cx="1120" cy="40" r="20" fill="#E0E0E6"/>
+  <text x="1120" y="47" font-family="Inter, sans-serif" font-size="12" font-weight="500" text-anchor="middle" fill="#666666">用户</text>
+  
+  <!-- Main Content -->
+  <rect x="60" y="120" width="1080" height="640" fill="transparent"/>
+  
+  <!-- Page Title -->
+  <text x="60" y="160" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="#222222">发布二手物品</text>
+  <text x="60" y="185" font-family="Inter, sans-serif" font-size="16" fill="#666666">填写物品信息，让更多人看到你的宝贝</text>
+  
+  <!-- Form Container -->
+  <rect x="60" y="220" width="1080" height="500" fill="#FFFFFF" rx="16" filter="url(#card-shadow)"/>
+  
+  <!-- Left Column - Photos -->
+  <text x="100" y="270" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#222222">物品照片</text>
+  <text x="100" y="295" font-family="Inter, sans-serif" font-size="14" fill="#999999">最多可上传9张照片，建议第一张为主图</text>
+  
+  <!-- Photo Upload Grid -->
+  <!-- Main Photo -->
+  <rect x="100" y="315" width="200" height="200" fill="#F9F9FB" rx="12" stroke="#E0E0E6" stroke-width="2" stroke-dasharray="8,8"/>
+  <circle cx="200" cy="365" r="20" fill="#E0E0E6"/>
+  <path d="M190 355 L210 375 M190 375 L210 355" stroke="#999999" stroke-width="2" stroke-linecap="round"/>
+  <text x="200" y="395" font-family="Inter, sans-serif" font-size="14" font-weight="500" text-anchor="middle" fill="#666666">上传主图</text>
+  <text x="200" y="415" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#999999">建议尺寸 800x800</text>
+  <text x="200" y="440" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" fill="#999999">支持 JPG、PNG</text>
+  
+  <!-- Additional Photos -->
+  <rect x="320" y="315" width="90" height="90" fill="#F9F9FB" rx="8" stroke="#E0E0E6" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="365" y="368" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#E0E0E6">+</text>
+  
+  <rect x="430" y="315" width="90" height="90" fill="#F9F9FB" rx="8" stroke="#E0E0E6" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="475" y="368" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#E0E0E6">+</text>
+  
+  <rect x="320" y="425" width="90" height="90" fill="#F9F9FB" rx="8" stroke="#E0E0E6" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="365" y="478" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#E0E0E6">+</text>
+  
+  <rect x="430" y="425" width="90" height="90" fill="#F9F9FB" rx="8" stroke="#E0E0E6" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="475" y="478" font-family="Inter, sans-serif" font-size="24" text-anchor="middle" fill="#E0E0E6">+</text>
+  
+  <!-- Vertical Divider -->
+  <line x1="580" y1="250" x2="580" y2="680" stroke="#E0E0E6" stroke-width="1"/>
+  
+  <!-- Right Column - Form Fields -->
+  <text x="620" y="270" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#222222">基本信息</text>
+  
+  <!-- Title Input -->
+  <text x="620" y="305" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222">物品标题</text>
+  <circle cx="710" cy="301" r="3" fill="#FF5252"/>
+  <rect x="620" y="315" width="480" height="48" fill="#FFFFFF" rx="8" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="632" y="343" font-family="Inter, sans-serif" font-size="14" fill="#999999">请输入物品标题，建议包含品牌、型号等关键信息</text>
+  
+  <!-- Category and Condition Row -->
+  <text x="620" y="385" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222">商品分类</text>
+  <circle cx="690" cy="381" r="3" fill="#FF5252"/>
+  <rect x="620" y="395" width="230" height="48" fill="#FFFFFF" rx="8" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="632" y="423" font-family="Inter, sans-serif" font-size="14" fill="#999999">请选择分类</text>
+  <path d="M835 415 L841 421 L835 427" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <text x="870" y="385" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222">新旧程度</text>
+  <circle cx="940" cy="381" r="3" fill="#FF5252"/>
+  <rect x="870" y="395" width="230" height="48" fill="#FFFFFF" rx="8" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="882" y="423" font-family="Inter, sans-serif" font-size="14" fill="#999999">请选择新旧程度</text>
+  <path d="M1085 415 L1091 421 L1085 427" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Price Row -->
+  <text x="620" y="465" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222">期望价格</text>
+  <circle cx="690" cy="461" r="3" fill="#FF5252"/>
+  <rect x="620" y="475" width="230" height="48" fill="#FFFFFF" rx="8" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="632" y="503" font-family="Inter, sans-serif" font-size="14" fill="#999999">¥ 输入价格</text>
+  
+  <text x="870" y="465" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222">原价（可选）</text>
+  <rect x="870" y="475" width="230" height="48" fill="#FFFFFF" rx="8" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="882" y="503" font-family="Inter, sans-serif" font-size="14" fill="#999999">¥ 原价</text>
+  
+  <!-- Description -->
+  <text x="620" y="545" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222">商品属性</text>
+  
+  <!-- Attributes Grid -->
+  <!-- Brand and Model -->
+  <text x="620" y="565" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#222222">品牌</text>
+  <rect x="620" y="573" width="150" height="40" fill="#FFFFFF" rx="6" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="630" y="597" font-family="Inter, sans-serif" font-size="13" fill="#999999">选择品牌</text>
+  <path d="M755 588 L760 593 L755 598" stroke="#999999" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <text x="790" y="565" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#222222">型号</text>
+  <rect x="790" y="573" width="150" height="40" fill="#FFFFFF" rx="6" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="800" y="597" font-family="Inter, sans-serif" font-size="13" fill="#999999">输入型号</text>
+  
+  <text x="960" y="565" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#222222">颜色</text>
+  <rect x="960" y="573" width="140" height="40" fill="#FFFFFF" rx="6" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="970" y="597" font-family="Inter, sans-serif" font-size="13" fill="#999999">选择颜色</text>
+  <path d="M1085 588 L1090 593 L1085 598" stroke="#999999" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Purchase Date and Storage -->
+  <text x="620" y="635" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#222222">购买时间</text>
+  <rect x="620" y="643" width="150" height="40" fill="#FFFFFF" rx="6" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="630" y="667" font-family="Inter, sans-serif" font-size="13" fill="#999999">选择年月</text>
+  <path d="M755 658 L760 663 L755 668" stroke="#999999" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <text x="790" y="635" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#222222">存储容量</text>
+  <rect x="790" y="643" width="150" height="40" fill="#FFFFFF" rx="6" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="800" y="667" font-family="Inter, sans-serif" font-size="13" fill="#999999">如：256GB</text>
+  
+  <!-- Custom Attributes -->
+  <text x="960" y="635" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#222222">自定义属性</text>
+  <rect x="960" y="643" width="140" height="40" fill="#F0F4FF" rx="6" stroke="#4E6FFF" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="970" y="667" font-family="Inter, sans-serif" font-size="13" fill="#4E6FFF">+ 添加属性</text>
+  
+  <!-- Detailed Description -->
+  <text x="620" y="705" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222">详细描述</text>
+  <rect x="620" y="715" width="480" height="80" fill="#FFFFFF" rx="8" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="632" y="735" font-family="Inter, sans-serif" font-size="14" fill="#999999">详细描述物品状况、购买时间、使用情况等...</text>
+  <text x="632" y="755" font-family="Inter, sans-serif" font-size="14" fill="#999999">（例如：购买于2023年，使用1年，功能正常，外观有轻微使用痕迹）</text>
+  
+  <!-- Character Count -->
+  <text x="1080" y="785" font-family="Inter, sans-serif" font-size="12" text-anchor="end" fill="#999999">0/500</text>
+  
+  <!-- Bottom Actions -->
+  <rect x="60" y="740" width="1080" height="80" fill="#FFFFFF" rx="16"/>
+  
+  <!-- Left Side - Tips -->
+  <circle cx="100" cy="770" r="12" fill="#4E6FFF"/>
+  <text x="100" y="775" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle" fill="#FFFFFF">!</text>
+  <text x="125" y="775" font-family="Inter, sans-serif" font-size="14" fill="#666666">发布前请确保信息真实有效，虚假信息将被下架</text>
+  
+  <!-- Right Side - Actions -->
+  <rect x="780" y="752" width="120" height="40" fill="transparent" rx="20" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="840" y="775" font-family="Inter, sans-serif" font-size="14" font-weight="500" text-anchor="middle" fill="#666666">保存草稿</text>
+  
+  <rect x="920" y="752" width="120" height="40" fill="#E0E0E6" rx="20"/>
+  <text x="980" y="775" font-family="Inter, sans-serif" font-size="14" font-weight="500" text-anchor="middle" fill="#999999">预览</text>
+  
+  <rect x="1060" y="752" width="120" height="40" fill="url(#primary-gradient)" rx="20"/>
+  <text x="1120" y="775" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle" fill="#FFFFFF">发布物品</text>
+  
+  <!-- Side Tips Panel -->
+  <rect x="100" y="540" width="420" height="160" fill="#F0F4FF" rx="12" stroke="#CCE1FF" stroke-width="1"/>
+  <text x="120" y="565" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#4E6FFF">📝 发布小贴士</text>
+  
+  <text x="120" y="585" font-family="Inter, sans-serif" font-size="12" fill="#3050E0">• 清晰的照片能提高成交率，建议多角度拍摄</text>
+  <text x="120" y="605" font-family="Inter, sans-serif" font-size="12" fill="#3050E0">• 详细描述物品状况，诚信交易建立信任</text>
+  <text x="120" y="625" font-family="Inter, sans-serif" font-size="12" fill="#3050E0">• 合理定价参考市场行情，方便快速出手</text>
+  <text x="120" y="645" font-family="Inter, sans-serif" font-size="12" fill="#3050E0">• 及时回复买家咨询，提高交易成功率</text>
+  <text x="120" y="665" font-family="Inter, sans-serif" font-size="12" fill="#3050E0">• 准确填写商品属性，帮助买家快速了解</text>
+  <text x="120" y="685" font-family="Inter, sans-serif" font-size="12" fill="#3050E0">• 自定义属性可添加特殊说明，如保修期等</text>
+  
+  <!-- Required Field Note -->
+  <text x="620" y="810" font-family="Inter, sans-serif" font-size="12" fill="#FF5252">* 标记为必填项</text>
+  
+  <!-- Design Notes -->
+  <text x="60" y="850" font-family="Inter, sans-serif" font-size="10" fill="#999999">设计说明：桌面端布局，左右分栏设计，图片上传区域更大，表单填写更便捷，支持商品属性配置</text>
+</svg>

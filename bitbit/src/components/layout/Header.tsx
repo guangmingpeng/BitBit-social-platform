@@ -5,11 +5,11 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 根据不同路由显示不同标题
-  const getTitle = () => {
+  const isHomePage = location.pathname === "/";
+
+  // 获取页面标题（非首页时显示）
+  const getPageTitle = () => {
     switch (location.pathname) {
-      case "/":
-        return "BitBit";
       case "/activities":
         return "活动";
       case "/community":
@@ -21,23 +21,36 @@ const Header = () => {
       case "/components":
         return "组件";
       default:
-        return "BitBit";
+        return null;
     }
   };
 
-  const isHomePage = location.pathname === "/";
+  const pageTitle = getPageTitle();
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-light">
       <div className="container-main py-3 md:py-4">
         <div className="flex items-center justify-between">
-          {/* 左侧：标题 */}
-          <h1
-            className="text-lg md:text-title-4 text-primary-500 font-bold cursor-pointer hover:text-primary-600 transition-colors"
-            onClick={() => navigate("/")}
-          >
-            {getTitle()}
-          </h1>
+          {/* 左侧：Logo和页面标题 */}
+          <div className="flex items-center gap-3">
+            {/* Logo - 始终可点击返回首页 */}
+            <h1
+              className="text-lg md:text-title-4 text-primary-500 font-bold cursor-pointer hover:text-primary-600 transition-colors"
+              onClick={() => navigate("/")}
+            >
+              BitBit
+            </h1>
+
+            {/* 页面标题 - 非首页时显示 */}
+            {pageTitle && (
+              <>
+                <span className="text-text-tertiary mx-2">|</span>
+                <h2 className="text-lg md:text-title-4 text-text-primary font-medium">
+                  {pageTitle}
+                </h2>
+              </>
+            )}
+          </div>
 
           {/* 右侧：操作区域 */}
           <div className="flex items-center space-x-2 md:space-x-4">

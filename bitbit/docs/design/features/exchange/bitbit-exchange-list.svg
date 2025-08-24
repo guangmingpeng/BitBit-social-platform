@@ -1,0 +1,245 @@
+<svg width="1400" height="900" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="1400" height="900" fill="#F9F9FB"/>
+  
+  <!-- 标题区域 -->
+  <text x="60" y="60" font-family="PingFang SC" font-size="32" font-weight="700" fill="#222222">二手交换列表页面设计</text>
+  <text x="60" y="90" font-family="PingFang SC" font-size="16" fill="#666666">Exchange List Page - 首页推荐和二手交换tab页展示</text>
+  
+  <!-- 页面布局框架 -->
+  <rect x="60" y="120" width="1280" height="720" rx="16" fill="white" stroke="#E0E0E6" stroke-width="2"/>
+  
+  <!-- 顶部导航栏 -->
+  <rect x="60" y="120" width="1280" height="64" rx="16" fill="#F9F9FB" stroke="#E0E0E6" stroke-width="1"/>
+  <text x="80" y="157" font-family="PingFang SC" font-size="24" font-weight="700" fill="#222222">BitBit</text>
+  
+  <g transform="translate(200, 140)">
+    <rect x="0" y="0" width="60" height="24" rx="12" fill="white" stroke="#E0E0E6"/>
+    <text x="30" y="15" font-family="PingFang SC" font-size="12" fill="#222222" text-anchor="middle">首页</text>
+    
+    <rect x="80" y="0" width="80" height="24" rx="12" fill="#4E6FFF"/>
+    <text x="120" y="15" font-family="PingFang SC" font-size="12" fill="white" text-anchor="middle">二手交换</text>
+    
+    <rect x="180" y="0" width="60" height="24" rx="12" fill="white" stroke="#E0E0E6"/>
+    <text x="210" y="15" font-family="PingFang SC" font-size="12" fill="#222222" text-anchor="middle">社区</text>
+    
+    <rect x="260" y="0" width="60" height="24" rx="12" fill="white" stroke="#E0E0E6"/>
+    <text x="290" y="15" font-family="PingFang SC" font-size="12" fill="#222222" text-anchor="middle">活动</text>
+  </g>
+  
+  <!-- 搜索和用户区域 -->
+  <g transform="translate(1000, 140)">
+    <rect x="0" y="0" width="200" height="24" rx="12" fill="white" stroke="#E0E0E6"/>
+    <text x="12" y="15" font-family="PingFang SC" font-size="12" fill="#999999">搜索商品...</text>
+    <text x="180" y="15" font-family="PingFang SC" font-size="12" fill="#4E6FFF">🔍</text>
+    
+    <circle cx="230" cy="12" r="12" fill="#4E6FFF"/>
+    <text x="230" y="17" font-family="PingFang SC" font-size="8" fill="white" text-anchor="middle">U</text>
+  </g>
+  
+  <!-- 页面标题和筛选区域 -->
+  <g transform="translate(80, 220)">
+    <text x="0" y="0" font-family="PingFang SC" font-size="28" font-weight="700" fill="#222222">二手交换</text>
+    <text x="0" y="24" font-family="PingFang SC" font-size="14" fill="#666666">发现优质二手好物，安全便捷的交换平台</text>
+    
+    <!-- 筛选标签 -->
+    <g transform="translate(0, 50)">
+      <rect x="0" y="0" width="60" height="32" rx="16" fill="#4E6FFF"/>
+      <text x="30" y="20" font-family="PingFang SC" font-size="12" fill="white" text-anchor="middle">全部</text>
+      
+      <rect x="80" y="0" width="80" height="32" rx="16" fill="white" stroke="#E0E0E6"/>
+      <text x="120" y="20" font-family="PingFang SC" font-size="12" fill="#666666" text-anchor="middle">数码产品</text>
+      
+      <rect x="180" y="0" width="60" height="32" rx="16" fill="white" stroke="#E0E0E6"/>
+      <text x="210" y="20" font-family="PingFang SC" font-size="12" fill="#666666" text-anchor="middle">服装</text>
+      
+      <rect x="260" y="0" width="60" height="32" rx="16" fill="white" stroke="#E0E0E6"/>
+      <text x="290" y="20" font-family="PingFang SC" font-size="12" fill="#666666" text-anchor="middle">家居</text>
+      
+      <rect x="340" y="0" width="60" height="32" rx="16" fill="white" stroke="#E0E0E6"/>
+      <text x="370" y="20" font-family="PingFang SC" font-size="12" fill="#666666" text-anchor="middle">书籍</text>
+      
+      <rect x="420" y="0" width="60" height="32" rx="16" fill="white" stroke="#E0E0E6"/>
+      <text x="450" y="20" font-family="PingFang SC" font-size="12" fill="#666666" text-anchor="middle">其他</text>
+    </g>
+    
+    <!-- 排序和布局切换 -->
+    <g transform="translate(900, 50)">
+      <rect x="0" y="0" width="80" height="32" rx="16" fill="white" stroke="#E0E0E6"/>
+      <text x="40" y="20" font-family="PingFang SC" font-size="12" fill="#666666" text-anchor="middle">最新发布</text>
+      
+      <rect x="100" y="0" width="32" height="32" rx="16" fill="#4E6FFF"/>
+      <text x="116" y="20" font-family="PingFang SC" font-size="12" fill="white" text-anchor="middle">⊞</text>
+      
+      <rect x="140" y="0" width="32" height="32" rx="16" fill="white" stroke="#E0E0E6"/>
+      <text x="156" y="20" font-family="PingFang SC" font-size="12" fill="#666666" text-anchor="middle">☰</text>
+    </g>
+  </g>
+  
+  <!-- 商品网格展示区域 -->
+  <g transform="translate(80, 360)">
+    <!-- 第一行 -->
+    <g transform="translate(0, 0)">
+      <!-- 商品卡片 1 -->
+      <rect x="0" y="0" width="280" height="360" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" filter="url(#cardShadow)"/>
+      
+      <!-- 图片区域 -->
+      <rect x="16" y="16" width="248" height="160" rx="12" fill="#F3F3F7"/>
+      <rect x="32" y="32" width="216" height="128" rx="8" fill="#E0E0E6"/>
+      <text x="140" y="100" font-family="PingFang SC" font-size="40" fill="#999999" text-anchor="middle">📱</text>
+      
+      <!-- 状态标签和收藏 -->
+      <rect x="28" y="28" width="44" height="20" rx="8" fill="#CCE1FF"/>
+      <text x="50" y="41" font-family="PingFang SC" font-size="10" font-weight="500" fill="#4E6FFF" text-anchor="middle">在售</text>
+      <circle cx="244" cy="36" r="14" fill="white" fill-opacity="0.9"/>
+      <text x="244" y="41" font-family="PingFang SC" font-size="12" fill="#999999" text-anchor="middle">♡</text>
+      
+      <!-- 商品信息 -->
+      <text x="16" y="200" font-family="PingFang SC" font-size="16" font-weight="600" fill="#222222">iPhone 14 Pro 深空黑</text>
+      <text x="16" y="220" font-family="PingFang SC" font-size="12" fill="#666666">9成新 | 数码产品</text>
+      <text x="16" y="250" font-family="PingFang SC" font-size="20" font-weight="700" fill="#4E6FFF">¥6,800</text>
+      <text x="90" y="250" font-family="PingFang SC" font-size="14" fill="#999999" text-decoration="line-through">¥8,999</text>
+      
+      <!-- 发布者信息 -->
+      <circle cx="24" cy="275" r="10" fill="#4E6FFF"/>
+      <text x="24" y="280" font-family="PingFang SC" font-size="8" fill="white" text-anchor="middle">ZL</text>
+      <text x="40" y="280" font-family="PingFang SC" font-size="10" fill="#666666">张亮 · 2小时前</text>
+      
+      <!-- 互动信息 -->
+      <text x="16" y="300" font-family="PingFang SC" font-size="9" fill="#999999">👁 126 · ❤ 23 · 💬 8</text>
+      
+      <!-- 操作按钮 -->
+      <rect x="16" y="320" width="120" height="28" rx="14" fill="#4E6FFF"/>
+      <text x="76" y="337" font-family="PingFang SC" font-size="11" font-weight="500" fill="white" text-anchor="middle">立即交换</text>
+      <rect x="144" y="320" width="120" height="28" rx="14" fill="white" stroke="#E0E0E6"/>
+      <text x="204" y="337" font-family="PingFang SC" font-size="11" fill="#4E6FFF" text-anchor="middle">查看详情</text>
+    </g>
+    
+    <!-- 商品卡片 2 -->
+    <g transform="translate(300, 0)">
+      <rect x="0" y="0" width="280" height="360" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" filter="url(#cardShadow)"/>
+      
+      <rect x="16" y="16" width="248" height="160" rx="12" fill="#F3F3F7"/>
+      <rect x="32" y="32" width="216" height="128" rx="8" fill="#E0E0E6"/>
+      <text x="140" y="100" font-family="PingFang SC" font-size="40" fill="#999999" text-anchor="middle">💻</text>
+      
+      <!-- 火热标签 -->
+      <rect x="28" y="28" width="44" height="20" rx="8" fill="#FFF3E0"/>
+      <text x="50" y="41" font-family="PingFang SC" font-size="10" font-weight="500" fill="#FFB951" text-anchor="middle">火热</text>
+      <circle cx="244" cy="36" r="14" fill="white" fill-opacity="0.9"/>
+      <text x="244" y="41" font-family="PingFang SC" font-size="12" fill="#999999" text-anchor="middle">♡</text>
+      
+      <text x="16" y="200" font-family="PingFang SC" font-size="16" font-weight="600" fill="#222222">MacBook Air M2</text>
+      <text x="16" y="220" font-family="PingFang SC" font-size="12" fill="#666666">95成新 | 数码产品</text>
+      <text x="16" y="250" font-family="PingFang SC" font-size="20" font-weight="700" fill="#4E6FFF">¥7,200</text>
+      <text x="90" y="250" font-family="PingFang SC" font-size="14" fill="#999999" text-decoration="line-through">¥9,499</text>
+      
+      <circle cx="24" cy="275" r="10" fill="#4E6FFF"/>
+      <text x="24" y="280" font-family="PingFang SC" font-size="8" fill="white" text-anchor="middle">LW</text>
+      <text x="40" y="280" font-family="PingFang SC" font-size="10" fill="#666666">李伟 · 1天前</text>
+      
+      <text x="16" y="300" font-family="PingFang SC" font-size="9" fill="#999999">👁 234 · ❤ 45 · 💬 12</text>
+      
+      <rect x="16" y="320" width="120" height="28" rx="14" fill="#4E6FFF"/>
+      <text x="76" y="337" font-family="PingFang SC" font-size="11" font-weight="500" fill="white" text-anchor="middle">立即交换</text>
+      <rect x="144" y="320" width="120" height="28" rx="14" fill="white" stroke="#E0E0E6"/>
+      <text x="204" y="337" font-family="PingFang SC" font-size="11" fill="#4E6FFF" text-anchor="middle">查看详情</text>
+    </g>
+    
+    <!-- 商品卡片 3 -->
+    <g transform="translate(600, 0)">
+      <rect x="0" y="0" width="280" height="360" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" filter="url(#cardShadow)"/>
+      
+      <rect x="16" y="16" width="248" height="160" rx="12" fill="#F3F3F7"/>
+      <rect x="32" y="32" width="216" height="128" rx="8" fill="#E0E0E6"/>
+      <text x="140" y="100" font-family="PingFang SC" font-size="40" fill="#999999" text-anchor="middle">👟</text>
+      
+      <!-- 新品标签 -->
+      <rect x="28" y="28" width="44" height="20" rx="8" fill="#E6F7F0"/>
+      <text x="50" y="41" font-family="PingFang SC" font-size="10" font-weight="500" fill="#65D1AA" text-anchor="middle">新品</text>
+      <!-- 已收藏状态 -->
+      <circle cx="244" cy="36" r="14" fill="#FFE5E9"/>
+      <text x="244" y="41" font-family="PingFang SC" font-size="12" fill="#FF6B8B" text-anchor="middle">♥</text>
+      
+      <text x="16" y="200" font-family="PingFang SC" font-size="16" font-weight="600" fill="#222222">Nike Air Jordan 1</text>
+      <text x="16" y="220" font-family="PingFang SC" font-size="12" fill="#666666">全新 | 服装鞋帽</text>
+      <text x="16" y="250" font-family="PingFang SC" font-size="20" font-weight="700" fill="#4E6FFF">¥1,200</text>
+      <text x="90" y="250" font-family="PingFang SC" font-size="14" fill="#999999" text-decoration="line-through">¥1,599</text>
+      
+      <circle cx="24" cy="275" r="10" fill="#4E6FFF"/>
+      <text x="24" y="280" font-family="PingFang SC" font-size="8" fill="white" text-anchor="middle">WX</text>
+      <text x="40" y="280" font-family="PingFang SC" font-size="10" fill="#666666">王小明 · 3小时前</text>
+      
+      <text x="16" y="300" font-family="PingFang SC" font-size="9" fill="#999999">👁 89 · ❤ 16 · 💬 5</text>
+      
+      <rect x="16" y="320" width="120" height="28" rx="14" fill="#4E6FFF"/>
+      <text x="76" y="337" font-family="PingFang SC" font-size="11" font-weight="500" fill="white" text-anchor="middle">立即交换</text>
+      <rect x="144" y="320" width="120" height="28" rx="14" fill="white" stroke="#E0E0E6"/>
+      <text x="204" y="337" font-family="PingFang SC" font-size="11" fill="#4E6FFF" text-anchor="middle">查看详情</text>
+    </g>
+    
+    <!-- 商品卡片 4 - 已预定状态 -->
+    <g transform="translate(900, 0)">
+      <rect x="0" y="0" width="280" height="360" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" filter="url(#cardShadow)" opacity="0.8"/>
+      
+      <rect x="16" y="16" width="248" height="160" rx="12" fill="#F3F3F7"/>
+      <rect x="32" y="32" width="216" height="128" rx="8" fill="#E0E0E6"/>
+      <text x="140" y="100" font-family="PingFang SC" font-size="40" fill="#999999" text-anchor="middle">📚</text>
+      
+      <!-- 已预定标签 -->
+      <rect x="28" y="28" width="50" height="20" rx="8" fill="#FFE5E9"/>
+      <text x="53" y="41" font-family="PingFang SC" font-size="10" font-weight="500" fill="#FF6B8B" text-anchor="middle">已预定</text>
+      <circle cx="244" cy="36" r="14" fill="white" fill-opacity="0.6"/>
+      <text x="244" y="41" font-family="PingFang SC" font-size="12" fill="#CCCCCC" text-anchor="middle">♡</text>
+      
+      <text x="16" y="200" font-family="PingFang SC" font-size="16" font-weight="600" fill="#999999">程序设计入门教程</text>
+      <text x="16" y="220" font-family="PingFang SC" font-size="12" fill="#999999">9成新 | 书籍教材</text>
+      <text x="16" y="250" font-family="PingFang SC" font-size="20" font-weight="700" fill="#999999">¥35</text>
+      
+      <circle cx="24" cy="275" r="10" fill="#999999"/>
+      <text x="24" y="280" font-family="PingFang SC" font-size="8" fill="white" text-anchor="middle">CS</text>
+      <text x="40" y="280" font-family="PingFang SC" font-size="10" fill="#999999">陈同学 · 1周前</text>
+      
+      <text x="16" y="300" font-family="PingFang SC" font-size="9" fill="#CCCCCC">👁 45 · ❤ 8 · 💬 3</text>
+      
+      <rect x="16" y="320" width="120" height="28" rx="14" fill="#E0E0E6"/>
+      <text x="76" y="337" font-family="PingFang SC" font-size="11" font-weight="500" fill="#999999" text-anchor="middle">已预定</text>
+      <rect x="144" y="320" width="120" height="28" rx="14" fill="white" stroke="#E0E0E6"/>
+      <text x="204" y="337" font-family="PingFang SC" font-size="11" fill="#999999" text-anchor="middle">查看详情</text>
+    </g>
+  </g>
+  
+  <!-- 分页器 -->
+  <g transform="translate(640, 800)">
+    <rect x="0" y="0" width="32" height="32" rx="8" fill="white" stroke="#E0E0E6"/>
+    <text x="16" y="21" font-family="PingFang SC" font-size="14" fill="#666666" text-anchor="middle">‹</text>
+    
+    <rect x="40" y="0" width="32" height="32" rx="8" fill="#4E6FFF"/>
+    <text x="56" y="21" font-family="PingFang SC" font-size="14" fill="white" text-anchor="middle">1</text>
+    
+    <rect x="80" y="0" width="32" height="32" rx="8" fill="white" stroke="#E0E0E6"/>
+    <text x="96" y="21" font-family="PingFang SC" font-size="14" fill="#666666" text-anchor="middle">2</text>
+    
+    <rect x="120" y="0" width="32" height="32" rx="8" fill="white" stroke="#E0E0E6"/>
+    <text x="136" y="21" font-family="PingFang SC" font-size="14" fill="#666666" text-anchor="middle">3</text>
+    
+    <rect x="160" y="0" width="32" height="32" rx="8" fill="white" stroke="#E0E0E6"/>
+    <text x="176" y="21" font-family="PingFang SC" font-size="14" fill="#666666" text-anchor="middle">›</text>
+  </g>
+  
+  <!-- 设计注释 -->
+  <g transform="translate(60, 860)">
+    <text x="0" y="0" font-family="PingFang SC" font-size="14" font-weight="600" fill="#222222">页面设计要点</text>
+    <text x="0" y="20" font-family="PingFang SC" font-size="12" fill="#666666">• 4列网格布局，间距20px，支持响应式调整</text>
+    <text x="350" y="20" font-family="PingFang SC" font-size="12" fill="#666666">• 筛选标签水平滚动，支持快速分类浏览</text>
+    <text x="700" y="20" font-family="PingFang SC" font-size="12" fill="#666666">• 状态标签区分商品状态，视觉层级清晰</text>
+    <text x="1050" y="20" font-family="PingFang SC" font-size="12" fill="#666666">• 分页器支持页面导航</text>
+  </g>
+  
+  <!-- 滤镜定义 -->
+  <defs>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,0.08)"/>
+    </filter>
+  </defs>
+</svg>

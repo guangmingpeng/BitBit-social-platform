@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2000">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7D95FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientCoral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B8B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFB8C5;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="2000" fill="#F9F9FB" />
+  
+  <!-- 状态栏 -->
+  <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" />
+  <text x="600" y="30" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222" text-anchor="middle">BitBit 活动报名</text>
+  
+  <!-- 标题栏 -->
+  <rect x="0" y="50" width="1200" height="70" fill="#FFFFFF" filter="drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05))" />
+  <!-- 返回按钮 -->
+  <circle cx="60" cy="85" r="24" fill="transparent" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="60" y="91" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#222222" text-anchor="middle">←</text>
+  
+  <text x="600" y="92" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#222222" text-anchor="middle">活动报名</text>
+  
+  <!-- 活动信息卡片 -->
+  <rect x="30" y="150" width="1140" height="220" rx="16" fill="white" filter="drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 活动头图缩略图 -->
+  <rect x="60" y="180" width="120" height="80" rx="12" fill="#F3F3F7" />
+  <rect x="60" y="180" width="120" height="80" rx="12" fill="url(#gradientBlue)" opacity="0.3" />
+  
+  <!-- 活动基本信息 -->
+  <text x="210" y="205" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#222222">周末爬山活动</text>
+  <rect x="210" y="215" width="80" height="28" rx="14" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="250" y="233" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">户外</text>
+  
+  <text x="210" y="275" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">📅 6月18日 周六 09:00-15:00</text>
+  <text x="210" y="305" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">📍 莫干山风景区</text>
+  <text x="210" y="335" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">💰 ¥50/人</text>
+  
+  <!-- 报名表单 -->
+  <rect x="30" y="400" width="1140" height="800" rx="16" fill="white" filter="drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.08))" />
+  
+  <text x="60" y="445" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="600" fill="#222222">报名信息</text>
+  
+  <!-- 姓名输入 -->
+  <text x="60" y="490" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">姓名 *</text>
+  <rect x="60" y="505" width="1080" height="52" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="80" y="535" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999">请输入您的姓名</text>
+  
+  <!-- 手机号输入 -->
+  <text x="60" y="590" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">手机号 *</text>
+  <rect x="60" y="605" width="1080" height="52" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="80" y="635" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999">请输入手机号码</text>
+  
+  <!-- 紧急联系人 -->
+  <text x="60" y="690" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">紧急联系人</text>
+  <rect x="60" y="705" width="1080" height="52" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="80" y="735" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999">紧急联系人姓名和电话</text>
+  
+  <!-- 参与人数选择 -->
+  <text x="60" y="790" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">参与人数 *</text>
+  <rect x="60" y="805" width="200" height="52" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  
+  <!-- 数量选择器 -->
+  <circle cx="100" cy="831" r="20" fill="#F3F3F7" />
+  <text x="100" y="837" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="500" fill="#666666" text-anchor="middle">-</text>
+  
+  <text x="160" y="837" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="500" fill="#222222" text-anchor="middle">1</text>
+  
+  <circle cx="220" cy="831" r="20" fill="#4E6FFF" />
+  <text x="220" y="837" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="500" fill="white" text-anchor="middle">+</text>
+  
+  <!-- 特殊需求 -->
+  <text x="60" y="890" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">特殊需求说明</text>
+  <rect x="60" y="905" width="1080" height="100" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="80" y="930" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999">如有特殊的饮食要求、身体状况等请说明</text>
+  
+  <!-- 同意条款 -->
+  <circle cx="80" cy="1040" r="12" fill="white" stroke="#E0E0E6" stroke-width="2" />
+  <circle cx="80" cy="1040" r="6" fill="#4E6FFF" />
+  <text x="110" y="1047" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">我已阅读并同意</text>
+  <text x="260" y="1047" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF">《活动安全协议》</text>
+  
+  <!-- 费用明细 -->
+  <rect x="30" y="1240" width="1140" height="180" rx="16" fill="white" filter="drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.08))" />
+  
+  <text x="60" y="1285" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#222222">费用明细</text>
+  
+  <text x="60" y="1320" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">活动费用</text>
+  <text x="1110" y="1320" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#222222" text-anchor="end">¥50 × 1人</text>
+  
+  <text x="60" y="1350" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">平台服务费</text>
+  <text x="1110" y="1350" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#222222" text-anchor="end">¥2</text>
+  
+  <line x1="60" y1="1370" x2="1140" y2="1370" stroke="#E0E0E6" stroke-width="1" />
+  
+  <text x="60" y="1400" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">总计</text>
+  <text x="1110" y="1400" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="700" fill="#FF6B8B" text-anchor="end">¥52</text>
+  
+  <!-- 底部固定操作栏 -->
+  <rect x="0" y="1850" width="1200" height="150" fill="white" filter="drop-shadow(0px -2px 8px rgba(0, 0, 0, 0.05))" />
+  
+  <!-- 确认报名按钮 -->
+  <rect x="60" y="1880" width="1080" height="60" rx="30" fill="url(#gradientBlue)" filter="drop-shadow(0px 4px 12px rgba(78, 111, 255, 0.25))" />
+  <text x="600" y="1920" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="white" text-anchor="middle">确认报名并支付 ¥52</text>
+  
+  <text x="600" y="1965" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999" text-anchor="middle">点击确认即表示同意平台服务条款</text>
+</svg>

@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2200">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7D95FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientBackground" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0F4FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#CCE1FF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="2200" fill="url(#gradientBackground)" />
+  
+  <!-- 状态栏 -->
+  <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" />
+  <text x="600" y="30" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222" text-anchor="middle">BitBit 注册</text>
+  
+  <!-- 返回按钮 -->
+  <circle cx="60" cy="85" r="24" fill="white" filter="drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1))" />
+  <text x="60" y="91" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#222222" text-anchor="middle">←</text>
+  
+  <!-- Logo区域 -->
+  <circle cx="600" cy="200" r="60" fill="white" filter="drop-shadow(0px 8px 24px rgba(78, 111, 255, 0.15))" />
+  <text x="600" y="215" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="36" font-weight="700" fill="#4E6FFF" text-anchor="middle">BB</text>
+  
+  <text x="600" y="300" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222" text-anchor="middle">加入BitBit</text>
+  <text x="600" y="330" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">开启你的精彩社交生活</text>
+  
+  <!-- 注册表单容器 -->
+  <rect x="60" y="380" width="1080" height="1000" rx="24" fill="white" filter="drop-shadow(0px 8px 32px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 手机号输入 -->
+  <text x="120" y="445" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">手机号 *</text>
+  <rect x="120" y="460" width="960" height="60" rx="12" fill="#F9F9FB" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="150" y="500" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#999999">请输入手机号码</text>
+  
+  <!-- 验证码输入 -->
+  <text x="120" y="555" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">验证码 *</text>
+  <rect x="120" y="570" width="640" height="60" rx="12" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="150" y="610" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#999999">请输入验证码</text>
+  
+  <!-- 获取验证码按钮 -->
+  <rect x="780" y="570" width="300" height="60" rx="12" fill="#4E6FFF" />
+  <text x="930" y="610" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">获取验证码</text>
+  
+  <!-- 昵称输入 -->
+  <text x="120" y="665" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">昵称 *</text>
+  <rect x="120" y="680" width="960" height="60" rx="12" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="150" y="720" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#999999">请输入昵称 (2-20个字符)</text>
+  
+  <!-- 密码输入 -->
+  <text x="120" y="775" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">密码 *</text>
+  <rect x="120" y="790" width="960" height="60" rx="12" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="150" y="830" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#999999">请输入密码 (至少8位)</text>
+  <circle cx="1040" cy="820" r="20" fill="transparent" />
+  <text x="1040" y="827" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999" text-anchor="middle">👁</text>
+  
+  <!-- 确认密码输入 -->
+  <text x="120" y="885" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">确认密码 *</text>
+  <rect x="120" y="900" width="960" height="60" rx="12" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="150" y="940" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#999999">请再次输入密码</text>
+  <circle cx="1040" cy="930" r="20" fill="transparent" />
+  <text x="1040" y="937" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999" text-anchor="middle">👁</text>
+  
+  <!-- 兴趣标签选择 -->
+  <text x="120" y="995" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222">感兴趣的活动类型 (可选)</text>
+  
+  <rect x="120" y="1015" width="80" height="36" rx="18" fill="#4E6FFF" />
+  <text x="160" y="1037" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">运动</text>
+  
+  <rect x="220" y="1015" width="80" height="36" rx="18" fill="rgba(255, 107, 139, 0.2)" stroke="#FF6B8B" stroke-width="1.5" />
+  <text x="260" y="1037" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#FF6B8B" text-anchor="middle">音乐</text>
+  
+  <rect x="320" y="1015" width="80" height="36" rx="18" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="360" y="1037" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">美食</text>
+  
+  <rect x="420" y="1015" width="80" height="36" rx="18" fill="rgba(255, 185, 81, 0.2)" stroke="#FFB951" stroke-width="1.5" />
+  <text x="460" y="1037" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#FFB951" text-anchor="middle">学习</text>
+  
+  <rect x="520" y="1015" width="80" height="36" rx="18" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="560" y="1037" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">阅读</text>
+  
+  <rect x="620" y="1015" width="80" height="36" rx="18" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="660" y="1037" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">旅行</text>
+  
+  <!-- 用户协议勾选 -->
+  <circle cx="140" cy="1095" r="12" fill="white" stroke="#E0E0E6" stroke-width="2" />
+  <circle cx="140" cy="1095" r="6" fill="#4E6FFF" />
+  <text x="170" y="1102" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">我已阅读并同意</text>
+  <text x="320" y="1102" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF">《用户服务协议》</text>
+  <text x="500" y="1102" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">和</text>
+  <text x="530" y="1102" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF">《隐私政策》</text>
+  
+  <!-- 营销信息勾选 -->
+  <circle cx="140" cy="1135" r="12" fill="white" stroke="#E0E0E6" stroke-width="2" />
+  <text x="170" y="1142" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666">接收活动推荐和优惠信息 (可选)</text>
+  
+  <!-- 注册按钮 -->
+  <rect x="120" y="1180" width="960" height="60" rx="30" fill="url(#gradientBlue)" filter="drop-shadow(0px 4px 12px rgba(78, 111, 255, 0.25))" />
+  <text x="600" y="1220" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="white" text-anchor="middle">立即注册</text>
+  
+  <!-- 分割线 -->
+  <line x1="120" y1="1280" x2="480" y2="1280" stroke="#E0E0E6" stroke-width="1" />
+  <text x="600" y="1287" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999" text-anchor="middle">或</text>
+  <line x1="720" y1="1280" x2="1080" y2="1280" stroke="#E0E0E6" stroke-width="1" />
+  
+  <!-- 第三方注册 -->
+  <rect x="120" y="1310" width="960" height="60" rx="30" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="540" y="1345" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#1AAD19" text-anchor="middle">💬</text>
+  <text x="660" y="1350" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#222222" text-anchor="middle">微信快速注册</text>
+  
+  <!-- 已有账户提示 -->
+  <text x="450" y="1500" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">已有账户？</text>
+  <text x="750" y="1500" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">立即登录</text>
+  
+  <!-- 安全提示 -->
+  <rect x="120" y="1540" width="960" height="80" rx="16" fill="rgba(78, 111, 255, 0.05)" />
+  <text x="150" y="1565" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#4E6FFF">🛡️ 安全提示</text>
+  <text x="150" y="1590" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">我们采用银行级加密技术保护您的个人信息安全</text>
+  <text x="150" y="1610" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">注册后即可享受丰富的社交功能和个性化推荐</text>
+  
+  <!-- 底部装饰 -->
+  <circle cx="100" cy="1750" r="30" fill="rgba(255, 107, 139, 0.1)" />
+  <circle cx="1100" cy="1800" r="40" fill="rgba(101, 209, 170, 0.1)" />
+  <circle cx="200" cy="1900" r="25" fill="rgba(255, 185, 81, 0.1)" />
+  <circle cx="1000" cy="1950" r="35" fill="rgba(143, 124, 255, 0.1)" />
+  
+  <!-- 版本信息 -->
+  <text x="600" y="2100" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999" text-anchor="middle">BitBit v1.0.0</text>
+</svg>

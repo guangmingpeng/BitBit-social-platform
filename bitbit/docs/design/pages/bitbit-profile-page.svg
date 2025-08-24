@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 2000">
+  <!-- 背景 -->
+  <rect width="1200" height="2000" fill="#F9F9FB" />
+  
+  <!-- 状态栏 -->
+  <rect x="0" y="0" width="1200" height="50" fill="#FFFFFF" />
+  <text x="600" y="30" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222" text-anchor="middle">BitBit 个人中心页设计</text>
+  
+  <!-- 用户信息区域 -->
+  <rect x="0" y="50" width="1200" height="300" fill="white" />
+  
+  <!-- 导航 -->
+  <text x="30" y="92" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#222222">个人中心</text>
+  <circle cx="1120" cy="85" r="24" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1120" y="92" font-family="Inter, sans-serif" font-size="16" fill="#999999" text-anchor="middle">⚙️</text>
+  
+  <circle cx="1060" cy="85" r="24" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1060" y="92" font-family="Inter, sans-serif" font-size="16" fill="#999999" text-anchor="middle">🔔</text>
+  
+  <!-- 用户头像和基本信息 -->
+  <circle cx="120" cy="180" r="70" fill="#8F7CFF" />
+  <text x="120" y="195" font-family="Inter, sans-serif" font-size="36" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  
+  <text x="230" y="165" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#222222">子龙</text>
+  <rect x="230" y="180" width="80" height="30" rx="15" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="270" y="200" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">Lv.3</text>
+  
+  <text x="230" y="230" font-family="Inter, sans-serif" font-size="16" fill="#666666">热爱音乐和摄影的技术爱好者</text>
+  
+  <!-- 关注数据 -->
+  <rect x="800" y="140" width="140" height="80" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="870" y="170" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#222222" text-anchor="middle">128</text>
+  <text x="870" y="200" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">关注</text>
+  
+  <rect x="960" y="140" width="140" height="80" rx="8" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="1030" y="170" font-family="Inter, sans-serif" font-size="24" font-weight="600" fill="#222222" text-anchor="middle">256</text>
+  <text x="1030" y="200" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">粉丝</text>
+  
+  <!-- 编辑按钮 -->
+  <rect x="230" y="250" width="140" height="44" rx="22" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="300" y="277" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">编辑资料</text>
+  
+  <!-- 标签导航 -->
+  <rect x="0" y="350" width="1200" height="60" fill="white" />
+  
+  <text x="200" y="387" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#4E6FFF" text-anchor="middle">我的活动</text>
+  <rect x="170" y="406" width="60" height="4" rx="2" fill="#4E6FFF" />
+  
+  <text x="400" y="387" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">我的帖子</text>
+  
+  <text x="600" y="387" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">我的交易</text>
+  
+  <text x="800" y="387" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">我的收藏</text>
+  
+  <text x="1000" y="387" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">草稿箱</text>
+  
+  <!-- 内容区 - 我的活动 -->
+  <!-- 活动分类 -->
+  <rect x="30" y="440" width="140" height="44" rx="22" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="100" y="467" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">全部活动</text>
+  
+  <rect x="180" y="440" width="140" height="44" rx="22" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="250" y="467" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">我组织的</text>
+  
+  <rect x="330" y="440" width="140" height="44" rx="22" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="400" y="467" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">我参加的</text>
+  
+  <rect x="480" y="440" width="140" height="44" rx="22" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="550" y="467" font-family="Inter, sans-serif" font-size="16" fill="#666666" text-anchor="middle">已结束</text>
+  
+  <!-- 活动卡片1 -->
+  <rect x="30" y="510" width="1140" height="180" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="530" width="260" height="140" rx="8" fill="#F3F3F7" />
+  <rect x="50" y="530" width="260" height="140" rx="8" fill="url(#gradient1)" opacity="0.3" />
+  
+  <text x="330" y="550" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#222222">爵士乐现场演出</text>
+  <rect x="330" y="565" width="90" height="30" rx="15" fill="rgba(255, 107, 139, 0.15)" />
+  <text x="375" y="585" font-family="Inter, sans-serif" font-size="14" fill="#FF6B8B" text-anchor="middle">音乐表演</text>
+  
+  <text x="330" y="610" font-family="Inter, sans-serif" font-size="16" fill="#222222">6月15日 周三 20:00-22:00 | 蓝调酒吧</text>
+  <text x="330" y="640" font-family="Inter, sans-serif" font-size="14" fill="#666666">现场爵士乐演出，多位知名爵士乐手演奏经典曲目，还有即兴互动环节。</text>
+  
+  <rect x="330" y="670" width="110" height="36" rx="18" fill="#F3F3F7" />
+  <text x="385" y="692" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">已报名</text>
+  
+  <rect x="450" y="670" width="140" height="36" rx="18" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="520" y="692" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">查看详情</text>
+  
+  <text x="1080" y="550" font-family="Inter, sans-serif" font-size="14" fill="#999999" text-anchor="end">两天后</text>
+  
+  <!-- 活动卡片2 -->
+  <rect x="30" y="710" width="1140" height="180" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="730" width="260" height="140" rx="8" fill="#F3F3F7" />
+  <rect x="50" y="730" width="260" height="140" rx="8" fill="url(#gradient2)" opacity="0.3" />
+  
+  <text x="330" y="750" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#222222">周末爬山活动</text>
+  <rect x="330" y="765" width="90" height="30" rx="15" fill="rgba(78, 111, 255, 0.15)" />
+  <text x="375" y="785" font-family="Inter, sans-serif" font-size="14" fill="#4E6FFF" text-anchor="middle">户外活动</text>
+  
+  <text x="330" y="810" font-family="Inter, sans-serif" font-size="16" fill="#222222">6月18日 周六 09:00-15:00 | 莫干山风景区</text>
+  <text x="330" y="840" font-family="Inter, sans-serif" font-size="14" fill="#666666">一起登山，欣赏美丽的自然风光，感受大自然的魅力。适合所有年龄段的参与者。</text>
+  
+  <rect x="330" y="870" width="110" height="36" rx="18" fill="#F3F3F7" />
+  <text x="385" y="892" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">已报名</text>
+  
+  <rect x="450" y="870" width="140" height="36" rx="18" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="520" y="892" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">查看详情</text>
+  
+  <text x="1080" y="750" font-family="Inter, sans-serif" font-size="14" fill="#999999" text-anchor="end">5天后</text>
+  
+  <!-- 活动卡片3 -->
+  <rect x="30" y="910" width="1140" height="180" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <rect x="50" y="930" width="260" height="140" rx="8" fill="#F3F3F7" />
+  <rect x="50" y="930" width="260" height="140" rx="8" fill="url(#gradient3)" opacity="0.3" />
+  
+  <text x="330" y="950" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#222222">摄影技巧分享会</text>
+  <rect x="330" y="965" width="90" height="30" rx="15" fill="rgba(101, 209, 170, 0.15)" />
+  <text x="375" y="985" font-family="Inter, sans-serif" font-size="14" fill="#65D1AA" text-anchor="middle">技能分享</text>
+  
+  <text x="330" y="1010" font-family="Inter, sans-serif" font-size="16" fill="#222222">6月24日 周五 14:00-16:00 | 创意空间</text>
+  <text x="330" y="1040" font-family="Inter, sans-serif" font-size="14" fill="#666666">分享实用的摄影技巧和后期处理方法，适合初学者和有一定基础的摄影爱好者。</text>
+  
+  <rect x="330" y="1070" width="110" height="36" rx="18" fill="#F3F3F7" />
+  <text x="385" y="1092" font-family="Inter, sans-serif" font-size="14" fill="#666666" text-anchor="middle">已组织</text>
+  
+  <rect x="450" y="1070" width="140" height="36" rx="18" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="520" y="1092" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="middle">编辑活动</text>
+  
+  <text x="1080" y="950" font-family="Inter, sans-serif" font-size="14" fill="#999999" text-anchor="end">11天后</text>
+  
+  <!-- 成就与徽章 -->
+  <text x="30" y="1140" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">我的成就</text>
+  
+  <rect x="30" y="1160" width="1140" height="200" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 徽章1 -->
+  <circle cx="120" cy="1220" r="40" fill="white" stroke="#FFB951" stroke-width="2" />
+  <text x="120" y="1232" font-family="Inter, sans-serif" font-size="30" fill="#FFB951" text-anchor="middle">🏆</text>
+  <text x="120" y="1280" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222" text-anchor="middle">活动达人</text>
+  
+  <!-- 徽章2 -->
+  <circle cx="240" cy="1220" r="40" fill="white" stroke="#4E6FFF" stroke-width="2" />
+  <text x="240" y="1232" font-family="Inter, sans-serif" font-size="30" fill="#4E6FFF" text-anchor="middle">🎯</text>
+  <text x="240" y="1280" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222" text-anchor="middle">社交新星</text>
+  
+  <!-- 徽章3 -->
+  <circle cx="360" cy="1220" r="40" fill="white" stroke="#FF6B8B" stroke-width="2" />
+  <text x="360" y="1232" font-family="Inter, sans-serif" font-size="30" fill="#FF6B8B" text-anchor="middle">🎵</text>
+  <text x="360" y="1280" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#222222" text-anchor="middle">音乐爱好者</text>
+  
+  <!-- 徽章4 -->
+  <circle cx="480" cy="1220" r="40" fill="white" stroke="#E0E0E6" stroke-width="2" />
+  <text x="480" y="1232" font-family="Inter, sans-serif" font-size="30" fill="#E0E0E6" text-anchor="middle">📝</text>
+  <text x="480" y="1280" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#999999" text-anchor="middle">内容创作者</text>
+  <rect x="450" y="1200" width="20" height="20" rx="10" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="460" y="1215" font-family="Inter, sans-serif" font-size="14" fill="#999999" text-anchor="middle">?</text>
+  
+  <!-- 徽章5 -->
+  <circle cx="600" cy="1220" r="40" fill="white" stroke="#E0E0E6" stroke-width="2" />
+  <text x="600" y="1232" font-family="Inter, sans-serif" font-size="30" fill="#E0E0E6" text-anchor="middle">🌟</text>
+  <text x="600" y="1280" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#999999" text-anchor="middle">人气之星</text>
+  <rect x="570" y="1200" width="20" height="20" rx="10" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="580" y="1215" font-family="Inter, sans-serif" font-size="14" fill="#999999" text-anchor="middle">?</text>
+  
+  <!-- 进度条 -->
+  <text x="750" y="1200" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#222222">下一等级：Lv.4</text>
+  <text x="750" y="1230" font-family="Inter, sans-serif" font-size="14" fill="#666666">再获得25点经验值升级</text>
+  <rect x="750" y="1250" width="380" height="14" rx="7" fill="#F3F3F7" />
+  <rect x="750" y="1250" width="260" height="14" rx="7" fill="#4E6FFF" />
+  <text x="1140" y="1250" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#4E6FFF" text-anchor="end">75/100</text>
+  
+  <!-- 快速访问 -->
+  <text x="30" y="1410" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#222222">快速访问</text>
+  
+  <!-- 功能卡片1 -->
+  <rect x="30" y="1440" width="270" height="120" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <circle cx="80" cy="1490" r="24" fill="rgba(78, 111, 255, 0.2)" />
+  <text x="80" y="1498" font-family="Inter, sans-serif" font-size="20" fill="#4E6FFF" text-anchor="middle">📋</text>
+  <text x="160" y="1480" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">我的订单</text>
+  <text x="160" y="1510" font-family="Inter, sans-serif" font-size="14" fill="#666666">查看全部交易记录</text>
+  
+  <!-- 功能卡片2 -->
+  <rect x="320" y="1440" width="270" height="120" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <circle cx="370" cy="1490" r="24" fill="rgba(255, 107, 139, 0.2)" />
+  <text x="370" y="1498" font-family="Inter, sans-serif" font-size="20" fill="#FF6B8B" text-anchor="middle">❤️</text>
+  <text x="450" y="1480" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">我关注的</text>
+  <text x="450" y="1510" font-family="Inter, sans-serif" font-size="14" fill="#666666">好友、活动和内容</text>
+  
+  <!-- 功能卡片3 -->
+  <rect x="610" y="1440" width="270" height="120" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <circle cx="660" cy="1490" r="24" fill="rgba(101, 209, 170, 0.2)" />
+  <text x="660" y="1498" font-family="Inter, sans-serif" font-size="20" fill="#65D1AA" text-anchor="middle">💬</text>
+  <text x="740" y="1480" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">我的消息</text>
+  <text x="740" y="1510" font-family="Inter, sans-serif" font-size="14" fill="#666666">查看私信和通知</text>
+  
+  <!-- 功能卡片4 -->
+  <rect x="900" y="1440" width="270" height="120" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  <circle cx="950" cy="1490" r="24" fill="rgba(143, 124, 255, 0.2)" />
+  <text x="950" y="1498" font-family="Inter, sans-serif" font-size="20" fill="#8F7CFF" text-anchor="middle">⚙️</text>
+  <text x="1030" y="1480" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">设置</text>
+  <text x="1030" y="1510" font-family="Inter, sans-serif" font-size="14" fill="#666666">账号和隐私设置</text>
+  
+  <!-- 帮助栏 -->
+  <rect x="30" y="1590" width="1140" height="80" rx="16" fill="#F3F3F7" />
+  <text x="80" y="1640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#222222">需要帮助? 联系客服或访问帮助中心</text>
+  <rect x="950" y="1615" width="180" height="40" rx="20" fill="white" stroke="#4E6FFF" stroke-width="1.5" />
+  <text x="1040" y="1640" font-family="Inter, sans-serif" font-size="16" font-weight="500" fill="#4E6FFF" text-anchor="middle">获取帮助</text>
+  
+  <!-- 底部导航栏 -->
+  <rect x="0" y="1750" width="1200" height="80" fill="white" filter="drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.05))" />
+  
+  <text x="90" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">首页</text>
+  
+  <text x="340" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">活动</text>
+  
+  <text x="600" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">社区</text>
+  
+  <text x="850" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#666666" text-anchor="middle">二手</text>
+  
+  <text x="1100" y="1800" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#4E6FFF" text-anchor="middle">我的</text>
+  <rect x="1070" y="1770" width="60" height="4" rx="2" fill="#4E6FFF" />
+  
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B8B;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#FFB951;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#8F7CFF;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#65D1AA;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#4E6FFF;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+</svg>

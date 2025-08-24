@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1400">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="gradientPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4E6FFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7D95FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientMint" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#65D1AA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A8E6CF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="1400" fill="#F9F9FB" />
+  
+  <!-- 标题 -->
+  <text x="50" y="70" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="36" font-weight="700" fill="#222222">BitBit 评论互动组件</text>
+  <text x="50" y="110" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" fill="#666666">点赞、评论、分享等社交互动组件设计</text>
+  <line x1="50" y1="140" x2="1150" y2="140" stroke="#E0E0E6" stroke-width="2" />
+  
+  <!-- 1. 基础互动按钮 -->
+  <text x="50" y="190" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">1. 基础互动按钮</text>
+  
+  <!-- 点赞按钮 - 未点赞 -->
+  <rect x="50" y="220" width="120" height="50" rx="25" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="80" y="245" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#999999" text-anchor="middle">♡</text>
+  <text x="120" y="252" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">89</text>
+  <text x="110" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">未点赞</text>
+  
+  <!-- 点赞按钮 - 已点赞 -->
+  <rect x="190" y="220" width="120" height="50" rx="25" fill="rgba(255, 107, 139, 0.1)" stroke="#FF6B8B" stroke-width="1.5" />
+  <text x="220" y="245" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#FF6B8B" text-anchor="middle">❤</text>
+  <text x="260" y="252" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="#FF6B8B" text-anchor="middle">90</text>
+  <text x="250" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">已点赞</text>
+  
+  <!-- 评论按钮 -->
+  <rect x="330" y="220" width="120" height="50" rx="25" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="360" y="245" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#666666" text-anchor="middle">💬</text>
+  <text x="400" y="252" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">23</text>
+  <text x="390" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">评论</text>
+  
+  <!-- 分享按钮 -->
+  <rect x="470" y="220" width="120" height="50" rx="25" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="500" y="245" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#666666" text-anchor="middle">🔗</text>
+  <text x="540" y="252" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">分享</text>
+  <text x="530" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">分享</text>
+  
+  <!-- 收藏按钮 -->
+  <rect x="610" y="220" width="120" height="50" rx="25" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="640" y="245" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#666666" text-anchor="middle">⭐</text>
+  <text x="680" y="252" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">收藏</text>
+  <text x="670" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">收藏</text>
+  
+  <!-- 更多按钮 -->
+  <rect x="750" y="220" width="80" height="50" rx="25" fill="white" stroke="#E0E0E6" stroke-width="1.5" />
+  <text x="790" y="252" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="20" fill="#666666" text-anchor="middle">⋯</text>
+  <text x="790" y="295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">更多</text>
+  
+  <!-- 2. 点赞动画状态 -->
+  <text x="50" y="360" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">2. 点赞动画状态</text>
+  
+  <!-- 点赞动画序列 -->
+  <rect x="50" y="390" width="100" height="100" rx="50" fill="rgba(255, 107, 139, 0.1)" />
+  <text x="100" y="450" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="32" fill="#FF6B8B" text-anchor="middle">❤</text>
+  <text x="100" y="515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">点击瞬间</text>
+  
+  <rect x="170" y="390" width="100" height="100" rx="50" fill="rgba(255, 107, 139, 0.2)" transform="scale(1.1)" transform-origin="220 440" />
+  <text x="220" y="450" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="36" fill="#FF6B8B" text-anchor="middle">❤</text>
+  <text x="220" y="515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">放大效果</text>
+  
+  <rect x="290" y="390" width="100" height="100" rx="50" fill="rgba(255, 107, 139, 0.15)" />
+  <text x="340" y="450" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="32" fill="#FF6B8B" text-anchor="middle">❤</text>
+  <!-- 粒子效果 -->
+  <circle cx="320" cy="420" r="3" fill="#FF6B8B" opacity="0.7" />
+  <circle cx="360" cy="430" r="2" fill="#FF6B8B" opacity="0.5" />
+  <circle cx="350" cy="410" r="2" fill="#FF6B8B" opacity="0.6" />
+  <text x="340" y="515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">粒子散开</text>
+  
+  <rect x="410" y="390" width="100" height="100" rx="50" fill="rgba(255, 107, 139, 0.1)" />
+  <text x="460" y="450" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="32" fill="#FF6B8B" text-anchor="middle">❤</text>
+  <text x="460" y="515" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">完成状态</text>
+  
+  <!-- 3. 评论组件 -->
+  <text x="50" y="580" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">3. 评论组件</text>
+  
+  <!-- 评论列表容器 -->
+  <rect x="50" y="610" width="1100" height="400" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <!-- 评论标题 -->
+  <text x="80" y="645" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">评论 (23)</text>
+  
+  <!-- 排序选项 -->
+  <rect x="900" y="625" width="100" height="32" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="930" y="646" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">最新</text>
+  <text x="980" y="646" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">▼</text>
+  
+  <rect x="1020" y="625" width="100" height="32" rx="16" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="1050" y="646" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">最热</text>
+  <text x="1100" y="646" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">▼</text>
+  
+  <!-- 评论项1 -->
+  <circle cx="110" cy="690" r="24" fill="#65D1AA" />
+  <text x="110" y="698" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  
+  <text x="150" y="680" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">张亮</text>
+  <text x="220" y="680" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">1小时前</text>
+  <text x="150" y="705" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#222222">我也想去！正好最近在学摄影，可以一起交流技巧</text>
+  
+  <!-- 评论互动 -->
+  <text x="150" y="730" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">回复</text>
+  <text x="200" y="730" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">👍 5</text>
+  <text x="250" y="730" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">💬 2</text>
+  
+  <!-- 回复按钮 -->
+  <rect x="950" y="675" width="60" height="28" rx="14" fill="white" stroke="#E0E0E6" stroke-width="1" />
+  <text x="980" y="694" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">回复</text>
+  
+  <!-- 点赞按钮 -->
+  <rect x="1020" y="675" width="60" height="28" rx="14" fill="rgba(255, 107, 139, 0.1)" stroke="#FF6B8B" stroke-width="1" />
+  <text x="1040" y="694" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#FF6B8B" text-anchor="middle">❤ 5</text>
+  
+  <!-- 子评论 -->
+  <line x1="150" y1="750" x2="150" y2="800" stroke="#E0E0E6" stroke-width="2" />
+  <circle cx="180" cy="775" r="20" fill="#8F7CFF" />
+  <text x="180" y="782" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" font-weight="500" fill="white" text-anchor="middle">LS</text>
+  
+  <text x="210" y="770" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#222222">李摄</text>
+  <text x="260" y="770" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#999999">30分钟前</text>
+  <text x="210" y="790" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#222222">@张亮 我可以分享一些拍摄心得</text>
+  
+  <!-- 评论项2 -->
+  <circle cx="110" cy="840" r="24" fill="#FFB951" />
+  <text x="110" y="848" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">XM</text>
+  
+  <text x="150" y="830" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">小美</text>
+  <text x="200" y="830" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">刚刚</text>
+  <text x="150" y="855" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#222222">好想参加！但是我是摄影小白，会不会拖后腿呀 😅</text>
+  
+  <text x="150" y="880" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">回复</text>
+  <text x="200" y="880" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#999999">👍 3</text>
+  
+  <!-- 评论输入框 -->
+  <line x1="80" y1="920" x2="1120" y2="920" stroke="#E0E0E6" stroke-width="1" />
+  
+  <circle cx="110" cy="960" r="20" fill="#F3F3F7" />
+  <text x="110" y="968" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">我</text>
+  
+  <rect x="150" y="940" width="800" height="40" rx="20" fill="#F3F3F7" />
+  <text x="180" y="965" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999">写评论...</text>
+  
+  <rect x="970" y="940" width="80" height="40" rx="20" fill="#4E6FFF" />
+  <text x="1010" y="965" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="500" fill="white" text-anchor="middle">发送</text>
+  
+  <circle cx="1070" cy="960" r="20" fill="#F3F3F7" />
+  <text x="1070" y="968" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">😊</text>
+  
+  <!-- 4. 分享面板 -->
+  <text x="50" y="1070" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#222222">4. 分享面板</text>
+  
+  <!-- 分享弹窗 -->
+  <rect x="50" y="1100" width="320" height="240" rx="20" fill="white" filter="drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.12))" />
+  
+  <text x="80" y="1135" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#222222">分享到</text>
+  
+  <!-- 分享选项 -->
+  <circle cx="110" cy="1170" r="24" fill="#1DA1F2" />
+  <text x="110" y="1178" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">微</text>
+  <text x="110" y="1200" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">微信</text>
+  
+  <circle cx="170" cy="1170" r="24" fill="#07C160" />
+  <text x="170" y="1178" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">朋</text>
+  <text x="170" y="1200" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">朋友圈</text>
+  
+  <circle cx="230" cy="1170" r="24" fill="#FF6B8B" />
+  <text x="230" y="1178" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">微</text>
+  <text x="230" y="1200" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">微博</text>
+  
+  <circle cx="290" cy="1170" r="24" fill="#1296DB" />
+  <text x="290" y="1178" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500" fill="white" text-anchor="middle">QQ</text>
+  <text x="290" y="1200" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">QQ</text>
+  
+  <circle cx="110" cy="1240" r="24" fill="#F3F3F7" />
+  <text x="110" y="1248" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">🔗</text>
+  <text x="110" y="1270" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">复制链接</text>
+  
+  <circle cx="170" cy="1240" r="24" fill="#F3F3F7" />
+  <text x="170" y="1248" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">📋</text>
+  <text x="170" y="1270" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">复制文本</text>
+  
+  <circle cx="230" cy="1240" r="24" fill="#F3F3F7" />
+  <text x="230" y="1248" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666" text-anchor="middle">📱</text>
+  <text x="230" y="1270" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="12" fill="#666666" text-anchor="middle">其他应用</text>
+  
+  <!-- 取消按钮 -->
+  <rect x="80" y="1290" width="260" height="40" rx="20" fill="#F3F3F7" />
+  <text x="210" y="1315" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#666666" text-anchor="middle">取消</text>
+  
+  <!-- 5. 互动统计 -->
+  <text x="400" y="1130" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="24" font-weight="700" fill="#222222">5. 互动统计面板</text>
+  
+  <!-- 统计容器 -->
+  <rect x="400" y="1160" width="360" height="160" rx="16" fill="white" filter="drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08))" />
+  
+  <text x="430" y="1190" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#222222">互动统计</text>
+  
+  <!-- 点赞用户头像 -->
+  <text x="430" y="1215" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">❤ 点赞 (89人)</text>
+  
+  <circle cx="460" cy="1240" r="16" fill="#65D1AA" />
+  <text x="460" y="1247" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="10" font-weight="500" fill="white" text-anchor="middle">ZL</text>
+  
+  <circle cx="490" cy="1240" r="16" fill="#FFB951" />
+  <text x="490" y="1247" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="10" font-weight="500" fill="white" text-anchor="middle">XM</text>
+  
+  <circle cx="520" cy="1240" r="16" fill="#8F7CFF" />
+  <text x="520" y="1247" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="10" font-weight="500" fill="white" text-anchor="middle">LS</text>
+  
+  <circle cx="550" cy="1240" r="16" fill="#F3F3F7" />
+  <text x="550" y="1247" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="10" fill="#666666" text-anchor="middle">+86</text>
+  
+  <!-- 其他统计 -->
+  <text x="430" y="1275" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">💬 评论: 23条</text>
+  <text x="580" y="1275" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">🔗 分享: 12次</text>
+  <text x="430" y="1295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">👁 浏览: 156次</text>
+  <text x="580" y="1295" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">⭐ 收藏: 45次</text>
+  
+  <!-- 设计说明 -->
+  <rect x="50" y="1360" width="1100" height="40" rx="8" fill="rgba(78, 111, 255, 0.05)" stroke="#4E6FFF" stroke-width="1" stroke-dasharray="5,5" />
+  <text x="80" y="1385" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="#666666">设计规范: • 按钮高度: 50px • 圆角: 25px • 点赞颜色: #FF6B8B • 动画时长: 300ms • 评论头像: 48px/40px • 分享面板圆角: 20px</text>
+</svg>

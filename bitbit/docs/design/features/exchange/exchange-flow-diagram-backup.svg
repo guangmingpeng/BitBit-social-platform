@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#FAFAFA"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" fill="#1F2937" font-family="Arial, sans-serif" font-size="24" font-weight="600">
+    BitBit 二手物品交换流程图
+  </text>
+  
+  <!-- User Journey Flow -->
+  
+  <!-- Start Node -->
+  <circle cx="100" cy="150" r="30" fill="#10B981" stroke="#059669" stroke-width="2"/>
+  <text x="100" y="155" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="600">开始</text>
+  
+  <!-- Step 1: Browse Items -->
+  <rect x="200" y="120" width="120" height="60" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="2"/>
+  <text x="260" y="140" text-anchor="middle" fill="#4338CA" font-family="Arial, sans-serif" font-size="11" font-weight="500">浏览物品</text>
+  <text x="260" y="155" text-anchor="middle" fill="#4338CA" font-family="Arial, sans-serif" font-size="11">Exchange List</text>
+  <text x="260" y="170" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">查看所有可交换物品</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M130 150 L200 150" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2: Item Detail -->
+  <rect x="380" y="120" width="120" height="60" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+  <text x="440" y="140" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="11" font-weight="500">查看详情</text>
+  <text x="440" y="155" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="11">Item Detail</text>
+  <text x="440" y="170" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">了解物品信息</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M320 150 L380 150" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Decision: Want to Exchange? -->
+  <polygon points="590,120 650,150 590,180 530,150" fill="#FDE68A" stroke="#F59E0B" stroke-width="2"/>
+  <text x="590" y="140" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="10" font-weight="500">想要</text>
+  <text x="590" y="155" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="10" font-weight="500">交换？</text>
+  <text x="590" y="170" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="10" font-weight="500">Exchange?</text>
+  
+  <!-- Arrow 3 -->
+  <path d="M500 150 L530 150" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Branch: No - Back to Browse -->
+  <path d="M590 120 Q590 80 260 80 Q260 100 260 120" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <text x="425" y="75" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">否 / No</text>
+  
+  <!-- Branch: Yes - Continue -->
+  <text x="710" y="145" fill="#10B981" font-family="Arial, sans-serif" font-size="10">是 / Yes</text>
+  
+  <!-- Step 3: Login Check -->
+  <polygon points="780,120 840,150 780,180 720,150" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+  <text x="780" y="140" text-anchor="middle" fill="#1E40AF" font-family="Arial, sans-serif" font-size="10" font-weight="500">已登录？</text>
+  <text x="780" y="155" text-anchor="middle" fill="#1E40AF" font-family="Arial, sans-serif" font-size="10" font-weight="500">Logged in?</text>
+  
+  <!-- Arrow 4 -->
+  <path d="M650 150 L720 150" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Login Process -->
+  <rect x="880" y="60" width="100" height="50" rx="6" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <text x="930" y="80" text-anchor="middle" fill="#DC2626" font-family="Arial, sans-serif" font-size="10" font-weight="500">登录/注册</text>
+  <text x="930" y="95" text-anchor="middle" fill="#DC2626" font-family="Arial, sans-serif" font-size="10">Login/Register</text>
+  
+  <!-- Arrow to Login -->
+  <path d="M820 130 Q880 130 920 110" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="870" y="125" fill="#EF4444" font-family="Arial, sans-serif" font-size="10">否 / No</text>
+  
+  <!-- Arrow from Login back -->
+  <path d="M930 110 Q930 150 840 150" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)" stroke-dasharray="3,3"/>
+  
+  <!-- Continue if logged in -->
+  <text x="850" y="145" fill="#10B981" font-family="Arial, sans-serif" font-size="10">是 / Yes</text>
+  
+  <!-- Step 4: Exchange Modal -->
+  <rect x="200" y="250" width="120" height="60" rx="8" fill="#F3E8FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="260" y="270" text-anchor="middle" fill="#7C3AED" font-family="Arial, sans-serif" font-size="11" font-weight="500">打开交换弹窗</text>
+  <text x="260" y="285" text-anchor="middle" fill="#7C3AED" font-family="Arial, sans-serif" font-size="11">Exchange Modal</text>
+  <text x="260" y="300" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">选择交换方式</text>
+  
+  <!-- Arrow 5 -->
+  <path d="M780 180 Q780 220 260 220 Q260 240 260 250" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 5: Contact Seller -->
+  <rect x="380" y="250" width="120" height="60" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+  <text x="440" y="270" text-anchor="middle" fill="#059669" font-family="Arial, sans-serif" font-size="11" font-weight="500">联系卖家</text>
+  <text x="440" y="285" text-anchor="middle" fill="#059669" font-family="Arial, sans-serif" font-size="11">Contact Seller</text>
+  <text x="440" y="300" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">发起交换请求</text>
+  
+  <!-- Arrow 6 -->
+  <path d="M320 280 L380 280" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 6: Purchase Process -->
+  <rect x="560" y="250" width="120" height="60" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="620" y="270" text-anchor="middle" fill="#DC2626" font-family="Arial, sans-serif" font-size="11" font-weight="500">购买流程</text>
+  <text x="620" y="285" text-anchor="middle" fill="#DC2626" font-family="Arial, sans-serif" font-size="11">Purchase Flow</text>
+  <text x="620" y="300" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">支付确认</text>
+  
+  <!-- Arrow 7 -->
+  <path d="M500 280 L560 280" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 7: Transaction Complete -->
+  <rect x="740" y="250" width="120" height="60" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+  <text x="800" y="270" text-anchor="middle" fill="#059669" font-family="Arial, sans-serif" font-size="11" font-weight="500">交易完成</text>
+  <text x="800" y="285" text-anchor="middle" fill="#059669" font-family="Arial, sans-serif" font-size="11">Transaction Done</text>
+  <text x="800" y="300" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">交换成功</text>
+  
+  <!-- Arrow 8 -->
+  <path d="M680 280 L740 280" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- End Node -->
+  <circle cx="950" cy="280" r="30" fill="#EF4444" stroke="#DC2626" stroke-width="2"/>
+  <text x="950" y="285" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="600">结束</text>
+  
+  <!-- Arrow 9 -->
+  <path d="M860 280 L920 280" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Publishing Flow Section -->
+  <text x="600" y="380" text-anchor="middle" fill="#1F2937" font-family="Arial, sans-serif" font-size="18" font-weight="600">
+    发布物品流程 / Publishing Flow
+  </text>
+  
+  <!-- Publish Start -->
+  <circle cx="100" cy="450" r="25" fill="#3B82F6" stroke="#1E40AF" stroke-width="2"/>
+  <text x="100" y="455" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="600">发布</text>
+  
+  <!-- Publish Step 1: Login Check -->
+  <polygon points="220,425 280,450 220,475 160,450" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+  <text x="220" y="445" text-anchor="middle" fill="#1E40AF" font-family="Arial, sans-serif" font-size="10" font-weight="500">已登录？</text>
+  <text x="220" y="460" text-anchor="middle" fill="#1E40AF" font-family="Arial, sans-serif" font-size="10" font-weight="500">Logged in?</text>
+  
+  <!-- Arrow P1 -->
+  <path d="M125 450 L160 450" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Publish Step 2: Item Form -->
+  <rect x="350" y="420" width="120" height="60" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+  <text x="410" y="440" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="11" font-weight="500">填写物品信息</text>
+  <text x="410" y="455" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="11">Item Form</text>
+  <text x="410" y="470" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">上传图片，描述</text>
+  
+  <!-- Arrow P2 -->
+  <path d="M280 450 L350 450" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Publish Step 3: Set Attributes -->
+  <rect x="520" y="420" width="120" height="60" rx="8" fill="#F3E8FF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="580" y="440" text-anchor="middle" fill="#7C3AED" font-family="Arial, sans-serif" font-size="11" font-weight="500">设置属性</text>
+  <text x="580" y="455" text-anchor="middle" fill="#7C3AED" font-family="Arial, sans-serif" font-size="11">Set Attributes</text>
+  <text x="580" y="470" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">价格，类别等</text>
+  
+  <!-- Arrow P3 -->
+  <path d="M470 450 L520 450" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Publish Step 4: Preview & Submit -->
+  <rect x="690" y="420" width="120" height="60" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+  <text x="750" y="440" text-anchor="middle" fill="#059669" font-family="Arial, sans-serif" font-size="11" font-weight="500">预览发布</text>
+  <text x="750" y="455" text-anchor="middle" fill="#059669" font-family="Arial, sans-serif" font-size="11">Preview & Submit</text>
+  <text x="750" y="470" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">确认发布</text>
+  
+  <!-- Arrow P4 -->
+  <path d="M640 450 L690 450" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Publish End -->
+  <circle cx="880" cy="450" r="25" fill="#10B981" stroke="#059669" stroke-width="2"/>
+  <text x="880" y="455" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="600">完成</text>
+  
+  <!-- Arrow P5 -->
+  <path d="M810 450 L855 450" stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Key Features Section -->
+  <rect x="50" y="550" width="1100" height="200" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2"/>
+  <text x="600" y="580" text-anchor="middle" fill="#1F2937" font-family="Arial, sans-serif" font-size="16" font-weight="600">
+    主要功能特性 / Key Features
+  </text>
+  
+  <!-- Feature 1 -->
+  <rect x="80" y="600" width="200" height="60" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="1"/>
+  <text x="180" y="620" text-anchor="middle" fill="#4338CA" font-family="Arial, sans-serif" font-size="12" font-weight="500">物品浏览 Browse Items</text>
+  <text x="180" y="635" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 搜索筛选 Search & Filter</text>
+  <text x="180" y="650" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 分类浏览 Category Browse</text>
+  
+  <!-- Feature 2 -->
+  <rect x="300" y="600" width="200" height="60" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+  <text x="400" y="620" text-anchor="middle" fill="#92400E" font-family="Arial, sans-serif" font-size="12" font-weight="500">物品详情 Item Details</text>
+  <text x="400" y="635" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 图片展示 Image Gallery</text>
+  <text x="400" y="650" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 详细描述 Description</text>
+  
+  <!-- Feature 3 -->
+  <rect x="520" y="600" width="200" height="60" rx="8" fill="#F3E8FF" stroke="#8B5CF6" stroke-width="1"/>
+  <text x="620" y="620" text-anchor="middle" fill="#7C3AED" font-family="Arial, sans-serif" font-size="12" font-weight="500">交换机制 Exchange</text>
+  <text x="620" y="635" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 直接购买 Direct Purchase</text>
+  <text x="620" y="650" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 物品交换 Item Exchange</text>
+  
+  <!-- Feature 4 -->
+  <rect x="740" y="600" width="200" height="60" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1"/>
+  <text x="840" y="620" text-anchor="middle" fill="#059669" font-family="Arial, sans-serif" font-size="12" font-weight="500">用户管理 User System</text>
+  <text x="840" y="635" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 登录注册 Auth System</text>
+  <text x="840" y="650" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">• 个人资料 Profile</text>
+  
+  <!-- Legend -->
+  <text x="600" y="720" text-anchor="middle" fill="#1F2937" font-family="Arial, sans-serif" font-size="14" font-weight="600">
+    图例 / Legend
+  </text>
+  <circle cx="200" cy="735" r="8" fill="#10B981"/>
+  <text x="220" y="740" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">开始/结束 Start/End</text>
+  
+  <rect x="350" y="727" width="16" height="16" rx="2" fill="#EEF2FF" stroke="#6366F1"/>
+  <text x="375" y="738" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">流程步骤 Process Step</text>
+  
+  <polygon points="520,727 535,735 520,743 505,735" fill="#FDE68A" stroke="#F59E0B"/>
+  <text x="545" y="738" fill="#6B7280" font-family="Arial, sans-serif" font-size="10">决策节点 Decision Node</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+  </defs>
+</svg>

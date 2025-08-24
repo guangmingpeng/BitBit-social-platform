@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="430" height="972" viewBox="0 0 430 972" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="430" height="972" fill="#F9F9FB"/>
+  
+  <!-- 顶部导航栏 -->
+  <g id="navbar">
+    <rect width="430" height="92" fill="#FFFFFF"/>
+    <rect x="0" y="91" width="430" height="1" fill="#E0E0E6"/>
+    
+    <!-- 返回按钮 -->
+    <g id="back-button" transform="translate(20, 54)">
+      <circle cx="12" cy="12" r="12" fill="#F3F3F7"/>
+      <path d="M13 8L9 12L13 16" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    
+    <!-- 标题 -->
+    <text x="215" y="70" font-family="system-ui" font-size="20" font-weight="600" fill="#222222" text-anchor="middle">活动报名</text>
+  </g>
+
+  <!-- 活动信息卡片 -->
+  <g id="activity-info-card" transform="translate(20, 112)">
+    <rect width="390" height="160" rx="16" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="390" height="160" rx="16" stroke="#E0E0E6" stroke-width="1"/>
+    
+    <!-- 活动封面图 -->
+    <rect x="16" y="16" width="80" height="80" rx="8" fill="#F9F0FF"/>
+    <circle cx="56" cy="56" r="16" fill="#8F7CFF"/>
+    <path d="M48 52L52 56L64 44" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- 活动信息 -->
+    <text x="112" y="32" font-family="system-ui" font-size="18" font-weight="600" fill="#222222">读书分享会</text>
+    <text x="112" y="52" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">8月26日 14:00-16:00</text>
+    <text x="112" y="72" font-family="system-ui" font-size="14" font-weight="400" fill="#666666">三里屯书店</text>
+    
+    <!-- 参与人数和免费标签 -->
+    <g transform="translate(112, 84)">
+      <rect width="48" height="20" rx="10" fill="#F9F0FF"/>
+      <text x="24" y="14" font-family="system-ui" font-size="12" font-weight="500" fill="#8F7CFF" text-anchor="middle">8/15人</text>
+      
+      <!-- 免费标签 -->
+      <rect x="60" y="0" width="32" height="20" rx="10" fill="#F0FFF7"/>
+      <text x="76" y="14" font-family="system-ui" font-size="12" font-weight="500" fill="#12B76A" text-anchor="middle">免费</text>
+    </g>
+    
+    <!-- 活动分类标签 -->
+    <g transform="translate(112, 112)">
+      <rect width="40" height="20" rx="10" fill="#F9F0FF"/>
+      <text x="20" y="14" font-family="system-ui" font-size="10" font-weight="500" fill="#8F7CFF" text-anchor="middle">📚 读书</text>
+    </g>
+  </g>
+
+  <!-- 报名表单 -->
+  <g id="registration-form" transform="translate(20, 292)">
+    <!-- 表单容器 -->
+    <rect width="390" height="500" rx="16" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="390" height="500" rx="16" stroke="#E0E0E6" stroke-width="1"/>
+    
+    <!-- 表单标题 -->
+    <text x="20" y="36" font-family="system-ui" font-size="20" font-weight="600" fill="#222222">报名信息</text>
+    
+    <!-- 姓名输入 -->
+    <g transform="translate(20, 56)">
+      <text x="0" y="16" font-family="system-ui" font-size="14" font-weight="500" fill="#222222">姓名 *</text>
+      <rect x="0" y="24" width="350" height="48" rx="8" fill="#FFFFFF" stroke="#E0E0E6" stroke-width="1"/>
+      <text x="16" y="50" font-family="system-ui" font-size="16" font-weight="400" fill="#999999">请输入您的真实姓名</text>
+    </g>
+    
+    <!-- 手机号输入 -->
+    <g transform="translate(20, 144)">
+      <text x="0" y="16" font-family="system-ui" font-size="14" font-weight="500" fill="#222222">手机号 *</text>
+      <rect x="0" y="24" width="350" height="48" rx="8" fill="#FFFFFF" stroke="#E0E0E6" stroke-width="1"/>
+      <text x="16" y="50" font-family="system-ui" font-size="16" font-weight="400" fill="#999999">请输入您的手机号码</text>
+    </g>
+    
+    <!-- 兴趣话题 -->
+    <g transform="translate(20, 232)">
+      <text x="0" y="16" font-family="system-ui" font-size="14" font-weight="500" fill="#222222">感兴趣的话题</text>
+      <rect x="0" y="24" width="350" height="48" rx="8" fill="#FFFFFF" stroke="#E0E0E6" stroke-width="1"/>
+      <text x="16" y="50" font-family="system-ui" font-size="16" font-weight="400" fill="#999999">请选择您感兴趣的讨论话题</text>
+      <path d="M325 45L330 50L325 55" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    
+    <!-- 自我介绍 -->
+    <g transform="translate(20, 320)">
+      <text x="0" y="16" font-family="system-ui" font-size="14" font-weight="500" fill="#222222">简单自我介绍</text>
+      <rect x="0" y="24" width="350" height="72" rx="8" fill="#FFFFFF" stroke="#E0E0E6" stroke-width="1"/>
+      <text x="16" y="42" font-family="system-ui" font-size="16" font-weight="400" fill="#999999">分享一下您的阅读偏好和参与动机...</text>
+    </g>
+    
+    <!-- 免费活动提示 -->
+    <g transform="translate(20, 420)">
+      <rect x="0" y="0" width="350" height="60" rx="8" fill="#F0FFF7"/>
+      <g transform="translate(16, 20)">
+        <circle cx="8" cy="8" r="8" fill="#12B76A"/>
+        <text x="8" y="12" font-family="system-ui" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">✓</text>
+        <text x="24" y="8" font-family="system-ui" font-size="12" font-weight="500" fill="#0D7542">免费活动</text>
+        <text x="24" y="24" font-family="system-ui" font-size="12" font-weight="400" fill="#0D7542">此活动完全免费，报名成功即可参与</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- 注意事项 -->
+  <g id="notice" transform="translate(20, 812)">
+    <rect width="390" height="60" rx="8" fill="#FFF8E1"/>
+    <g transform="translate(16, 20)">
+      <circle cx="8" cy="8" r="8" fill="#FFB951"/>
+      <text x="8" y="12" font-family="system-ui" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">!</text>
+      <text x="24" y="8" font-family="system-ui" font-size="12" font-weight="400" fill="#E65100">温馨提示</text>
+      <text x="24" y="24" font-family="system-ui" font-size="12" font-weight="400" fill="#E65100">请确保信息准确无误，报名成功后将发送确认短信</text>
+    </g>
+  </g>
+
+  <!-- 底部按钮区域 -->
+  <g id="bottom-actions" transform="translate(0, 892)">
+    <rect width="430" height="80" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="430" height="1" fill="#E0E0E6"/>
+    
+    <!-- 确认报名按钮 -->
+    <g transform="translate(20, 20)">
+      <rect width="390" height="48" rx="24" fill="#12B76A"/>
+      <text x="195" y="30" font-family="system-ui" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle">确认报名（免费）</text>
+    </g>
+  </g>
+</svg>

@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -6,13 +6,46 @@ import {
   Grid,
   CategoryItem,
   SectionHeader,
-  ActivityCard,
-  ExchangeItem,
+  ExchangeModal,
+  PurchaseModal,
 } from "@/components/ui";
+import { ActivityCard } from "@/features/activities";
+import { ExchangeCard } from "@/features/exchange";
 import PostCard from "@/features/community/components/PostCard";
+import { getAllExchangeItems } from "@/shared/data/exchangeItems";
+import { getPopularActivities } from "@/shared/data/activities";
 
 const Home: FC = () => {
   const navigate = useNavigate();
+
+  // 模态框状态
+  const [showExchangeModal, setShowExchangeModal] = useState(false);
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<{
+    id: string;
+    title: string;
+    image: string;
+    price: number;
+    seller: { name: string; avatar: string; rating: number };
+  } | null>(null);
+
+  // 处理交换
+  const handleExchange = (item: (typeof exchangeItems)[0]) => {
+    setSelectedItem({
+      id: item.id,
+      title: item.title,
+      image: item.image || "https://picsum.photos/400/400?random=default",
+      price: item.price,
+      seller: {
+        name: item.seller.name,
+        avatar:
+          item.seller.avatar || "https://picsum.photos/40/40?random=seller",
+        rating: item.seller.rating,
+      },
+    });
+    setShowExchangeModal(true);
+  };
+
   // 模拟数据
   const categories = [
     { id: "1", name: "运动", icon: "🏃", color: "primary" },
@@ -23,42 +56,8 @@ const Home: FC = () => {
     { id: "6", name: "户外", icon: "🌳", color: "primary" },
   ];
 
-  const activities = [
-    {
-      id: "1",
-      title: "爵士乐现场演出",
-      description: "享受一场精彩的爵士乐演出，与音乐爱好者一起度过美好的夜晚",
-      category: "music" as const,
-      date: "8月25日",
-      time: "20:00-22:00",
-      location: "蓝调酒吧",
-      currentParticipants: 42,
-      maxParticipants: 50,
-      organizer: {
-        name: "音乐协会",
-        avatar: "https://picsum.photos/40/40?random=1",
-      },
-      images: ["https://picsum.photos/300/200?random=jazz"],
-      price: 68,
-    },
-    {
-      id: "2",
-      title: "咖啡品鉴工作坊",
-      description: "学习咖啡品鉴技巧，从基础知识到专业技能",
-      category: "food" as const,
-      date: "8月26日",
-      time: "14:00-16:00",
-      location: "星空咖啡馆",
-      currentParticipants: 18,
-      maxParticipants: 25,
-      organizer: {
-        name: "咖啡达人",
-        avatar: "https://picsum.photos/40/40?random=2",
-      },
-      images: ["https://picsum.photos/300/200?random=coffee"],
-      price: 128,
-    },
-  ];
+  const exchangeItems = getAllExchangeItems();
+  const activities = getPopularActivities(2);
 
   const communityPosts = [
     {
@@ -91,7 +90,6 @@ const Home: FC = () => {
       },
       content:
         "推荐一本最近看的书《深度工作》，讲述如何在信息爆炸的时代保持专注。书中的理念对提高工作效率很有帮助，推荐给大家！这本书从心理学和神经科学的角度分析了专注力的重要性，提供了很多实用的方法来培养深度工作的能力。",
-      // 没有图片，测试无图片时的布局
       category: "reading" as const,
       publishTime: "5小时前",
       likes: 23,
@@ -99,27 +97,6 @@ const Home: FC = () => {
       shares: 7,
       isLiked: true,
       isBookmarked: true,
-    },
-  ];
-
-  const exchangeItems = [
-    {
-      id: "1",
-      title: "二手书籍合集",
-      condition: "90%新",
-      category: "文学类",
-      price: 50,
-      image: "https://picsum.photos/300/200?random=books",
-      icon: "📚",
-    },
-    {
-      id: "2",
-      title: "iPhone 12",
-      condition: "95%新",
-      category: "128GB",
-      price: 3200,
-      image: "https://picsum.photos/300/200?random=phone",
-      icon: "📱",
     },
   ];
 
@@ -170,7 +147,8 @@ const Home: FC = () => {
               <ActivityCard
                 key={activity.id}
                 {...activity}
-                onClick={() => console.log(`查看活动: ${activity.title}`)}
+                onClick={() => navigate(`/activities/${activity.id}`)}
+                onJoin={() => console.log(`参加活动: ${activity.title}`)}
               />
             ))}
           </Grid>
@@ -205,18 +183,54 @@ const Home: FC = () => {
             actionText="查看全部"
             onActionClick={() => navigate("/exchange")}
           />
-          <Grid cols={2} gap="lg">
-            {exchangeItems.map((item) => (
-              <ExchangeItem
-                key={item.id}
-                {...item}
-                onClick={() => console.log(`查看商品: ${item.title}`)}
-                onExchange={() => console.log(`交换商品: ${item.title}`)}
-              />
+          {/* 水平滚动的4个紧凑卡片 */}
+          <div className="flex gap-6 overflow-x-auto pb-4">
+            {exchangeItems.slice(0, 4).map((item) => (
+              <div key={item.id} className="flex-shrink-0">
+                <ExchangeCard
+                  {...item}
+                  layout="compact"
+                  onClick={() => navigate(`/exchange/${item.id}`)}
+                  onExchange={() => handleExchange(item)}
+                  onLike={() => console.log(`收藏商品: ${item.title}`)}
+                />
+              </div>
             ))}
-          </Grid>
+          </div>
         </section>
       </Container>
+
+      {/* 交换模态框 */}
+      {selectedItem && (
+        <ExchangeModal
+          open={showExchangeModal}
+          onClose={() => {
+            setShowExchangeModal(false);
+            setSelectedItem(null);
+          }}
+          item={selectedItem}
+          onConfirm={(data) => {
+            console.log("交换请求数据:", data);
+            // 这里可以调用API发送交换请求
+          }}
+        />
+      )}
+
+      {/* 购买模态框 */}
+      {selectedItem && (
+        <PurchaseModal
+          open={showPurchaseModal}
+          onClose={() => {
+            setShowPurchaseModal(false);
+            setSelectedItem(null);
+          }}
+          item={selectedItem}
+          onConfirm={(data) => {
+            console.log("购买请求数据:", data);
+            // 这里可以调用API发送购买请求
+          }}
+        />
+      )}
     </div>
   );
 };

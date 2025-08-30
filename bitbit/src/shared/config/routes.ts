@@ -12,6 +12,7 @@ const Exchange = lazy(() => import("@/pages/Exchange"));
 const ExchangeDetail = lazy(() => import("@/pages/ExchangeDetail"));
 const PublishItem = lazy(() => import("@/pages/PublishItem"));
 const Community = lazy(() => import("@/pages/Community"));
+const PostDetail = lazy(() => import("@/pages/PostDetail"));
 const Profile = lazy(() => import("@/pages/Profile"));
 
 // 路由配置
@@ -59,6 +60,10 @@ export const routes = [
   {
     path: "/community",
     element: Community,
+  },
+  {
+    path: "/community/:id",
+    element: PostDetail,
   },
   {
     path: "/profile",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, Avatar, Tag } from "@/components/ui";
+import { ImageCarousel } from "@/components/common";
 import { cn } from "@/shared/utils/cn";
 
 export interface PostCardProps {
@@ -18,6 +19,7 @@ export interface PostCardProps {
   shares: number;
   isLiked?: boolean;
   isBookmarked?: boolean;
+  layout?: "default" | "compact";
   className?: string;
   onLike?: () => void;
   onComment?: () => void;
@@ -37,6 +39,7 @@ const PostCard: React.FC<PostCardProps> = ({
   shares,
   isLiked = false,
   isBookmarked = false,
+  layout = "default",
   className,
   onLike,
   onComment,
@@ -45,7 +48,6 @@ const PostCard: React.FC<PostCardProps> = ({
   onClick,
 }) => {
   const [showFullContent, setShowFullContent] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const categoryConfig = {
     music: { variant: "music" as const, label: "音乐", emoji: "🎵" },
@@ -75,15 +77,121 @@ const PostCard: React.FC<PostCardProps> = ({
   };
 
   const handleCardClick = () => {
+    console.log("PostCard: 卡片被点击");
     onClick?.();
   };
 
-  const shouldTruncateContent = content.length > 200;
+  const shouldTruncateContent =
+    layout === "compact" ? content.length > 100 : content.length > 200;
+  const truncateLength = layout === "compact" ? 100 : 200;
   const displayContent =
     shouldTruncateContent && !showFullContent
-      ? content.slice(0, 200) + "..."
+      ? content.slice(0, truncateLength) + "..."
       : content;
 
+  // 紧凑布局
+  if (layout === "compact") {
+    return (
+      <Card
+        className={cn("group cursor-pointer", className)}
+        hover
+        onClick={handleCardClick}
+      >
+        <CardContent className="p-3">
+          <div className="flex gap-3">
+            {/* 左侧图片 */}
+            {images && images.length > 0 && (
+              <div className="w-20 h-20 flex-shrink-0">
+                <ImageCarousel
+                  images={images}
+                  alt="帖子图片"
+                  height="80px"
+                  showIndicators={false}
+                  showArrows={false}
+                  showCounter={images.length > 1}
+                  onImageClick={(index, image) => {
+                    console.log("点击图片:", index, image);
+                  }}
+                />
+              </div>
+            )}
+
+            {/* 右侧内容 */}
+            <div className="flex-1 min-w-0">
+              {/* 作者信息 */}
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Avatar
+                    src={author.avatar}
+                    fallback={author.name}
+                    size="sm"
+                  />
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm font-medium text-text-primary truncate">
+                      {author.name}
+                    </span>
+                    {author.isVerified && (
+                      <svg
+                        className="w-3 h-3 text-primary-500 flex-shrink-0"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                {category && (
+                  <Tag variant={categoryConfig[category].variant} size="sm">
+                    {categoryConfig[category].emoji}
+                  </Tag>
+                )}
+              </div>
+
+              {/* 内容 */}
+              <div className="mb-2">
+                <p className="text-sm text-text-primary line-clamp-2">
+                  {displayContent}
+                  {shouldTruncateContent && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowFullContent(!showFullContent);
+                      }}
+                      className="ml-1 text-primary-500 hover:text-primary-600 text-xs"
+                    >
+                      {showFullContent ? "收起" : "展开"}
+                    </button>
+                  )}
+                </p>
+              </div>
+
+              {/* 互动信息 */}
+              <div className="flex items-center justify-between text-xs text-text-tertiary">
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1">
+                    <span>❤</span>
+                    <span>{likes}</span>
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span>💬</span>
+                    <span>{comments}</span>
+                  </span>
+                </div>
+                <span>{publishTime}</span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // 默认布局
   return (
     <Card
       className={cn("group cursor-pointer", className)}
@@ -145,100 +253,19 @@ const PostCard: React.FC<PostCardProps> = ({
 
           {/* 图片轮播 */}
           {images && images.length > 0 && (
-            <div className="relative rounded-lg overflow-hidden bg-gray-100">
-              {images.length === 1 ? (
-                // 单张图片
-                <div className="aspect-video">
-                  <img
-                    src={images[0]}
-                    alt="图片"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              ) : (
-                // 多张图片轮播
-                <div className="aspect-video relative">
-                  <img
-                    src={images[currentImageIndex]}
-                    alt={`图片 ${currentImageIndex + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-
-                  {/* 图片指示器 */}
-                  <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1">
-                    {images.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCurrentImageIndex(index);
-                        }}
-                        className={cn(
-                          "w-2 h-2 rounded-full transition-all",
-                          index === currentImageIndex
-                            ? "bg-white"
-                            : "bg-white/50"
-                        )}
-                      />
-                    ))}
-                  </div>
-
-                  {/* 左右切换按钮 */}
-                  {images.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCurrentImageIndex((prev) =>
-                            prev === 0 ? images.length - 1 : prev - 1
-                          );
-                        }}
-                        className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCurrentImageIndex((prev) =>
-                            prev === images.length - 1 ? 0 : prev + 1
-                          );
-                        }}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                    </>
-                  )}
-
-                  {/* 图片计数 */}
-                  {images.length > 1 && (
-                    <div className="absolute top-3 right-3 bg-black/50 text-white px-2 py-1 rounded-full text-sm">
-                      {currentImageIndex + 1}/{images.length}
-                    </div>
-                  )}
-                </div>
-              )}
+            <div className="aspect-video">
+              <ImageCarousel
+                images={images}
+                alt="帖子图片"
+                height="100%"
+                showIndicators={images.length > 1}
+                showArrows={images.length > 1}
+                showCounter={images.length > 1}
+                onImageClick={(index, image) => {
+                  // 可以添加图片预览逻辑
+                  console.log("点击图片:", index, image);
+                }}
+              />
             </div>
           )}
         </div>

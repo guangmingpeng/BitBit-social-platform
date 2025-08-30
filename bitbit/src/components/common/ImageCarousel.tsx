@@ -48,6 +48,10 @@ interface ImageCarouselProps {
    */
   rounded?: boolean;
   /**
+   * 图片填充方式
+   */
+  objectFit?: "cover" | "contain" | "fill" | "scale-down" | "none";
+  /**
    * 点击图片的回调
    */
   onImageClick?: (index: number, image: string) => void;
@@ -65,6 +69,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
   autoPlayInterval = 3000,
   height = "300px",
   rounded = true,
+  objectFit = "cover",
   onImageClick,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -127,7 +132,12 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
           src={images[0]}
           alt={alt}
           className={cn(
-            "w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-105",
+            "w-full h-full cursor-pointer transition-transform duration-300 hover:scale-105",
+            objectFit === "cover" && "object-cover",
+            objectFit === "contain" && "object-contain",
+            objectFit === "fill" && "object-fill",
+            objectFit === "scale-down" && "object-scale-down",
+            objectFit === "none" && "object-none",
             imageClassName
           )}
           onClick={() => onImageClick?.(0, images[0])}
@@ -156,7 +166,12 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
             src={image}
             alt={`${alt} ${index + 1}`}
             className={cn(
-              "w-full h-full object-cover flex-shrink-0 cursor-pointer",
+              "w-full h-full flex-shrink-0 cursor-pointer",
+              objectFit === "cover" && "object-cover",
+              objectFit === "contain" && "object-contain",
+              objectFit === "fill" && "object-fill",
+              objectFit === "scale-down" && "object-scale-down",
+              objectFit === "none" && "object-none",
               imageClassName
             )}
             onClick={() => onImageClick?.(index, image)}

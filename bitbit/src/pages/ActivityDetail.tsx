@@ -76,9 +76,9 @@ const ActivityDetail: FC = () => {
   };
 
   const handleCreateSimilar = () => {
-    console.log("创建同类活动");
+    // 跳转到创建活动页面
+    navigateWithSource("activity-detail")("/publish-activity");
   };
-
   const handleViewLocationDetails = () => {
     console.log("查看详细地址");
   };

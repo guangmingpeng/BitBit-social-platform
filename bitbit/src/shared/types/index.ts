@@ -50,6 +50,7 @@ export interface Activity {
   price?: number;
   isFree?: boolean;
   detailContent?: string;
+  registrationDeadline?: string;
   createdAt: string;
   updatedAt: string;
 }

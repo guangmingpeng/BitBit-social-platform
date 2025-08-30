@@ -17,11 +17,12 @@ const ActivityHeader: FC<ActivityHeaderProps> = ({
   isLiked,
 }) => {
   return (
-    <div className="relative h-96 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600">
+    <div className="relative h-96 overflow-hidden rounded-2xl bg-gray-100">
       <ImageCarousel
         images={activity.images || []}
         alt={activity.title}
         height="384px"
+        objectFit="contain"
         showIndicators={activity.images && activity.images.length > 1}
         showArrows={activity.images && activity.images.length > 1}
         showCounter={activity.images && activity.images.length > 1}

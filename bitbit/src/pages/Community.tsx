@@ -193,7 +193,12 @@ const Community: FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="flex-1 rounded-md border-gray-300 shadow-sm px-3 py-2 border focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
               />
-              <Button variant="primary">发布新帖子</Button>
+              <Button
+                variant="primary"
+                onClick={() => navigate("/community/publish")}
+              >
+                发布新帖子
+              </Button>
             </div>
 
             {/* 筛选标签 */}

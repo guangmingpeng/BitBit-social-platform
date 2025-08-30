@@ -1,47 +1,37 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@/components/ui";
-import { ActivityForm } from "@/features/activities/components/ActivityForm";
-import ActivityPreview from "@/features/activities/components/ActivityPreview";
-import type { ActivityFormData } from "@/features/activities/components/ActivityForm";
+import { CommunityPostForm } from "@/features/community/components/CommunityPostForm";
+import PostPreview from "@/features/community/components/PostPreview";
+import type { CommunityPostFormData } from "@/features/community/components/CommunityPostForm";
 
-const PublishActivity: React.FC = () => {
+const PublishPost: React.FC = () => {
   const navigate = useNavigate();
   const previewRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState<ActivityFormData>({
+  const [formData, setFormData] = useState<CommunityPostFormData>({
     title: "",
-    description: "",
+    content: "",
     category: "",
-    startDate: "",
-    endDate: "",
-    location: "",
-    maxParticipants: 20,
-    registrationDeadline: "",
-    fee: 0,
     tags: [],
     images: [],
-    requirements: "",
-    contactInfo: "",
-    isOnline: false,
-    meetingLink: "",
-    schedule: [],
-    notices: [],
+    isPrivate: false,
+    allowComments: true,
   });
 
-  const handleSubmit = async (formData: ActivityFormData) => {
+  const handleSubmit = async (formData: CommunityPostFormData) => {
     setIsSubmitting(true);
 
     try {
       // 模拟API调用
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      console.log("发布活动:", formData);
+      console.log("发布帖子:", formData);
 
-      // 发布成功后跳转到活动列表页面
-      navigate("/activities", {
+      // 发布成功后跳转到社区页面
+      navigate("/community", {
         replace: true,
-        state: { message: "活动发布成功！" },
+        state: { message: "帖子发布成功！" },
       });
     } catch (error) {
       console.error("发布失败:", error);
@@ -52,7 +42,7 @@ const PublishActivity: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate("/activities");
+    navigate("/community");
   };
 
   // 处理字段焦点，滚动预览到对应位置
@@ -61,22 +51,12 @@ const PublishActivity: React.FC = () => {
 
     const fieldScrollMap: { [key: string]: number } = {
       title: 0,
-      description: 100,
-      images: 200,
-      category: 300,
-      startDate: 400,
-      endDate: 400,
-      isOnline: 450,
-      location: 450,
-      meetingLink: 450,
-      maxParticipants: 500,
-      fee: 500,
-      registrationDeadline: 550,
-      requirements: 600,
-      contactInfo: 650,
-      schedule: 700,
-      notices: 800,
-      tags: 900,
+      content: 100,
+      category: 200,
+      images: 300,
+      tags: 400,
+      isPrivate: 450,
+      allowComments: 500,
     };
 
     const scrollOffset = fieldScrollMap[fieldName] || 0;
@@ -91,9 +71,11 @@ const PublishActivity: React.FC = () => {
       <Container size="full" className="py-6">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-text-primary mb-2">
-            发布新活动
+            发布新帖子
           </h1>
-          <p className="text-text-secondary">创建精彩活动，邀请大家一起参与</p>
+          <p className="text-text-secondary">
+            分享你的想法，与社区成员交流互动
+          </p>
         </div>
 
         {/* 左右分栏布局 */}
@@ -119,12 +101,12 @@ const PublishActivity: React.FC = () => {
                   <span className="font-medium">编辑模式</span>
                 </div>
                 <p className="text-sm text-blue-600 mt-1">
-                  在左侧编辑活动信息，右侧会实时显示预览效果
+                  在左侧编辑帖子内容，右侧会实时显示预览效果
                 </p>
               </div>
             </div>
 
-            <ActivityForm
+            <CommunityPostForm
               initialData={formData}
               onSubmit={handleSubmit}
               onCancel={handleCancel}
@@ -161,7 +143,7 @@ const PublishActivity: React.FC = () => {
               ref={previewRef}
               className="max-h-[calc(100vh-180px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
             >
-              <ActivityPreview formData={formData} />
+              <PostPreview formData={formData} />
             </div>
           </div>
         </div>
@@ -170,4 +152,4 @@ const PublishActivity: React.FC = () => {
   );
 };
 
-export default PublishActivity;
+export default PublishPost;

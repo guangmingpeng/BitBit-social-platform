@@ -194,7 +194,10 @@ const Home: FC = () => {
               <PostCard
                 key={post.id}
                 {...post}
-                onClick={() => console.log(`查看帖子: ${post.id}`)}
+                onClick={() => {
+                  const navigateToPost = navigateWithSource("home");
+                  navigateToPost(`/community/${post.id}`);
+                }}
                 onLike={() => console.log(`点赞帖子: ${post.id}`)}
                 onComment={() => console.log(`评论帖子: ${post.id}`)}
                 onShare={() => console.log(`分享帖子: ${post.id}`)}

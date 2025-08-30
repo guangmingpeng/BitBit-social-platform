@@ -45,6 +45,7 @@ export const useSmartNavigation = () => {
     const fromSource = location.state?.fromSource;
     const originalSource = location.state?.originalSource;
     const isRegisterPage = currentPath.includes("/register");
+    const isPostDetailPage = currentPath.match(/^\/community\/[^/]+$/);
 
     console.log("=== Smart Go Back Debug ===");
     console.log("Current path:", currentPath);
@@ -55,7 +56,36 @@ export const useSmartNavigation = () => {
       stack.map((s) => ({ path: s.pathname, from: s.fromSource }))
     );
 
-    // 1. 处理报名页的返回
+    // 1. 处理帖子详情页的返回
+    if (isPostDetailPage) {
+      if (fromSource === "community") {
+        console.log("→ 帖子详情页返回社区");
+        navigate("/community", { replace: true });
+        return;
+      } else if (fromSource === "home") {
+        console.log("→ 帖子详情页返回首页");
+        navigate("/", { replace: true });
+        return;
+      }
+
+      // 兜底：从栈中查找前一个页面
+      const currentIndex = stack.findIndex(
+        (entry) => entry.pathname === currentPath
+      );
+      if (currentIndex > 0) {
+        const previousEntry = stack[currentIndex - 1];
+        console.log("→ 帖子详情页返回栈中前一个页面:", previousEntry.pathname);
+        navigate(previousEntry.pathname, { replace: true });
+        return;
+      }
+
+      // 最终兜底：返回社区
+      console.log("→ 帖子详情页最终兜底返回社区");
+      navigate("/community", { replace: true });
+      return;
+    }
+
+    // 2. 处理报名页的返回
     if (isRegisterPage) {
       if (fromSource === "activity-detail") {
         // 从详情页进入报名页，返回详情页并保持原始来源
@@ -103,7 +133,7 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 2. 处理详情页的返回
+    // 3. 处理活动详情页的返回
     if (currentPath.match(/^\/activities\/[^/]+$/)) {
       if (fromSource === "registration") {
         // 从报名页返回到详情页，现在需要返回到详情页的原始来源
@@ -156,7 +186,7 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 3. 其他页面的通用返回逻辑
+    // 4. 其他页面的通用返回逻辑
     if (stack.length > 1) {
       const previousEntry = stack[stack.length - 2];
       console.log("→ 通用返回逻辑，返回:", previousEntry.pathname);

@@ -3,9 +3,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Container, Breadcrumb, Button } from "@/components/ui";
 import PostCard from "@/features/community/components/PostCard";
 import { useNavigationFilters } from "@/shared/hooks/useNavigationStore";
+import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
 
 const Community: FC = () => {
   const navigate = useNavigate();
+  const { navigateWithSource } = useSmartNavigation();
   const [searchParams] = useSearchParams();
   const { communityFilters, setCommunityFilters } = useNavigationFilters();
 
@@ -239,7 +241,10 @@ const Community: FC = () => {
                 <PostCard
                   key={post.id}
                   {...post}
-                  onClick={() => console.log(`查看帖子: ${post.id}`)}
+                  onClick={() => {
+                    const navigateToPost = navigateWithSource("community");
+                    navigateToPost(`/community/${post.id}`);
+                  }}
                   onLike={() => console.log(`点赞帖子: ${post.id}`)}
                   onComment={() => console.log(`评论帖子: ${post.id}`)}
                   onShare={() => console.log(`分享帖子: ${post.id}`)}

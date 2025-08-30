@@ -22,7 +22,11 @@ export const mockActivities: Activity[] = [
       createdAt: "2024-01-01T00:00:00Z",
       updatedAt: "2024-01-01T00:00:00Z",
     },
-    images: ["https://picsum.photos/800/600?random=jazz"],
+    images: [
+      "https://picsum.photos/800/600?random=jazz1",
+      "https://picsum.photos/800/600?random=jazz2",
+      "https://picsum.photos/800/600?random=jazz3",
+    ],
     price: 68,
     isFree: false,
     status: "published",
@@ -73,7 +77,10 @@ export const mockActivities: Activity[] = [
       createdAt: "2024-01-01T00:00:00Z",
       updatedAt: "2024-01-01T00:00:00Z",
     },
-    images: ["https://picsum.photos/800/600?random=coffee"],
+    images: [
+      "https://picsum.photos/800/600?random=coffee1",
+      "https://picsum.photos/800/600?random=coffee2",
+    ],
     price: 128,
     isFree: false,
     status: "published",
@@ -203,6 +210,83 @@ export const mockActivities: Activity[] = [
         <li>可以分享读过的好书</li>
         <li>交流读书心得和方法</li>
         <li>推荐值得阅读的书籍</li>
+      </ul>
+    `,
+  },
+  {
+    id: "music-festival-2024",
+    title: "周末音乐节",
+    description:
+      "为期两天的音乐盛宴，汇聚10+乐队现场表演，美食摊位，创意市集，与音乐爱好者一起度过难忘的周末时光。",
+    category: "music",
+    date: "6月25-26日",
+    time: "10:00-22:00",
+    location: "湖畔音乐广场",
+    currentParticipants: 156,
+    maxParticipants: 500,
+    organizer: {
+      id: "org-festival",
+      username: "音乐节组委会",
+      email: "festival@example.com",
+      avatar: "https://picsum.photos/40/40?random=festival",
+      bio: "专业音乐节策划团队",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    images: [
+      "https://picsum.photos/800/600?random=festival1",
+      "https://picsum.photos/800/600?random=festival2",
+      "https://picsum.photos/800/600?random=festival3",
+    ],
+    price: 168,
+    isFree: false,
+    status: "published",
+    tags: ["音乐节", "现场演出", "户外活动", "美食"],
+    startTime: "2024-06-25T10:00:00Z",
+    endTime: "2024-06-26T22:00:00Z",
+    capacity: 500,
+    coverImage: "https://picsum.photos/800/600?random=festival1",
+    createdAt: "2024-06-01T10:00:00Z",
+    updatedAt: "2024-06-01T10:00:00Z",
+    detailContent: `
+      <h3>活动介绍</h3>
+      <p>欢迎参加我们的周末音乐节！这是一场为期两天的音乐盛宴，汇聚了来自各地的优秀乐队和音乐人。</p>
+      
+      <h3>精彩亮点</h3>
+      <ul>
+        <li>10+知名乐队现场表演</li>
+        <li>多种音乐风格：摇滚、民谣、电子、爵士</li>
+        <li>丰富美食摊位和特色小吃</li>
+        <li>创意市集和手工艺品展示</li>
+        <li>互动游戏和抽奖活动</li>
+        <li>专业音响设备和舞台效果</li>
+      </ul>
+      
+      <h3>演出安排</h3>
+      <h4>6月25日（周六）</h4>
+      <ul>
+        <li>10:00-12:00 开场表演 - 民谣组合</li>
+        <li>14:00-16:00 摇滚专场</li>
+        <li>18:00-20:00 电子音乐时间</li>
+        <li>20:30-22:00 压轴演出</li>
+      </ul>
+      
+      <h4>6月26日（周日）</h4>
+      <ul>
+        <li>10:00-12:00 爵士乐专场</li>
+        <li>14:00-16:00 独立音乐人展示</li>
+        <li>18:00-20:00 经典怀旧金曲</li>
+        <li>20:30-22:00 闭幕大合唱</li>
+      </ul>
+      
+      <h3>注意事项</h3>
+      <ul>
+        <li>门票包含两日活动，无需重复购买</li>
+        <li>现场有充足的餐饮和休息区域</li>
+        <li>建议穿着舒适的鞋子和服装</li>
+        <li>雨天照常举行，有雨棚覆盖</li>
+        <li>禁止自带酒精饮料</li>
+        <li>现场有专业安保和医疗服务</li>
       </ul>
     `,
   },

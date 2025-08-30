@@ -10,6 +10,7 @@ import {
   Breadcrumb,
   Input,
 } from "@/components/ui";
+import { BackButton, ImageCarousel } from "@/components/common";
 
 interface ActivityForm {
   title: string;
@@ -23,7 +24,7 @@ interface ActivityForm {
   price: number;
   isFree: boolean;
   tags: string[];
-  coverImage: string;
+  images: string[];
   detailContent: string;
 }
 
@@ -43,7 +44,7 @@ const PublishActivity: FC = () => {
     price: 0,
     isFree: true,
     tags: [],
-    coverImage: "",
+    images: [],
     detailContent: "",
   });
 
@@ -78,6 +79,22 @@ const PublishActivity: FC = () => {
     setFormData((prev) => ({
       ...prev,
       tags: prev.tags.filter((tag) => tag !== tagToRemove),
+    }));
+  };
+
+  const handleAddImage = (imageUrl: string) => {
+    if (imageUrl.trim() && !formData.images.includes(imageUrl.trim())) {
+      setFormData((prev) => ({
+        ...prev,
+        images: [...prev.images, imageUrl.trim()],
+      }));
+    }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
     }));
   };
 
@@ -133,8 +150,11 @@ const PublishActivity: FC = () => {
 
   return (
     <Container size="lg" className="py-6 space-y-6">
-      {/* 面包屑导航 */}
-      <Breadcrumb items={breadcrumbItems} />
+      {/* 返回按钮和面包屑导航 */}
+      <div className="flex items-center gap-4">
+        <BackButton variant="outline" />
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* 左侧：发布表单 */}
@@ -415,16 +435,81 @@ const PublishActivity: FC = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-text-primary mb-2">
-                        封面图片链接
+                        活动图片
                       </label>
-                      <Input
-                        value={formData.coverImage}
-                        onChange={(e) =>
-                          handleInputChange("coverImage", e.target.value)
-                        }
-                        placeholder="请输入封面图片链接（选填）"
-                        type="url"
-                      />
+                      <div className="space-y-3">
+                        {/* 添加图片输入 */}
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="请输入图片链接"
+                            type="url"
+                            onKeyPress={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                const input = e.currentTarget;
+                                handleAddImage(input.value);
+                                input.value = "";
+                              }
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={(e) => {
+                              const input =
+                                e.currentTarget.parentElement?.querySelector(
+                                  "input"
+                                ) as HTMLInputElement;
+                              if (input?.value) {
+                                handleAddImage(input.value);
+                                input.value = "";
+                              }
+                            }}
+                          >
+                            添加
+                          </Button>
+                        </div>
+
+                        {/* 已添加的图片列表 */}
+                        {formData.images.length > 0 && (
+                          <div className="space-y-2">
+                            {formData.images.map((image, index) => (
+                              <div
+                                key={index}
+                                className="flex items-center gap-2 p-2 bg-gray-50 rounded"
+                              >
+                                <img
+                                  src={image}
+                                  alt={`图片 ${index + 1}`}
+                                  className="w-12 h-12 object-cover rounded"
+                                  onError={(e) => {
+                                    (
+                                      e.target as HTMLImageElement
+                                    ).style.display = "none";
+                                  }}
+                                />
+                                <span className="flex-1 text-sm text-text-secondary truncate">
+                                  {image}
+                                </span>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleRemoveImage(index)}
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  <Icon
+                                    name="plus"
+                                    size="sm"
+                                    className="rotate-45"
+                                  />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-text-primary mb-2">
@@ -478,15 +563,15 @@ const PublishActivity: FC = () => {
 
               {/* 活动预览 */}
               <div className="space-y-3">
-                {formData.coverImage && (
+                {formData.images.length > 0 && (
                   <div className="relative h-32 rounded-lg overflow-hidden bg-gray-100">
-                    <img
-                      src={formData.coverImage}
-                      alt="活动封面"
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
+                    <ImageCarousel
+                      images={formData.images}
+                      alt="活动图片"
+                      height="128px"
+                      showIndicators={formData.images.length > 1}
+                      showArrows={formData.images.length > 1}
+                      className="rounded-lg"
                     />
                   </div>
                 )}

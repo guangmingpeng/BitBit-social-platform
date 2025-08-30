@@ -82,8 +82,8 @@ export type {
 export { default as CategoryItem } from "./CategoryItem/index";
 export type { CategoryItemProps } from "./CategoryItem/index";
 
-export { default as FeaturedBanner } from "./FeaturedBanner/index";
-export type { FeaturedBannerProps } from "./FeaturedBanner/index";
+export { default as FeaturedRecommendation } from "./FeaturedRecommendation/index";
+export type { FeaturedRecommendationProps } from "./FeaturedRecommendation/index";
 
 export { default as SectionHeader } from "./SectionHeader/index";
 export type { SectionHeaderProps } from "./SectionHeader/index";

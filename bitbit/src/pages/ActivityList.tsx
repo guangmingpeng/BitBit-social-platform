@@ -8,9 +8,15 @@ import {
   getActivitiesByCategory,
 } from "@/shared/data/activities";
 import { useNavigationFilters } from "@/shared/hooks/useNavigationStore";
+import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
+import {
+  AVAILABLE_CATEGORIES,
+  getCategoryChineseName,
+} from "@/shared/constants/categories";
 
 const ActivityList: FC = () => {
   const navigate = useNavigate();
+  const { navigateWithSource } = useSmartNavigation();
   const [searchParams] = useSearchParams();
   const { activityFilters, setActivityFilters } = useNavigationFilters();
 
@@ -39,6 +45,39 @@ const ActivityList: FC = () => {
       sortBy,
     });
   }, [searchTerm, selectedCategory, sortBy, setActivityFilters]);
+
+  // 清除所有筛选条件的函数
+  const clearAllFilters = () => {
+    setSearchTerm("");
+    setSelectedCategory("");
+    setSortBy("");
+    setActivityFilters({
+      searchTerm: "",
+      category: "",
+      sortBy: "",
+    });
+    // 清除URL参数
+    navigate("/activities", { replace: true });
+  };
+
+  // 清除单个分类筛选条件的函数
+  const clearCategoryFilter = () => {
+    setSelectedCategory("");
+    setActivityFilters({
+      searchTerm,
+      category: "",
+      sortBy,
+    });
+    // 如果URL中有分类参数，也要清除
+    const currentParams = new URLSearchParams(window.location.search);
+    if (currentParams.has("category")) {
+      currentParams.delete("category");
+      const newUrl = currentParams.toString()
+        ? `/activities?${currentParams.toString()}`
+        : "/activities";
+      navigate(newUrl, { replace: true });
+    }
+  };
 
   // 获取活动数据
   const getFilteredActivities = () => {
@@ -104,12 +143,11 @@ const ActivityList: FC = () => {
             className="rounded-md border-gray-300 shadow-sm px-3 py-2 border focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
           >
             <option value="">全部类型</option>
-            <option value="运动">运动</option>
-            <option value="艺术">艺术</option>
-            <option value="美食">美食</option>
-            <option value="学习">学习</option>
-            <option value="心理">心理</option>
-            <option value="户外">户外</option>
+            {AVAILABLE_CATEGORIES.map((category) => (
+              <option key={category.id} value={category.nameEn}>
+                {category.nameZh}
+              </option>
+            ))}
           </select>
           <select
             value={sortBy}
@@ -127,9 +165,9 @@ const ActivityList: FC = () => {
             <span className="text-sm text-text-secondary">筛选条件:</span>
             {selectedCategory && (
               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary-100 text-primary-700">
-                {selectedCategory}
+                {getCategoryChineseName(selectedCategory)}
                 <button
-                  onClick={() => setSelectedCategory("")}
+                  onClick={clearCategoryFilter}
                   className="ml-1 hover:text-primary-900"
                 >
                   ×
@@ -139,11 +177,7 @@ const ActivityList: FC = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => {
-                setSearchTerm("");
-                setSelectedCategory("");
-                setSortBy("");
-              }}
+              onClick={clearAllFilters}
               className="text-text-secondary hover:text-text-primary"
             >
               清除全部
@@ -160,8 +194,17 @@ const ActivityList: FC = () => {
               key={activity.id}
               {...activity}
               layout="horizontal"
-              onClick={() => navigate(`/activities/${activity.id}`)}
-              onJoin={() => console.log(`参加活动: ${activity.title}`)}
+              onClick={() =>
+                navigateWithSource("activities")(`/activities/${activity.id}`)
+              }
+              onJoin={() =>
+                navigateWithSource("activities")(
+                  `/activities/${activity.id}/register`
+                )
+              }
+              onViewDetail={() =>
+                navigateWithSource("activities")(`/activities/${activity.id}`)
+              }
             />
           ))
         ) : (
@@ -173,11 +216,7 @@ const ActivityList: FC = () => {
             <p className="text-text-secondary">
               试试调整筛选条件或{" "}
               <button
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedCategory("");
-                  setSortBy("");
-                }}
+                onClick={clearAllFilters}
                 className="text-primary-500 hover:text-primary-600"
               >
                 清除筛选

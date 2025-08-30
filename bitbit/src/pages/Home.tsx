@@ -2,7 +2,7 @@ import { type FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
-  FeaturedBanner,
+  FeaturedRecommendation,
   Grid,
   CategoryItem,
   SectionHeader,
@@ -14,9 +14,15 @@ import { ExchangeCard } from "@/features/exchange";
 import PostCard from "@/features/community/components/PostCard";
 import { getAllExchangeItems } from "@/shared/data/exchangeItems";
 import { getPopularActivities } from "@/shared/data/activities";
+import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
+import {
+  AVAILABLE_CATEGORIES,
+  getCategoryEnglishName,
+} from "@/shared/constants/categories";
 
 const Home: FC = () => {
   const navigate = useNavigate();
+  const { navigateWithSource } = useSmartNavigation();
 
   // 模态框状态
   const [showExchangeModal, setShowExchangeModal] = useState(false);
@@ -47,14 +53,12 @@ const Home: FC = () => {
   };
 
   // 模拟数据
-  const categories = [
-    { id: "1", name: "运动", icon: "🏃", color: "primary" },
-    { id: "2", name: "艺术", icon: "🎭", color: "coral" },
-    { id: "3", name: "美食", icon: "🍳", color: "mint" },
-    { id: "4", name: "学习", icon: "📚", color: "sunflower" },
-    { id: "5", name: "心理", icon: "🧠", color: "lavender" },
-    { id: "6", name: "户外", icon: "🌳", color: "primary" },
-  ];
+  const categories = AVAILABLE_CATEGORIES.map((cat) => ({
+    id: cat.id,
+    name: cat.nameZh,
+    icon: cat.icon,
+    color: cat.color,
+  }));
 
   const exchangeItems = getAllExchangeItems();
   const activities = getPopularActivities(2);
@@ -108,15 +112,26 @@ const Home: FC = () => {
           <p className="mt-2 text-gray-600">连接同城，分享生活</p>
         </div>
 
-        {/* 精选横幅 */}
-        <FeaturedBanner
+        {/* 精选推荐区 */}
+        <FeaturedRecommendation
           title="周末音乐节"
           subtitle="6月25-26日 | 湖畔音乐广场"
           description="10+ 乐队现场表演，美食摊位，创意市集..."
-          primaryButtonText="立即报名"
+          primaryButtonText="立即参加"
           secondaryButtonText="详情"
-          onPrimaryClick={() => console.log("立即报名")}
-          onSecondaryClick={() => console.log("查看详情")}
+          images={[
+            "https://picsum.photos/800/400?random=music1",
+            "https://picsum.photos/800/400?random=music2",
+            "https://picsum.photos/800/400?random=music3",
+          ]}
+          onPrimaryClick={() =>
+            navigateWithSource("home")(
+              "/activities/music-festival-2024/register"
+            )
+          }
+          onSecondaryClick={() =>
+            navigateWithSource("home")("/activities/music-festival-2024")
+          }
         />
 
         {/* 分类导航 */}
@@ -128,7 +143,11 @@ const Home: FC = () => {
                 key={category.id}
                 {...category}
                 onClick={() =>
-                  navigate(`/activities?category=${category.name}`)
+                  navigate(
+                    `/activities?category=${getCategoryEnglishName(
+                      category.name
+                    )}`
+                  )
                 }
               />
             ))}
@@ -147,8 +166,17 @@ const Home: FC = () => {
               <ActivityCard
                 key={activity.id}
                 {...activity}
-                onClick={() => navigate(`/activities/${activity.id}`)}
-                onJoin={() => console.log(`参加活动: ${activity.title}`)}
+                onClick={() =>
+                  navigateWithSource("home")(`/activities/${activity.id}`)
+                }
+                onJoin={() =>
+                  navigateWithSource("home")(
+                    `/activities/${activity.id}/register`
+                  )
+                }
+                onViewDetail={() =>
+                  navigateWithSource("home")(`/activities/${activity.id}`)
+                }
               />
             ))}
           </Grid>

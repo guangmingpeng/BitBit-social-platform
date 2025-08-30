@@ -500,7 +500,7 @@ const ComponentShowcase: React.FC = () => {
               maxParticipants={20}
               currentParticipants={15}
               organizer={{
-                name: "音乐小子",
+                username: "音乐小子",
                 avatar: "https://picsum.photos/40/40?random=1",
               }}
               images={["https://picsum.photos/300/200?random=1"]}
@@ -519,7 +519,7 @@ const ComponentShowcase: React.FC = () => {
               maxParticipants={15}
               currentParticipants={12}
               organizer={{
-                name: "瑜伽导师Anna",
+                username: "瑜伽导师Anna",
               }}
               images={["https://picsum.photos/300/200?random=2"]}
               isFree={true}

@@ -25,6 +25,7 @@ dist-ssr
 
 # Development documentation
 docs/development/
+docs/
 
 # Environment files
 .env

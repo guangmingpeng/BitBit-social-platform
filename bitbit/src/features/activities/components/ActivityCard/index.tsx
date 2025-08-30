@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent, Tag, Avatar, Icon } from "@/components/ui";
+import { ImageCarousel } from "@/components/common";
 import { cn } from "@/shared/utils/cn";
 
 export interface ActivityCardProps {
@@ -24,6 +25,7 @@ export interface ActivityCardProps {
   className?: string;
   onJoin?: () => void;
   onClick?: () => void;
+  onViewDetail?: () => void;
 }
 
 const ActivityCard: React.FC<ActivityCardProps> = ({
@@ -44,6 +46,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   className,
   onJoin,
   onClick,
+  onViewDetail,
 }) => {
   const categoryConfig = {
     music: { variant: "music" as const, label: "音乐", emoji: "🎵" },
@@ -59,6 +62,11 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   const handleJoinClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onJoin?.();
+  };
+
+  const handleDetailClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onViewDetail?.();
   };
 
   const handleCardClick = () => {
@@ -78,10 +86,14 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
       >
         {images && images.length > 0 && (
           <div className="relative h-32 overflow-hidden">
-            <img
-              src={images[0]}
+            <ImageCarousel
+              images={images}
               alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              height="128px"
+              showIndicators={images.length > 1}
+              showArrows={false}
+              showCounter={images.length > 1}
+              className="rounded-none"
             />
             <div className="absolute top-2 left-2">
               <Tag variant={categoryConfig[category].variant} size="sm">
@@ -111,12 +123,35 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
             <div className="text-sm font-semibold text-primary-500">
               {isFree ? "免费" : `¥${price}`}
             </div>
-            <div className="flex items-center gap-1 text-xs text-text-tertiary">
+            <div className="flex items-center gap-1 text-caption text-text-tertiary">
               <Icon name="users" size="sm" />
-              <span>
+              <span className={isAlmostFull ? "text-warning" : ""}>
                 {currentParticipants}/{maxParticipants}
               </span>
             </div>
+          </div>
+          {/* 紧凑布局的按钮组 */}
+          <div className="flex items-center gap-2 pt-2">
+            <button
+              onClick={handleDetailClick}
+              className="flex-1 px-2 py-1 rounded text-xs font-medium border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors"
+            >
+              详情
+            </button>
+            <button
+              onClick={handleJoinClick}
+              disabled={isFull}
+              className={cn(
+                "flex-1 px-2 py-1 rounded text-xs font-medium transition-colors",
+                isJoined
+                  ? "bg-gray-100 text-text-secondary cursor-default"
+                  : isFull
+                  ? "bg-gray-100 text-text-tertiary cursor-not-allowed"
+                  : "bg-primary-500 text-white hover:bg-primary-600"
+              )}
+            >
+              {isJoined ? "已参加" : isFull ? "已满员" : "立即参加"}
+            </button>
           </div>
         </CardContent>
       </Card>
@@ -132,25 +167,29 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
     >
       {images && images.length > 0 && (
         <div className="relative h-48 overflow-hidden">
-          <img
-            src={images[0]}
+          <ImageCarousel
+            images={images}
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            height="192px"
+            showIndicators={images.length > 1}
+            showArrows={images.length > 1}
+            showCounter={images.length > 1}
+            className="rounded-none"
           />
-          <div className="absolute top-3 left-3">
+          <div className="absolute top-3 left-3 z-10">
             <Tag variant={categoryConfig[category].variant} size="sm">
               {categoryConfig[category].emoji} {categoryConfig[category].label}
             </Tag>
           </div>
           {isJoined && (
-            <div className="absolute top-3 right-3">
+            <div className="absolute top-3 right-3 z-10">
               <span className="inline-flex items-center px-2 py-1 rounded-full text-caption font-medium bg-success text-white">
                 已参加
               </span>
             </div>
           )}
           {isFull && !isJoined && (
-            <div className="absolute top-3 right-3">
+            <div className="absolute top-3 right-3 z-10">
               <span className="inline-flex items-center px-2 py-1 rounded-full text-caption font-medium bg-error text-white">
                 已满
               </span>
@@ -205,20 +244,28 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
           <div className="text-subtitle font-semibold text-primary-500">
             {isFree ? "免费" : `¥${price}`}
           </div>
-          <button
-            onClick={handleJoinClick}
-            disabled={isFull}
-            className={cn(
-              "px-4 py-2 rounded-lg text-body font-medium transition-all duration-250",
-              isJoined
-                ? "bg-gray-100 text-text-secondary cursor-default"
-                : isFull
-                ? "bg-gray-100 text-text-tertiary cursor-not-allowed"
-                : "bg-primary-500 text-white hover:bg-primary-600 active:scale-95"
-            )}
-          >
-            {isJoined ? "已参加" : isFull ? "已满员" : "立即参加"}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDetailClick}
+              className="px-3 py-1.5 rounded-lg text-body font-medium border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors"
+            >
+              详情
+            </button>
+            <button
+              onClick={handleJoinClick}
+              disabled={isFull}
+              className={cn(
+                "px-4 py-2 rounded-lg text-body font-medium transition-all duration-250",
+                isJoined
+                  ? "bg-gray-100 text-text-secondary cursor-default"
+                  : isFull
+                  ? "bg-gray-100 text-text-tertiary cursor-not-allowed"
+                  : "bg-primary-500 text-white hover:bg-primary-600 active:scale-95"
+              )}
+            >
+              {isJoined ? "已参加" : isFull ? "已满员" : "立即参加"}
+            </button>
+          </div>
         </div>
       </CardContent>
     </Card>

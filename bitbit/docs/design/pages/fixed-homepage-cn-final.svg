@@ -25,7 +25,7 @@
   <circle cx="70" cy="180" r="16" fill="transparent" stroke="#999999" stroke-width="2" />
   <text x="100" y="185" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="16" fill="#999999">搜索活动、话题或用户...</text>
   
-  <!-- 精选横幅 -->
+  <!-- 精选推荐区 -->
   <rect x="30" y="240" width="1140" height="300" rx="20" fill="#F3F3F7" />
   <rect x="30" y="240" width="1140" height="300" rx="20" fill="url(#gradient1)" opacity="0.3" />
   <text x="80" y="300" font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#222222">周末音乐节</text>

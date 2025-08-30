@@ -60,7 +60,7 @@ const Header = () => {
                 variant="primary"
                 size="md"
                 className="shadow-lg hidden sm:flex"
-                onClick={() => console.log("创建活动")}
+                onClick={() => navigate("/publish-activity")}
               >
                 <span className="hidden md:inline">创建活动 </span>+
               </Button>

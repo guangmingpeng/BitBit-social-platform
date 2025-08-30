@@ -79,6 +79,13 @@ export type {
   PurchaseFormData,
 } from "./PurchaseModal/index";
 
+// 新增通用组件
+export { default as ImageUpload } from "./ImageUpload/index";
+export type { ImageUploadProps } from "./ImageUpload/index";
+
+export { default as CategorySelector } from "./CategorySelector/index";
+export type { CategorySelectorProps } from "./CategorySelector/index";
+
 export { default as CategoryItem } from "./CategoryItem/index";
 export type { CategoryItemProps } from "./CategoryItem/index";
 

@@ -33,14 +33,37 @@ const ActivityBasicInfo: FC<ActivityBasicInfoProps> = ({ activity }) => {
       {/* 基本信息卡片 */}
       <Card className="bg-gray-50 border-0">
         <CardContent className="p-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <div className="flex items-center gap-2 text-gray-600 mb-1">
                 <span>📅</span>
-                <span className="text-sm">时间</span>
+                <span className="text-sm">活动时间</span>
               </div>
-              <div className="font-medium text-gray-900">
-                {activity.date} {activity.time}
+              <div className="font-medium text-gray-900 text-sm leading-relaxed">
+                <div>{activity.date}</div>
+                <div className="text-xs text-gray-600 mt-1">
+                  {activity.time}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 text-gray-600 mb-1">
+                <span>⏰</span>
+                <span className="text-sm">报名截止</span>
+              </div>
+              <div className="font-medium text-gray-900 text-sm">
+                {activity.registrationDeadline
+                  ? new Date(activity.registrationDeadline).toLocaleString(
+                      "zh-CN",
+                      {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )
+                  : "暂未设置"}
               </div>
             </div>
             <div>

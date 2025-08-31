@@ -19,6 +19,8 @@ export { default as Icon } from "./Icon";
 export { default as Input } from "./Input";
 export type { InputProps } from "./Input/index";
 
+export { default as DateTimePicker } from "./DateTimePicker";
+
 export { default as Avatar } from "./Avatar/index";
 export type { AvatarProps } from "./Avatar/index";
 

@@ -28,10 +28,15 @@ export interface ExchangeCardProps {
   location?: string;
   isLiked?: boolean;
   layout?: "grid" | "list" | "compact" | "sidebar";
+  mode?: "default" | "owner"; // 新增模式属性，owner 表示用户自己发布的商品
   onClick?: () => void;
   onExchange?: () => void;
   onContact?: () => void;
   onLike?: () => void;
+  // 新增针对自己商品的操作
+  onEdit?: () => void;
+  onDelete?: () => void;
+  onToggleStatus?: () => void; // 下架商品
   className?: string;
 }
 
@@ -58,10 +63,14 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
   location,
   isLiked = false,
   layout = "grid",
+  mode = "default",
   onClick,
   onExchange,
   onContact,
   onLike,
+  onEdit,
+  onDelete,
+  onToggleStatus,
   className,
 }) => {
   const statusStyle = statusConfig[status];
@@ -245,29 +254,73 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                 </div>
               )}
               <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="primary"
-                  className="flex-1"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onExchange?.();
-                  }}
-                  disabled={isDisabled}
-                >
-                  立即交换
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="flex-1"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onClick?.();
-                  }}
-                >
-                  详情
-                </Button>
+                {mode === "owner" ? (
+                  // 自己发布的商品：显示编辑、下架、删除
+                  <div className="flex gap-2 w-full">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onEdit?.();
+                      }}
+                    >
+                      编辑
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleStatus?.();
+                      }}
+                    >
+                      下架
+                    </Button>
+                    {onDelete && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-red-600 hover:text-red-700 hover:border-red-300"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDelete?.();
+                        }}
+                      >
+                        删除
+                      </Button>
+                    )}
+                  </div>
+                ) : (
+                  // 其他人发布的商品：显示交换和详情按钮
+                  <>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onExchange?.();
+                      }}
+                      disabled={isDisabled}
+                    >
+                      立即交换
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onClick?.();
+                      }}
+                    >
+                      详情
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -392,27 +445,73 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                 )}
 
                 <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onContact?.();
-                    }}
-                  >
-                    联系卖家
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="primary"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onExchange?.();
-                    }}
-                    disabled={isDisabled}
-                  >
-                    立即交换
-                  </Button>
+                  {mode === "owner" ? (
+                    // 自己发布的商品：显示编辑、下架、删除按钮
+                    <div className="flex gap-2 w-full">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEdit?.();
+                        }}
+                      >
+                        编辑
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onToggleStatus?.();
+                        }}
+                      >
+                        下架
+                      </Button>
+                      {onDelete && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-red-600 hover:text-red-700 hover:border-red-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete?.();
+                          }}
+                        >
+                          删除
+                        </Button>
+                      )}
+                    </div>
+                  ) : (
+                    // 其他人发布的商品：显示联系和交换按钮
+                    <>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onContact?.();
+                        }}
+                      >
+                        联系卖家
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="primary"
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onExchange?.();
+                        }}
+                        disabled={isDisabled}
+                      >
+                        立即交换
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -530,29 +629,73 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
 
             {/* 操作按钮 */}
             <div className="flex gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                className="flex-1"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onContact?.();
-                }}
-              >
-                联系
-              </Button>
-              <Button
-                size="sm"
-                variant="primary"
-                className="flex-1"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onExchange?.();
-                }}
-                disabled={isDisabled}
-              >
-                交换
-              </Button>
+              {mode === "owner" ? (
+                // 自己发布的商品：显示编辑、下架、删除按钮
+                <div className="flex gap-2 w-full">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit?.();
+                    }}
+                  >
+                    编辑
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="flex-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleStatus?.();
+                    }}
+                  >
+                    下架
+                  </Button>
+                  {onDelete && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-red-600 hover:text-red-700 hover:border-red-300"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete?.();
+                      }}
+                    >
+                      删除
+                    </Button>
+                  )}
+                </div>
+              ) : (
+                // 其他人发布的商品：显示联系和交换按钮
+                <>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onContact?.();
+                    }}
+                  >
+                    联系
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    className="flex-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onExchange?.();
+                    }}
+                    disabled={isDisabled}
+                  >
+                    交换
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>

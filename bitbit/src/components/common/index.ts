@@ -2,3 +2,6 @@
 export { default as BackButton } from "./BackButton";
 export { default as ImageCarousel } from "./ImageCarousel";
 export { default as FloatingBackButton } from "./FloatingBackButton";
+export { default as ConfirmExitDialog } from "./ConfirmExitDialog";
+export { PublishStatus } from "./PublishStatus";
+export type { PublishStatusProps } from "./PublishStatus";

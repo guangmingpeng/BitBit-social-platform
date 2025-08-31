@@ -136,11 +136,12 @@ const PostPreview: FC<PostPreviewProps> = ({ formData, className }) => {
                 images={previewImageUrls}
                 alt="帖子图片"
                 height="400px"
+                objectFit="contain"
                 showIndicators={previewImageUrls.length > 1}
                 showArrows={previewImageUrls.length > 1}
                 showCounter={previewImageUrls.length > 1}
                 onImageClick={handleImageClick}
-                className="rounded-xl overflow-hidden"
+                className="rounded-xl overflow-hidden bg-gray-50"
               />
             </div>
           )}

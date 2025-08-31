@@ -23,9 +23,8 @@ import {
 } from "@/components/ui";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
 import DesignSystemShowcase from "./DesignSystemShowcase";
-import ActivityCard from "@/features/activities/components/ActivityCard";
+import { ActivityCard, PostCard } from "@/components/ui/cards";
 import UserCard from "@/features/auth/components/UserCard";
-import PostCard from "@/features/community/components/PostCard";
 
 const ComponentShowcase: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -490,40 +489,47 @@ const ComponentShowcase: React.FC = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <ActivityCard
-              id="1"
-              title="周末音乐分享会"
-              description="来一起分享你喜欢的音乐，结识志同道合的朋友！我们会准备茶点和小食，你只需要带上好心情和想分享的歌单。"
-              category="music"
-              date="2024-01-20"
-              time="14:00-17:00"
-              location="五道口咖啡厅二楼"
-              maxParticipants={20}
-              currentParticipants={15}
-              organizer={{
-                username: "音乐小子",
-                avatar: "https://picsum.photos/40/40?random=1",
+              activity={{
+                id: "1",
+                title: "周末音乐分享会",
+                description:
+                  "来一起分享你喜欢的音乐，结识志同道合的朋友！我们会准备茶点和小食，你只需要带上好心情和想分享的歌单。",
+                category: "music",
+                date: "2024-01-20",
+                time: "14:00-17:00",
+                location: "五道口咖啡厅二楼",
+                maxParticipants: 20,
+                currentParticipants: 15,
+                organizer: {
+                  username: "音乐小子",
+                  avatar: "https://picsum.photos/40/40?random=1",
+                },
+                images: ["https://picsum.photos/300/200?random=1"],
+                price: 35,
+                isFree: false,
               }}
-              images={["https://picsum.photos/300/200?random=1"]}
-              price={35}
               onJoin={() => console.log("参加活动")}
               onClick={() => console.log("查看活动详情")}
             />
             <ActivityCard
-              id="2"
-              title="免费瑜伽体验课"
-              description="零基础瑜伽课程，专业老师指导，提供瑜伽垫和其他用具。"
-              category="learning"
-              date="2024-01-22"
-              time="19:00-20:30"
-              location="健身工作室"
-              maxParticipants={15}
-              currentParticipants={12}
-              organizer={{
-                username: "瑜伽导师Anna",
+              activity={{
+                id: "2",
+                title: "免费瑜伽体验课",
+                description:
+                  "零基础瑜伽课程，专业老师指导，提供瑜伽垫和其他用具。",
+                category: "learning",
+                date: "2024-01-22",
+                time: "19:00-20:30",
+                location: "健身工作室",
+                maxParticipants: 15,
+                currentParticipants: 12,
+                organizer: {
+                  username: "瑜伽导师Anna",
+                },
+                images: ["https://picsum.photos/300/200?random=2"],
+                isFree: true,
+                isJoined: true,
               }}
-              images={["https://picsum.photos/300/200?random=2"]}
-              isFree={true}
-              isJoined={true}
               onJoin={() => console.log("参加活动")}
               onClick={() => console.log("查看活动详情")}
             />
@@ -571,24 +577,27 @@ const ComponentShowcase: React.FC = () => {
           </h3>
           <div className="max-w-2xl space-y-6">
             <PostCard
-              id="1"
-              author={{
-                name: "美食探索者",
-                avatar: "https://picsum.photos/40/40?random=4",
-                isVerified: true,
+              post={{
+                id: "1",
+                author: {
+                  name: "美食探索者",
+                  avatar: "https://picsum.photos/40/40?random=4",
+                  isVerified: true,
+                },
+                content:
+                  "今天去了一家超棒的日式料理店！环境很好，服务也很贴心。特别推荐他们的三文鱼刺身和天妇罗，新鲜度和口感都很棒。价格也很合理，人均150左右。已经预定了下周的位置，准备带朋友们一起去体验！",
+                images: [
+                  "https://picsum.photos/400/300?random=5",
+                  "https://picsum.photos/400/300?random=6",
+                  "https://picsum.photos/400/300?random=7",
+                ],
+                category: "food",
+                publishTime: "2小时前",
+                likes: 24,
+                comments: 8,
+                shares: 3,
+                isLiked: true,
               }}
-              content="今天去了一家超棒的日式料理店！环境很好，服务也很贴心。特别推荐他们的三文鱼刺身和天妇罗，新鲜度和口感都很棒。价格也很合理，人均150左右。已经预定了下周的位置，准备带朋友们一起去体验！"
-              images={[
-                "https://picsum.photos/400/300?random=5",
-                "https://picsum.photos/400/300?random=6",
-                "https://picsum.photos/400/300?random=7",
-              ]}
-              category="food"
-              publishTime="2小时前"
-              likes={24}
-              comments={8}
-              shares={3}
-              isLiked={true}
               onLike={() => console.log("点赞")}
               onComment={() => console.log("评论")}
               onShare={() => console.log("分享")}
@@ -596,18 +605,21 @@ const ComponentShowcase: React.FC = () => {
               onClick={() => console.log("查看动态详情")}
             />
             <PostCard
-              id="2"
-              author={{
-                name: "读书小屋",
-                avatar: "https://picsum.photos/40/40?random=8",
+              post={{
+                id: "2",
+                author: {
+                  name: "读书小屋",
+                  avatar: "https://picsum.photos/40/40?random=8",
+                },
+                content:
+                  "刚读完《百年孤独》，马尔克斯的魔幻现实主义真的太震撼了。推荐给所有喜欢文学的朋友们！",
+                category: "reading",
+                publishTime: "1天前",
+                likes: 15,
+                comments: 12,
+                shares: 5,
+                isBookmarked: true,
               }}
-              content="刚读完《百年孤独》，马尔克斯的魔幻现实主义真的太震撼了。推荐给所有喜欢文学的朋友们！"
-              category="reading"
-              publishTime="1天前"
-              likes={15}
-              comments={12}
-              shares={5}
-              isBookmarked={true}
               onLike={() => console.log("点赞")}
               onComment={() => console.log("评论")}
               onShare={() => console.log("分享")}

@@ -63,8 +63,29 @@ export type {
 } from "./Tabs/index";
 
 // 业务组件
-export { default as ActivityCard } from "../../features/activities/components/ActivityCard/index";
-export type { ActivityCardProps } from "../../features/activities/components/ActivityCard/index";
+// 注意：这些是旧的组件导出，建议使用统一的卡片组件
+// export { default as ActivityCard } from "../../features/activities/components/ActivityCard/index";
+// export type { ActivityCardProps } from "../../features/activities/components/ActivityCard/index";
+
+// 统一的卡片组件
+export {
+  ActivityCard as UnifiedActivityCard,
+  PostCard,
+  BaseCard,
+  getCardVariantClasses,
+  getLayoutClasses,
+} from "./cards";
+export type {
+  ActivityCardProps as UnifiedActivityCardProps,
+  PostCardProps,
+  Activity,
+  Post,
+  BaseCardProps,
+  CardLayout,
+  CardActions,
+  CardStats,
+  CardMeta,
+} from "./cards";
 
 export { default as CommunityPost } from "./CommunityPost/index";
 export type { CommunityPostProps } from "./CommunityPost/index";
@@ -96,3 +117,8 @@ export type { FeaturedRecommendationProps } from "./FeaturedRecommendation/index
 
 export { default as SectionHeader } from "./SectionHeader/index";
 export type { SectionHeaderProps } from "./SectionHeader/index";
+
+// Profile相关组件
+export { default as OrderCard } from "./OrderCard/index";
+export { default as FavoriteCard } from "./FavoriteCard/index";
+export { default as DraftCard } from "./DraftCard/index";

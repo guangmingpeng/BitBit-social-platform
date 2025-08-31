@@ -1,7 +1,7 @@
 import { type FC, useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Container, Breadcrumb, Button } from "@/components/ui";
-import { ActivityCard } from "@/features/activities";
+import { ActivityCard } from "@/components/ui/cards";
 import {
   getAllActivities,
   searchActivities,
@@ -215,8 +215,9 @@ const ActivityList: FC = () => {
           activities.map((activity) => (
             <ActivityCard
               key={activity.id}
-              {...activity}
-              layout="horizontal"
+              activity={activity}
+              layout="default"
+              size="md"
               onClick={() =>
                 navigateWithSource("activities")(`/activities/${activity.id}`)
               }

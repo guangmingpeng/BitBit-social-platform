@@ -13,6 +13,7 @@ interface PostDetailContentProps {
     content: string;
     images?: string[];
     category: string;
+    tags?: string[]; // 添加标签字段
     publishTime: string;
     location: string;
     likes?: number;
@@ -29,12 +30,14 @@ interface PostDetailContentProps {
   };
   onFollow: () => void;
   onJoinActivity?: () => void;
+  onTagClick?: (tag: string) => void; // 添加标签点击回调
 }
 
 const PostDetailContent: FC<PostDetailContentProps> = ({
   post,
   onFollow,
   onJoinActivity,
+  onTagClick,
 }) => {
   const [showImageGallery, setShowImageGallery] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -98,6 +101,23 @@ const PostDetailContent: FC<PostDetailContentProps> = ({
               {post.content}
             </p>
           </div>
+
+          {/* 标签显示 */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="mb-6">
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => onTagClick?.(tag)}
+                    className="text-sm px-3 py-1 bg-gray-50 text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+                  >
+                    #{tag}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* 图片网格 - 最多显示两排 (6张) */}
           {post.images && post.images.length > 0 && (

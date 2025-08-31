@@ -5,10 +5,10 @@ import {
   CardContent,
   Input,
   Button,
-  Tag,
   ImageUpload,
   CategorySelector,
 } from "@/components/ui";
+import { TagsInput } from "@/shared/components";
 
 export interface CommunityPostFormData {
   title: string;
@@ -54,8 +54,6 @@ export const CommunityPostForm: React.FC<CommunityPostFormProps> = ({
     ...initialData,
   });
 
-  const [currentTag, setCurrentTag] = useState("");
-
   // 当表单数据变化时通知父组件
   useEffect(() => {
     onChange?.(formData);
@@ -83,20 +81,6 @@ export const CommunityPostForm: React.FC<CommunityPostFormProps> = ({
       onChange?.(newData);
       return newData;
     });
-  };
-
-  const addTag = () => {
-    if (currentTag.trim() && !formData.tags.includes(currentTag.trim())) {
-      updateField("tags", [...formData.tags, currentTag.trim()]);
-      setCurrentTag("");
-    }
-  };
-
-  const removeTag = (tagToRemove: string) => {
-    updateField(
-      "tags",
-      formData.tags.filter((tag) => tag !== tagToRemove)
-    );
   };
 
   const isValid =
@@ -190,63 +174,15 @@ export const CommunityPostForm: React.FC<CommunityPostFormProps> = ({
       </Card>
 
       {/* 标签 */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-text-primary">
-              添加标签（可选）
-            </label>
-
-            {/* 标签输入 */}
-            <div className="flex gap-2">
-              <Input
-                placeholder="输入标签..."
-                value={currentTag}
-                onChange={(e) => setCurrentTag(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    addTag();
-                  }
-                }}
-                className="flex-1"
-              />
-              <Button
-                type="button"
-                variant="outline"
-                onClick={addTag}
-                disabled={
-                  !currentTag.trim() ||
-                  formData.tags.includes(currentTag.trim())
-                }
-              >
-                添加
-              </Button>
-            </div>
-
-            {/* 已添加的标签 */}
-            {formData.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {formData.tags.map((tag) => (
-                  <Tag
-                    key={tag}
-                    variant="secondary"
-                    size="sm"
-                    className="cursor-pointer"
-                    onClick={() => removeTag(tag)}
-                  >
-                    {tag} ×
-                  </Tag>
-                ))}
-              </div>
-            )}
-
-            <p className="text-xs text-text-secondary">
-              按 Enter 或点击添加按钮来添加标签，点击标签可删除
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <TagsInput
+        tags={formData.tags}
+        onTagsChange={(tags) => updateField("tags", tags)}
+        onFieldFocus={() => onFieldFocus?.("tags")}
+        maxTags={10}
+        title="添加标签（可选）"
+        description="添加相关标签，让你的帖子更容易被发现"
+        showPresets={true}
+      />
 
       {/* 发布设置 */}
       <Card>

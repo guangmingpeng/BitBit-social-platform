@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import PostCard from "@/features/community/components/PostCard";
+import { PostCard } from "@/components/ui/cards";
 
 interface Recommendation {
   id: string;
@@ -11,6 +11,7 @@ interface Recommendation {
   content: string;
   images?: string[];
   category?: "music" | "food" | "learning" | "reading";
+  tags?: string[]; // 添加标签字段
   publishTime: string;
   likes: number;
   comments: number;
@@ -22,11 +23,13 @@ interface Recommendation {
 interface PostDetailRecommendationsProps {
   recommendations: Recommendation[];
   onRecommendationClick: (id: string) => void;
+  onTagClick?: (tag: string) => void; // 添加标签点击回调
 }
 
 const PostDetailRecommendations: FC<PostDetailRecommendationsProps> = ({
   recommendations,
   onRecommendationClick,
+  onTagClick,
 }) => {
   return (
     <div className="space-y-4">
@@ -36,17 +39,7 @@ const PostDetailRecommendations: FC<PostDetailRecommendationsProps> = ({
         {recommendations.map((item) => (
           <PostCard
             key={item.id}
-            id={item.id}
-            author={item.author}
-            content={item.content}
-            images={item.images}
-            category={item.category}
-            publishTime={item.publishTime}
-            likes={item.likes}
-            comments={item.comments}
-            shares={item.shares}
-            isLiked={item.isLiked}
-            isBookmarked={item.isBookmarked}
+            post={item}
             layout="compact"
             onClick={() => {
               console.log("相关推荐卡片被点击，ID:", item.id);
@@ -56,6 +49,7 @@ const PostDetailRecommendations: FC<PostDetailRecommendationsProps> = ({
             onComment={() => console.log(`评论推荐: ${item.id}`)}
             onShare={() => console.log(`分享推荐: ${item.id}`)}
             onBookmark={() => console.log(`收藏推荐: ${item.id}`)}
+            onTagClick={onTagClick} // 添加标签点击回调
           />
         ))}
       </div>

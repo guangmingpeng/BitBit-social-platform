@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Input } from "@/components/ui";
+import { Card, CardContent, Input, DateTimePicker } from "@/components/ui";
 import type { ActivityFormData } from "../ActivityForm";
 
 interface RegistrationSectionProps {
@@ -63,21 +63,22 @@ export const RegistrationSection: React.FC<RegistrationSectionProps> = ({
             <label className="block text-sm font-medium text-text-primary">
               报名截止时间 <span className="text-red-500">*</span>
             </label>
-            <Input
-              type="datetime-local"
+            <DateTimePicker
               value={formData.registrationDeadline}
-              onChange={(e) =>
-                onFieldChange("registrationDeadline", e.target.value)
+              onChange={(value) => onFieldChange("registrationDeadline", value)}
+              onFocus={() => onFieldFocus("registrationDeadline")}
+              placeholder="选择报名截止时间"
+              className="w-full"
+              minDate={new Date()}
+              maxDate={
+                formData.endDate ? new Date(formData.endDate) : undefined
               }
-              onFocus={(e) => {
-                onFieldFocus("registrationDeadline");
-                e.currentTarget.showPicker?.();
-              }}
-              className="cursor-pointer"
-              onClick={(e) => {
-                e.currentTarget.showPicker?.();
-              }}
             />
+            {formData.endDate && !formData.registrationDeadline && (
+              <p className="text-xs text-gray-500 mt-1">
+                报名截止时间可以设置到活动结束前的任何时间
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">

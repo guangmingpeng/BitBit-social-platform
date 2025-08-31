@@ -12,6 +12,7 @@ import {
 } from "@/shared/constants/categories";
 import type { ActivityFormData } from "./ActivityForm";
 import type { Activity } from "@/shared/types";
+import dayjs from "dayjs";
 
 interface ActivityPreviewProps {
   formData: ActivityFormData;
@@ -349,7 +350,7 @@ const ActivityPreview: FC<ActivityPreviewProps> = ({ formData, className }) => {
                             <div className="flex items-center gap-3 mb-2">
                               {item.time && (
                                 <span className="px-2 py-1 bg-gray-100 text-gray-700 text-sm rounded-md font-mono">
-                                  {item.time}
+                                  {dayjs(item.time).format("MM月DD日 HH:mm")}
                                 </span>
                               )}
                               <h4 className="font-medium text-gray-900">

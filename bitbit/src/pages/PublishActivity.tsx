@@ -61,9 +61,9 @@ const PublishActivity: React.FC = () => {
 
     const fieldScrollMap: { [key: string]: number } = {
       title: 0,
-      description: 100,
-      images: 200,
-      category: 300,
+      images: 100,
+      category: 200,
+      description: 600,
       startDate: 400,
       endDate: 400,
       isOnline: 450,
@@ -72,7 +72,7 @@ const PublishActivity: React.FC = () => {
       maxParticipants: 500,
       fee: 500,
       registrationDeadline: 550,
-      requirements: 600,
+      requirements: 700,
       contactInfo: 650,
       schedule: 700,
       notices: 800,

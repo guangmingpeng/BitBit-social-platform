@@ -1,5 +1,11 @@
 import React from "react";
-import { Card, CardContent, Input, Button } from "@/components/ui";
+import {
+  Card,
+  CardContent,
+  Input,
+  Button,
+  DateTimePicker,
+} from "@/components/ui";
 import type { ActivityFormData, ScheduleItem } from "../ActivityForm";
 
 interface ScheduleSectionProps {
@@ -8,11 +14,13 @@ interface ScheduleSectionProps {
     field: K,
     value: ActivityFormData[K]
   ) => void;
+  onFieldFocus: (fieldName: string) => void;
 }
 
 export const ScheduleSection: React.FC<ScheduleSectionProps> = ({
   formData,
   onFieldChange,
+  onFieldFocus,
 }) => {
   const addScheduleItem = () => {
     const newScheduleItem: ScheduleItem = {
@@ -42,6 +50,24 @@ export const ScheduleSection: React.FC<ScheduleSectionProps> = ({
       formData.schedule.filter((_, i) => i !== index)
     );
   };
+
+  // 获取活动的最小和最大日期范围
+  const getTimeConstraints = () => {
+    let minDate: Date | undefined;
+    let maxDate: Date | undefined;
+
+    if (formData.startDate) {
+      minDate = new Date(formData.startDate);
+    }
+
+    if (formData.endDate) {
+      maxDate = new Date(formData.endDate);
+    }
+
+    return { minDate, maxDate };
+  };
+
+  const { minDate, maxDate } = getTimeConstraints();
 
   return (
     <Card>
@@ -74,6 +100,39 @@ export const ScheduleSection: React.FC<ScheduleSectionProps> = ({
               添加时间项
             </Button>
           </div>
+
+          {(formData.startDate || formData.endDate) && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <div className="text-sm text-blue-700">
+                <div className="flex items-center gap-2 mb-1">
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span className="font-medium">时间约束提示</span>
+                </div>
+                <p className="text-xs">
+                  时间安排项目将限制在活动的开始时间
+                  {formData.startDate &&
+                    ` (${new Date(formData.startDate).toLocaleString(
+                      "zh-CN"
+                    )})`}
+                  {formData.endDate &&
+                    ` 到结束时间 (${new Date(formData.endDate).toLocaleString(
+                      "zh-CN"
+                    )})`}
+                  之间
+                </p>
+              </div>
+            </div>
+          )}
 
           {formData.schedule.map((item, index) => (
             <div
@@ -112,14 +171,27 @@ export const ScheduleSection: React.FC<ScheduleSectionProps> = ({
                   <label className="block text-xs font-medium text-gray-600 mb-1">
                     时间
                   </label>
-                  <Input
-                    type="time"
+                  <DateTimePicker
                     value={item.time}
-                    onChange={(e) =>
-                      updateScheduleItem(index, "time", e.target.value)
+                    onChange={(value) =>
+                      updateScheduleItem(index, "time", value)
+                    }
+                    onFocus={() => onFieldFocus("schedule")}
+                    placeholder={
+                      formData.startDate
+                        ? "选择具体时间"
+                        : "请先设置活动开始时间"
                     }
                     className="text-sm"
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    disabled={!formData.startDate && !formData.endDate}
                   />
+                  {!formData.startDate && !formData.endDate && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      请先在"时间和地点"部分设置活动时间
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">

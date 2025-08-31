@@ -180,13 +180,21 @@ export const ActivityForm: React.FC<ActivityFormProps> = ({
       />
 
       {/* 活动安排 */}
-      <ScheduleSection formData={formData} onFieldChange={updateField} />
+      <ScheduleSection
+        formData={formData}
+        onFieldChange={updateField}
+        onFieldFocus={handleFieldFocus}
+      />
 
       {/* 注意事项 */}
       <NoticesSection formData={formData} onFieldChange={updateField} />
 
       {/* 标签 */}
-      <TagsSection formData={formData} onFieldChange={updateField} />
+      <TagsSection
+        formData={formData}
+        onFieldChange={updateField}
+        onFieldFocus={handleFieldFocus}
+      />
 
       {/* 操作按钮 */}
       <FormActions

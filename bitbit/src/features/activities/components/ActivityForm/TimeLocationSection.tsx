@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Input } from "@/components/ui";
+import { Card, CardContent, Input, DateTimePicker } from "@/components/ui";
 import type { ActivityFormData } from "../ActivityForm";
 
 interface TimeLocationSectionProps {
@@ -16,6 +16,43 @@ export const TimeLocationSection: React.FC<TimeLocationSectionProps> = ({
   onFieldChange,
   onFieldFocus,
 }) => {
+  // 处理开始时间变化
+  const handleStartDateChange = (value: string) => {
+    onFieldChange("startDate", value);
+
+    // 如果结束时间已设置且小于等于新的开始时间，则清空结束时间
+    if (
+      formData.endDate &&
+      value &&
+      new Date(value) >= new Date(formData.endDate)
+    ) {
+      onFieldChange("endDate", "");
+    }
+  };
+
+  // 处理结束时间变化
+  const handleEndDateChange = (value: string) => {
+    // 如果开始时间已设置且新的结束时间小于等于开始时间，则不允许设置
+    if (
+      formData.startDate &&
+      value &&
+      new Date(value) <= new Date(formData.startDate)
+    ) {
+      // 自动设置为开始时间后1小时
+      const startTime = new Date(formData.startDate);
+      startTime.setHours(startTime.getHours() + 1);
+      onFieldChange("endDate", startTime.toISOString());
+      return;
+    }
+    onFieldChange("endDate", value);
+  };
+
+  // 检查时间冲突
+  const hasTimeConflict =
+    formData.startDate &&
+    formData.endDate &&
+    new Date(formData.endDate) <= new Date(formData.startDate);
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -29,46 +66,50 @@ export const TimeLocationSection: React.FC<TimeLocationSectionProps> = ({
               <label className="block text-sm font-medium text-text-primary">
                 开始时间 <span className="text-red-500">*</span>
               </label>
-              <div className="relative">
-                <Input
-                  type="datetime-local"
-                  value={formData.startDate}
-                  onChange={(e) => onFieldChange("startDate", e.target.value)}
-                  onFocus={(e) => {
-                    onFieldFocus("startDate");
-                    // 聚焦时也显示选择器
-                    e.currentTarget.showPicker?.();
-                  }}
-                  className="cursor-pointer w-full"
-                  onClick={(e) => {
-                    // 确保点击时显示日期时间选择器
-                    e.currentTarget.showPicker?.();
-                  }}
-                />
-              </div>
+              <DateTimePicker
+                value={formData.startDate}
+                onChange={handleStartDateChange}
+                onFocus={() => onFieldFocus("startDate")}
+                placeholder="选择开始时间"
+                className="w-full"
+                minDate={new Date()}
+              />
+              {formData.startDate && (
+                <p className="text-xs text-green-600 mt-1">✓ 开始时间已设置</p>
+              )}
             </div>
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-text-primary">
                 结束时间 <span className="text-red-500">*</span>
               </label>
-              <div className="relative">
-                <Input
-                  type="datetime-local"
-                  value={formData.endDate}
-                  onChange={(e) => onFieldChange("endDate", e.target.value)}
-                  onFocus={(e) => {
-                    onFieldFocus("endDate");
-                    // 聚焦时也显示选择器
-                    e.currentTarget.showPicker?.();
-                  }}
-                  className="cursor-pointer w-full"
-                  onClick={(e) => {
-                    // 确保点击时显示日期时间选择器
-                    e.currentTarget.showPicker?.();
-                  }}
-                />
-              </div>
+              <DateTimePicker
+                value={formData.endDate}
+                onChange={handleEndDateChange}
+                onFocus={() => onFieldFocus("endDate")}
+                placeholder="选择结束时间"
+                className="w-full"
+                minDate={
+                  formData.startDate
+                    ? new Date(
+                        Math.max(
+                          new Date().getTime(),
+                          new Date(formData.startDate).getTime()
+                        )
+                      )
+                    : new Date()
+                }
+              />
+              {formData.startDate && !formData.endDate && (
+                <p className="text-xs text-gray-500 mt-1">
+                  结束时间需要晚于开始时间
+                </p>
+              )}
+              {hasTimeConflict && (
+                <p className="text-xs text-red-500 mt-1">
+                  ⚠️ 结束时间不能早于或等于开始时间
+                </p>
+              )}
             </div>
           </div>
 

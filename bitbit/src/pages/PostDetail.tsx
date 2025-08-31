@@ -56,6 +56,7 @@ const PostDetail: FC = () => {
           "https://picsum.photos/400/400?random=10",
         ],
         category: "摄影",
+        tags: ["摄影技巧", "西湖", "人像摄影", "风景摄影"], // 添加标签
         publishTime: "2小时前",
         location: "📍 杭州西湖区",
         likes: 89,
@@ -88,6 +89,7 @@ const PostDetail: FC = () => {
           "https://picsum.photos/400/300?random=book2",
         ],
         category: "读书",
+        tags: ["读书分享", "深度工作", "效率提升", "专注力"], // 添加标签
         publishTime: "5小时前",
         location: "📍 在线分享",
         likes: 45,
@@ -353,6 +355,7 @@ const PostDetail: FC = () => {
         "https://picsum.photos/80/80?random=rec1-3",
       ],
       category: "learning" as const,
+      tags: ["摄影技巧", "人像摄影", "春日摄影"], // 添加标签
       publishTime: "1天前",
       comments: 45,
       likes: 128,
@@ -376,6 +379,7 @@ const PostDetail: FC = () => {
         "https://picsum.photos/80/80?random=rec2-5",
       ],
       category: "learning" as const,
+      tags: ["西湖", "樱花", "摄影地点"], // 添加标签
       publishTime: "2天前",
       comments: 67,
       likes: 234,
@@ -396,6 +400,7 @@ const PostDetail: FC = () => {
         "https://picsum.photos/80/80?random=rec3-2",
       ],
       category: "reading" as const,
+      tags: ["学习方法", "效率提升", "读书分享"], // 添加标签
       publishTime: "3天前",
       comments: 32,
       likes: 95,
@@ -420,6 +425,7 @@ const PostDetail: FC = () => {
         "https://picsum.photos/80/80?random=rec4-6",
       ],
       category: "learning" as const,
+      tags: ["旅行", "小众景点", "杭州周边"], // 添加标签
       publishTime: "4天前",
       comments: 89,
       likes: 176,
@@ -435,6 +441,11 @@ const PostDetail: FC = () => {
 
   const handleJoinActivity = () => {
     console.log("报名活动");
+  };
+
+  const handleTagClick = (tag: string) => {
+    const navigateToCommunity = navigateWithSource("post-detail");
+    navigateToCommunity(`/community?tag=${encodeURIComponent(tag)}`);
   };
 
   const handleSubmitComment = (comment: string) => {
@@ -555,6 +566,7 @@ const PostDetail: FC = () => {
           post={postData}
           onFollow={handleFollow}
           onJoinActivity={handleJoinActivity}
+          onTagClick={handleTagClick}
         />
 
         {/* 评论区域 */}
@@ -581,6 +593,7 @@ const PostDetail: FC = () => {
             console.log("PostDetail: 导航函数已调用");
             // 页面切换后会自动滚动到顶部（在useEffect中处理）
           }}
+          onTagClick={handleTagClick} // 添加标签点击处理
         />
       </Container>
 

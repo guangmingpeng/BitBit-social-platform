@@ -270,4 +270,27 @@
     white-space: nowrap;
     border: 0;
   }
+
+  /* ============ 动画样式 ============ */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.98);
+    }
+  }
 }

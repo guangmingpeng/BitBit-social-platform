@@ -9,9 +9,8 @@ import {
   ExchangeModal,
   PurchaseModal,
 } from "@/components/ui";
-import { ActivityCard } from "@/features/activities";
+import { ActivityCard, PostCard } from "@/components/ui/cards";
 import { ExchangeCard } from "@/features/exchange";
-import PostCard from "@/features/community/components/PostCard";
 import { getAllExchangeItems } from "@/shared/data/exchangeItems";
 import { getPopularActivities } from "@/shared/data/activities";
 import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
@@ -79,6 +78,7 @@ const Home: FC = () => {
         "https://picsum.photos/400/300?random=photography3",
       ],
       category: "learning" as const,
+      tags: ["摄影技巧", "后期技巧", "西湖"],
       publishTime: "2小时前",
       likes: 15,
       comments: 8,
@@ -95,6 +95,7 @@ const Home: FC = () => {
       content:
         "推荐一本最近看的书《深度工作》，讲述如何在信息爆炸的时代保持专注。书中的理念对提高工作效率很有帮助，推荐给大家！这本书从心理学和神经科学的角度分析了专注力的重要性，提供了很多实用的方法来培养深度工作的能力。",
       category: "reading" as const,
+      tags: ["读书分享", "深度工作", "效率提升"],
       publishTime: "5小时前",
       likes: 23,
       comments: 12,
@@ -165,7 +166,9 @@ const Home: FC = () => {
             {activities.map((activity) => (
               <ActivityCard
                 key={activity.id}
-                {...activity}
+                activity={activity}
+                layout="default"
+                size="md"
                 onClick={() =>
                   navigateWithSource("home")(`/activities/${activity.id}`)
                 }
@@ -193,7 +196,7 @@ const Home: FC = () => {
             {communityPosts.map((post) => (
               <PostCard
                 key={post.id}
-                {...post}
+                post={post}
                 onClick={() => {
                   const navigateToPost = navigateWithSource("home");
                   navigateToPost(`/community/${post.id}`);
@@ -202,6 +205,12 @@ const Home: FC = () => {
                 onComment={() => console.log(`评论帖子: ${post.id}`)}
                 onShare={() => console.log(`分享帖子: ${post.id}`)}
                 onBookmark={() => console.log(`收藏帖子: ${post.id}`)}
+                onTagClick={(tag) => {
+                  const navigateToCommunity = navigateWithSource("home");
+                  navigateToCommunity(
+                    `/community?tag=${encodeURIComponent(tag)}`
+                  );
+                }}
               />
             ))}
           </Grid>

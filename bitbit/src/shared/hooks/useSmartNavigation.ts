@@ -66,6 +66,11 @@ export const useSmartNavigation = () => {
         console.log("→ 帖子详情页返回首页");
         navigate("/", { replace: true });
         return;
+      } else if (fromSource === "profile") {
+        console.log("→ 帖子详情页返回个人资料");
+        const profileTab = location.state?.profileTab || "activities";
+        navigate(`/profile/${profileTab}`, { replace: true });
+        return;
       }
 
       // 兜底：从栈中查找前一个页面
@@ -125,6 +130,11 @@ export const useSmartNavigation = () => {
         console.log("→ 报名页返回活动列表");
         navigate("/activities", { replace: true });
         return;
+      } else if (fromSource === "profile") {
+        console.log("→ 报名页返回个人资料");
+        const profileTab = location.state?.profileTab || "activities";
+        navigate(`/profile/${profileTab}`, { replace: true });
+        return;
       }
 
       // 兜底：返回活动列表
@@ -148,6 +158,11 @@ export const useSmartNavigation = () => {
           console.log("→ 从详情页返回活动列表");
           navigate("/activities", { replace: true });
           return;
+        } else if (originalSource === "profile") {
+          console.log("→ 从详情页返回个人资料");
+          const profileTab = location.state?.profileTab || "activities";
+          navigate(`/profile/${profileTab}`, { replace: true });
+          return;
         }
 
         // 如果没有 originalSource，兜底返回活动列表
@@ -164,6 +179,11 @@ export const useSmartNavigation = () => {
       } else if (fromSource === "activities") {
         console.log("→ 详情页直接返回活动列表");
         navigate("/activities", { replace: true });
+        return;
+      } else if (fromSource === "profile") {
+        console.log("→ 详情页直接返回个人资料");
+        const profileTab = location.state?.profileTab || "activities";
+        navigate(`/profile/${profileTab}`, { replace: true });
         return;
       }
 
@@ -186,7 +206,42 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 4. 其他页面的通用返回逻辑
+    // 4. 处理交换详情页的返回
+    const isExchangeDetailPage = currentPath.match(/^\/exchange\/[^/]+$/);
+    if (isExchangeDetailPage) {
+      if (fromSource === "home") {
+        console.log("→ 交换详情页返回首页");
+        navigate("/", { replace: true });
+        return;
+      } else if (fromSource === "exchange") {
+        console.log("→ 交换详情页返回交换列表");
+        navigate("/exchange", { replace: true });
+        return;
+      } else if (fromSource === "profile") {
+        console.log("→ 交换详情页返回个人资料");
+        const profileTab = location.state?.profileTab || "activities";
+        navigate(`/profile/${profileTab}`, { replace: true });
+        return;
+      }
+
+      // 兜底：从栈中查找前一个页面
+      const currentIndex = stack.findIndex(
+        (entry) => entry.pathname === currentPath
+      );
+      if (currentIndex > 0) {
+        const previousEntry = stack[currentIndex - 1];
+        console.log("→ 交换详情页返回栈中前一个页面:", previousEntry.pathname);
+        navigate(previousEntry.pathname, { replace: true });
+        return;
+      }
+
+      // 最终兜底：返回交换列表
+      console.log("→ 交换详情页最终兜底返回交换列表");
+      navigate("/exchange", { replace: true });
+      return;
+    }
+
+    // 5. 其他页面的通用返回逻辑
     if (stack.length > 1) {
       const previousEntry = stack[stack.length - 2];
       console.log("→ 通用返回逻辑，返回:", previousEntry.pathname);

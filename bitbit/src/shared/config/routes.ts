@@ -73,4 +73,8 @@ export const routes = [
     path: "/profile",
     element: Profile,
   },
+  {
+    path: "/profile/:tab",
+    element: Profile,
+  },
 ];

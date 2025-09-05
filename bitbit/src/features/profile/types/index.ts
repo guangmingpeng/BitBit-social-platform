@@ -18,7 +18,7 @@ export interface Activity {
   time: string;
   location: string;
   description: string;
-  status: "registered" | "organized" | "ended";
+  status: "registered" | "organized" | "ended" | "completed";
   daysLeft?: number;
   image?: string;
   currentParticipants?: number; // 添加参与者数量字段

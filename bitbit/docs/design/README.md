@@ -27,6 +27,8 @@ docs/design/
 │   ├── bitbit-profile-page.svg  # 个人资料页面
 │   ├── bitbit-community-page.svg # 社区页面设计
 │   ├── bitbit-activity-list.svg # 活动列表页面设计 (新增)
+│   ├── bitbit-order-detail-page.svg # 订单详情页面设计 (新增)
+│   ├── order-detail-page.md     # 订单详情页面设计规范 (新增)
 │   └── fixed-homepage-cn-final.svg # 首页最终设计
 └── features/                    # 功能模块设计稿
     ├── UI-design-2.svg          # 综合UI设计稿

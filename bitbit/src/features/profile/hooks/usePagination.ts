@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 
 interface UsePaginationProps<T> {
   data: T[];
@@ -20,8 +20,21 @@ export function usePagination<T>({
   pageSize = 10,
 }: UsePaginationProps<T>): UsePaginationReturn<T> {
   const [currentPage, setCurrentPage] = useState(1);
+  const prevDataLengthRef = useRef(data.length);
 
   const totalPages = Math.ceil(data.length / pageSize);
+
+  // 当数据变化时，如果当前页超出了总页数，则重置到第一页
+  // 或者当数据长度发生变化时（说明筛选条件变了），也重置到第一页
+  useEffect(() => {
+    const dataLengthChanged = prevDataLengthRef.current !== data.length;
+    const currentPageExceedsTotal = totalPages > 0 && currentPage > totalPages;
+
+    if (dataLengthChanged || currentPageExceedsTotal) {
+      setCurrentPage(1);
+      prevDataLengthRef.current = data.length;
+    }
+  }, [data.length, totalPages, currentPage]);
 
   const currentData = useMemo(() => {
     const startIndex = (currentPage - 1) * pageSize;

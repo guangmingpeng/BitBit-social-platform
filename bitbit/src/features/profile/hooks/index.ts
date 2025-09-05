@@ -62,9 +62,14 @@ export const useActivityFilter = (activities: Activity[] = []) => {
     }
   }, [activities, activeFilter]);
 
+  // 包装 setActiveFilter 以便在筛选条件变化时可以触发其他副作用
+  const handleFilterChange = (filter: ActivityFilterType) => {
+    setActiveFilter(filter);
+  };
+
   return {
     activeFilter,
-    setActiveFilter,
+    setActiveFilter: handleFilterChange,
     filteredActivities,
   };
 };

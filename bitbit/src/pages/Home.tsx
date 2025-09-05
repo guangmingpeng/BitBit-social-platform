@@ -19,9 +19,20 @@ import {
   getCategoryEnglishName,
 } from "@/shared/constants/categories";
 
+// 导入测试函数以便在开发时检查状态一致性
+import { testActivityStatusConsistency } from "@/utils/testActivityStatusFix";
+
 const Home: FC = () => {
   const navigate = useNavigate();
   const { navigateWithSource } = useSmartNavigation();
+
+  // 在开发环境下运行测试
+  if (process.env.NODE_ENV === "development") {
+    // 延迟执行以确保组件已加载
+    setTimeout(() => {
+      testActivityStatusConsistency();
+    }, 1000);
+  }
 
   // 模态框状态
   const [showExchangeModal, setShowExchangeModal] = useState(false);

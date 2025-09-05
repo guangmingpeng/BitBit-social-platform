@@ -3,6 +3,11 @@ import { BaseCard } from "../../BaseCard";
 import { cn } from "@/shared/utils/cn";
 import { getLayoutClasses } from "../../BaseCard/variants";
 import { ImageCarousel } from "@/components/common";
+import {
+  getActivityParticipationInfo,
+  CURRENT_USER_ID,
+} from "@/shared/utils/activityUtils";
+import type { Activity } from "@/shared/types";
 import type { ActivityCardProps } from "./types";
 
 export const ActivityCard: React.FC<ActivityCardProps> = ({
@@ -117,48 +122,119 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
   };
 
   const getStatusDisplay = () => {
+    // 使用统一的活动状态判断逻辑
+    const hasCompleteActivityData =
+      "startTime" in activity &&
+      "endTime" in activity &&
+      "organizer" in activity;
+
+    if (hasCompleteActivityData) {
+      const fullActivity = activity as Activity;
+      const participationInfo = getActivityParticipationInfo(
+        fullActivity,
+        CURRENT_USER_ID
+      );
+      const { ended, isOrganizer, isJoined } = participationInfo;
+
+      // 已结束状态的优先级最高
+      if (ended) {
+        if (isOrganizer) {
+          return {
+            text: "已结束",
+            bgColor: "bg-gray-50",
+            textColor: "text-gray-500",
+            secondaryText: "已组织",
+            secondaryBgColor: "bg-green-50",
+            secondaryTextColor: "text-green-600",
+            showAsLabel: true, // 标记为标签显示
+          };
+        } else {
+          return {
+            text: "已结束",
+            bgColor: "bg-gray-50",
+            textColor: "text-gray-500",
+            showAsLabel: true, // 标记为标签显示
+          };
+        }
+      }
+
+      if (isOrganizer) {
+        return {
+          text: "已组织",
+          bgColor: "bg-green-50",
+          textColor: "text-green-600",
+          showAsLabel: true, // 标记为标签显示
+        };
+      }
+
+      if (isJoined) {
+        return {
+          text: "已报名",
+          bgColor: "bg-blue-50",
+          textColor: "text-blue-600",
+          showAsLabel: true, // 标记为标签显示
+        };
+      }
+
+      return {
+        text: "可报名",
+        bgColor: "bg-green-50",
+        textColor: "text-green-600",
+        showAsLabel: false, // 可报名状态不显示标签
+      };
+    }
+
+    // 后备方案：基于简单的status字段
     switch (status) {
       case "registered":
         return {
           text: "已报名",
           bgColor: "bg-blue-50",
           textColor: "text-blue-600",
+          showAsLabel: true,
         };
       case "organized":
         return {
           text: "已组织",
           bgColor: "bg-green-50",
           textColor: "text-green-600",
+          showAsLabel: true,
         };
       case "ongoing":
         return {
           text: "进行中",
           bgColor: "bg-yellow-50",
           textColor: "text-yellow-600",
+          showAsLabel: true,
         };
       case "ended":
+      case "completed":
         return {
           text: "已结束",
           bgColor: "bg-gray-50",
           textColor: "text-gray-500",
+          showAsLabel: true,
         };
       case "cancelled":
         return {
           text: "已取消",
           bgColor: "bg-red-50",
           textColor: "text-red-600",
+          showAsLabel: true,
         };
       case "draft":
         return {
           text: "草稿",
           bgColor: "bg-gray-50",
           textColor: "text-gray-500",
+          showAsLabel: true,
         };
       default:
         return {
           text: "可报名",
           bgColor: "bg-green-50",
           textColor: "text-green-600",
+          showAsLabel: false,
         };
     }
   };
@@ -166,6 +242,34 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
   const categoryConfig = getCategoryConfig(category);
   const statusConfig = getStatusDisplay();
   const layoutClass = getLayoutClasses(layout);
+
+  // 使用统一的活动状态判断逻辑
+  const hasCompleteActivityData =
+    "startTime" in activity && "endTime" in activity && "organizer" in activity;
+
+  // 计算活动状态
+  let canJoin = false;
+  let isOrganizer = false;
+  let ended = false;
+
+  if (hasCompleteActivityData) {
+    const fullActivity = activity as Activity;
+    const participationInfo = getActivityParticipationInfo(
+      fullActivity,
+      CURRENT_USER_ID
+    );
+    canJoin = participationInfo.canJoin;
+    isOrganizer = participationInfo.isOrganizer;
+    ended = participationInfo.ended;
+  } else {
+    // 后备逻辑：基于简单的status字段
+    canJoin =
+      status === "published" &&
+      !isJoined &&
+      currentParticipants < maxParticipants;
+    isOrganizer = status === "organized";
+    ended = status === "ended" || status === "completed";
+  }
 
   const handleCardClick = () => {
     if (onClick) {
@@ -238,8 +342,8 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
         </div>
 
         {/* 状态标签 */}
-        {status && status !== "published" && (
-          <div className="absolute top-3 right-3 z-10">
+        {statusConfig.showAsLabel && (
+          <div className="absolute top-3 right-3 z-10 flex flex-col gap-1">
             <span
               className={cn(
                 "px-2 py-1 rounded text-xs font-medium",
@@ -249,6 +353,18 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
             >
               {statusConfig.text}
             </span>
+            {/* 显示次要状态标签（如已组织+已结束） */}
+            {statusConfig.secondaryText && (
+              <span
+                className={cn(
+                  "px-2 py-1 rounded text-xs font-medium",
+                  statusConfig.secondaryBgColor,
+                  statusConfig.secondaryTextColor
+                )}
+              >
+                {statusConfig.secondaryText}
+              </span>
+            )}
           </div>
         )}
       </div>
@@ -288,7 +404,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
           >
             {categoryConfig.icon} {categoryConfig.label}
           </span>
-          {status && status !== "published" && (
+          {statusConfig.showAsLabel && (
             <span
               className={cn(
                 "px-2 py-1 rounded text-xs font-medium",
@@ -322,16 +438,30 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
             >
               {categoryConfig.icon} {categoryConfig.label}
             </span>
-            {status && status !== "published" && (
-              <span
-                className={cn(
-                  "px-2 py-0.5 rounded-full text-xs",
-                  statusConfig.bgColor,
-                  statusConfig.textColor
+            {statusConfig.showAsLabel && (
+              <div className="flex items-center gap-1">
+                <span
+                  className={cn(
+                    "px-2 py-0.5 rounded-full text-xs",
+                    statusConfig.bgColor,
+                    statusConfig.textColor
+                  )}
+                >
+                  {statusConfig.text}
+                </span>
+                {/* 显示次要状态标签 */}
+                {statusConfig.secondaryText && (
+                  <span
+                    className={cn(
+                      "px-2 py-0.5 rounded-full text-xs",
+                      statusConfig.secondaryBgColor,
+                      statusConfig.secondaryTextColor
+                    )}
+                  >
+                    {statusConfig.secondaryText}
+                  </span>
                 )}
-              >
-                {statusConfig.text}
-              </span>
+              </div>
             )}
           </div>
         )}
@@ -352,16 +482,30 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
             {/* 右侧标签容器使用固定位置，确保一致性 */}
             <div className="flex items-center gap-2 flex-shrink-0">
               {/* 状态标签 */}
-              {status && status !== "published" && (
-                <span
-                  className={cn(
-                    "px-2 py-1 rounded text-xs font-medium",
-                    statusConfig.bgColor,
-                    statusConfig.textColor
+              {statusConfig.showAsLabel && (
+                <div className="flex items-center gap-1">
+                  <span
+                    className={cn(
+                      "px-2 py-1 rounded text-xs font-medium",
+                      statusConfig.bgColor,
+                      statusConfig.textColor
+                    )}
+                  >
+                    {statusConfig.text}
+                  </span>
+                  {/* 显示次要状态标签 */}
+                  {statusConfig.secondaryText && (
+                    <span
+                      className={cn(
+                        "px-2 py-1 rounded text-xs font-medium",
+                        statusConfig.secondaryBgColor,
+                        statusConfig.secondaryTextColor
+                      )}
+                    >
+                      {statusConfig.secondaryText}
+                    </span>
                   )}
-                >
-                  {statusConfig.text}
-                </span>
+                </div>
               )}
               {/* 价格标签 */}
               {showPrice && (
@@ -482,13 +626,10 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
   const renderActions = () => {
     if (!showActions) return null;
 
-    const canJoin =
-      status === "published" &&
-      !isJoined &&
-      currentParticipants < maxParticipants;
-    const canLeave = isJoined && status !== "ended";
-    const canNotify = status === "organized" && onNotify;
-    const canEdit = (status === "draft" || status === "organized") && onEdit;
+    // 使用已计算的状态变量
+    const canNotify = isOrganizer && !ended && !!onNotify;
+    const canEdit = isOrganizer && !!onEdit;
+    const canActuallyLeave = isJoined && !ended && !isOrganizer;
 
     if (layout === "compact") {
       return (
@@ -562,7 +703,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
               报名参加
             </button>
           )}
-          {canLeave && onLeave && (
+          {canActuallyLeave && onLeave && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -752,23 +893,37 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      onJoin();
+                      if (canJoin && !ended) {
+                        onJoin();
+                      }
                     }}
-                    disabled={currentParticipants >= maxParticipants}
+                    disabled={!canJoin || ended || isOrganizer}
                     className={cn(
                       "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                      isJoined
-                        ? "bg-gray-100 text-gray-600 cursor-default"
+                      ended
+                        ? "bg-gray-100 text-gray-500 cursor-not-allowed"
+                        : isOrganizer
+                        ? "bg-green-100 text-green-600 cursor-default"
+                        : isJoined
+                        ? "bg-blue-100 text-blue-600 cursor-default"
                         : currentParticipants >= maxParticipants
                         ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                        : "bg-blue-600 text-white hover:bg-blue-700 active:scale-95"
+                        : canJoin
+                        ? "bg-blue-600 text-white hover:bg-blue-700 active:scale-95"
+                        : "bg-gray-100 text-gray-400 cursor-not-allowed"
                     )}
                   >
-                    {isJoined
+                    {ended
+                      ? "已结束"
+                      : isOrganizer
+                      ? "已组织"
+                      : isJoined
                       ? "已参加"
                       : currentParticipants >= maxParticipants
                       ? "已满员"
-                      : "立即参加"}
+                      : canJoin
+                      ? "立即参加"
+                      : "无法参加"}
                   </button>
                 )}
               </div>

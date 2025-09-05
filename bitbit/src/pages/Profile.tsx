@@ -33,7 +33,22 @@ const Profile: FC = () => {
   const { activeTab, handleTabChange } = useProfileTabs();
   const { activeFilter, setActiveFilter, filteredActivities } =
     useActivityFilter(profileData?.activities || []);
+  // 导航函数
   const navigation = useProfileNavigation();
+
+  // 修改活动详情导航，传递profile状态信息
+  const navigateToActivityDetail = (activityId: string) => {
+    navigate(`/activities/${activityId}`, {
+      state: {
+        fromProfile: true,
+        fromSource: "profile", // 添加这个字段以支持smartGoBack
+        profileTab: activeTab, // 传递当前的tab信息
+        profileData: {
+          activities: filteredActivities,
+        },
+      },
+    });
+  };
 
   // 如果没有提供tab参数，重定向到activities
   useEffect(() => {
@@ -70,6 +85,96 @@ const Profile: FC = () => {
       }
     };
 
+    // 根据profile活动状态确定主活动类型的状态和用户参与情况
+    const getActivityStatus = () => {
+      switch (profileActivity.status) {
+        case "organized":
+          // 组织的活动：设置组织者为当前用户，状态为published，已报名
+          return {
+            status: "published" as const,
+            isJoined: true,
+            isOrganizer: true,
+          };
+        case "registered":
+          // 已报名的活动：状态为published，已报名但非组织者
+          return {
+            status: "published" as const,
+            isJoined: true,
+            isOrganizer: false,
+          };
+        case "ended": {
+          // ended状态：表示我组织的已结束活动
+          return {
+            status: "completed" as const,
+            isJoined: true, // 组织者默认已加入
+            isOrganizer: true,
+          };
+        }
+        case "completed": {
+          // completed状态：表示我参加过的已结束活动
+          return {
+            status: "completed" as const,
+            isJoined: true, // 曾经参加过
+            isOrganizer: false,
+          };
+        }
+        default:
+          return {
+            status: "published" as const,
+            isJoined: false,
+            isOrganizer: false,
+          };
+      }
+    };
+
+    const { status, isJoined, isOrganizer } = getActivityStatus();
+
+    // 创建当前用户作为组织者的用户对象
+    const currentUser = {
+      id: "current_user", // 与activityUtils中的CURRENT_USER_ID保持一致
+      username: profileData?.user?.name || "当前用户",
+      email: "current@user.com",
+      avatar: profileData?.user?.avatar || "",
+      bio: profileData?.user?.bio || "",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // 创建默认的其他组织者对象
+    const defaultOrganizer = {
+      id: "other_user",
+      username: "活动组织者",
+      email: "organizer@example.com",
+      avatar: "https://picsum.photos/40/40?random=organizer",
+      bio: "活动组织者",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // 生成模拟的时间数据（基于活动date和time）
+    const generateDateTime = () => {
+      const today = new Date();
+      const activityDate = new Date(today);
+
+      // 根据状态决定时间
+      if (status === "completed") {
+        // 已结束活动设为过去时间
+        activityDate.setDate(today.getDate() - 7);
+      } else {
+        // 未结束活动设为未来时间
+        activityDate.setDate(today.getDate() + 7);
+      }
+
+      const startTime = activityDate.toISOString();
+      const endTime = new Date(
+        activityDate.getTime() + 2 * 60 * 60 * 1000
+      ).toISOString(); // 加2小时
+
+      return { startTime, endTime };
+    };
+
+    const { startTime, endTime } = generateDateTime();
+
     return {
       id: profileActivity.id,
       title: profileActivity.title,
@@ -78,17 +183,21 @@ const Profile: FC = () => {
       date: profileActivity.date,
       time: profileActivity.time,
       location: profileActivity.location,
-      maxParticipants: profileActivity.maxParticipants || 0,
-      currentParticipants: profileActivity.currentParticipants || 0,
-      organizer: {
-        username: profileData?.user?.name || "当前用户",
-        avatar: profileData?.user?.avatar,
-      },
+      startTime,
+      endTime,
+      capacity: profileActivity.maxParticipants || 30,
+      maxParticipants: profileActivity.maxParticipants || 30,
+      currentParticipants: profileActivity.currentParticipants || 15,
+      organizer: isOrganizer ? currentUser : defaultOrganizer,
       images: profileActivity.image ? [profileActivity.image] : [],
+      coverImage: profileActivity.image,
       price: 0,
       isFree: true,
-      isJoined: profileActivity.status === "registered",
-      status: profileActivity.status,
+      isJoined,
+      status,
+      tags: [profileActivity.category],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
   };
 
@@ -202,12 +311,8 @@ const Profile: FC = () => {
                     key={activity.id}
                     activity={activity}
                     layout="horizontal"
-                    onClick={() =>
-                      navigation.navigateToActivityDetail(activity.id)
-                    }
-                    onViewDetail={() =>
-                      navigation.navigateToActivityDetail(activity.id)
-                    }
+                    onClick={() => navigateToActivityDetail(activity.id)}
+                    onViewDetail={() => navigateToActivityDetail(activity.id)}
                     onNotify={() => handleNotifyParticipants(activity.id)}
                     showActions={true}
                     showImages={true}

@@ -29,10 +29,11 @@ export const mockActivities: Activity[] = [
     ],
     price: 68,
     isFree: false,
+    isJoined: true, // 测试用户已报名状态
     status: "published",
     tags: ["音乐", "爵士", "现场演出"],
-    startTime: "2024-08-25T20:00:00Z",
-    endTime: "2024-08-25T22:00:00Z",
+    startTime: "2025-09-15T20:00:00Z", // 未来活动
+    endTime: "2025-09-15T22:00:00Z",
     capacity: 50,
     coverImage: "https://picsum.photos/800/600?random=jazz",
     createdAt: "2024-08-20T10:00:00Z",
@@ -83,10 +84,11 @@ export const mockActivities: Activity[] = [
     ],
     price: 128,
     isFree: false,
+    isJoined: false, // 测试用户未报名状态
     status: "published",
     tags: ["咖啡", "品鉴", "学习"],
-    startTime: "2024-08-26T14:00:00Z",
-    endTime: "2024-08-26T16:00:00Z",
+    startTime: "2025-09-25T14:00:00Z", // 未来活动
+    endTime: "2025-09-25T16:00:00Z",
     capacity: 25,
     coverImage: "https://picsum.photos/800/600?random=coffee",
     createdAt: "2024-08-20T11:00:00Z",
@@ -121,8 +123,8 @@ export const mockActivities: Activity[] = [
     date: "8月27日",
     time: "09:00-17:00",
     location: "香山公园",
-    currentParticipants: 12,
-    maxParticipants: 20,
+    currentParticipants: 20,
+    maxParticipants: 20, // 满员状态测试
     organizer: {
       id: "org3",
       username: "outdoorclub",
@@ -135,10 +137,11 @@ export const mockActivities: Activity[] = [
     images: ["https://picsum.photos/800/600?random=hiking"],
     price: 0,
     isFree: true,
+    isJoined: false, // 测试用户未报名但已满员
     status: "published",
     tags: ["户外", "徒步", "健康"],
-    startTime: "2024-08-27T09:00:00Z",
-    endTime: "2024-08-27T17:00:00Z",
+    startTime: "2025-09-20T09:00:00Z", // 未来活动
+    endTime: "2025-09-20T17:00:00Z",
     capacity: 20,
     coverImage: "https://picsum.photos/800/600?random=hiking",
     createdAt: "2024-08-20T12:00:00Z",
@@ -186,9 +189,10 @@ export const mockActivities: Activity[] = [
     images: ["https://picsum.photos/800/600?random=books"],
     price: 0,
     isFree: true,
-    status: "published",
+    isJoined: true, // 测试用户已报名但活动已结束
+    status: "completed", // 已完成状态
     tags: ["读书", "分享", "交流"],
-    startTime: "2024-08-28T19:00:00Z",
+    startTime: "2024-08-28T19:00:00Z", // 已过期活动
     endTime: "2024-08-28T21:00:00Z",
     capacity: 15,
     coverImage: "https://picsum.photos/800/600?random=books",
@@ -287,6 +291,198 @@ export const mockActivities: Activity[] = [
         <li>雨天照常举行，有雨棚覆盖</li>
         <li>禁止自带酒精饮料</li>
         <li>现场有专业安保和医疗服务</li>
+      </ul>
+    `,
+  },
+  // 用户创建的活动
+  {
+    id: "3",
+    title: "Python编程入门",
+    description:
+      "Python编程基础入门课程，适合编程初学者。从基础语法到实际项目练习，让你快速上手Python开发。",
+    category: "learning",
+    date: "8月28日",
+    time: "19:00-21:00",
+    location: "科技园会议室",
+    currentParticipants: 15,
+    maxParticipants: 30,
+    organizer: {
+      id: "current_user",
+      username: "子龙",
+      email: "zilong@example.com",
+      avatar: "",
+      bio: "热爱技术分享的程序员",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    images: [
+      "https://picsum.photos/800/600?random=python1",
+      "https://picsum.photos/800/600?random=python2",
+    ],
+    price: 0,
+    isFree: true,
+    isJoined: false, // 用户未报名但是自己组织的活动
+    status: "published",
+    tags: ["编程", "Python", "学习"],
+    startTime: "2024-08-28T19:00:00Z",
+    endTime: "2024-08-28T21:00:00Z",
+    capacity: 30,
+    coverImage: "https://picsum.photos/800/600?random=python",
+    createdAt: "2024-08-25T10:00:00Z",
+    updatedAt: "2024-08-25T10:00:00Z",
+    detailContent: `
+      <h3>课程介绍</h3>
+      <p>这是一门专为编程初学者设计的Python入门课程，将带你从零开始学习Python编程。</p>
+      
+      <h3>课程内容</h3>
+      <ul>
+        <li>Python基础语法和数据类型</li>
+        <li>控制结构：条件语句和循环</li>
+        <li>函数的定义和使用</li>
+        <li>列表、字典等数据结构</li>
+        <li>实际项目练习</li>
+      </ul>
+      
+      <h3>适合人群</h3>
+      <ul>
+        <li>编程零基础的初学者</li>
+        <li>想要学习Python的技术爱好者</li>
+        <li>希望提升编程技能的学生</li>
+      </ul>
+      
+      <h3>课程收获</h3>
+      <ul>
+        <li>掌握Python基础语法</li>
+        <li>能够编写简单的Python程序</li>
+        <li>具备继续深入学习的基础</li>
+        <li>获得实际项目经验</li>
+      </ul>
+    `,
+  },
+  {
+    id: "4",
+    title: "周末户外摄影",
+    description:
+      "户外摄影实践活动，拍摄美丽的自然风光，学习摄影技巧和构图方法。",
+    category: "learning",
+    date: "8月31日",
+    time: "09:00-15:00",
+    location: "西湖景区",
+    currentParticipants: 8,
+    maxParticipants: 15,
+    organizer: {
+      id: "current_user",
+      username: "子龙",
+      email: "zilong@example.com",
+      avatar: "",
+      bio: "摄影爱好者，喜欢记录生活美好",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    images: [
+      "https://picsum.photos/800/600?random=photography1",
+      "https://picsum.photos/800/600?random=photography2",
+    ],
+    price: 0,
+    isFree: true,
+    status: "published",
+    tags: ["摄影", "户外", "风光"],
+    startTime: "2025-09-10T09:00:00Z",
+    endTime: "2025-09-10T15:00:00Z",
+    capacity: 15,
+    coverImage: "https://picsum.photos/800/600?random=photography",
+    createdAt: "2024-08-26T14:00:00Z",
+    updatedAt: "2024-08-26T14:00:00Z",
+    detailContent: `
+      <h3>活动介绍</h3>
+      <p>这是一次户外摄影实践活动，我们将前往风景优美的西湖景区，在实际拍摄中学习摄影技巧。</p>
+      
+      <h3>活动安排</h3>
+      <ul>
+        <li>09:00-10:00 集合点名，摄影基础知识讲解</li>
+        <li>10:00-12:00 风光摄影实践 - 湖光山色</li>
+        <li>12:00-13:00 午餐休息</li>
+        <li>13:00-15:00 人像摄影实践 - 构图与光影</li>
+      </ul>
+      
+      <h3>学习内容</h3>
+      <ul>
+        <li>摄影基础理论：光圈、快门、ISO</li>
+        <li>构图技巧：三分法、对称构图等</li>
+        <li>风光摄影要点</li>
+        <li>人像摄影技巧</li>
+        <li>后期处理基础</li>
+      </ul>
+      
+      <h3>携带物品</h3>
+      <ul>
+        <li>相机（单反或微单优先）</li>
+        <li>备用电池和存储卡</li>
+        <li>舒适的徒步鞋</li>
+        <li>防晒用品</li>
+        <li>水和简单食物</li>
+      </ul>
+    `,
+  },
+  {
+    id: "5",
+    title: "读书分享：《人类简史》",
+    description:
+      "分享《人类简史》的读书心得，讨论人类发展历程，一起探讨历史与现实的联系。",
+    category: "reading",
+    date: "9月2日",
+    time: "14:00-16:00",
+    location: "咖啡书屋",
+    currentParticipants: 12,
+    maxParticipants: 20,
+    organizer: {
+      id: "current_user",
+      username: "子龙",
+      email: "zilong@example.com",
+      avatar: "",
+      bio: "热爱阅读和思考的文学爱好者",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    images: [
+      "https://picsum.photos/800/600?random=reading1",
+      "https://picsum.photos/800/600?random=reading2",
+    ],
+    price: 0,
+    isFree: true,
+    status: "published",
+    tags: ["读书", "历史", "分享"],
+    startTime: "2025-09-05T14:00:00Z",
+    endTime: "2025-09-05T16:00:00Z",
+    capacity: 20,
+    coverImage: "https://picsum.photos/800/600?random=reading",
+    createdAt: "2024-08-28T16:00:00Z",
+    updatedAt: "2024-08-28T16:00:00Z",
+    detailContent: `
+      <h3>读书会介绍</h3>
+      <p>《人类简史》是一本关于人类发展历程的经典著作，本次读书会将围绕这本书展开深入讨论。</p>
+      
+      <h3>讨论主题</h3>
+      <ul>
+        <li>认知革命：语言的力量</li>
+        <li>农业革命：文明的开始</li>
+        <li>科学革命：现代世界的诞生</li>
+        <li>人工智能时代的思考</li>
+      </ul>
+      
+      <h3>活动流程</h3>
+      <ul>
+        <li>14:00-14:30 自我介绍和开场</li>
+        <li>14:30-15:30 核心章节讨论</li>
+        <li>15:30-15:45 茶歇时间</li>
+        <li>15:45-16:00 总结和下期预告</li>
+      </ul>
+      
+      <h3>参与要求</h3>
+      <ul>
+        <li>至少读过书籍的主要章节</li>
+        <li>准备一个感兴趣的讨论点</li>
+        <li>带着开放的心态参与讨论</li>
       </ul>
     `,
   },

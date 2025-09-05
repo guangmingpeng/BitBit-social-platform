@@ -49,6 +49,7 @@ export interface Activity {
   coverImage?: string;
   price?: number;
   isFree?: boolean;
+  isJoined?: boolean; // 用户是否已报名参加
   detailContent?: string;
   registrationDeadline?: string;
   createdAt: string;

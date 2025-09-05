@@ -1,9 +1,11 @@
-import { type FC, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { type FC, useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Container, Card, CardContent, Button } from "@/components/ui";
 import { FloatingBackButton } from "@/components/common";
 import { getActivityById } from "@/shared/data/activities";
 import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
+import { getActivityParticipationInfo } from "@/shared/utils/activityUtils";
+import type { Activity } from "@/shared/types";
 import {
   ActivityHeader,
   ActivityBasicInfo,
@@ -15,16 +17,69 @@ import {
   ActivityActions,
 } from "@/features/activities/components";
 
+interface ProfileActivity {
+  id: string;
+  status: "registered" | "organized" | "ended";
+  title?: string;
+  category?: string;
+  date?: string;
+  time?: string;
+  location?: string;
+  description?: string;
+}
+
+interface LocationState {
+  fromProfile?: boolean;
+  profileData?: {
+    activities?: ProfileActivity[];
+  };
+}
+
 const ActivityDetail: FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { smartGoBack, navigateWithSource } = useSmartNavigation();
   const [isLiked, setIsLiked] = useState(false);
+  const [activityData, setActivityData] = useState<Activity | null>(null);
 
-  // 获取活动详情
-  const activity = id ? getActivityById(id) : null;
+  // 获取活动详情并处理用户参与状态
+  useEffect(() => {
+    if (!id) return;
 
-  if (!activity) {
+    const baseActivity = getActivityById(id);
+    if (!baseActivity) {
+      setActivityData(null);
+      return;
+    }
+
+    // 根据来源确定用户参与状态
+    const state = location.state as LocationState;
+    if (state?.fromProfile && state.profileData?.activities) {
+      const profileActivity = state.profileData.activities.find(
+        (a: ProfileActivity) => a.id === baseActivity.id
+      );
+      if (profileActivity) {
+        // 基于profile中的活动状态设置isJoined和组织者状态
+        let isJoined = false;
+
+        // 根据profile活动状态确定参与状态
+        if (profileActivity.status === "registered") {
+          isJoined = true;
+        } else if (profileActivity.status === "organized") {
+          // 对于组织的活动，设置组织者为当前用户，并且默认已报名
+          isJoined = true;
+        }
+
+        setActivityData({ ...baseActivity, isJoined });
+        return;
+      }
+    }
+
+    setActivityData(baseActivity);
+  }, [id, location.state]);
+
+  if (!activityData) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Container size="lg" className="py-8">
@@ -44,19 +99,41 @@ const ActivityDetail: FC = () => {
     );
   }
 
+  const participationInfo = getActivityParticipationInfo(activityData);
+
   const handleJoin = () => {
-    const isFull = activity.currentParticipants >= activity.maxParticipants;
-    if (!isFull) {
+    if (!activityData) return;
+
+    if (participationInfo.canJoin) {
       // 跳转到报名页面，使用智能导航记录来源
       navigateWithSource("activity-detail")(
-        `/activities/${activity.id}/register`
+        `/activities/${activityData.id}/register`
       );
     }
   };
 
+  const handleLeave = () => {
+    if (!activityData) return;
+
+    if (participationInfo.canLeave) {
+      // 确认取消报名
+      const confirmed = window.confirm(
+        "确定要取消报名吗？取消后可能无法再次报名。"
+      );
+      if (confirmed) {
+        // 这里应该调用API取消报名
+        console.log("取消报名:", activityData.title);
+        alert("已成功取消报名");
+        // 更新活动状态
+        setActivityData({ ...activityData, isJoined: false });
+      }
+    }
+  };
+
   const handleShare = () => {
+    if (!activityData) return;
     // 分享活动逻辑
-    console.log("分享活动:", activity.title);
+    console.log("分享活动:", activityData.title);
   };
 
   const handleLike = () => {
@@ -72,13 +149,16 @@ const ActivityDetail: FC = () => {
   };
 
   const handleComment = () => {
-    console.log("评论活动");
+    if (!participationInfo.ended) {
+      console.log("评论活动");
+    }
   };
 
   const handleCreateSimilar = () => {
     // 跳转到创建活动页面
     navigateWithSource("activity-detail")("/publish-activity");
   };
+
   const handleViewLocationDetails = () => {
     console.log("查看详细地址");
   };
@@ -113,7 +193,7 @@ const ActivityDetail: FC = () => {
       <Container size="lg" className="py-0 pl-12 md:pl-16 lg:pl-20">
         {/* 头部图片区域 */}
         <ActivityHeader
-          activity={activity}
+          activity={activityData}
           onShare={handleShare}
           onLike={handleLike}
           isLiked={isLiked}
@@ -124,17 +204,17 @@ const ActivityDetail: FC = () => {
           <Card className="overflow-hidden rounded-t-3xl">
             <CardContent className="p-6 space-y-6">
               {/* 活动基本信息 */}
-              <ActivityBasicInfo activity={activity} />
+              <ActivityBasicInfo activity={activityData} />
 
               {/* 组织者信息 */}
-              <OrganizerInfo activity={activity} onFollow={handleFollow} />
+              <OrganizerInfo activity={activityData} onFollow={handleFollow} />
 
               {/* 参与者统计概览 */}
-              <ParticipantStats activity={activity} />
+              <ParticipantStats activity={activityData} />
 
               {/* 参与者头像列表 */}
               <ParticipantAvatars
-                activity={activity}
+                activity={activityData}
                 onViewAll={handleViewAllParticipants}
                 onFollowParticipant={handleFollowParticipant}
                 onMessageParticipant={handleMessageParticipant}
@@ -142,19 +222,20 @@ const ActivityDetail: FC = () => {
               />
 
               {/* 活动详情 */}
-              <ActivityContent activity={activity} />
+              <ActivityContent activity={activityData} />
 
               {/* 活动地点 */}
               <ActivityLocation
-                activity={activity}
+                activity={activityData}
                 onViewDetails={handleViewLocationDetails}
                 onNavigate={handleNavigate}
               />
 
               {/* 操作按钮区域 */}
               <ActivityActions
-                activity={activity}
+                activity={activityData}
                 onJoin={handleJoin}
+                onLeave={handleLeave}
                 onComment={handleComment}
                 onCreateSimilar={handleCreateSimilar}
               />

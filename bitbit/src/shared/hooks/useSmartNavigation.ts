@@ -241,7 +241,33 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 5. 其他页面的通用返回逻辑
+    // 5. 处理订单详情页的返回
+    if (currentPath.match(/^\/orders\/[^/]+$/)) {
+      if (fromSource === "profile") {
+        console.log("→ 订单详情页返回个人资料");
+        const profileTab = location.state?.profileTab || "trades";
+        navigate(`/profile/${profileTab}`, { replace: true });
+        return;
+      }
+
+      // 兜底：从栈中查找前一个页面
+      const currentIndex = stack.findIndex(
+        (entry) => entry.pathname === currentPath
+      );
+      if (currentIndex > 0) {
+        const previousEntry = stack[currentIndex - 1];
+        console.log("→ 订单详情页返回栈中前一个页面:", previousEntry.pathname);
+        navigate(previousEntry.pathname, { replace: true });
+        return;
+      }
+
+      // 最终兜底：返回个人资料交易页
+      console.log("→ 订单详情页最终兜底返回个人资料交易页");
+      navigate("/profile/trades", { replace: true });
+      return;
+    }
+
+    // 6. 其他页面的通用返回逻辑
     if (stack.length > 1) {
       const previousEntry = stack[stack.length - 2];
       console.log("→ 通用返回逻辑，返回:", previousEntry.pathname);

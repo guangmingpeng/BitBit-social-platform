@@ -26,9 +26,7 @@ export const useProfileNavigation = () => {
   };
 
   const navigateToOrderDetail = (orderId: string) => {
-    // 假设有订单详情页，如果没有可以导航到用户中心或显示模态框
-    console.log("Navigate to order detail:", orderId);
-    // navigate(`/order/${orderId}`);
+    navigateFromProfile(`/orders/${orderId}`, { profileTab: currentTab });
   };
 
   const navigateToEditActivity = (activityId: string) => {

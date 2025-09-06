@@ -76,6 +76,60 @@ export interface ExchangeFilters {
   sortBy?: "newest" | "price_asc" | "price_desc" | "popularity";
 }
 
+// 订单相关类型定义
+export interface OrderProgress {
+  id: string;
+  title: string;
+  description?: string;
+  timestamp: string;
+  status: "completed" | "current" | "pending";
+  icon?: string;
+}
+
+export interface OrderAction {
+  id: string;
+  label: string;
+  type: "primary" | "secondary" | "danger";
+  action: string;
+  disabled?: boolean;
+}
+
+export interface OrderDetail {
+  id: string;
+  type: "buy" | "sell" | "exchange";
+  itemTitle: string;
+  itemImage: string;
+  itemDescription?: string;
+  price: number;
+  status: "pending" | "completed" | "cancelled" | "shipped" | "delivered";
+  createTime: string;
+  orderNumber: string;
+
+  // 交易对方信息
+  otherParty: {
+    id: string;
+    name: string;
+    avatar?: string;
+    rating: number;
+    creditLevel: string;
+    responseTime?: string;
+  };
+
+  // 交易详情
+  transactionDetails: {
+    paymentMethod: string;
+    deliveryMethod: string;
+    totalAmount: number;
+    fees?: number;
+  };
+
+  // 订单进度
+  progress: OrderProgress[];
+
+  // 可用操作
+  availableActions: OrderAction[];
+}
+
 export interface PublishFormData {
   title: string;
   category: string;

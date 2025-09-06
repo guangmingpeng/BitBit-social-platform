@@ -55,10 +55,10 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({
       )}
       onClick={onClick}
     >
-      <CardContent className="p-4">
-        <div className="flex gap-4">
+      <CardContent className="p-3">
+        <div className="flex gap-3">
           {/* 内容图片 */}
-          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+          <div className="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
             {favorite.image ? (
               <img
                 src={favorite.image}
@@ -66,20 +66,20 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-2xl text-gray-300">{typeConfig.icon}</span>
+              <span className="text-xl text-gray-300">{typeConfig.icon}</span>
             )}
           </div>
 
           {/* 收藏信息 */}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <Tag className={typeConfig.color}>{typeConfig.label}</Tag>
-              </div>
+              <Tag className={cn(typeConfig.color, "text-xs")}>
+                {typeConfig.label}
+              </Tag>
               <Button
                 size="sm"
                 variant="outline"
-                className="opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-600 border-red-200 hover:border-red-300"
+                className="opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-600 border-red-200 hover:border-red-300 h-6 px-2 text-xs"
                 onClick={(e) => {
                   e.stopPropagation();
                   onRemove?.();
@@ -89,25 +89,34 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({
               </Button>
             </div>
 
-            <h3 className="font-medium text-gray-900 line-clamp-2 mb-2">
+            <h3 className="font-medium text-gray-900 line-clamp-2 mb-2 text-sm leading-tight">
               {favorite.title}
             </h3>
 
-            <div className="flex items-center justify-between text-xs text-gray-500">
-              <div className="flex items-center gap-2">
-                <span>{favorite.author.name}</span>
-                {favorite.price && (
+            {/* 作者和基本信息 */}
+            <div className="flex items-center gap-1 text-xs text-gray-500 mb-1 flex-wrap">
+              <span>{favorite.author.name}</span>
+              {favorite.price && (
+                <>
+                  <span>•</span>
                   <span className="font-medium text-orange-600">
                     ¥{favorite.price}
                   </span>
-                )}
-                {favorite.date && favorite.location && (
-                  <span>
+                </>
+              )}
+              {favorite.date && favorite.location && (
+                <>
+                  <span>•</span>
+                  <span className="truncate">
                     {favorite.date} · {favorite.location}
                   </span>
-                )}
-              </div>
-              <span>收藏于 {favorite.favoriteTime}</span>
+                </>
+              )}
+            </div>
+
+            {/* 收藏时间 */}
+            <div className="text-xs text-gray-400">
+              收藏于 {favorite.favoriteTime}
             </div>
           </div>
         </div>

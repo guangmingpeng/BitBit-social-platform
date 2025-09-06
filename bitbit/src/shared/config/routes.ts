@@ -15,6 +15,11 @@ const Community = lazy(() => import("@/pages/Community"));
 const PostDetail = lazy(() => import("@/pages/PostDetail"));
 const PublishPost = lazy(() => import("@/pages/PublishPost"));
 const Profile = lazy(() => import("@/pages/Profile"));
+
+// 从 exchange 功能模块导入订单详情页
+const OrderDetailPage = lazy(
+  () => import("@/features/exchange/pages/OrderDetailPage")
+);
 // 路由配置
 export const routes = [
   {
@@ -56,6 +61,10 @@ export const routes = [
   {
     path: "/exchange/publish",
     element: PublishItem,
+  },
+  {
+    path: "/orders/:orderId",
+    element: OrderDetailPage,
   },
   {
     path: "/community",

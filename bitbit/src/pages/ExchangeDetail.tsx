@@ -1,5 +1,5 @@
 import { type FC, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   Container,
   Breadcrumb,
@@ -11,21 +11,41 @@ import {
   ExchangeModal,
   PurchaseModal,
 } from "@/components/ui";
+import { FloatingBackButton } from "@/components/common";
 import { ExchangeCard } from "@/features/exchange";
 import { cn } from "@/shared/utils/cn";
 import {
   getExchangeItemById,
   getRecommendedItems,
 } from "@/shared/data/exchangeItems";
+import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
 
 const ExchangeDetail: FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { smartGoBack } = useSmartNavigation();
   const { id } = useParams<{ id: string }>();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [viewHistory, setViewHistory] = useState<string[]>([]);
   const [showExchangeModal, setShowExchangeModal] = useState(false);
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+
+  // 获取导航状态信息
+  const fromProfile = location.state?.fromSource === "profile";
+  // const profileTab = location.state?.profileTab;
+
+  // 当前用户ID (这里使用模拟数据，实际应该从Redux store或context获取)
+  // const currentUserId = "user-me"; // 这个应该从用户状态管理获取
+
+  // 获取商品信息
+  const exchangeItem = getExchangeItemById(id || "1");
+
+  // 检查是否是商品发布者
+  const isOwner =
+    exchangeItem &&
+    (exchangeItem.seller.name === "子龙" || // 临时判断逻辑，实际应该比较用户ID
+      fromProfile); // 如果从profile页面跳转过来，假设是发布者
 
   // 当ID变化时重置状态并更新浏览历史
   useEffect(() => {
@@ -39,8 +59,6 @@ const ExchangeDetail: FC = () => {
       return [currentId, ...newHistory].slice(0, 5); // 最多保存5个历史记录
     });
   }, [id]);
-
-  const exchangeItem = getExchangeItemById(id || "1");
 
   // 如果商品不存在，显示错误或重定向到列表页
   if (!exchangeItem) {
@@ -62,11 +80,19 @@ const ExchangeDetail: FC = () => {
   // 推荐商品 - 排除当前商品
   const recommendedItems = getRecommendedItems(id || "1", 3);
 
-  const breadcrumbItems = [
-    { label: "首页", href: "/" },
-    { label: "二手交换", href: "/exchange" },
-    { label: exchangeItem.title, current: true },
-  ];
+  // 根据来源设置面包屑导航
+  const breadcrumbItems = fromProfile
+    ? [
+        { label: "首页", href: "/" },
+        { label: "个人中心", href: "/profile" },
+        { label: "我的交易", href: "/profile/trades" },
+        { label: exchangeItem.title, current: true },
+      ]
+    : [
+        { label: "首页", href: "/" },
+        { label: "二手交换", href: "/exchange" },
+        { label: exchangeItem.title, current: true },
+      ];
 
   const statusConfig = {
     available: { label: "在售", color: "bg-primary-100 text-primary-500" },
@@ -90,15 +116,30 @@ const ExchangeDetail: FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-32">
-      <Container size="lg" className="py-6 space-y-6">
+    <div className="min-h-screen bg-gray-50 pb-32 relative">
+      {/* 左侧浮动返回按钮 */}
+      <FloatingBackButton
+        text="返回上页"
+        variant="elegant"
+        size="md"
+        onClick={smartGoBack}
+      />
+
+      <Container size="lg" className="py-6 space-y-6 pl-12 md:pl-16 lg:pl-20">
         {/* 面包屑导航 */}
         <div className="flex items-center justify-between">
           <Breadcrumb items={breadcrumbItems} />
           <Button
             variant="outline"
             size="sm"
-            onClick={() => navigate("/exchange")}
+            onClick={() => {
+              // 根据来源返回到相应页面
+              if (fromProfile) {
+                navigate("/profile/trades");
+              } else {
+                navigate("/exchange");
+              }
+            }}
             className="flex items-center gap-2"
           >
             <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -108,7 +149,7 @@ const ExchangeDetail: FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-            返回列表
+            {fromProfile ? "返回我的交易" : "返回列表"}
           </Button>
         </div>
 
@@ -418,22 +459,140 @@ const ExchangeDetail: FC = () => {
                 </div>
 
                 <div className="space-y-3 pt-4 border-t border-gray-100">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="w-full"
-                    onClick={handleExchange}
-                  >
-                    立即交换
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="w-full"
-                    onClick={handleContact}
-                  >
-                    联系卖家
-                  </Button>
+                  {isOwner ? (
+                    // 如果是商品发布者，显示管理按钮
+                    <>
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        className="w-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                        onClick={() => {
+                          // 跳转到编辑页面
+                          navigate(`/publish-item?edit=${exchangeItem.id}`);
+                        }}
+                      >
+                        <span className="flex items-center gap-2">
+                          <svg
+                            className="w-4 h-4"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                          </svg>
+                          编辑商品
+                        </span>
+                      </Button>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          className="w-full whitespace-nowrap shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] border-2 hover:border-blue-300"
+                          onClick={() => {
+                            console.log("下架商品", exchangeItem.id);
+                            // 这里应该调用下架API
+                          }}
+                        >
+                          <span className="flex items-center gap-2">
+                            {exchangeItem.status === "available" ? (
+                              // 下架图标 - 眼睛斜线（隐藏）
+                              <svg
+                                className="w-4 h-4"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
+                                  clipRule="evenodd"
+                                />
+                                <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+                              </svg>
+                            ) : (
+                              // 上架图标 - 眼睛（可见）
+                              <svg
+                                className="w-4 h-4"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                <path
+                                  fillRule="evenodd"
+                                  d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
+                            {exchangeItem.status === "available"
+                              ? "下架"
+                              : "上架"}
+                          </span>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          className="w-full text-red-600 border-red-200 hover:bg-red-50 whitespace-nowrap shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] border-2 hover:border-red-300 hover:text-red-700"
+                          onClick={() => {
+                            console.log("删除商品", exchangeItem.id);
+                            // 这里应该调用删除API
+                          }}
+                        >
+                          <span className="flex items-center gap-2">
+                            <svg
+                              className="w-4 h-4"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            删除
+                          </span>
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    // 如果不是发布者，显示交换和联系按钮
+                    <>
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        className="w-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                        onClick={handleExchange}
+                      >
+                        <span className="flex items-center gap-2 justify-center">
+                          <svg
+                            className="w-5 h-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z" />
+                          </svg>
+                          立即交换
+                        </span>
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="w-full shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] border-2 hover:border-blue-300"
+                        onClick={handleContact}
+                      >
+                        <span className="flex items-center gap-2 justify-center">
+                          <svg
+                            className="w-5 h-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                          </svg>
+                          联系卖家
+                        </span>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </CardContent>
             </Card>

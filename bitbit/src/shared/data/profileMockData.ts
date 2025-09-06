@@ -148,6 +148,129 @@ export const myPosts: Post[] = [
     isLiked: false,
     isBookmarked: false,
   },
+  {
+    id: "post-3",
+    author: {
+      name: "子龙",
+      avatar: "https://picsum.photos/40/40?random=me",
+      isVerified: false,
+    },
+    content:
+      "今天试做了一道新菜 - 红烧肉！第一次做居然成功了，满满的成就感！分享一下制作过程～ 🍖",
+    images: [
+      "https://picsum.photos/400/300?random=food1",
+      "https://picsum.photos/400/300?random=cooking1",
+    ],
+    category: "food",
+    tags: ["美食", "cooking", "红烧肉", "成就感"],
+    publishTime: "1天前",
+    likes: 42,
+    comments: 12,
+    shares: 6,
+    isLiked: false,
+    isBookmarked: false,
+  },
+  {
+    id: "post-4",
+    author: {
+      name: "子龙",
+      avatar: "https://picsum.photos/40/40?random=me",
+      isVerified: false,
+    },
+    content:
+      "推荐一本最近读完的好书《习惯的力量》，真的很受启发！改变一个小习惯，可能就会改变整个人生 📚",
+    images: ["https://picsum.photos/400/300?random=book1"],
+    category: "reading",
+    tags: ["读书", "个人成长", "习惯", "推荐"],
+    publishTime: "3天前",
+    likes: 36,
+    comments: 8,
+    shares: 5,
+    isLiked: false,
+    isBookmarked: false,
+  },
+  {
+    id: "post-5",
+    author: {
+      name: "子龙",
+      avatar: "https://picsum.photos/40/40?random=me",
+      isVerified: false,
+    },
+    content:
+      "周末去听了一场爵士音乐会，live music 的魅力真的无法用语言形容！现场的氛围太棒了 🎷",
+    images: [
+      "https://picsum.photos/400/300?random=jazz1",
+      "https://picsum.photos/400/300?random=concert1",
+    ],
+    category: "music",
+    tags: ["爵士", "音乐会", "live", "周末"],
+    publishTime: "6天前",
+    likes: 21,
+    comments: 4,
+    shares: 2,
+    isLiked: false,
+    isBookmarked: false,
+  },
+  {
+    id: "post-6",
+    author: {
+      name: "子龙",
+      avatar: "https://picsum.photos/40/40?random=me",
+      isVerified: false,
+    },
+    content:
+      "今天学会了用Python做数据可视化，原来编程也可以这么有趣！分享一些学习心得 💻",
+    images: ["https://picsum.photos/400/300?random=coding1"],
+    category: "learning",
+    tags: ["Python", "数据可视化", "编程", "学习"],
+    publishTime: "4天前",
+    likes: 19,
+    comments: 6,
+    shares: 3,
+    isLiked: false,
+    isBookmarked: false,
+  },
+  {
+    id: "post-7",
+    author: {
+      name: "子龙",
+      avatar: "https://picsum.photos/40/40?random=me",
+      isVerified: false,
+    },
+    content:
+      "自制奶茶成功！比外面买的还好喝，关键是用料足，没有添加剂。来分享制作方法～ 🧋",
+    images: [
+      "https://picsum.photos/400/300?random=milktea1",
+      "https://picsum.photos/400/300?random=ingredients1",
+    ],
+    category: "food",
+    tags: ["奶茶", "DIY", "饮品", "健康"],
+    publishTime: "1周前",
+    likes: 33,
+    comments: 9,
+    shares: 7,
+    isLiked: false,
+    isBookmarked: false,
+  },
+  {
+    id: "post-8",
+    author: {
+      name: "子龙",
+      avatar: "https://picsum.photos/40/40?random=me",
+      isVerified: false,
+    },
+    content:
+      "刚读完《三体》三部曲，刘慈欣的想象力真的太震撼了！科幻小说的魅力就在于此 🚀",
+    images: ["https://picsum.photos/400/300?random=threebody1"],
+    category: "reading",
+    tags: ["三体", "科幻", "刘慈欣", "想象力"],
+    publishTime: "1周前",
+    likes: 47,
+    comments: 15,
+    shares: 8,
+    isLiked: false,
+    isBookmarked: false,
+  },
 ];
 
 // 我的交易/商品数据
@@ -285,7 +408,7 @@ export interface FavoriteItem {
 // 我的收藏数据
 export const myFavorites: FavoriteItem[] = [
   {
-    id: "fav-1",
+    id: "2",
     type: "activity",
     title: "周末户外烧烤聚会",
     image: "https://picsum.photos/300/200?random=bbq1",
@@ -299,28 +422,66 @@ export const myFavorites: FavoriteItem[] = [
     location: "奥林匹克公园",
   },
   {
-    id: "fav-2",
+    id: "1",
     type: "post",
-    title: "分享一些实用的摄影后期技巧，让你的照片更专业",
+    title: "有没有喜欢摄影的朋友？周末一起去西湖拍照呀",
     image: "https://picsum.photos/400/300?random=photoshop1",
     author: {
-      name: "后期大师",
+      name: "嘉丽",
       avatar: "https://picsum.photos/40/40?random=ps1",
     },
     favoriteTime: "1周前",
     category: "learning",
   },
   {
-    id: "fav-3",
+    id: "1",
     type: "exchange",
-    title: "全新 AirPods Pro 2代",
+    title: "iPhone 14 Pro 深空黑 128GB",
     image: "https://picsum.photos/300/300?random=airpods1",
     author: {
-      name: "数码爱好者",
+      name: "子龙",
       avatar: "https://picsum.photos/40/40?random=digital1",
     },
     favoriteTime: "5天前",
-    price: 1800,
+    price: 6800,
+  },
+  {
+    id: "3",
+    type: "activity",
+    title: "咖啡品鉴工作坊",
+    image: "https://picsum.photos/300/200?random=coffee1",
+    author: {
+      name: "咖啡师小王",
+      avatar: "https://picsum.photos/40/40?random=coffee1",
+    },
+    favoriteTime: "1天前",
+    category: "learning",
+    date: "9月20日",
+    location: "咖啡文化中心",
+  },
+  {
+    id: "2",
+    type: "post",
+    title: "推荐一本最近看的书《深度工作》",
+    image: "https://picsum.photos/400/300?random=book1",
+    author: {
+      name: "文轩",
+      avatar: "https://picsum.photos/40/40?random=book1",
+    },
+    favoriteTime: "2天前",
+    category: "reading",
+  },
+  {
+    id: "2",
+    type: "exchange",
+    title: "MacBook Air M2 8GB/256GB",
+    image: "https://picsum.photos/300/300?random=laptop1",
+    author: {
+      name: "小李",
+      avatar: "https://picsum.photos/40/40?random=laptop1",
+    },
+    favoriteTime: "4天前",
+    price: 7800,
   },
 ];
 

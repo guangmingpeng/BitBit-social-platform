@@ -12,4 +12,8 @@ export type {
   PublishStep,
   PublishStepConfig,
   ExchangeFilters as ExchangeFiltersType,
+  // 订单相关类型
+  OrderDetail,
+  OrderProgress,
+  OrderAction,
 } from "./types";

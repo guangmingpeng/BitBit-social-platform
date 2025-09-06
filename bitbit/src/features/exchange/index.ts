@@ -9,6 +9,12 @@ export { ExchangeCard } from "./components/ExchangeCard";
 // 步骤组件
 export * from "./components/PublishSteps";
 
+// 订单详情组件
+export * from "./components/OrderDetail";
+
+// 页面组件
+export { default as OrderDetailPage } from "./pages/OrderDetailPage";
+
 // hooks导出
 export * from "./hooks/index";
 

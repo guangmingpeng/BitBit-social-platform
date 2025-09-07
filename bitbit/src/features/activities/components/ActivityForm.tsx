@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BasicInfoSection,
@@ -95,6 +95,23 @@ export const ActivityForm: React.FC<ActivityFormProps> = ({
   const handleFieldFocus = (fieldName: string) => {
     onFieldFocus?.(fieldName);
   };
+
+  // 当initialData变化时更新表单数据（但避免循环依赖）
+  const prevInitialDataRef = useRef<Partial<ActivityFormData> | undefined>(
+    undefined
+  );
+  useEffect(() => {
+    if (initialData && initialData !== prevInitialDataRef.current) {
+      // 检查是否是有意义的初始数据更新（标题不为空说明是真实的草稿数据）
+      if (initialData.title && initialData.title.trim()) {
+        setFormData((prev) => ({
+          ...prev,
+          ...initialData,
+        }));
+      }
+      prevInitialDataRef.current = initialData;
+    }
+  }, [initialData]);
 
   // 当表单数据变化时通知父组件
   useEffect(() => {

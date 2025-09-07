@@ -783,7 +783,7 @@ const Profile: FC = () => {
           {/* 用户资料 */}
           <UserProfile
             user={profileData.user}
-            onEditProfile={() => console.log("编辑资料")}
+            onEditProfile={() => navigate("/profile/edit")}
           />
 
           {/* 标签导航 */}

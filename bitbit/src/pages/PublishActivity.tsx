@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Container } from "@/components/ui";
 import {
   FloatingBackButton,
@@ -9,10 +10,19 @@ import { ActivityForm } from "@/features/activities/components/ActivityForm";
 import ActivityPreview from "@/features/activities/components/ActivityPreview";
 import { useConfirmExit, usePublishStatus } from "@/shared/hooks";
 import type { ActivityFormData } from "@/features/activities/components/ActivityForm";
+import { myDrafts } from "@/shared/data/profileMockData";
+import {
+  convertDraftToActivityForm,
+  calculateActivityProgress,
+} from "@/utils/draftUtils";
 
 const PublishActivity: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const editDraftId = searchParams.get("edit");
+  const isEditMode = Boolean(editDraftId);
+
   const previewRef = useRef<HTMLDivElement>(null);
-  const [formData, setFormData] = useState<ActivityFormData>({
+  const [initialFormData, setInitialFormData] = useState<ActivityFormData>({
     title: "",
     description: "",
     category: "",
@@ -31,6 +41,22 @@ const PublishActivity: React.FC = () => {
     schedule: [],
     notices: [],
   });
+
+  const [formData, setFormData] = useState<ActivityFormData>(initialFormData);
+
+  // 在组件加载时，如果是编辑模式，加载草稿数据
+  useEffect(() => {
+    if (isEditMode && editDraftId) {
+      const draft = myDrafts.find(
+        (d) => d.id === editDraftId && d.type === "activity"
+      );
+      if (draft) {
+        const draftFormData = convertDraftToActivityForm(draft);
+        setInitialFormData(draftFormData);
+        setFormData(draftFormData);
+      }
+    }
+  }, [isEditMode, editDraftId]);
 
   // 检查是否有未保存的更改
   const hasUnsavedChanges = (data: ActivityFormData) => {
@@ -53,8 +79,26 @@ const PublishActivity: React.FC = () => {
 
   // 保存草稿函数
   const saveDraft = async (data: ActivityFormData) => {
-    console.log("保存活动草稿:", data);
-    localStorage.setItem("activityDraft", JSON.stringify(data));
+    const progress = calculateActivityProgress(data);
+    console.log("保存活动草稿:", data, "完成度:", progress);
+
+    // 如果是编辑模式，更新现有草稿；否则创建新草稿
+    const draftData = {
+      id: editDraftId || `draft-${Date.now()}`,
+      type: "activity" as const,
+      title: data.title || "未命名活动",
+      content: data.description || "",
+      lastEditTime: new Date().toLocaleString("zh-CN"),
+      images: data.images.map(
+        (_, index) =>
+          `https://picsum.photos/300/200?random=draft-${
+            editDraftId || Date.now()
+          }-${index}`
+      ),
+      progress,
+    };
+
+    localStorage.setItem("activityDraft", JSON.stringify(draftData));
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };
 
@@ -173,9 +217,36 @@ const PublishActivity: React.FC = () => {
       <Container size="full" className="py-6 pl-20 md:pl-24 lg:pl-40">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-text-primary mb-2">
-            发布新活动
+            {isEditMode ? "编辑活动草稿" : "发布新活动"}
           </h1>
-          <p className="text-text-secondary">创建精彩活动，邀请大家一起参与</p>
+          <p className="text-text-secondary">
+            {isEditMode
+              ? "继续完善您的活动草稿，完成后即可发布"
+              : "创建精彩活动，邀请大家一起参与"}
+          </p>
+
+          {/* 在编辑模式下显示完成度 */}
+          {isEditMode && (
+            <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-blue-700">
+                  编辑进度
+                </span>
+                <span className="text-sm text-blue-600">
+                  {calculateActivityProgress(formData)}%
+                </span>
+              </div>
+              <div className="w-full bg-blue-200 rounded-full h-2">
+                <div
+                  className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${calculateActivityProgress(formData)}%` }}
+                />
+              </div>
+              <p className="text-xs text-blue-600 mt-2">
+                完善更多信息可以提高活动的吸引力
+              </p>
+            </div>
+          )}
         </div>
 
         {/* 根据发布状态显示不同内容 */}
@@ -269,7 +340,7 @@ const PublishActivity: React.FC = () => {
               </div>
 
               <ActivityForm
-                initialData={formData}
+                initialData={initialFormData}
                 onSubmit={handleSubmit}
                 onCancel={handleCancel}
                 isSubmitting={isSubmitting}

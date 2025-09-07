@@ -468,7 +468,7 @@ const ExchangeDetail: FC = () => {
                         className="w-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
                         onClick={() => {
                           // 跳转到编辑页面
-                          navigate(`/publish-item?edit=${exchangeItem.id}`);
+                          navigate(`/exchange/publish?edit=${exchangeItem.id}`);
                         }}
                       >
                         <span className="flex items-center gap-2">

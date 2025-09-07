@@ -1,15 +1,34 @@
 // 全局类型定义
 export interface User {
   id: string;
-  username: string;
+  username?: string;
+  name?: string; // 显示名称
   email: string;
   avatar?: string;
   bio?: string;
   location?: string;
-  joinDate: string;
+  joinDate?: string;
+  joinedDate?: string; // 兼容字段
   rating?: number;
   totalSales?: number;
   badges?: string[];
+
+  // 个人信息
+  profession?: string;
+  age?: number;
+  level?: number;
+  following?: number;
+  followers?: number;
+  interests?: string[];
+
+  // 在线状态
+  isOnline?: boolean;
+
+  // 活动统计
+  activitiesCount?: number;
+  postCount?: number;
+  exchangeCount?: number;
+
   preferences?: {
     notifications: boolean;
     emailUpdates: boolean;

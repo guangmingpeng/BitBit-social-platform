@@ -79,3 +79,8 @@ export { useProfileNavigation } from "./useProfileNavigation";
 
 // 导出分页hook
 export { usePagination } from "./usePagination";
+
+// 新增的 settings hooks
+export { useSettings, useTheme } from "./useSettings";
+export { useSettingsNavigation } from "./useSettingsNavigation";
+export type { SettingsNavigationItem } from "./useSettingsNavigation";

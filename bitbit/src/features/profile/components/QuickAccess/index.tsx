@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import type { QuickAccessItem } from "../../types";
 
 interface QuickAccessProps {
@@ -6,6 +7,16 @@ interface QuickAccessProps {
 }
 
 export const QuickAccess: React.FC<QuickAccessProps> = ({ items }) => {
+  const navigate = useNavigate();
+
+  const handleItemClick = (item: QuickAccessItem) => {
+    if (item.onClick) {
+      item.onClick();
+    } else if (item.title === "设置") {
+      navigate("/profile/settings");
+    }
+    // 可以根据需要添加其他默认导航逻辑
+  };
   return (
     <div>
       <h3 className="text-xl font-semibold text-gray-900 mb-6">快速访问</h3>
@@ -14,7 +25,7 @@ export const QuickAccess: React.FC<QuickAccessProps> = ({ items }) => {
         {items.map((item) => (
           <button
             key={item.id}
-            onClick={item.onClick}
+            onClick={() => handleItemClick(item)}
             className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-200 text-left"
           >
             <div className="flex items-start gap-4">

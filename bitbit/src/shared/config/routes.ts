@@ -16,6 +16,7 @@ const PostDetail = lazy(() => import("@/pages/PostDetail"));
 const PublishPost = lazy(() => import("@/pages/PublishPost"));
 const Profile = lazy(() => import("@/pages/Profile"));
 const ProfileEdit = lazy(() => import("../../pages/ProfileEdit"));
+const ProfileSettings = lazy(() => import("../../pages/ProfileSettings"));
 
 // 从 exchange 功能模块导入订单详情页
 const OrderDetailPage = lazy(
@@ -82,6 +83,10 @@ export const routes = [
   {
     path: "/profile/edit",
     element: ProfileEdit,
+  },
+  {
+    path: "/profile/settings",
+    element: ProfileSettings,
   },
   {
     path: "/profile",

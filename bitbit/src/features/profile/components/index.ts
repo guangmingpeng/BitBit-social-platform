@@ -9,3 +9,6 @@ export { ActivityNotificationModal } from "./ActivityNotificationModal";
 
 // ProfileEdit 相关组件
 export * from "./ProfileEdit";
+
+// Settings 相关组件
+export * from "./Settings";

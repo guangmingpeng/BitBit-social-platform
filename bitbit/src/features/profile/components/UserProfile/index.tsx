@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Tag } from "@/components/ui";
 import type { User } from "@/types";
 
@@ -11,6 +12,11 @@ export const UserProfile: React.FC<UserProfileProps> = ({
   user,
   onEditProfile,
 }) => {
+  const navigate = useNavigate();
+
+  const handleSettingsClick = () => {
+    navigate("/profile/settings");
+  };
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
       {/* 顶部导航 */}
@@ -20,7 +26,10 @@ export const UserProfile: React.FC<UserProfileProps> = ({
           <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
             <span className="text-lg">🔔</span>
           </button>
-          <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+          <button
+            onClick={handleSettingsClick}
+            className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+          >
             <span className="text-lg">⚙️</span>
           </button>
         </div>

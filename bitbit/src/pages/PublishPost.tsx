@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Container } from "@/components/ui";
 import {
   FloatingBackButton,
@@ -9,18 +10,46 @@ import { CommunityPostForm } from "@/features/community/components/CommunityPost
 import PostPreview from "@/features/community/components/PostPreview";
 import { useConfirmExit, usePublishStatus } from "@/shared/hooks";
 import type { CommunityPostFormData } from "@/features/community/components/CommunityPostForm";
+import { myDrafts } from "@/shared/data/profileMockData";
+import {
+  convertDraftToPostForm,
+  calculatePostProgress,
+} from "@/utils/draftUtils";
 
 const PublishPost: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const editDraftId = searchParams.get("edit");
+  const isEditMode = Boolean(editDraftId);
+
   const previewRef = useRef<HTMLDivElement>(null);
-  const [formData, setFormData] = useState<CommunityPostFormData>({
-    title: "",
-    content: "",
-    category: "",
-    tags: [],
-    images: [],
-    isPrivate: false,
-    allowComments: true,
-  });
+  const [initialFormData, setInitialFormData] = useState<CommunityPostFormData>(
+    {
+      title: "",
+      content: "",
+      category: "",
+      tags: [],
+      images: [],
+      isPrivate: false,
+      allowComments: true,
+    }
+  );
+
+  const [formData, setFormData] =
+    useState<CommunityPostFormData>(initialFormData);
+
+  // 在组件加载时，如果是编辑模式，加载草稿数据
+  useEffect(() => {
+    if (isEditMode && editDraftId) {
+      const draft = myDrafts.find(
+        (d) => d.id === editDraftId && d.type === "post"
+      );
+      if (draft) {
+        const draftFormData = convertDraftToPostForm(draft);
+        setInitialFormData(draftFormData);
+        setFormData(draftFormData);
+      }
+    }
+  }, [isEditMode, editDraftId]);
 
   // 检查是否有未保存的更改
   const hasUnsavedChanges = (data: CommunityPostFormData) => {
@@ -35,8 +64,26 @@ const PublishPost: React.FC = () => {
 
   // 保存草稿函数
   const saveDraft = async (data: CommunityPostFormData) => {
-    console.log("保存帖子草稿:", data);
-    localStorage.setItem("postDraft", JSON.stringify(data));
+    const progress = calculatePostProgress(data);
+    console.log("保存帖子草稿:", data, "完成度:", progress);
+
+    // 如果是编辑模式，更新现有草稿；否则创建新草稿
+    const draftData = {
+      id: editDraftId || `draft-${Date.now()}`,
+      type: "post" as const,
+      title: data.title || "未命名帖子",
+      content: data.content || "",
+      lastEditTime: new Date().toLocaleString("zh-CN"),
+      images: data.images.map(
+        (_, index) =>
+          `https://picsum.photos/300/200?random=post-draft-${
+            editDraftId || Date.now()
+          }-${index}`
+      ),
+      progress,
+    };
+
+    localStorage.setItem("postDraft", JSON.stringify(draftData));
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };
 
@@ -145,11 +192,36 @@ const PublishPost: React.FC = () => {
       <Container size="full" className="py-6 pl-20 md:pl-30 lg:pl-40">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-text-primary mb-2">
-            发布新帖子
+            {isEditMode ? "编辑帖子草稿" : "发布新帖子"}
           </h1>
           <p className="text-text-secondary">
-            分享你的想法，与社区成员交流互动
+            {isEditMode
+              ? "继续完善您的帖子草稿，完成后即可发布"
+              : "分享你的想法，与社区成员交流互动"}
           </p>
+
+          {/* 在编辑模式下显示完成度 */}
+          {isEditMode && (
+            <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-green-700">
+                  编辑进度
+                </span>
+                <span className="text-sm text-green-600">
+                  {calculatePostProgress(formData)}%
+                </span>
+              </div>
+              <div className="w-full bg-green-200 rounded-full h-2">
+                <div
+                  className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${calculatePostProgress(formData)}%` }}
+                />
+              </div>
+              <p className="text-xs text-green-600 mt-2">
+                完善更多信息可以提高帖子的互动性
+              </p>
+            </div>
+          )}
         </div>
 
         {/* 根据发布状态显示不同内容 */}
@@ -233,7 +305,7 @@ const PublishPost: React.FC = () => {
               </div>
 
               <CommunityPostForm
-                initialData={formData}
+                initialData={initialFormData}
                 onSubmit={handleSubmit}
                 onCancel={handleCancel}
                 isSubmitting={isSubmitting}

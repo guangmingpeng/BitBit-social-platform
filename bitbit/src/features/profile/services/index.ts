@@ -5,12 +5,25 @@ export const mockProfileData: ProfileData = {
   user: {
     id: "1",
     name: "子龙",
+    email: "zilong@bitbit.com",
     bio: "热爱音乐和摄影的技术爱好者",
-    avatar: "",
+    avatar: "https://picsum.photos/200/200?random=me",
     level: 3,
     following: 128,
     followers: 256,
     joinedDate: "2023-01-15",
+    // 新增字段，确保与UserCard保持一致
+    profession: "软件工程师",
+    location: "北京市",
+    age: 25,
+    interests: ["摄影", "音乐", "编程", "旅行", "美食", "读书", "运动", "电影"],
+    isOnline: true,
+    activitiesCount: 12,
+    stats: {
+      totalPosts: 8,
+      totalExchanges: 5,
+      totalViews: 156,
+    },
   },
   activities: [
     {

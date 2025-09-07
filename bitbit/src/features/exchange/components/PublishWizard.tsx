@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent } from "@/components/ui";
 import { cn } from "@/shared/utils/cn";
@@ -12,20 +12,22 @@ import {
 } from "./PublishSteps";
 
 interface PublishWizardProps {
+  initialData?: Partial<PublishFormData>;
   onSubmit?: (data: PublishFormData) => Promise<void>;
 }
 
-const PublishWizard: React.FC<PublishWizardProps> = ({ onSubmit }) => {
+const PublishWizard: React.FC<PublishWizardProps> = ({
+  initialData,
+  onSubmit,
+}) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<PublishFormData>({
     title: "",
     category: "",
-    customCategory: "",
-    condition: "",
-    customCondition: "",
+    condition: "new",
     price: 0,
-    originalPrice: undefined,
+    originalPrice: 0,
     description: "",
     location: "",
     images: [],
@@ -41,13 +43,32 @@ const PublishWizard: React.FC<PublishWizardProps> = ({ onSubmit }) => {
       localOnly: false,
     },
     paymentMethods: {
-      cash: true,
+      cash: false,
       bankTransfer: false,
       wechatPay: false,
       alipay: false,
     },
     paymentQRCodes: [],
   });
+
+  // 用于追踪已处理的initialData
+  const processedInitialDataRef = useRef<Partial<PublishFormData> | null>(null);
+
+  // 当initialData发生有意义的变化时更新表单数据
+  useEffect(() => {
+    if (initialData && initialData !== processedInitialDataRef.current) {
+      // 检查是否是真正的数据更新（不是空对象）
+      const hasData = Object.values(initialData).some((value) => {
+        if (Array.isArray(value)) return value.length > 0;
+        return value !== undefined && value !== null && value !== "";
+      });
+
+      if (hasData) {
+        setFormData((prev) => ({ ...prev, ...initialData }));
+        processedInitialDataRef.current = initialData;
+      }
+    }
+  }, [initialData]);
 
   const [currentStep, setCurrentStep] = useState<PublishStep>(1);
   const [publishStatus, setPublishStatus] = useState<

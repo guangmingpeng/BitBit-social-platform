@@ -34,11 +34,11 @@ export const useProfileNavigation = () => {
   };
 
   const navigateToEditPost = (postId: string) => {
-    navigate(`/publish-post?edit=${postId}`);
+    navigate(`/community/publish?edit=${postId}`);
   };
 
   const navigateToEditExchange = (exchangeId: string) => {
-    navigate(`/publish-item?edit=${exchangeId}`);
+    navigate(`/exchange/publish?edit=${exchangeId}`);
   };
 
   const navigateToPublishActivity = () => {
@@ -46,11 +46,11 @@ export const useProfileNavigation = () => {
   };
 
   const navigateToPublishPost = () => {
-    navigate("/publish-post");
+    navigate("/community/publish");
   };
 
   const navigateToPublishItem = () => {
-    navigate("/publish-item");
+    navigate("/exchange/publish");
   };
 
   return {

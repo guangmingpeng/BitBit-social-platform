@@ -33,6 +33,9 @@ export type { BreadcrumbProps, BreadcrumbItem } from "./Breadcrumb/index";
 export { default as Spinner } from "./Spinner/index";
 export type { SpinnerProps } from "./Spinner/index";
 
+export { Switch } from "./Switch/index";
+export type { SwitchProps } from "./Switch/index";
+
 export {
   default as Modal,
   ModalHeader,

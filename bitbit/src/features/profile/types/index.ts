@@ -167,3 +167,142 @@ export interface ProfileData {
   levelProgress: LevelProgress;
   quickAccessItems: QuickAccessItem[];
 }
+
+// ==================== 设置功能相关类型 ====================
+
+export type SettingsModule =
+  | "account"
+  | "notifications"
+  | "privacy"
+  | "app"
+  | "about";
+
+// 账户安全设置
+export interface AccountSecuritySettings {
+  twoFactorEnabled: boolean;
+  phoneNumber?: string;
+  email?: string;
+  backupCodes: string[];
+  loginDevices: DeviceInfo[];
+  securityLogs: SecurityLog[];
+}
+
+export interface DeviceInfo {
+  id: string;
+  name: string;
+  type: "desktop" | "mobile" | "tablet";
+  browser: string;
+  location: string;
+  lastActive: string;
+  isCurrent: boolean;
+}
+
+export interface SecurityLog {
+  id: string;
+  action: "login" | "logout" | "password_change" | "2fa_enable" | "2fa_disable";
+  timestamp: string;
+  location: string;
+  device: string;
+  success: boolean;
+}
+
+// 通知设置
+export interface NotificationSettings {
+  push: {
+    activities: boolean;
+    messages: boolean;
+    exchanges: boolean;
+    community: boolean;
+    marketing: boolean;
+  };
+  email: {
+    activities: boolean;
+    messages: boolean;
+    exchanges: boolean;
+    community: boolean;
+    newsletter: boolean;
+    marketing: boolean;
+  };
+  sms: {
+    security: boolean;
+    important: boolean;
+  };
+  doNotDisturb: {
+    enabled: boolean;
+    startTime: string;
+    endTime: string;
+    weekendsOnly: boolean;
+  };
+}
+
+// 应用设置
+export interface ApplicationSettings {
+  theme: "light" | "dark" | "auto";
+  language: string;
+  fontSize: "small" | "medium" | "large";
+  animations: boolean;
+  imageQuality: "high" | "medium" | "low";
+  autoPlayVideo: boolean;
+  reducedMotion: boolean;
+  highContrast: boolean;
+}
+
+// 用户完整设置
+export interface UserSettings {
+  account: AccountSecuritySettings;
+  notifications: NotificationSettings;
+  privacy: {
+    profileVisibility: "public" | "friends" | "private";
+    showEmail: boolean;
+    showAge: boolean;
+    showLocation: boolean;
+    allowMessages: boolean;
+    allowActivityInvites: boolean;
+    searchable: boolean;
+    dataSharing: {
+      analytics: boolean;
+      personalization: boolean;
+      thirdParty: boolean;
+    };
+  };
+  app: ApplicationSettings;
+}
+
+// 设置项类型
+export type SettingItemType =
+  | "switch"
+  | "select"
+  | "navigation"
+  | "input"
+  | "slider"
+  | "button";
+
+export interface SettingItem {
+  id: string;
+  type: SettingItemType;
+  title: string;
+  description?: string;
+  icon?: string;
+  iconColor?: string;
+  value?: unknown;
+  options?: { label: string; value: unknown }[];
+  disabled?: boolean;
+  dangerous?: boolean;
+  onChange?: (value: unknown) => void;
+  onClick?: () => void;
+}
+
+export interface SettingGroup {
+  id: string;
+  title: string;
+  description?: string;
+  items: SettingItem[];
+}
+
+export interface SettingSection {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  groups: SettingGroup[];
+}

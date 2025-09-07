@@ -24,6 +24,44 @@
     --color-bg-primary: #f9f9fb;
     --color-bg-secondary: #f3f3f7;
     --color-border: #e0e0e6;
+
+    /* 动画变量 */
+    --animation-duration: 250ms;
+  }
+
+  /* 暗色主题变量 */
+  .dark {
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a0a0a0;
+    --color-text-tertiary: #666666;
+    --color-bg-primary: #1a1a1a;
+    --color-bg-secondary: #2d2d2d;
+    --color-border: #404040;
+  }
+
+  /* 高对比度模式 */
+  .high-contrast {
+    --color-text-primary: #000000;
+    --color-text-secondary: #1a1a1a;
+    --color-text-tertiary: #333333;
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f5f5f5;
+    --color-border: #000000;
+  }
+
+  .dark.high-contrast {
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #e0e0e0;
+    --color-text-tertiary: #cccccc;
+    --color-bg-primary: #000000;
+    --color-bg-secondary: #1a1a1a;
+    --color-border: #ffffff;
+  }
+
+  /* 减少动画设置 */
+  .reduced-motion * {
+    animation-duration: var(--animation-duration, 0.1s) !important;
+    transition-duration: var(--animation-duration, 0.1s) !important;
   }
 
   * {

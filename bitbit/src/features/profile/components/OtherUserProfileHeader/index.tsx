@@ -1,34 +1,57 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Tag } from "@/components/ui";
-import type { User } from "@/types";
+import { Avatar, Tag, Button } from "@/components/ui";
+import type { User } from "@/components/ui/cards/UserCard/types";
 
-interface UserProfileProps {
+interface OtherUserProfileHeaderProps {
   user: User;
-  onEditProfile?: () => void;
+  onFollow: (isFollowing: boolean) => void;
+  isFollowing: boolean;
+  isLoading?: boolean;
 }
 
-export const UserProfile: React.FC<UserProfileProps> = ({
+export const OtherUserProfileHeader: React.FC<OtherUserProfileHeaderProps> = ({
   user,
-  onEditProfile,
+  onFollow,
+  isFollowing,
+  isLoading = false,
 }) => {
   const navigate = useNavigate();
+  const displayName = user.name || user.username;
 
-  const handleSettingsClick = () => {
-    navigate("/profile/settings");
-  };
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
       {/* 顶部导航 */}
       <div className="flex items-center justify-between p-6 border-b border-gray-100">
-        <h1 className="text-xl font-bold text-gray-900">个人中心</h1>
-        <div className="flex items-center gap-3">
-          {/* 移除重复的通知按钮，保持设计简洁 */}
+        <div className="flex items-center gap-4">
           <button
-            onClick={handleSettingsClick}
-            className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+            onClick={() => navigate(-1)}
+            className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
           >
-            <span className="text-lg">⚙️</span>
+            <svg
+              className="w-5 h-5 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <h1 className="text-xl font-bold text-gray-900">
+            {displayName}的主页
+          </h1>
+        </div>
+        <div className="flex items-center gap-3">
+          <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+            <span className="text-lg">💬</span>
+          </button>
+          <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+            <span className="text-lg">📧</span>
           </button>
         </div>
       </div>
@@ -38,39 +61,28 @@ export const UserProfile: React.FC<UserProfileProps> = ({
         <div className="flex items-start gap-6">
           {/* 头像 */}
           <div className="relative">
-            <div className="w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
-              {user.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="w-full h-full rounded-full object-cover"
-                />
-              ) : (
-                <span className="text-white text-2xl font-medium">
-                  {user.name?.slice(0, 2) || "U"}
-                </span>
-              )}
-            </div>
-            {/* 在线状态指示器 */}
-            {user.isOnline && (
-              <div className="absolute -bottom-1 -right-1">
-                <div className="w-6 h-6 bg-green-500 rounded-full border-3 border-white"></div>
-              </div>
-            )}
+            <Avatar
+              src={user.avatar}
+              fallback={displayName}
+              size="xl"
+              online={user.isOnline}
+            />
           </div>
 
           {/* 用户信息 */}
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <h2 className="text-2xl font-semibold text-gray-900">
-                {user.name}
+                {displayName}
               </h2>
-              <div className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium">
-                Lv.{user.level}
-              </div>
+              {user.level && (
+                <div className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium">
+                  Lv.{user.level}
+                </div>
+              )}
             </div>
 
-            {/* 扩展的用户信息 - 与 UserCard 保持一致 */}
+            {/* 扩展的用户信息 */}
             <div className="space-y-2 mb-4">
               {/* 职业、年龄、位置 */}
               {(user.profession || user.age || user.location) && (
@@ -101,44 +113,50 @@ export const UserProfile: React.FC<UserProfileProps> = ({
               )}
 
               {/* 加入时间 */}
-              <div className="flex items-center gap-1 text-gray-500 text-sm">
-                <svg
-                  className="w-4 h-4"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>加入于 {user.joinedDate}</span>
-              </div>
+              {(user.joinedDate || user.joinDate) && (
+                <div className="flex items-center gap-1 text-gray-500 text-sm">
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>加入于 {user.joinedDate || user.joinDate}</span>
+                </div>
+              )}
             </div>
 
             {/* 个人简介 */}
             <p className="text-gray-600 mb-4">
-              {user.bio || "热爱音乐和摄影的技术爱好者"}
+              {user.bio || "这个用户很神秘，什么都没有留下"}
             </p>
 
-            {/* 兴趣标签 - 与 UserCard 保持一致 */}
-            {user.interests && user.interests.length > 0 && (
-              <div className="mb-4">
-                <div className="flex flex-wrap gap-2">
-                  {user.interests.slice(0, 3).map((interest, index) => (
-                    <Tag key={index} variant="secondary" size="sm">
-                      {interest}
-                    </Tag>
-                  ))}
-                  {user.interests.length > 3 && (
-                    <Tag variant="default" size="sm">
-                      +{user.interests.length - 3}
-                    </Tag>
-                  )}
+            {/* 兴趣标签 */}
+            {(user.interests || user.tags) &&
+              (user.interests?.length || user.tags?.length) && (
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-2">
+                    {(user.interests || user.tags)
+                      ?.slice(0, 5)
+                      .map((interest, index) => (
+                        <Tag key={index} variant="secondary" size="sm">
+                          {interest}
+                        </Tag>
+                      ))}
+                    {(user.interests?.length || user.tags?.length || 0) > 5 && (
+                      <Tag variant="default" size="sm">
+                        +
+                        {(user.interests?.length || user.tags?.length || 0) - 5}
+                      </Tag>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* 统计信息 */}
             {(user.activitiesCount !== undefined ||
@@ -159,30 +177,32 @@ export const UserProfile: React.FC<UserProfileProps> = ({
               </div>
             )}
 
-            <button
-              onClick={onEditProfile}
-              className="px-6 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-50 transition-colors font-medium"
+            {/* 关注按钮 */}
+            <Button
+              onClick={() => onFollow(isFollowing)}
+              disabled={isLoading}
+              variant={isFollowing ? "outline" : "primary"}
+              className="px-6 py-2 rounded-full font-medium"
             >
-              编辑资料
-            </button>
+              {isLoading ? "..." : isFollowing ? "已关注" : "关注"}
+            </Button>
           </div>
 
           {/* 关注数据 */}
           <div className="flex gap-3">
             <button
-              onClick={() => navigate(`/profile/following`)}
+              onClick={() => navigate(`/user/${user.id}/following`)}
               className="group relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200/50 rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
             >
               <div className="relative z-10 p-5 text-center min-w-[120px]">
                 <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1">
-                  {user.following || 0}
+                  {user.following || user.followingCount || 0}
                 </div>
                 <div className="text-sm font-medium text-blue-700 group-hover:text-blue-800 transition-colors">
                   关注
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-indigo-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              {/* 装饰性图标 */}
               <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-40 transition-opacity">
                 <svg
                   className="w-4 h-4 text-blue-500"
@@ -199,19 +219,18 @@ export const UserProfile: React.FC<UserProfileProps> = ({
             </button>
 
             <button
-              onClick={() => navigate(`/profile/followers`)}
+              onClick={() => navigate(`/user/${user.id}/followers`)}
               className="group relative overflow-hidden bg-gradient-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border border-purple-200/50 rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
             >
               <div className="relative z-10 p-5 text-center min-w-[120px]">
                 <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-1">
-                  {user.followers || 0}
+                  {user.followers || user.followersCount || 0}
                 </div>
                 <div className="text-sm font-medium text-purple-700 group-hover:text-purple-800 transition-colors">
                   粉丝
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              {/* 装饰性图标 */}
               <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-40 transition-opacity">
                 <svg
                   className="w-4 h-4 text-purple-500"

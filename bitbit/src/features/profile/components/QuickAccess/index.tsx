@@ -1,6 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import type { QuickAccessItem } from "../../types";
+import { smartScrollAfterNavigation } from "@/shared/utils/scrollUtils";
 
 interface QuickAccessProps {
   items: QuickAccessItem[];
@@ -8,14 +9,64 @@ interface QuickAccessProps {
 
 export const QuickAccess: React.FC<QuickAccessProps> = ({ items }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 判断当前页面来源和具体的标签页
+  const getCurrentSourceAndTab = () => {
+    const currentPath = location.pathname;
+    if (currentPath.startsWith("/profile")) {
+      // 提取当前的标签页，例如 /profile/activities -> activities
+      const pathParts = currentPath.split("/");
+      const tab = pathParts[2] || "activities"; // 默认为 activities
+      return {
+        source: "profile",
+        tab: tab,
+      };
+    }
+    return {
+      source: "profile",
+      tab: "activities",
+    };
+  };
 
   const handleItemClick = (item: QuickAccessItem) => {
     if (item.onClick) {
       item.onClick();
-    } else if (item.title === "设置") {
-      navigate("/profile/settings");
+      return;
     }
-    // 可以根据需要添加其他默认导航逻辑
+
+    const { source: currentSource, tab: currentTab } = getCurrentSourceAndTab();
+
+    // 根据标题导航到相应页面并处理滚动
+    switch (item.title) {
+      case "我的订单":
+        navigate("/profile/trades");
+        smartScrollAfterNavigation("/profile/trades");
+        break;
+      case "我关注的":
+        navigate("/profile/following", {
+          state: { fromSource: currentSource },
+        });
+        smartScrollAfterNavigation("/profile/following");
+        break;
+      case "我的消息":
+        navigate("/notifications", {
+          state: {
+            fromSource: currentSource,
+            profileTab: currentTab,
+          },
+        });
+        smartScrollAfterNavigation("/notifications");
+        break;
+      case "设置":
+        navigate("/profile/settings", {
+          state: { fromSource: currentSource },
+        });
+        smartScrollAfterNavigation("/profile/settings");
+        break;
+      default:
+        console.warn(`未实现的快速入口: ${item.title}`);
+    }
   };
   return (
     <div>

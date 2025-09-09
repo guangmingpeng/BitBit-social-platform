@@ -200,6 +200,29 @@ select:focus {
   color: var(--color-text-primary);
 }
 
+/* UserCardPopover 动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.98);
+  }
+}
+
 /* 焦点样式 */
 .focus-visible:focus-visible {
   outline: 2px solid var(--color-primary);

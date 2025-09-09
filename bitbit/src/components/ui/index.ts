@@ -121,6 +121,13 @@ export type { FeaturedRecommendationProps } from "./FeaturedRecommendation/index
 export { default as SectionHeader } from "./SectionHeader/index";
 export type { SectionHeaderProps } from "./SectionHeader/index";
 
+// 页面级组件
+export { PageHeader } from "./PageHeader";
+export type { PageHeaderProps } from "./PageHeader";
+
+export { EmptyState } from "./EmptyState";
+export type { EmptyStateProps } from "./EmptyState";
+
 // Profile相关组件
 export { default as OrderCard } from "./OrderCard/index";
 export { default as FavoriteCard } from "./FavoriteCard/index";

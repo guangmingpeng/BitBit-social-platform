@@ -267,7 +267,52 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 6. 其他页面的通用返回逻辑
+    // 6. 处理通知页面的返回
+    if (currentPath === "/notifications") {
+      if (fromSource) {
+        // 根据来源页面返回
+        if (fromSource === "home") {
+          console.log("→ 通知页面返回首页");
+          navigate("/", { replace: true });
+          return;
+        } else if (fromSource === "activities") {
+          console.log("→ 通知页面返回活动列表");
+          navigate("/activities", { replace: true });
+          return;
+        } else if (fromSource === "community") {
+          console.log("→ 通知页面返回社区");
+          navigate("/community", { replace: true });
+          return;
+        } else if (fromSource === "exchange") {
+          console.log("→ 通知页面返回交换页面");
+          navigate("/exchange", { replace: true });
+          return;
+        } else if (fromSource === "profile") {
+          console.log("→ 通知页面返回个人资料");
+          const profileTab = location.state?.profileTab || "activities";
+          navigate(`/profile/${profileTab}`, { replace: true });
+          return;
+        }
+      }
+
+      // 兜底：从栈中查找前一个页面
+      const currentIndex = stack.findIndex(
+        (entry) => entry.pathname === currentPath
+      );
+      if (currentIndex > 0) {
+        const previousEntry = stack[currentIndex - 1];
+        console.log("→ 通知页面返回栈中前一个页面:", previousEntry.pathname);
+        navigate(previousEntry.pathname, { replace: true });
+        return;
+      }
+
+      // 最终兜底：返回首页
+      console.log("→ 通知页面最终兜底返回首页");
+      navigate("/", { replace: true });
+      return;
+    }
+
+    // 7. 其他页面的通用返回逻辑
     if (stack.length > 1) {
       const previousEntry = stack[stack.length - 2];
       console.log("→ 通用返回逻辑，返回:", previousEntry.pathname);

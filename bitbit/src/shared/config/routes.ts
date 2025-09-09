@@ -17,11 +17,21 @@ const PublishPost = lazy(() => import("@/pages/PublishPost"));
 const Profile = lazy(() => import("@/pages/Profile"));
 const ProfileEdit = lazy(() => import("../../pages/ProfileEdit"));
 const ProfileSettings = lazy(() => import("../../pages/ProfileSettings"));
+const Notifications = lazy(() => import("@/pages/Notifications"));
+
+// 新增的Profile相关页面
+const FollowListPage = lazy(() => import("@/pages/FollowListPage"));
+const OtherUserProfilePage = lazy(
+  () => import("@/features/profile/components/OtherUserProfile")
+);
 
 // 从 exchange 功能模块导入订单详情页
 const OrderDetailPage = lazy(
   () => import("@/features/exchange/pages/OrderDetailPage")
 );
+
+// 测试页面
+const UserCardTest = lazy(() => import("@/pages/UserCardTest"));
 // 路由配置
 export const routes = [
   {
@@ -81,6 +91,10 @@ export const routes = [
     element: PostDetail,
   },
   {
+    path: "/notifications",
+    element: Notifications,
+  },
+  {
     path: "/profile/edit",
     element: ProfileEdit,
   },
@@ -95,5 +109,29 @@ export const routes = [
   {
     path: "/profile/:tab",
     element: Profile,
+  },
+  {
+    path: "/profile/following",
+    element: FollowListPage,
+  },
+  {
+    path: "/profile/followers",
+    element: FollowListPage,
+  },
+  {
+    path: "/user/:userId",
+    element: OtherUserProfilePage,
+  },
+  {
+    path: "/user/:userId/following",
+    element: FollowListPage,
+  },
+  {
+    path: "/user/:userId/followers",
+    element: FollowListPage,
+  },
+  {
+    path: "/test/user-card",
+    element: UserCardTest,
   },
 ];

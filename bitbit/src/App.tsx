@@ -104,6 +104,12 @@ const AppContent = () => {
           >
             交换卡片
           </NavLink>
+          <NavLink
+            to="/test/user-card"
+            className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600 transition-colors"
+          >
+            用户卡片测试
+          </NavLink>
         </div>
       </nav>
     </div>

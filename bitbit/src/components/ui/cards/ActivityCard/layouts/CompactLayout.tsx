@@ -4,9 +4,9 @@ import { ActivityImages } from "../ActivityImages";
 import { ActivityActions } from "../ActivityActions";
 
 interface CompactLayoutProps {
-  adaptedActivity: Record<string, unknown>;
-  categoryConfig: Record<string, unknown>;
-  statusConfig: Record<string, unknown>;
+  adaptedActivity: Record<string, any>;
+  categoryConfig: Record<string, any>;
+  statusConfig: Record<string, any>;
   showImages: boolean;
   showDate: boolean;
   showLocation: boolean;

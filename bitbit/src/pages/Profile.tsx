@@ -19,6 +19,7 @@ import {
   ContentFilter,
   useContentFilter,
 } from "../components/ui/ContentFilter/exports";
+import { TabFilter } from "../shared/components";
 import { ActivityCard, PostCard } from "../components/ui/cards";
 import { ExchangeCard } from "../features/exchange/components";
 import { OrderCard, FavoriteCard, DraftCard } from "../components/ui";
@@ -37,7 +38,6 @@ const Profile: FC = () => {
   const { activeTab, handleTabChange } = useProfileTabs();
 
   // 简化的收藏筛选状态 - 使用key强制组件重新渲染
-  const favoritesFilterKey = `${activeTab}-favorites-filter`;
   const [favoritesTypeFilter, setFavoritesTypeFilter] = useState<string>("");
 
   // 当activeTab改变时，立即重置筛选状态
@@ -540,7 +540,7 @@ const Profile: FC = () => {
             </div>
 
             {/* 我的订单 */}
-            <div className="space-y-4">
+            <div className="space-y-4" data-section="trades">
               <h3 className="text-lg font-semibold text-gray-900">我的订单</h3>
               <div className="space-y-3">
                 {(ordersPagination.currentData as typeof myOrders).map(
@@ -586,12 +586,10 @@ const Profile: FC = () => {
             className="space-y-4"
             key={`favorites-${favoritesTypeFilter}-${filteredFavorites.length}`}
           >
-            {/* 简化的筛选按钮 */}
-            <div className="flex gap-2 flex-wrap">
-              <span className="text-sm font-medium text-gray-700 self-center">
-                类型:
-              </span>
-              {[
+            {/* 使用Tab筛选组件 */}
+            <TabFilter
+              label="类型:"
+              options={[
                 { key: "", label: "全部", count: myFavorites.length },
                 {
                   key: "activity",
@@ -611,35 +609,15 @@ const Profile: FC = () => {
                   count: myFavorites.filter((item) => item.type === "exchange")
                     .length,
                 },
-              ].map((option) => (
-                <button
-                  key={`${favoritesFilterKey}-${option.key}`}
-                  onClick={() => {
-                    console.log("=== 筛选按钮点击事件 ===");
-                    console.log("点击的筛选类型:", option.key);
-                    console.log("点击前的筛选状态:", favoritesTypeFilter);
-                    console.log("即将设置为:", option.key);
-                    setFavoritesTypeFilter(option.key);
-
-                    // 使用setTimeout确保状态更新后再检查
-                    setTimeout(() => {
-                      console.log("状态更新后:", favoritesTypeFilter);
-                    }, 100);
-                  }}
-                  className={`
-                    px-4 py-2 rounded-full text-sm font-medium transition-colors
-                    ${
-                      favoritesTypeFilter === option.key
-                        ? "bg-blue-100 text-blue-600 border border-blue-200"
-                        : "border border-gray-200 text-gray-600 hover:bg-gray-50"
-                    }
-                  `}
-                >
-                  {option.label}
-                  <span className="ml-1 text-xs">({option.count})</span>
-                </button>
-              ))}
-            </div>
+              ]}
+              value={favoritesTypeFilter}
+              onChange={(value) => {
+                console.log("=== TabFilter 筛选按钮点击事件 ===");
+                console.log("点击的筛选类型:", value);
+                console.log("点击前的筛选状态:", favoritesTypeFilter);
+                setFavoritesTypeFilter(value);
+              }}
+            />
 
             {/* 调试信息 */}
             <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">

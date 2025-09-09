@@ -6,6 +6,9 @@ export { QuickAccess } from "./QuickAccess";
 export { LoadingState } from "./LoadingState";
 export { Pagination } from "./Pagination";
 export { ActivityNotificationModal } from "./ActivityNotificationModal";
+export { FollowList } from "./FollowList";
+export { OtherUserProfilePage } from "./OtherUserProfile";
+export { OtherUserProfileHeader } from "./OtherUserProfileHeader";
 
 // ProfileEdit 相关组件
 export * from "./ProfileEdit";

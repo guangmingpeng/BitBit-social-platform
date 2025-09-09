@@ -1,9 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Avatar } from "@/components/ui";
+import { useNotifications } from "@/features/notifications";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { stats } = useNotifications();
 
   const isHomePage = location.pathname === "/";
 
@@ -66,18 +68,38 @@ const Header = () => {
               </Button>
             )}
 
-            {/* 消息通知 */}
+            {/* 消息通知 - 统一的通知入口 */}
             <div className="relative">
               <button
                 className="w-9 h-9 md:w-10 md:h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
-                onClick={() => console.log("查看消息")}
+                onClick={() =>
+                  navigate("/notifications", {
+                    state: {
+                      fromSource:
+                        location.pathname === "/"
+                          ? "home"
+                          : location.pathname.startsWith("/activities")
+                          ? "activities"
+                          : location.pathname.startsWith("/community")
+                          ? "community"
+                          : location.pathname.startsWith("/exchange")
+                          ? "exchange"
+                          : location.pathname.startsWith("/profile")
+                          ? "profile"
+                          : "other",
+                    },
+                  })
+                }
+                title="查看所有通知"
               >
                 <span className="text-base md:text-lg">🔔</span>
               </button>
               {/* 未读消息指示器 */}
-              <div className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-coral-500 text-white rounded-full flex items-center justify-center text-xs font-medium">
-                3
-              </div>
+              {stats.unread > 0 && (
+                <div className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-coral-500 text-white rounded-full flex items-center justify-center text-xs font-medium">
+                  {stats.unread > 99 ? "99+" : stats.unread}
+                </div>
+              )}
             </div>
 
             {/* 用户头像 */}
@@ -86,7 +108,8 @@ const Header = () => {
               fallback="ZL"
               size="md"
               className="cursor-pointer hover:ring-2 hover:ring-primary-200 transition-all"
-              onClick={() => console.log("查看个人信息")}
+              onClick={() => navigate("/profile")}
+              title="个人中心"
             />
           </div>
         </div>

@@ -88,8 +88,8 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
   useEffect(() => {
     if (isVisible && triggerRef.current) {
       const triggerRect = triggerRef.current.getBoundingClientRect();
-      const popoverWidth = 320;
-      const popoverHeight = 400; // 增加高度以适应新的布局
+      const popoverWidth = 340; // 略微增加宽度
+      const popoverHeight = 420; // 固定高度，确保所有内容可见
 
       let top = 0;
       let left = 0;
@@ -219,15 +219,22 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
 
     return (
       <div className="flex items-center justify-center gap-1 flex-wrap">
-        {statsItems.map((item, index) => (
-          <React.Fragment key={index}>
-            <span className={`${item.color} font-semibold`}>{item.count}</span>
-            <span className="text-text-secondary">{item.label}</span>
-            {index < statsItems.length - 1 && (
-              <span className="text-text-tertiary mx-1">·</span>
-            )}
-          </React.Fragment>
-        ))}
+        {statsItems.slice(0, 4).map(
+          (
+            item,
+            index // 最多显示4个统计项
+          ) => (
+            <React.Fragment key={index}>
+              <span className={`${item.color} font-semibold text-sm`}>
+                {item.count}
+              </span>
+              <span className="text-text-secondary text-xs">{item.label}</span>
+              {index < Math.min(statsItems.length, 4) - 1 && (
+                <span className="text-text-tertiary mx-0.5">·</span>
+              )}
+            </React.Fragment>
+          )
+        )}
       </div>
     );
   };
@@ -235,10 +242,12 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
   const popoverContent = (
     <div
       ref={popoverRef}
-      className="fixed z-50 bg-white rounded-lg shadow-focus border border-gray-200 w-80 max-h-96 overflow-y-auto"
+      className="fixed z-50 bg-white rounded-lg shadow-focus border border-gray-200"
       style={{
         top: position.top,
         left: position.left,
+        width: "340px", // 固定宽度
+        height: "420px", // 固定高度
         animation: isVisible
           ? "fadeInUp 0.2s ease-out"
           : "fadeOut 0.15s ease-in forwards",
@@ -247,8 +256,8 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
       onMouseLeave={handlePopoverMouseLeave}
     >
       {/* 头部区域 - 头像和基本信息 */}
-      <div className="p-5 pb-4 border-b border-gray-100">
-        <div className="flex items-start gap-4">
+      <div className="p-4 pb-3 border-b border-gray-100">
+        <div className="flex items-start gap-3">
           {/* 头像 */}
           <div className="flex-shrink-0">{renderUserAvatar()}</div>
 
@@ -256,13 +265,20 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h4
-                className="text-title-4 text-text-primary cursor-pointer hover:text-primary-500 transition-colors truncate font-semibold"
+                className="text-title-4 text-text-primary cursor-pointer hover:text-primary-500 transition-colors font-semibold"
                 onClick={handleViewProfile}
+                title={user.name} // 添加 tooltip
+                style={{
+                  maxWidth: "180px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               >
                 {user.name}
               </h4>
               {user.isOrganizer && (
-                <span className="bg-sunflower-500 text-white text-caption px-2 py-1 rounded-full font-medium flex-shrink-0">
+                <span className="bg-sunflower-500 text-white text-caption px-2 py-0.5 rounded-full font-medium flex-shrink-0">
                   组织者
                 </span>
               )}
@@ -270,14 +286,38 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
 
             {/* 真实姓名作为补充信息 */}
             {user.fullName && user.fullName !== user.name && (
-              <p className="text-body text-text-tertiary mb-2">
+              <p
+                className="text-caption text-text-tertiary mb-1"
+                title={user.fullName}
+                style={{
+                  maxWidth: "200px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 真实姓名：{user.fullName}
               </p>
             )}
 
             {/* 基本信息 */}
             {(user.profession || user.age || user.location) && (
-              <p className="text-body text-text-secondary mb-2">
+              <p
+                className="text-caption text-text-secondary"
+                title={[
+                  user.profession,
+                  user.age && `${user.age}岁`,
+                  user.location,
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
+                style={{
+                  maxWidth: "200px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {[user.profession, user.age && `${user.age}岁`, user.location]
                   .filter(Boolean)
                   .join(" · ")}
@@ -287,93 +327,107 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
         </div>
       </div>
 
-      {/* 主体内容区域 */}
-      <div className="p-5 pt-4 space-y-4">
+      {/* 主体内容区域 - 使用 flex 布局和固定高度 */}
+      <div className="flex flex-col h-80">
+        {" "}
+        {/* 固定主体区域高度 */}
         {/* 统计信息 */}
         {renderStats() && (
-          <div className="bg-gray-50 rounded-sm p-3">
-            <div className="text-body text-center font-medium">
+          <div className="flex-shrink-0 mx-4 mt-3 bg-gray-50 rounded-lg p-2.5">
+            <div className="text-caption text-center font-medium">
               {renderStats()}
             </div>
           </div>
         )}
+        {/* 可滚动内容区域 */}
+        <div className="flex-1 overflow-y-auto px-4 pt-3 pb-2 space-y-3">
+          {/* 个人简介 */}
+          {user.bio && (
+            <div>
+              <h5 className="text-caption font-medium text-text-primary mb-1.5">
+                个人简介
+              </h5>
+              <p
+                className="text-caption text-text-secondary leading-relaxed"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical" as const,
+                  overflow: "hidden",
+                }}
+                title={user.bio} // 添加完整内容的 tooltip
+              >
+                {user.bio}
+              </p>
+            </div>
+          )}
 
-        {/* 个人简介 */}
-        {user.bio && (
-          <div>
-            <h5 className="text-body font-medium text-text-primary mb-2">
-              个人简介
-            </h5>
-            <p
-              className="text-body text-text-secondary leading-relaxed overflow-hidden"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: "vertical" as const,
-              }}
-            >
-              {user.bio}
-            </p>
-          </div>
-        )}
+          {/* 兴趣标签 */}
+          {user.tags && user.tags.length > 0 && (
+            <div>
+              <h5 className="text-caption font-medium text-text-primary mb-2">
+                兴趣标签
+              </h5>
+              <div className="flex gap-1.5 flex-wrap">
+                {user.tags.slice(0, 4).map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-0.5 bg-primary-50 text-primary-500 text-xs rounded-full font-medium border border-primary-100"
+                    title={tag}
+                    style={{
+                      maxWidth: "80px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+                {user.tags.length > 4 && (
+                  <span className="text-xs text-text-tertiary px-2 py-0.5">
+                    +{user.tags.length - 4}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
 
-        {/* 兴趣标签 */}
-        {user.tags && user.tags.length > 0 && (
-          <div>
-            <h5 className="text-body font-medium text-text-primary mb-3">
-              兴趣标签
-            </h5>
-            <div className="flex gap-2 flex-wrap">
-              {user.tags.slice(0, 4).map((tag, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-primary-50 text-primary-500 text-caption rounded-full font-medium border border-primary-100"
+          {/* 加入时间 */}
+          {user.joinDate && (
+            <div className="border-t border-gray-100 pt-2">
+              <p className="text-xs text-text-tertiary">
+                加入于 {user.joinDate}
+              </p>
+            </div>
+          )}
+        </div>
+        {/* 操作按钮区域 - 固定在底部 */}
+        {showActions && (
+          <div className="flex-shrink-0 p-4 pt-2 border-t border-gray-100">
+            <div className="flex gap-2">
+              <Button
+                variant={user.isFollowed ? "secondary" : "primary"}
+                size="sm"
+                onClick={handleFollow}
+                className="flex-1 font-medium text-sm h-8"
+              >
+                {user.isFollowed ? "已关注" : "关注"}
+              </Button>
+              {onMessage && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleMessage}
+                  className="flex-shrink-0 text-sm h-8 px-3"
                 >
-                  {tag}
-                </span>
-              ))}
-              {user.tags.length > 4 && (
-                <span className="text-caption text-text-tertiary px-2 py-1">
-                  +{user.tags.length - 4} 更多
-                </span>
+                  私信
+                </Button>
               )}
             </div>
           </div>
         )}
-
-        {/* 加入时间 */}
-        {user.joinDate && (
-          <p className="text-caption text-text-tertiary border-t border-gray-100 pt-3">
-            加入于 {user.joinDate}
-          </p>
-        )}
       </div>
-
-      {/* 操作按钮区域 */}
-      {showActions && (
-        <div className="p-5 pt-0">
-          <div className="flex gap-3">
-            <Button
-              variant={user.isFollowed ? "secondary" : "primary"}
-              size="sm"
-              onClick={handleFollow}
-              className="flex-1 font-medium"
-            >
-              {user.isFollowed ? "已关注" : "关注"}
-            </Button>
-            {onMessage && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleMessage}
-                className="flex-shrink-0"
-              >
-                私信
-              </Button>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 

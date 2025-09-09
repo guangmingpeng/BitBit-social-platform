@@ -406,11 +406,33 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
         {showActions && (
           <div className="flex-shrink-0 p-4 pt-2 border-t border-gray-100">
             <div className="flex gap-2">
+              {/* 进入主页按钮 - 更明显的主要操作 */}
               <Button
-                variant={user.isFollowed ? "secondary" : "primary"}
+                variant="primary"
+                size="sm"
+                onClick={handleViewProfile}
+                className="flex-1 font-medium text-sm h-8"
+              >
+                <svg
+                  className="w-4 h-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+                进入主页
+              </Button>
+              <Button
+                variant={user.isFollowed ? "secondary" : "outline"}
                 size="sm"
                 onClick={handleFollow}
-                className="flex-1 font-medium text-sm h-8"
+                className="flex-shrink-0 font-medium text-sm h-8 px-3"
               >
                 {user.isFollowed ? "已关注" : "关注"}
               </Button>
@@ -421,7 +443,7 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
                   onClick={handleMessage}
                   className="flex-shrink-0 text-sm h-8 px-3"
                 >
-                  私信
+                  💬
                 </Button>
               )}
             </div>

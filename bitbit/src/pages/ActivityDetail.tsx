@@ -1,7 +1,8 @@
 import { type FC, useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Container, Card, CardContent, Button } from "@/components/ui";
-import { FloatingBackButton } from "@/components/common";
+import { useUserNavigation } from "../shared/utils/userNavigation";
+import FloatingBackButton from "../components/common/FloatingBackButton";
 import { getActivityById } from "@/shared/data/activities";
 import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
 import { getActivityParticipationInfo } from "@/shared/utils/activityUtils";
@@ -37,6 +38,7 @@ interface LocationState {
 
 const ActivityDetail: FC = () => {
   const { id } = useParams<{ id: string }>();
+  const userNavigation = useUserNavigation();
   const navigate = useNavigate();
   const location = useLocation();
   const { smartGoBack, navigateWithSource } = useSmartNavigation();
@@ -176,8 +178,8 @@ const ActivityDetail: FC = () => {
   };
 
   const handleViewProfile = (participantId: string) => {
-    // 跳转到用户个人主页
-    navigateWithSource("activity-detail")(`/profile/${participantId}`);
+    // 使用智能导航跳转到用户页面
+    userNavigation.smartNavigateToUser(participantId);
   };
 
   return (

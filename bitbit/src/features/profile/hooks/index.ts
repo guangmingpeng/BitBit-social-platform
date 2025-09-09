@@ -43,6 +43,24 @@ export const useProfileTabs = () => {
   return { activeTab, handleTabChange };
 };
 
+// 新增：用于其他用户页面的tab管理
+export const useOtherUserProfileTabs = () => {
+  const navigate = useNavigate();
+  const params = useParams<{ userId: string; tab?: string }>();
+
+  // 从URL参数中获取当前标签，默认为 "activities"
+  const activeTab = (params.tab as ProfileTab) || "activities";
+
+  const handleTabChange = (tab: ProfileTab) => {
+    // 为其他用户页面更新URL
+    if (params.userId) {
+      navigate(`/user/${params.userId}/${tab}`, { replace: true });
+    }
+  };
+
+  return { activeTab, handleTabChange };
+};
+
 export const useActivityFilter = (activities: Activity[] = []) => {
   const [activeFilter, setActiveFilter] = useState<ActivityFilterType>("all");
 

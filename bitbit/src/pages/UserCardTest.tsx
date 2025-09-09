@@ -1,5 +1,9 @@
 import React from "react";
 import { UserCardPopover } from "@/shared/components";
+import {
+  useUserNavigation,
+  createUserProfileHandler,
+} from "@/shared/utils/userNavigation";
 import type { UserInfo } from "@/shared/components/UserCardPopover";
 
 const TestUser: UserInfo = {
@@ -33,6 +37,9 @@ const TestUser: UserInfo = {
 };
 
 export const UserCardTest: React.FC = () => {
+  const userNavigation = useUserNavigation();
+  const handleViewProfile = createUserProfileHandler(userNavigation);
+
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
@@ -47,7 +54,7 @@ export const UserCardTest: React.FC = () => {
               placement="right"
               onFollow={(userId) => console.log("关注", userId)}
               onMessage={(userId) => console.log("私信", userId)}
-              onViewProfile={(userId) => console.log("查看资料", userId)}
+              onViewProfile={handleViewProfile}
             >
               <div className="p-3 bg-blue-100 rounded-lg cursor-pointer hover:bg-blue-200 transition-colors">
                 悬停查看用户卡片 (右侧)
@@ -62,7 +69,7 @@ export const UserCardTest: React.FC = () => {
               placement="left"
               onFollow={(userId) => console.log("关注", userId)}
               onMessage={(userId) => console.log("私信", userId)}
-              onViewProfile={(userId) => console.log("查看资料", userId)}
+              onViewProfile={handleViewProfile}
             >
               <div className="p-3 bg-green-100 rounded-lg cursor-pointer hover:bg-green-200 transition-colors">
                 悬停查看用户卡片 (左侧)
@@ -77,7 +84,7 @@ export const UserCardTest: React.FC = () => {
               placement="top"
               onFollow={(userId) => console.log("关注", userId)}
               onMessage={(userId) => console.log("私信", userId)}
-              onViewProfile={(userId) => console.log("查看资料", userId)}
+              onViewProfile={handleViewProfile}
             >
               <div className="p-3 bg-purple-100 rounded-lg cursor-pointer hover:bg-purple-200 transition-colors">
                 悬停查看用户卡片 (顶部)
@@ -92,7 +99,7 @@ export const UserCardTest: React.FC = () => {
               placement="bottom"
               onFollow={(userId) => console.log("关注", userId)}
               onMessage={(userId) => console.log("私信", userId)}
-              onViewProfile={(userId) => console.log("查看资料", userId)}
+              onViewProfile={handleViewProfile}
             >
               <div className="p-3 bg-yellow-100 rounded-lg cursor-pointer hover:bg-yellow-200 transition-colors">
                 悬停查看用户卡片 (底部)
@@ -127,7 +134,7 @@ export const UserCardTest: React.FC = () => {
               }}
               placement="right"
               onFollow={(userId) => console.log("关注", userId)}
-              onViewProfile={(userId) => console.log("查看资料", userId)}
+              onViewProfile={handleViewProfile}
             >
               <div className="p-3 bg-indigo-100 rounded-lg cursor-pointer hover:bg-indigo-200 transition-colors">
                 悬停查看用户卡片 (简单信息)

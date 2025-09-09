@@ -1,6 +1,7 @@
 export { UserProfile } from "./UserProfile";
 export { ProfileTabs } from "./ProfileTabs";
 export { ActivityFilter } from "./ActivityFilter";
+export { OtherUserActivityFilter } from "./OtherUserActivityFilter";
 export { AchievementBadges } from "./AchievementBadges";
 export { QuickAccess } from "./QuickAccess";
 export { LoadingState } from "./LoadingState";

@@ -20,13 +20,14 @@ export const OtherUserProfileHeader: React.FC<OtherUserProfileHeaderProps> = ({
   const displayName = user.name || user.username;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-      {/* 顶部导航 */}
-      <div className="flex items-center justify-between p-6 border-b border-gray-100">
-        <div className="flex items-center gap-4">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      {/* 顶部导航栏 */}
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
             className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+            aria-label="返回"
           >
             <svg
               className="w-5 h-5 text-gray-600"
@@ -42,63 +43,100 @@ export const OtherUserProfileHeader: React.FC<OtherUserProfileHeaderProps> = ({
               />
             </svg>
           </button>
-          <h1 className="text-xl font-bold text-gray-900">
-            {displayName}的主页
-          </h1>
+          <h1 className="text-lg font-semibold text-gray-900">用户主页</h1>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
-            <span className="text-lg">💬</span>
+
+        {/* 右侧操作按钮 */}
+        <div className="flex items-center gap-2">
+          <button
+            className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+            aria-label="分享"
+          >
+            <svg
+              className="w-5 h-5 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+              />
+            </svg>
           </button>
-          <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
-            <span className="text-lg">📧</span>
+          <button
+            className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+            aria-label="更多"
+          >
+            <svg
+              className="w-5 h-5 text-gray-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+            </svg>
           </button>
         </div>
       </div>
 
-      {/* 用户信息区域 */}
+      {/* 主要内容区域 */}
       <div className="p-6">
-        <div className="flex items-start gap-6">
-          {/* 头像 */}
-          <div className="relative">
-            <Avatar
-              src={user.avatar}
-              fallback={displayName}
-              size="xl"
-              online={user.isOnline}
-            />
-          </div>
-
-          {/* 用户信息 */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* 左侧：用户基本信息 */}
           <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <h2 className="text-2xl font-semibold text-gray-900">
-                {displayName}
-              </h2>
-              {user.level && (
-                <div className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium">
-                  Lv.{user.level}
-                </div>
-              )}
-            </div>
+            <div className="flex items-start gap-4">
+              {/* 头像 */}
+              <div className="relative">
+                <Avatar
+                  src={user.avatar}
+                  alt={displayName}
+                  size="lg"
+                  className="w-20 h-20 border-4 border-white shadow-lg"
+                />
+                {user.isOnline && (
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 border-3 border-white rounded-full" />
+                )}
+              </div>
 
-            {/* 扩展的用户信息 */}
-            <div className="space-y-2 mb-4">
-              {/* 职业、年龄、位置 */}
-              {(user.profession || user.age || user.location) && (
-                <div className="flex items-center gap-2 text-gray-600">
-                  {user.profession && <span>{user.profession}</span>}
-                  {user.profession && user.age && <span>·</span>}
-                  {user.age && <span>{user.age}岁</span>}
-                  {(user.profession || user.age) && user.location && (
-                    <span>·</span>
+              {/* 用户信息 */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-2xl font-bold text-gray-900 truncate">
+                    {displayName}
+                  </h2>
+                  {user.level && (
+                    <span className="px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-medium rounded-full">
+                      Lv.{user.level}
+                    </span>
+                  )}
+                </div>
+
+                {/* 副标题信息 */}
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-3">
+                  {user.profession && (
+                    <div className="flex items-center gap-1">
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span>{user.profession}</span>
+                    </div>
                   )}
                   {user.location && (
                     <div className="flex items-center gap-1">
                       <svg
                         className="w-4 h-4"
-                        viewBox="0 0 20 20"
                         fill="currentColor"
+                        viewBox="0 0 20 20"
                       >
                         <path
                           fillRule="evenodd"
@@ -109,142 +147,156 @@ export const OtherUserProfileHeader: React.FC<OtherUserProfileHeaderProps> = ({
                       <span>{user.location}</span>
                     </div>
                   )}
+                  {(user.joinedDate || user.joinDate) && (
+                    <div className="flex items-center gap-1">
+                      <svg
+                        className="w-4 h-4"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span>加入于 {user.joinedDate || user.joinDate}</span>
+                    </div>
+                  )}
                 </div>
-              )}
 
-              {/* 加入时间 */}
-              {(user.joinedDate || user.joinDate) && (
-                <div className="flex items-center gap-1 text-gray-500 text-sm">
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>加入于 {user.joinedDate || user.joinDate}</span>
-                </div>
-              )}
-            </div>
+                {/* 个人简介 */}
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  {user.bio || "这个用户很神秘，什么都没有留下~"}
+                </p>
 
-            {/* 个人简介 */}
-            <p className="text-gray-600 mb-4">
-              {user.bio || "这个用户很神秘，什么都没有留下"}
-            </p>
+                {/* 兴趣标签 */}
+                {(user.interests || user.tags) &&
+                  ((user.interests?.length || 0) > 0 ||
+                    (user.tags?.length || 0) > 0) && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {(user.interests || user.tags)
+                        ?.slice(0, 6)
+                        .map((interest, index) => (
+                          <Tag
+                            key={index}
+                            variant="secondary"
+                            size="sm"
+                            className="bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          >
+                            {interest}
+                          </Tag>
+                        ))}
+                    </div>
+                  )}
 
-            {/* 兴趣标签 */}
-            {(user.interests || user.tags) &&
-              (user.interests?.length || user.tags?.length) && (
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {(user.interests || user.tags)
-                      ?.slice(0, 5)
-                      .map((interest, index) => (
-                        <Tag key={index} variant="secondary" size="sm">
-                          {interest}
-                        </Tag>
-                      ))}
-                    {(user.interests?.length || user.tags?.length || 0) > 5 && (
-                      <Tag variant="default" size="sm">
-                        +
-                        {(user.interests?.length || user.tags?.length || 0) - 5}
-                      </Tag>
-                    )}
+                {/* 关注和粉丝统计 - 简洁显示 */}
+                <div className="flex items-center gap-6 pt-3 border-t border-gray-100">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="font-medium text-gray-900">
+                      {user.following || user.followingCount || 0}
+                    </span>
+                    <span className="text-gray-500">关注</span>
                   </div>
-                </div>
-              )}
-
-            {/* 统计信息 */}
-            {(user.activitiesCount !== undefined ||
-              user.stats?.totalPosts !== undefined ||
-              user.stats?.totalExchanges !== undefined) && (
-              <div className="mb-4">
-                <div className="flex items-center gap-4 text-sm text-gray-600">
-                  {user.activitiesCount !== undefined && (
-                    <span>参与活动 {user.activitiesCount}</span>
-                  )}
-                  {user.stats?.totalPosts !== undefined && (
-                    <span>发布帖子 {user.stats.totalPosts}</span>
-                  )}
-                  {user.stats?.totalExchanges !== undefined && (
-                    <span>交易次数 {user.stats.totalExchanges}</span>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="font-medium text-gray-900">
+                      {user.followers || user.followersCount || 0}
+                    </span>
+                    <span className="text-gray-500">粉丝</span>
+                  </div>
+                  {user.activitiesCount && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="font-medium text-gray-900">
+                        {user.activitiesCount}
+                      </span>
+                      <span className="text-gray-500">活动</span>
+                    </div>
                   )}
                 </div>
               </div>
-            )}
-
-            {/* 关注按钮 */}
-            <Button
-              onClick={() => onFollow(isFollowing)}
-              disabled={isLoading}
-              variant={isFollowing ? "outline" : "primary"}
-              className="px-6 py-2 rounded-full font-medium"
-            >
-              {isLoading ? "..." : isFollowing ? "已关注" : "关注"}
-            </Button>
+            </div>
           </div>
 
-          {/* 关注数据 */}
-          <div className="flex gap-3">
-            <button
-              onClick={() => navigate(`/user/${user.id}/following`)}
-              className="group relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200/50 rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
-            >
-              <div className="relative z-10 p-5 text-center min-w-[120px]">
-                <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1">
-                  {user.following || user.followingCount || 0}
-                </div>
-                <div className="text-sm font-medium text-blue-700 group-hover:text-blue-800 transition-colors">
-                  关注
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-indigo-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-              <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-40 transition-opacity">
-                <svg
-                  className="w-4 h-4 text-blue-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </button>
+          {/* 右侧：操作按钮 */}
+          <div className="lg:w-60">
+            {/* 主要操作按钮 */}
+            <div className="flex gap-3">
+              <Button
+                variant={isFollowing ? "outline" : "primary"}
+                size="md"
+                onClick={() => onFollow(isFollowing)}
+                disabled={isLoading}
+                className={`flex-1 ${
+                  isFollowing
+                    ? "border-gray-300 text-gray-700 hover:bg-gray-50"
+                    : "bg-blue-500 hover:bg-blue-600 text-white"
+                }`}
+              >
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    <span>处理中...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    {isFollowing ? (
+                      <>
+                        <svg
+                          className="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        <span>已关注</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                          />
+                        </svg>
+                        <span>关注</span>
+                      </>
+                    )}
+                  </div>
+                )}
+              </Button>
 
-            <button
-              onClick={() => navigate(`/user/${user.id}/followers`)}
-              className="group relative overflow-hidden bg-gradient-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border border-purple-200/50 rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
-            >
-              <div className="relative z-10 p-5 text-center min-w-[120px]">
-                <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-1">
-                  {user.followers || user.followersCount || 0}
-                </div>
-                <div className="text-sm font-medium text-purple-700 group-hover:text-purple-800 transition-colors">
-                  粉丝
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-pink-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-              <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-40 transition-opacity">
+              <Button
+                variant="outline"
+                size="md"
+                className="px-4 border-gray-300 text-gray-700 hover:bg-gray-50"
+                aria-label="发消息"
+              >
                 <svg
-                  className="w-4 h-4 text-purple-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
                   <path
-                    fillRule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clipRule="evenodd"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                   />
                 </svg>
-              </div>
-            </button>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

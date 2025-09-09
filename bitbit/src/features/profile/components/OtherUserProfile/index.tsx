@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ProfileTabs, ActivityFilter, LoadingState, Pagination } from "../";
+import { ProfileTabs, LoadingState, Pagination } from "../";
 import { OtherUserProfileHeader } from "../OtherUserProfileHeader";
+import { OtherUserActivityFilter } from "../OtherUserActivityFilter";
 import { EmptyState } from "@/components/ui";
 import { ActivityCard, PostCard } from "@/components/ui/cards";
 import type { ActivityCardActivity } from "@/components/ui/cards/ActivityCard/types";
@@ -10,9 +11,10 @@ import {
   ContentFilter,
   useContentFilter,
 } from "@/components/ui/ContentFilter/exports";
-import { useActivityFilter, useProfileTabs, usePagination } from "../../hooks";
+import { useOtherUserProfileTabs, usePagination } from "../../hooks";
 import type { User } from "@/components/ui/cards/UserCard/types";
 import type { Post } from "@/components/ui/cards";
+import type { OtherUserActivityFilterType } from "../OtherUserActivityFilter";
 
 // 本地活动类型定义
 interface LocalActivity {
@@ -197,23 +199,118 @@ const mockUserData: Record<
       },
     ],
   },
+  "user-2": {
+    id: "user-2",
+    name: "李美丽",
+    username: "limeili",
+    email: "li@example.com",
+    avatar: "https://picsum.photos/100/100?random=2",
+    bio: "UI/UX设计师，专注用户体验设计",
+    profession: "UI设计师",
+    age: 26,
+    location: "上海",
+    interests: ["设计", "摄影", "旅行"],
+    isOnline: true,
+    level: 12,
+    following: 89,
+    followers: 156,
+    joinedDate: "2024年3月",
+    activitiesCount: 15,
+    stats: {
+      totalPosts: 28,
+      totalExchanges: 3,
+    },
+    createdAt: "2024-03-01T00:00:00Z",
+    updatedAt: "2024-09-01T00:00:00Z",
+    activities: [
+      {
+        id: "act-3",
+        title: "设计思维工作坊",
+        description: "学习设计思维方法论",
+        category: "学习交流",
+        date: "9月20日",
+        time: "19:00-21:00",
+        location: "上海创意园",
+        maxParticipants: 20,
+        currentParticipants: 12,
+        image: "https://picsum.photos/300/200?random=design",
+        status: "organized" as const,
+      },
+    ],
+    posts: [
+      {
+        id: "post-3",
+        author: {
+          name: "李美丽",
+          avatar: "https://picsum.photos/40/40?random=2",
+        },
+        content: "分享一些设计原则和心得",
+        images: ["https://picsum.photos/400/300?random=design1"],
+        category: "learning" as const,
+        tags: ["设计", "UI", "用户体验"],
+        publishTime: "2天前",
+        likes: 67,
+        comments: 23,
+        shares: 5,
+        isLiked: false,
+        isBookmarked: true,
+      },
+    ],
+    exchanges: [],
+  },
+  "user-3": {
+    id: "user-3",
+    name: "王小华",
+    username: "wangxiaohua",
+    email: "wang@example.com",
+    avatar: "https://picsum.photos/100/100?random=3",
+    bio: "全栈开发工程师，热爱编程和开源",
+    profession: "全栈工程师",
+    age: 30,
+    location: "深圳",
+    interests: ["编程", "开源", "读书"],
+    isOnline: false,
+    level: 18,
+    following: 67,
+    followers: 203,
+    joinedDate: "2023年12月",
+    activitiesCount: 32,
+    stats: {
+      totalPosts: 89,
+      totalExchanges: 12,
+    },
+    createdAt: "2023-12-01T00:00:00Z",
+    updatedAt: "2024-09-01T00:00:00Z",
+    activities: [],
+    posts: [],
+    exchanges: [],
+  },
 };
 
 // 其他用户主页组件
 export const OtherUserProfilePage: React.FC = () => {
-  const { userId } = useParams<{ userId: string }>();
+  const { userId, tab } = useParams<{ userId: string; tab?: string }>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
+  const [activityFilter, setActivityFilter] =
+    useState<OtherUserActivityFilterType>("all");
 
   // 模拟获取用户数据
   const userData = userId
     ? mockUserData[userId as keyof typeof mockUserData]
     : null;
 
-  const { activeTab, handleTabChange } = useProfileTabs();
+  const { activeTab, handleTabChange } = useOtherUserProfileTabs();
+
+  // 如果没有提供tab参数，重定向到activities
+  useEffect(() => {
+    if (userId && !tab) {
+      navigate(`/user/${userId}/activities`, { replace: true });
+    }
+  }, [userId, tab, navigate]);
 
   // 将本地活动数据转换为Activity类型以兼容useActivityFilter
   const adaptedActivities =
@@ -255,8 +352,30 @@ export const OtherUserProfilePage: React.FC = () => {
       updatedAt: userData!.updatedAt,
     })) || [];
 
-  const { activeFilter, setActiveFilter, filteredActivities } =
-    useActivityFilter(adaptedActivities);
+  // 创建其他用户活动筛选逻辑
+  const getFilteredActivities = () => {
+    switch (activityFilter) {
+      case "organized":
+        return adaptedActivities.filter(
+          (activity) => activity.status === "organized"
+        );
+      case "participated":
+        return adaptedActivities.filter(
+          (activity) => activity.status === "registered"
+        );
+      case "recent":
+        return adaptedActivities
+          .sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+          .slice(0, 10);
+      default:
+        return adaptedActivities;
+    }
+  };
+
+  const finalFilteredActivities = getFilteredActivities();
 
   useEffect(() => {
     // 模拟API调用
@@ -311,7 +430,7 @@ export const OtherUserProfilePage: React.FC = () => {
 
   // 分页
   const activitiesPagination = usePagination({
-    data: filteredActivities,
+    data: finalFilteredActivities,
     pageSize: 6,
     resetKey: `user-${userId}-activities-${activeTab}`,
   });
@@ -351,16 +470,17 @@ export const OtherUserProfilePage: React.FC = () => {
       case "activities":
         return (
           <div className="space-y-6">
-            <ActivityFilter
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
+            <OtherUserActivityFilter
+              activeFilter={activityFilter}
+              onFilterChange={setActivityFilter}
+              userName={userData?.name}
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {activitiesPagination.currentData.length > 0 ? (
                 activitiesPagination.currentData.map((activity) => (
                   <ActivityCard
                     key={activity.id}
-                    activity={activity as unknown as ActivityCardActivity}
+                    activity={activity as ActivityCardActivity}
                     layout="horizontal"
                     onClick={() => navigate(`/activities/${activity.id}`)}
                     onViewDetail={() => navigate(`/activities/${activity.id}`)}
@@ -371,7 +491,17 @@ export const OtherUserProfilePage: React.FC = () => {
                   />
                 ))
               ) : (
-                <EmptyState title="暂无活动" className="col-span-2" />
+                <EmptyState
+                  title="暂无活动"
+                  description={`${userData?.name || "TA"}还没有${
+                    activityFilter === "organized"
+                      ? "组织"
+                      : activityFilter === "participated"
+                      ? "参与"
+                      : ""
+                  }任何活动`}
+                  className="col-span-2"
+                />
               )}
             </div>
             {activitiesPagination.totalPages > 1 && (

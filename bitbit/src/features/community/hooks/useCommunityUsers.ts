@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import type { UserInfo } from "@/shared/components";
+import { UserNavigation } from "@/shared/utils/userNavigation";
 
 // 扩展的用户接口，包含更多社区相关信息
 export interface CommunityUser {
@@ -88,6 +90,7 @@ const mockActiveUsers: CommunityUser[] = [
 ];
 
 export const useCommunityUsers = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState<CommunityUser[]>(mockActiveUsers);
   const [loading, setLoading] = useState(false);
 
@@ -160,10 +163,15 @@ export const useCommunityUsers = () => {
   }, []);
 
   // 查看用户资料
-  const viewProfile = useCallback(async (userId: string) => {
-    console.log("查看用户资料:", userId);
-    // 这里可以跳转到用户详情页面
-  }, []);
+  const viewProfile = useCallback(
+    async (userId: string) => {
+      console.log("查看用户资料:", userId);
+      // 使用UserNavigation进行跳转
+      const userNavigation = new UserNavigation(navigate);
+      userNavigation.navigateToUserProfile(userId);
+    },
+    [navigate]
+  );
 
   // 刷新活跃用户列表
   const refreshUsers = useCallback(async () => {

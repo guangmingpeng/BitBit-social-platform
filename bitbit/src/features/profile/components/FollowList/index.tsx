@@ -7,6 +7,10 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { usePagination } from "../../hooks";
 import { Pagination } from "../Pagination";
+import {
+  useUserNavigation,
+  createUserProfileHandler,
+} from "@/shared/utils/userNavigation";
 import type { User } from "@/components/ui/cards/UserCard/types";
 
 interface FollowListProps {
@@ -156,6 +160,8 @@ const mockFollowersUsers: User[] = [
 
 export const FollowList: React.FC<FollowListProps> = ({ type, userId }) => {
   const navigate = useNavigate();
+  const userNavigation = useUserNavigation();
+  const handleViewProfile = createUserProfileHandler(userNavigation);
 
   // 根据类型获取对应数据
   const users = type === "following" ? mockFollowingUsers : mockFollowersUsers;
@@ -169,16 +175,6 @@ export const FollowList: React.FC<FollowListProps> = ({ type, userId }) => {
     pageSize: 12,
     resetKey: `${type}-${userId || "current"}-${filteredData.length}`,
   });
-
-  const handleUserClick = (user: User) => {
-    if (user.id === "current_user") {
-      // 如果是当前用户，跳转到自己的profile
-      navigate("/profile/activities");
-    } else {
-      // 跳转到其他用户的主页
-      navigate(`/user/${user.id}`);
-    }
-  };
 
   const handleFollowToggle = (userId: string, isFollowing: boolean) => {
     console.log(isFollowing ? "取消关注" : "关注", userId);
@@ -299,7 +295,7 @@ export const FollowList: React.FC<FollowListProps> = ({ type, userId }) => {
                         handleFollowToggle(user.id, type === "following")
                       }
                       onMessage={() => handleSendMessage(user.id)}
-                      onViewProfile={() => handleUserClick(user)}
+                      onViewProfile={handleViewProfile}
                     >
                       <div
                         className={`group flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer transition-all duration-200 ${

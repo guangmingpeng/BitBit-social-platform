@@ -25,8 +25,10 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
 import DesignSystemShowcase from "./DesignSystemShowcase";
 import { ActivityCard, PostCard } from "@/components/ui/cards";
 import UserCard from "@/features/auth/components/UserCard";
+import { useUserNavigation } from "@/shared/utils/userNavigation";
 
 const ComponentShowcase: React.FC = () => {
+  const userNavigation = useUserNavigation();
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -554,7 +556,7 @@ const ComponentShowcase: React.FC = () => {
               joinedDate="2023年6月"
               onFollow={() => console.log("关注用户")}
               onMessage={() => console.log("发送消息")}
-              onClick={() => console.log("查看用户资料")}
+              onClick={() => userNavigation.navigateToUserProfile("user-1")}
             />
             <UserCard
               id="2"
@@ -565,7 +567,7 @@ const ComponentShowcase: React.FC = () => {
               isFollowing={true}
               joinedDate="2023年8月"
               onFollow={() => console.log("关注用户")}
-              onClick={() => console.log("查看用户资料")}
+              onClick={() => userNavigation.navigateToUserProfile("user-2")}
             />
           </div>
         </div>

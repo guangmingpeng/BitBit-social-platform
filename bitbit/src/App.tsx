@@ -90,7 +90,8 @@ const AppContent = () => {
         {/* 主题切换按钮 - 暂时隐藏，后续实现 */}
         {/* <ThemeToggleButton /> */}
 
-        {/* 用于开发调试的组件页面链接 */}
+        {/* 用于开发调试的组件页面链接 - 暂时隐藏 */}
+        {/* 
         <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-2">
           <NavLink
             to="/components"
@@ -117,6 +118,7 @@ const AppContent = () => {
             用户卡片测试
           </NavLink>
         </div>
+        */}
       </nav>
     </div>
   );

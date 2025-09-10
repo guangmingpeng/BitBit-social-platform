@@ -10,7 +10,7 @@ import { routes } from "@/shared/config/routes";
 import Header from "@/components/layout/Header";
 import SearchBar from "@/components/ui/SearchBar";
 import ComponentShowcase from "@/components/ComponentShowcase";
-import { ThemeToggleButton } from "@/components/ui/ThemeToggleButton";
+// import { ThemeToggleButton } from "@/components/ui/ThemeToggleButton"; // 暂时隐藏主题切换
 import "./App.css";
 
 const AppContent = () => {
@@ -87,8 +87,8 @@ const AppContent = () => {
             </NavLink>
           </div>
         </div>
-        {/* 主题切换按钮 */}
-        <ThemeToggleButton />
+        {/* 主题切换按钮 - 暂时隐藏，后续实现 */}
+        {/* <ThemeToggleButton /> */}
 
         {/* 用于开发调试的组件页面链接 */}
         <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-2">

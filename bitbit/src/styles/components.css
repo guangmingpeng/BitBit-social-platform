@@ -85,41 +85,87 @@
 
   /* 底部Tab导航 */
   .nav-tab-item {
-    @apply relative flex flex-col items-center justify-center px-3 py-2 text-sm font-medium text-text-tertiary transition-all duration-250;
-    min-width: 60px;
-    position: relative;
+    @apply relative flex flex-col items-center justify-center px-4 py-2 text-text-tertiary transition-all duration-300;
+    min-width: 64px;
+    text-decoration: none;
+  }
+
+  .nav-tab-item:hover {
+    @apply text-blue-500;
+    transform: translateY(-2px);
   }
 
   .nav-tab-active {
-    @apply text-primary-500 font-semibold;
-    position: relative;
+    @apply text-blue-600;
+  }
+
+  .nav-tab-item svg {
+    @apply transition-all duration-300;
+  }
+
+  .nav-tab-item:hover svg {
+    transform: scale(1.1);
+  }
+
+  .nav-tab-active svg {
+    transform: scale(1.15);
   }
 
   /* 激活状态的圆形背景 */
   .nav-tab-active::before {
     content: "";
     position: absolute;
-    top: -16px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(78, 111, 255, 0.1);
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.1),
+      rgba(147, 197, 253, 0.2)
+    );
     border-radius: 50%;
     z-index: -1;
+    animation: fadeIn 0.3s ease-out;
   }
 
-  /* 底部指示条 */
+  /* 活跃状态的脉冲效果 */
   .nav-tab-active::after {
     content: "";
     position: absolute;
-    bottom: -24px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 4px;
-    background: #4e6fff;
-    border-radius: 2px;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 50%;
+    z-index: -2;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.2;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
   }
 
   /* ============ 布局组件 ============ */

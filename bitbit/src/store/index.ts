@@ -4,6 +4,7 @@ import { authReducer } from "./slices/authSlice";
 import { uiReducer } from "./slices/uiSlice";
 import { userReducer } from "./slices/userSlice";
 import { settingsReducer } from "./slices/settingsSlice";
+import { chatReducer } from "@/features/chat/store/chatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     ui: uiReducer,
     user: userReducer,
     settings: settingsReducer,
+    chat: chatReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

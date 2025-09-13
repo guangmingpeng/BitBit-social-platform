@@ -10,6 +10,7 @@ import { routes } from "@/shared/config/routes";
 import Header from "@/components/layout/Header";
 import SearchBar from "@/components/ui/SearchBar";
 import ComponentShowcase from "@/components/ComponentShowcase";
+import { devConfig } from "@/config/dev.config";
 // import { ThemeToggleButton } from "@/components/ui/ThemeToggleButton"; // 暂时隐藏主题切换
 import "./App.css";
 
@@ -90,35 +91,41 @@ const AppContent = () => {
         {/* 主题切换按钮 - 暂时隐藏，后续实现 */}
         {/* <ThemeToggleButton /> */}
 
-        {/* 用于开发调试的组件页面链接 - 暂时隐藏 */}
-        {/* 
-        <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-2">
-          <NavLink
-            to="/components"
-            className="bg-gray-800 text-white px-3 py-1 rounded text-xs hover:bg-gray-700 transition-colors"
-          >
-            组件
-          </NavLink>
-          <NavLink
-            to="/test/user-navigation"
-            className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 transition-colors"
-          >
-            用户导航
-          </NavLink>
-          <NavLink
-            to="/exchange-showcase"
-            className="bg-primary-500 text-white px-3 py-1 rounded text-xs hover:bg-primary-600 transition-colors"
-          >
-            交换卡片
-          </NavLink>
-          <NavLink
-            to="/test/user-card"
-            className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600 transition-colors"
-          >
-            用户卡片测试
-          </NavLink>
-        </div>
-        */}
+        {/* 用于开发调试的组件页面链接 - 根据环境变量控制显示 */}
+        {devConfig.showDebugComponents && (
+          <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-2">
+            <NavLink
+              to="/components"
+              className="bg-gray-800 text-white px-3 py-1 rounded text-xs hover:bg-gray-700 transition-colors"
+            >
+              组件
+            </NavLink>
+            <NavLink
+              to="/test/user-navigation"
+              className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 transition-colors"
+            >
+              用户导航
+            </NavLink>
+            <NavLink
+              to="/exchange-showcase"
+              className="bg-primary-500 text-white px-3 py-1 rounded text-xs hover:bg-primary-600 transition-colors"
+            >
+              交换卡片
+            </NavLink>
+            <NavLink
+              to="/test/user-card"
+              className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600 transition-colors"
+            >
+              用户卡片测试
+            </NavLink>
+            <NavLink
+              to="/test/chat"
+              className="bg-purple-500 text-white px-3 py-1 rounded text-xs hover:bg-purple-600 transition-colors"
+            >
+              聊天功能测试
+            </NavLink>
+          </div>
+        )}
       </nav>
     </div>
   );

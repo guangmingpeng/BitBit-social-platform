@@ -13,6 +13,10 @@
 - [主题配置指南](./design/theme-guide.md) - 主题系统使用说明
 - [快速样式指南](./design/quick-guide.md) - 常用样式快速参考
 
+#### 📱 功能设计
+
+- [聊天功能设计方案](./design/features/chat/) - 聊天功能完整设计文档
+
 ### 🧩 组件文档
 
 - [UI 组件库](./components/ui-components.md) - 基础 UI 组件文档
@@ -21,6 +25,10 @@
 ### 🛠️ 开发指南
 
 - [重构完成报告](./development/REFACTOR_COMPLETE.md) - 最近的重构工作总结
+
+#### 💬 聊天功能开发
+
+- [聊天功能开发文档](./development/chat/) - 聊天功能技术实现文档
 
 ### 🎯 设计资源
 

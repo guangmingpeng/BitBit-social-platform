@@ -33,6 +33,7 @@ const OrderDetailPage = lazy(
 // 测试页面
 const UserCardTest = lazy(() => import("@/pages/UserCardTest"));
 const UserNavigationTest = lazy(() => import("@/pages/UserNavigationTest"));
+const ChatTestPage = lazy(() => import("@/pages/ChatTestPage"));
 // 路由配置
 export const routes = [
   {
@@ -142,5 +143,9 @@ export const routes = [
   {
     path: "/test/user-navigation",
     element: UserNavigationTest,
+  },
+  {
+    path: "/test/chat",
+    element: ChatTestPage,
   },
 ];

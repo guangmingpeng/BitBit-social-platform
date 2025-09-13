@@ -18,6 +18,8 @@ const Profile = lazy(() => import("@/pages/Profile"));
 const ProfileEdit = lazy(() => import("../../pages/ProfileEdit"));
 const ProfileSettings = lazy(() => import("../../pages/ProfileSettings"));
 const Notifications = lazy(() => import("@/pages/Notifications"));
+const NavigationDemo = lazy(() => import("@/pages/NavigationDemo"));
+const IconShowcase = lazy(() => import("@/pages/IconShowcase"));
 
 // 新增的Profile相关页面
 const FollowListPage = lazy(() => import("@/pages/FollowListPage"));
@@ -147,5 +149,13 @@ export const routes = [
   {
     path: "/test/chat",
     element: ChatTestPage,
+  },
+  {
+    path: "/test/navigation-demo",
+    element: NavigationDemo,
+  },
+  {
+    path: "/test/icon-showcase",
+    element: IconShowcase,
   },
 ];

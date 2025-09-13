@@ -15,7 +15,12 @@ export interface IconProps {
     | "arrow-right"
     | "plus"
     | "grid"
-    | "list";
+    | "list"
+    | "home"
+    | "activity"
+    | "community"
+    | "exchange"
+    | "profile";
   size?: "xs" | "sm" | "md" | "lg";
   className?: string;
 }
@@ -103,6 +108,52 @@ const Icon: React.FC<IconProps> = ({ name, size = "md", className }) => {
       <path
         fillRule="evenodd"
         d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+        clipRule="evenodd"
+      />
+    ),
+    // 导航图标 - 优化版本
+    home: (
+      <path
+        fillRule="evenodd"
+        d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
+        clipRule="evenodd"
+      />
+    ),
+    activity: (
+      <>
+        <path d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1z" />
+        <path
+          fillRule="evenodd"
+          d="M6 7a1 1 0 000 2h8a1 1 0 100-2H6z"
+          clipRule="evenodd"
+        />
+        <circle cx="8" cy="12" r="1" />
+        <circle cx="12" cy="12" r="1" />
+        <circle cx="8" cy="15" r="1" />
+        <circle cx="12" cy="15" r="1" />
+      </>
+    ),
+    community: (
+      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+    ),
+    exchange: (
+      <>
+        <path
+          fillRule="evenodd"
+          d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1z"
+          clipRule="evenodd"
+        />
+        <path
+          fillRule="evenodd"
+          d="M.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+          clipRule="evenodd"
+        />
+      </>
+    ),
+    profile: (
+      <path
+        fillRule="evenodd"
+        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
         clipRule="evenodd"
       />
     ),

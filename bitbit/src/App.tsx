@@ -11,6 +11,7 @@ import Header from "@/components/layout/Header";
 import SearchBar from "@/components/ui/SearchBar";
 import ComponentShowcase from "@/components/ComponentShowcase";
 import { devConfig } from "@/config/dev.config";
+import { Icon } from "@/components/ui";
 // import { ThemeToggleButton } from "@/components/ui/ThemeToggleButton"; // 暂时隐藏主题切换
 import "./App.css";
 
@@ -42,9 +43,10 @@ const AppContent = () => {
           </Routes>
         </Suspense>
       </main>
-      <nav className="bg-white shadow-light px-4 py-6 relative">
-        <div className="container-main">
-          <div className="flex justify-center space-x-8">
+      {/* 固定底部导航栏 */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200 px-4 py-2 z-50">
+        <div className="max-w-lg mx-auto">
+          <div className="flex justify-around items-center">
             <NavLink
               to="/"
               end
@@ -52,7 +54,10 @@ const AppContent = () => {
                 `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
               }
             >
-              首页
+              <div className="flex flex-col items-center">
+                <Icon name="home" size="lg" className="mb-1" />
+                <span className="text-xs">首页</span>
+              </div>
             </NavLink>
             <NavLink
               to="/activities"
@@ -60,7 +65,10 @@ const AppContent = () => {
                 `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
               }
             >
-              活动
+              <div className="flex flex-col items-center">
+                <Icon name="activity" size="lg" className="mb-1" />
+                <span className="text-xs">活动</span>
+              </div>
             </NavLink>
             <NavLink
               to="/community"
@@ -68,7 +76,10 @@ const AppContent = () => {
                 `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
               }
             >
-              社区
+              <div className="flex flex-col items-center">
+                <Icon name="community" size="lg" className="mb-1" />
+                <span className="text-xs">社区</span>
+              </div>
             </NavLink>
             <NavLink
               to="/exchange"
@@ -76,7 +87,10 @@ const AppContent = () => {
                 `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
               }
             >
-              二手
+              <div className="flex flex-col items-center">
+                <Icon name="exchange" size="lg" className="mb-1" />
+                <span className="text-xs">二手</span>
+              </div>
             </NavLink>
             <NavLink
               to="/profile"
@@ -84,7 +98,10 @@ const AppContent = () => {
                 `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
               }
             >
-              我的
+              <div className="flex flex-col items-center">
+                <Icon name="profile" size="lg" className="mb-1" />
+                <span className="text-xs">我的</span>
+              </div>
             </NavLink>
           </div>
         </div>
@@ -99,6 +116,18 @@ const AppContent = () => {
               className="bg-gray-800 text-white px-3 py-1 rounded text-xs hover:bg-gray-700 transition-colors"
             >
               组件
+            </NavLink>
+            <NavLink
+              to="/test/navigation-demo"
+              className="bg-indigo-600 text-white px-3 py-1 rounded text-xs hover:bg-indigo-700 transition-colors"
+            >
+              导航演示
+            </NavLink>
+            <NavLink
+              to="/test/icon-showcase"
+              className="bg-rose-600 text-white px-3 py-1 rounded text-xs hover:bg-rose-700 transition-colors"
+            >
+              图标展示
             </NavLink>
             <NavLink
               to="/test/user-navigation"
@@ -116,13 +145,13 @@ const AppContent = () => {
               to="/test/user-card"
               className="bg-green-500 text-white px-3 py-1 rounded text-xs hover:bg-green-600 transition-colors"
             >
-              用户卡片测试
+              用户卡片
             </NavLink>
             <NavLink
               to="/test/chat"
               className="bg-purple-500 text-white px-3 py-1 rounded text-xs hover:bg-purple-600 transition-colors"
             >
-              聊天功能测试
+              聊天功能
             </NavLink>
           </div>
         )}

@@ -36,6 +36,10 @@ const OrderDetailPage = lazy(
 const UserCardTest = lazy(() => import("@/pages/UserCardTest"));
 const UserNavigationTest = lazy(() => import("@/pages/UserNavigationTest"));
 const ChatTestPage = lazy(() => import("@/pages/ChatTestPage"));
+const UserCardPopoverDemo = lazy(
+  () => import("@/examples/UserCardPopoverDemo")
+);
+const ButtonVariantsDemo = lazy(() => import("@/examples/ButtonVariantsDemo"));
 // 路由配置
 export const routes = [
   {
@@ -157,5 +161,13 @@ export const routes = [
   {
     path: "/test/icon-showcase",
     element: IconShowcase,
+  },
+  {
+    path: "/test/user-card-popover",
+    element: UserCardPopoverDemo,
+  },
+  {
+    path: "/test/button-variants",
+    element: ButtonVariantsDemo,
   },
 ];

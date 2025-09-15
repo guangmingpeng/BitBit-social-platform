@@ -36,6 +36,8 @@ const OrderDetailPage = lazy(
 const UserCardTest = lazy(() => import("@/pages/UserCardTest"));
 const UserNavigationTest = lazy(() => import("@/pages/UserNavigationTest"));
 const ChatTestPage = lazy(() => import("@/pages/ChatTestPage"));
+const ChatPage = lazy(() => import("@/pages/ChatPage"));
+const ChatDemo = lazy(() => import("@/pages/ChatDemo"));
 const UserCardPopoverDemo = lazy(
   () => import("@/examples/UserCardPopoverDemo")
 );
@@ -103,6 +105,10 @@ export const routes = [
     element: Notifications,
   },
   {
+    path: "/chat",
+    element: ChatPage,
+  },
+  {
     path: "/profile/edit",
     element: ProfileEdit,
   },
@@ -153,6 +159,10 @@ export const routes = [
   {
     path: "/test/chat",
     element: ChatTestPage,
+  },
+  {
+    path: "/test/chat-demo",
+    element: ChatDemo,
   },
   {
     path: "/test/navigation-demo",

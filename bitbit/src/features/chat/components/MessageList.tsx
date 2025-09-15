@@ -12,6 +12,10 @@ interface MessageListProps {
   hasMore?: boolean;
   onLoadMore?: () => void;
   lastReadMessageId?: string; // 最后阅读的消息ID
+  firstNewMessageId?: string; // 实时新消息的第一条消息ID
+  onScrollStateChange?: (isAtBottom: boolean) => void; // 滚动状态变化回调
+  shouldScrollToUnread?: boolean; // 是否应该滚动到未读消息
+  onScrollToUnreadComplete?: () => void; // 滚动到未读消息完成的回调
   className?: string;
 }
 
@@ -23,12 +27,19 @@ const MessageList: React.FC<MessageListProps> = ({
   hasMore = false,
   onLoadMore,
   lastReadMessageId,
+  firstNewMessageId,
+  onScrollStateChange,
+  shouldScrollToUnread,
+  onScrollToUnreadComplete,
   className,
 }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const lastMessageRef = useRef<HTMLDivElement>(null);
+  const firstUnreadMessageRef = useRef<HTMLDivElement>(null);
+  const firstNewMessageRef = useRef<HTMLDivElement>(null); // 实时新消息的ref
   const isUserScrolling = useRef(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hasScrolledToUnread = useRef(false);
 
   // 自动滚动到底部
   const scrollToBottom = useCallback((force = false) => {
@@ -46,11 +57,85 @@ const MessageList: React.FC<MessageListProps> = ({
     }
   }, []);
 
+  // 滚动到第一条未读消息
+  const scrollToFirstUnreadMessage = useCallback(() => {
+    if (!firstUnreadMessageRef.current || !scrollContainerRef.current) return;
+
+    // 使用更精确的滚动位置计算
+    const container = scrollContainerRef.current;
+    const firstUnreadElement = firstUnreadMessageRef.current;
+
+    const containerRect = container.getBoundingClientRect();
+    const elementRect = firstUnreadElement.getBoundingClientRect();
+
+    // 计算元素相对于容器的位置
+    const elementTop =
+      elementRect.top - containerRect.top + container.scrollTop;
+
+    // 滚动到元素位置，留出一些顶部边距让分隔线更明显
+    const offsetTop = Math.max(0, elementTop - 100);
+
+    container.scrollTo({
+      top: offsetTop,
+      behavior: "smooth",
+    });
+
+    hasScrolledToUnread.current = true;
+  }, []);
+
+  // 滚动到第一条实时新消息
+  const scrollToFirstNewMessage = useCallback(() => {
+    if (!firstNewMessageRef.current || !scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const firstNewElement = firstNewMessageRef.current;
+
+    const containerRect = container.getBoundingClientRect();
+    const elementRect = firstNewElement.getBoundingClientRect();
+
+    // 计算元素相对于容器的位置
+    const elementTop =
+      elementRect.top - containerRect.top + container.scrollTop;
+
+    // 滚动到元素位置，留出一些顶部边距
+    const offsetTop = Math.max(0, elementTop - 100);
+
+    console.log("🎯 滚动到实时新消息位置:", {
+      elementTop,
+      offsetTop,
+      firstNewMessageId,
+    });
+
+    container.scrollTo({
+      top: offsetTop,
+      behavior: "smooth",
+    });
+  }, [firstNewMessageId]);
+
+  // 智能滚动：根据未读消息状态决定滚动位置
+  const smartScroll = useCallback(() => {
+    // 如果没有未读消息，滚动到底部
+    if (!lastReadMessageId) {
+      setTimeout(() => {
+        scrollToBottom(true);
+      }, 100);
+      return;
+    }
+
+    // 如果有未读消息且还没滚动过，滚动到第一条未读消息
+    if (!hasScrolledToUnread.current) {
+      setTimeout(() => {
+        scrollToFirstUnreadMessage();
+      }, 200); // 稍微延长延迟确保DOM完全渲染
+    }
+  }, [lastReadMessageId, scrollToBottom, scrollToFirstUnreadMessage]);
+
   // 处理滚动事件
   const handleScroll = useCallback(() => {
     if (!scrollContainerRef.current) return;
 
-    const { scrollTop } = scrollContainerRef.current;
+    const { scrollTop, scrollHeight, clientHeight } =
+      scrollContainerRef.current;
 
     // 检测用户是否在滚动
     isUserScrolling.current = true;
@@ -69,7 +154,20 @@ const MessageList: React.FC<MessageListProps> = ({
     if (scrollTop === 0 && hasMore && onLoadMore && !isLoading) {
       onLoadMore();
     }
-  }, [hasMore, onLoadMore, isLoading]);
+
+    // 检测用户是否在底部
+    const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
+    console.log("📊 滚动状态检测:", {
+      scrollTop,
+      scrollHeight,
+      clientHeight,
+      isAtBottom,
+      threshold: scrollHeight - scrollTop - clientHeight,
+    });
+    if (onScrollStateChange) {
+      onScrollStateChange(isAtBottom);
+    }
+  }, [hasMore, onLoadMore, isLoading, onScrollStateChange]);
 
   // 新消息时自动滚动到底部
   useEffect(() => {
@@ -84,30 +182,68 @@ const MessageList: React.FC<MessageListProps> = ({
     }
   }, [messages, currentUserId, scrollToBottom]);
 
-  // 组件挂载时滚动到底部
+  // 组件挂载时或会话切换时智能滚动
   useEffect(() => {
-    scrollToBottom(true);
-  }, [scrollToBottom]);
+    // 重置滚动状态
+    hasScrolledToUnread.current = false;
+    smartScroll();
+  }, [smartScroll, lastReadMessageId]);
+
+  // 处理滚动到未读消息的触发
+  useEffect(() => {
+    if (shouldScrollToUnread) {
+      console.log("🔥 触发滚动 [详细]:", {
+        shouldScrollToUnread,
+        firstNewMessageId,
+        hasFirstNewMessageRef: !!firstNewMessageRef.current,
+        hasFirstUnreadMessageRef: !!firstUnreadMessageRef.current,
+        messages: messages.map((m) => ({
+          id: m.id,
+          content: m.content.slice(0, 20),
+        })),
+      });
+
+      // 如果有实时新消息ID，优先滚动到实时新消息
+      if (firstNewMessageId && firstNewMessageRef.current) {
+        console.log("🎯 滚动到实时新消息:", firstNewMessageId);
+        console.log("🎯 实时新消息元素存在:", !!firstNewMessageRef.current);
+        scrollToFirstNewMessage();
+      } else if (firstUnreadMessageRef.current) {
+        console.log("🎯 滚动到历史未读消息");
+        scrollToFirstUnreadMessage();
+      } else {
+        console.log("❌ 没有找到可滚动的目标元素");
+      }
+      onScrollToUnreadComplete?.();
+    }
+  }, [
+    shouldScrollToUnread,
+    firstNewMessageId,
+    messages,
+    onScrollToUnreadComplete,
+    scrollToFirstNewMessage,
+    scrollToFirstUnreadMessage,
+  ]);
+
+  // 当lastReadMessageId改变时重置滚动状态
+  useEffect(() => {
+    hasScrolledToUnread.current = false;
+  }, [lastReadMessageId]);
+
+  // 组件卸载时清理定时器
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // 判断是否应该显示头像
-  const shouldShowAvatar = useCallback(
-    (message: Message, index: number) => {
-      if (index === 0) return true;
-
-      const prevMessage = messages[index - 1];
-      if (!prevMessage) return true;
-
-      // 如果发送者不同，显示头像
-      if (prevMessage.senderId !== message.senderId) return true;
-
-      // 如果时间间隔超过5分钟，显示头像
-      const timeDiff =
-        new Date(message.timestamp).getTime() -
-        new Date(prevMessage.timestamp).getTime();
-      return timeDiff > 5 * 60 * 1000; // 5分钟
-    },
-    [messages]
-  );
+  const shouldShowAvatar = useCallback(() => {
+    // 总是显示头像
+    return true;
+  }, []);
 
   // 判断是否应该显示时间戳
   const shouldShowTimestamp = useCallback(
@@ -203,7 +339,7 @@ const MessageList: React.FC<MessageListProps> = ({
     <div
       ref={scrollContainerRef}
       onScroll={handleScroll}
-      className={cn("flex-1 overflow-y-auto scroll-smooth", className)}
+      className={cn("overflow-y-auto scroll-smooth", className)}
     >
       {/* 加载更多指示器 */}
       {isLoading && (
@@ -234,12 +370,59 @@ const MessageList: React.FC<MessageListProps> = ({
             }
 
             // 检查是否需要显示新消息分隔线
-            // 只有在不是当前用户发送的消息时才显示新消息分隔线
-            const showNewMessagesDivider =
-              lastReadMessageId &&
-              globalIndex > 0 &&
-              messages[globalIndex - 1].id === lastReadMessageId &&
-              message.senderId !== currentUserId; // 自己发的消息不显示新消息分隔线
+            // 只在第一个未读的非自己消息前显示一次
+            const showNewMessagesDivider = (() => {
+              if (!lastReadMessageId) return false;
+
+              // 如果当前消息是自己发送的，不显示分隔线
+              if (message.senderId === currentUserId) return false;
+
+              // 找到最后阅读消息的索引
+              const lastReadIndex = messages.findIndex(
+                (m) => m.id === lastReadMessageId
+              );
+
+              if (lastReadIndex === -1) return false;
+
+              // 找到第一条未读的非自己消息
+              let firstUnreadNonSelfIndex = -1;
+              for (let i = lastReadIndex + 1; i < messages.length; i++) {
+                if (messages[i].senderId !== currentUserId) {
+                  firstUnreadNonSelfIndex = i;
+                  break;
+                }
+              }
+
+              const shouldShow = globalIndex === firstUnreadNonSelfIndex;
+
+              if (shouldShow) {
+                console.log(
+                  `🔹 显示未读分隔线在消息: ${message.content.slice(0, 20)}...`
+                );
+              }
+
+              return shouldShow;
+            })();
+
+            // 判断是否是第一条未读的非自己消息（用于滚动定位）
+            const isFirstUnreadMessage = (() => {
+              if (!lastReadMessageId) return false;
+              if (message.senderId === currentUserId) return false;
+
+              const lastReadIndex = messages.findIndex(
+                (m) => m.id === lastReadMessageId
+              );
+              if (lastReadIndex === -1) return false;
+
+              // 找到第一条未读的非自己消息
+              for (let i = lastReadIndex + 1; i < messages.length; i++) {
+                if (messages[i].senderId !== currentUserId) {
+                  return globalIndex === i;
+                }
+              }
+
+              return false;
+            })();
 
             return (
               <div key={message.id}>
@@ -271,17 +454,40 @@ const MessageList: React.FC<MessageListProps> = ({
                 )}
 
                 <div
-                  ref={
-                    globalIndex === messages.length - 1
-                      ? lastMessageRef
-                      : undefined
-                  }
+                  ref={(() => {
+                    let refToUse = undefined;
+                    let refType = "none";
+
+                    if (message.id === firstNewMessageId) {
+                      refToUse = firstNewMessageRef;
+                      refType = "firstNewMessage";
+                    } else if (isFirstUnreadMessage) {
+                      refToUse = firstUnreadMessageRef;
+                      refType = "firstUnread";
+                    } else if (globalIndex === messages.length - 1) {
+                      refToUse = lastMessageRef;
+                      refType = "lastMessage";
+                    }
+
+                    if (refToUse) {
+                      console.log("📌 分配ref:", {
+                        messageId: message.id,
+                        content: message.content.slice(0, 20),
+                        refType,
+                        firstNewMessageId,
+                        isFirstUnreadMessage,
+                        isLastMessage: globalIndex === messages.length - 1,
+                      });
+                    }
+
+                    return refToUse;
+                  })()}
                 >
                   <MessageBubble
                     message={message}
                     sender={sender}
                     isOwn={isOwn}
-                    showAvatar={shouldShowAvatar(message, globalIndex)}
+                    showAvatar={shouldShowAvatar()}
                     showTimestamp={shouldShowTimestamp(message, globalIndex)}
                   />
                 </div>

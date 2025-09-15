@@ -80,7 +80,7 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
     >
       <UserCardPopover
         user={convertUserForPopover(participant.user)}
-        placement="right"
+        placement="left"
         onFollow={() => console.log("Follow user:", participant.userId)}
         onMessage={() => console.log("Message user:", participant.userId)}
         onViewProfile={() => console.log("View profile:", participant.userId)}

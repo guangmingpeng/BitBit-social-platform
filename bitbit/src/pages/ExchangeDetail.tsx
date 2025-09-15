@@ -13,6 +13,7 @@ import {
 } from "@/components/ui";
 import { FloatingBackButton } from "@/components/common";
 import { ExchangeCard } from "@/features/exchange";
+import { navigateToChatFromExchange } from "@/features/chat/utils";
 import { cn } from "@/shared/utils/cn";
 import {
   getExchangeItemById,
@@ -104,7 +105,24 @@ const ExchangeDetail: FC = () => {
   };
 
   const handleContact = () => {
-    setShowPurchaseModal(true);
+    if (exchangeItem) {
+      // 导航到聊天页面
+      // 临时生成seller ID，实际应该从数据中获取
+      const sellerId = `seller-${exchangeItem.id}`;
+
+      navigateToChatFromExchange(
+        navigate,
+        sellerId,
+        {
+          name: exchangeItem.seller.name,
+          avatar: exchangeItem.seller.avatar,
+        },
+        {
+          id: exchangeItem.id,
+          title: exchangeItem.title,
+        }
+      );
+    }
   };
 
   const handleExchange = () => {

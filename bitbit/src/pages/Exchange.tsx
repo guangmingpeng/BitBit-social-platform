@@ -9,6 +9,7 @@ import {
   PurchaseModal,
 } from "@/components/ui";
 import { ExchangeCard } from "@/features/exchange";
+import { navigateToChatFromExchange } from "@/features/chat/utils";
 import { useNavigationFilters } from "@/shared/hooks/useNavigationStore";
 import {
   getAllExchangeItems,
@@ -98,6 +99,23 @@ const Exchange: FC = () => {
   };
 
   const exchangeItems = getFilteredItems();
+
+  // 处理联系卖家
+  const handleContact = (item: (typeof exchangeItems)[0]) => {
+    const sellerId = `seller-${item.id}`;
+    navigateToChatFromExchange(
+      navigate,
+      sellerId,
+      {
+        name: item.seller.name,
+        avatar: item.seller.avatar,
+      },
+      {
+        id: item.id,
+        title: item.title,
+      }
+    );
+  };
 
   // 处理交换
   const handleExchange = (item: (typeof exchangeItems)[0]) => {
@@ -291,6 +309,7 @@ const Exchange: FC = () => {
               layout={layout}
               onClick={() => navigate(`/exchange/${item.id}`)}
               onExchange={() => handleExchange(item)}
+              onContact={() => handleContact(item)}
               onLike={() => console.log(`收藏商品: ${item.title}`)}
             />
           ))

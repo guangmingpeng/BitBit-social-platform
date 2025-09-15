@@ -1,5 +1,10 @@
-// Chat utilities will be exported here when implemented
-// Example: export { formatMessageTime } from './timeUtils';
-// Example: export { validateMessage } from './validation';
-
-export {};
+// Chat utilities
+export {
+  navigateToChat,
+  navigateToChatFromUserCard,
+  navigateToChatFromExchange,
+  navigateToChatFromNotification,
+  navigateToChatFromActivity,
+  parseChatUrlParams,
+  type ChatNavigationParams,
+} from "./navigation";

@@ -12,6 +12,7 @@ export interface Message {
   replyTo?: string; // 回复的消息ID
   attachments?: MessageAttachment[];
   reactions?: MessageReaction[];
+  imageUrl?: string; // 图片消息的URL
 }
 
 export type MessageType = "text" | "image" | "file" | "system";
@@ -54,6 +55,7 @@ export interface Conversation {
   description?: string; // 群聊描述
   isArchived: boolean;
   isMuted: boolean;
+  isPinned?: boolean; // 是否置顶
   settings: ConversationSettings;
 }
 

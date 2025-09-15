@@ -157,10 +157,25 @@ export const useCommunityUsers = () => {
   );
 
   // 发送私信
-  const sendMessage = useCallback(async (userId: string) => {
-    console.log("发送私信给用户:", userId);
-    // 这里可以打开私信对话框或跳转到消息页面
-  }, []);
+  const sendMessage = useCallback(
+    async (userId: string) => {
+      console.log("发送私信给用户:", userId);
+
+      // 找到对应的用户信息
+      const user = users.find((u) => u.id === userId);
+      if (user) {
+        // 使用聊天导航工具函数
+        const { navigateToChatFromUserCard } = await import(
+          "@/features/chat/utils"
+        );
+        navigateToChatFromUserCard(navigate, userId, {
+          name: user.name,
+          avatar: user.avatar,
+        });
+      }
+    },
+    [users, navigate]
+  );
 
   // 查看用户资料
   const viewProfile = useCallback(

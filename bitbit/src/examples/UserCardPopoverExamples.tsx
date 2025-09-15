@@ -32,41 +32,69 @@ export const BasicExample = () => {
 
   const handleMessage = (userId: string) => {
     console.log("发送私信:", userId);
+    // 注意：如果传递了onMessage回调，会阻止默认的聊天导航
+    // 如果要测试真实导航，可以注释掉这个回调或移除onMessage prop
   };
 
   const handleViewProfile = (userId: string) => {
     console.log("查看资料:", userId);
   };
 
+  // 为了测试真实的聊天导航，我们提供两个版本的UserCardPopover
   return (
-    <div className="p-4">
-      <h3 className="mb-4">悬浮在头像上查看详细信息：</h3>
-
-      <UserCardPopover
-        user={exampleUser}
-        placement="right"
-        onFollow={handleFollow}
-        onMessage={handleMessage}
-        onViewProfile={handleViewProfile}
-      >
-        <div className="inline-flex items-center gap-2 p-2 border rounded-lg cursor-pointer hover:bg-gray-50">
-          <img
-            src={exampleUser.avatar}
-            alt={exampleUser.name}
-            className="w-10 h-10 rounded-full"
-          />
-          <div>
-            <div className="font-medium">{exampleUser.name}</div>
-            <div className="text-sm text-gray-500">
-              {exampleUser.profession}
+    <div className="p-4 space-y-8">
+      <div>
+        <h3 className="mb-4">版本1: 带自定义回调（仅输出日志）：</h3>
+        <UserCardPopover
+          user={exampleUser}
+          placement="right"
+          onFollow={handleFollow}
+          onMessage={handleMessage}
+          onViewProfile={handleViewProfile}
+        >
+          <div className="inline-flex items-center gap-2 p-2 border rounded-lg cursor-pointer hover:bg-gray-50">
+            <img
+              src={exampleUser.avatar}
+              alt={exampleUser.name}
+              className="w-10 h-10 rounded-full"
+            />
+            <div>
+              <div className="font-medium">{exampleUser.name}</div>
+              <div className="text-sm text-gray-500">
+                {exampleUser.profession}
+              </div>
             </div>
           </div>
-        </div>
-      </UserCardPopover>
+        </UserCardPopover>
+      </div>
+
+      <div>
+        <h3 className="mb-4">版本2: 默认聊天导航（真实跳转）：</h3>
+        <UserCardPopover
+          user={exampleUser}
+          placement="right"
+          onFollow={handleFollow}
+          // 不传onMessage，使用默认导航
+          onViewProfile={handleViewProfile}
+        >
+          <div className="inline-flex items-center gap-2 p-2 border rounded-lg cursor-pointer hover:bg-gray-50">
+            <img
+              src={exampleUser.avatar}
+              alt={exampleUser.name}
+              className="w-10 h-10 rounded-full"
+            />
+            <div>
+              <div className="font-medium">{exampleUser.name}</div>
+              <div className="text-sm text-gray-500">
+                {exampleUser.profession}
+              </div>
+            </div>
+          </div>
+        </UserCardPopover>
+      </div>
     </div>
   );
 };
-
 // 列表中使用示例
 export const ListExample = () => {
   const users = [exampleUser /* 更多用户... */];

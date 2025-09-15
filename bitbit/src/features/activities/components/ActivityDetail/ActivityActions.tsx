@@ -9,6 +9,7 @@ interface ActivityActionsProps {
   onLeave?: () => void;
   onComment?: () => void;
   onCreateSimilar?: () => void;
+  onJoinChat?: () => void; // 新增聊天群功能
 }
 
 const ActivityActions: FC<ActivityActionsProps> = ({
@@ -17,6 +18,7 @@ const ActivityActions: FC<ActivityActionsProps> = ({
   onLeave,
   onComment,
   onCreateSimilar,
+  onJoinChat,
 }) => {
   const participationInfo = getActivityParticipationInfo(activity);
   const { ended, isOrganizer, canJoin, canLeave, statusText, isJoined } =
@@ -32,6 +34,17 @@ const ActivityActions: FC<ActivityActionsProps> = ({
         >
           <Icon name="comment" size="md" />
         </button>
+
+        {/* 聊天群按钮 - 只有参与者可以加入 */}
+        {(isJoined || isOrganizer) && (
+          <button
+            className="w-12 h-12 rounded-lg border-2 border-green-300 bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 hover:border-green-400 transition-all duration-200 shadow-sm"
+            onClick={onJoinChat}
+            title="加入活动群聊"
+          >
+            <Icon name="comment" size="md" />
+          </button>
+        )}
 
         {/* 根据活动状态和用户身份显示不同的按钮 */}
         {ended ? (

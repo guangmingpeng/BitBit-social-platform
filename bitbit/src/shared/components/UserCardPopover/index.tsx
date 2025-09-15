@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui";
+import { navigateToChatFromUserCard } from "@/features/chat/utils";
 
 // 通用用户信息接口
 export interface UserInfo {
@@ -48,6 +50,7 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
   onViewProfile,
   className = "",
 }) => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -137,6 +140,11 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
   const handleMessage = () => {
     if (onMessage) {
       onMessage(user.id);
+    } else {
+      navigateToChatFromUserCard(navigate, user.id, {
+        name: user.name,
+        avatar: user.avatar,
+      });
     }
   };
 
@@ -254,6 +262,10 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
       }}
       onMouseEnter={handlePopoverMouseEnter}
       onMouseLeave={handlePopoverMouseLeave}
+      onClick={(e) => {
+        // 阻止popover内的点击关闭popover
+        e.stopPropagation();
+      }}
     >
       {/* 头部区域 - 头像和基本信息 */}
       <div className="p-4 pb-3 border-b border-gray-100">
@@ -418,64 +430,11 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
             </div>
           )}
         </div>
-        {/* 操作按钮区域 - 优化为更优雅的次要操作 */}
+        {/* 操作按钮区域 - 默认显示两个按钮：查看主页 + 发私信 */}
         {showActions && (
           <div className="flex-shrink-0 p-4 pt-3 border-t border-gray-100">
-            {onMessage ? (
-              /* 有私信功能时，使用两列布局 */
-              <div className="grid grid-cols-2 gap-3">
-                {/* 查看主页按钮 - 使用secondary作为默认高亮 */}
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={handleViewProfile}
-                  leftIcon={
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  }
-                  fullWidth
-                >
-                  查看主页
-                </Button>
-
-                {/* 私信按钮 - 使用outline作为次要操作 */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleMessage}
-                  leftIcon={
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"
-                      />
-                    </svg>
-                  }
-                  fullWidth
-                >
-                  发私信
-                </Button>
-              </div>
-            ) : (
-              /* 没有私信功能时，查看主页按钮占满宽度 - 使用secondary高亮 */
+            <div className="grid grid-cols-2 gap-3">
+              {/* 查看主页按钮 - 使用secondary作为默认高亮 */}
               <Button
                 variant="secondary"
                 size="sm"
@@ -499,7 +458,32 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
               >
                 查看主页
               </Button>
-            )}
+
+              {/* 私信按钮 - 使用outline作为次要操作 */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleMessage}
+                leftIcon={
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"
+                    />
+                  </svg>
+                }
+                fullWidth
+              >
+                发私信
+              </Button>
+            </div>
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/shared/utils/cn";
+import { navigateToChatFromNotification } from "@/features/chat/utils";
 import type { Notification } from "../types";
 
 interface NotificationItemProps {
@@ -33,6 +34,30 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     // 如果未读，先标记为已读
     if (!notification.isRead) {
       onMarkAsRead(notification.id);
+    }
+
+    // 特殊处理消息类型的通知
+    if (notification.type === "message" && notification.actionUrl) {
+      // 从actionUrl中提取用户信息
+      const chatUserMatch = notification.actionUrl.match(
+        /\/messages\/chat\/(.+)/
+      );
+      if (chatUserMatch) {
+        const userId = chatUserMatch[1];
+        // 从通知内容中解析用户名（格式：用户名: 消息内容）
+        const userNameMatch = notification.content.match(/^([^:]+):/);
+        const userName = userNameMatch ? userNameMatch[1] : userId;
+
+        navigateToChatFromNotification(navigate, {
+          userId,
+          userName,
+          userAvatar: notification.avatar?.startsWith("http")
+            ? notification.avatar
+            : undefined,
+          type: "private",
+        });
+        return;
+      }
     }
 
     // 如果有跳转链接，进行导航

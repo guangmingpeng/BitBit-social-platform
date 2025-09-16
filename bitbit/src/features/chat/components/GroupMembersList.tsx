@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import type {
   ConversationParticipant,
   ParticipantRole,
@@ -13,6 +13,8 @@ interface GroupMemberItemProps {
   isAdmin: boolean;
   onRoleChange?: (userId: string, newRole: ParticipantRole) => void;
   onRemoveMember?: (userId: string) => void;
+  showActions: boolean;
+  onToggleActions: () => void;
   className?: string;
 }
 
@@ -22,11 +24,71 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
   isAdmin,
   onRoleChange,
   onRemoveMember,
+  showActions,
+  onToggleActions,
   className,
 }) => {
-  const [showActions, setShowActions] = useState(false);
   const isCurrentUser = participant.userId === currentUserId;
   const canManage = isAdmin && !isCurrentUser;
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const [menuPosition, setMenuPosition] = useState<"bottom" | "top">("bottom");
+
+  // 检测菜单应该显示的位置
+  const checkMenuPosition = () => {
+    if (!menuButtonRef.current) return;
+
+    const buttonRect = menuButtonRef.current.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const menuHeight = 120; // 预估菜单高度
+    const spaceBelow = viewportHeight - buttonRect.bottom;
+    const spaceAbove = buttonRect.top;
+
+    // 同时考虑容器滚动区域
+    const container = menuButtonRef.current.closest(".max-h-80");
+    if (container) {
+      const containerRect = container.getBoundingClientRect();
+      const spaceBelowInContainer = containerRect.bottom - buttonRect.bottom;
+      const spaceAboveInContainer = buttonRect.top - containerRect.top;
+
+      // 优先考虑容器内空间，如果容器内空间不足则考虑视口空间
+      if (
+        spaceBelowInContainer < menuHeight &&
+        spaceAboveInContainer > menuHeight
+      ) {
+        setMenuPosition("top");
+      } else if (spaceBelow < menuHeight && spaceAbove > menuHeight) {
+        setMenuPosition("top");
+      } else {
+        setMenuPosition("bottom");
+      }
+    } else {
+      // 如果下方空间不足且上方空间充足，则向上显示
+      if (spaceBelow < menuHeight && spaceAbove > menuHeight) {
+        setMenuPosition("top");
+      } else {
+        setMenuPosition("bottom");
+      }
+    }
+  };
+
+  // 当菜单显示时检测位置
+  useEffect(() => {
+    if (showActions) {
+      checkMenuPosition();
+
+      // 监听窗口大小变化和滚动事件，重新计算位置
+      const handleResize = () => checkMenuPosition();
+      const handleScroll = () => checkMenuPosition();
+
+      window.addEventListener("resize", handleResize);
+      window.addEventListener("scroll", handleScroll, true);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        window.removeEventListener("scroll", handleScroll, true);
+      };
+    }
+  }, [showActions]);
 
   const getDisplayName = (user: User) => {
     return user.name || user.username || user.email.split("@")[0];
@@ -140,7 +202,8 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
       {canManage && (
         <div className="relative">
           <button
-            onClick={() => setShowActions(!showActions)}
+            ref={menuButtonRef}
+            onClick={onToggleActions}
             className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -149,12 +212,20 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
           </button>
 
           {showActions && (
-            <div className="absolute right-0 top-8 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-10 min-w-[120px]">
+            <div
+              className={cn(
+                "absolute right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[120px]",
+                "z-[100] animate-in fade-in-0 zoom-in-95 duration-200", // 添加进入动画
+                menuPosition === "top"
+                  ? "bottom-8 slide-in-from-bottom-2"
+                  : "top-8 slide-in-from-top-2"
+              )}
+            >
               {participant.role === "member" && onRoleChange && (
                 <button
                   onClick={() => {
                     onRoleChange(participant.userId, "admin");
-                    setShowActions(false);
+                    onToggleActions();
                   }}
                   className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                 >
@@ -165,7 +236,7 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
                 <button
                   onClick={() => {
                     onRoleChange(participant.userId, "member");
-                    setShowActions(false);
+                    onToggleActions();
                   }}
                   className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                 >
@@ -176,7 +247,7 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
                 <button
                   onClick={() => {
                     onRemoveMember(participant.userId);
-                    setShowActions(false);
+                    onToggleActions();
                   }}
                   className="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50"
                 >
@@ -208,6 +279,9 @@ const GroupMembersList: React.FC<GroupMembersListProps> = ({
   onInviteMembers,
   className,
 }) => {
+  const [activeMenuUserId, setActiveMenuUserId] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const currentUser = participants.find((p) => p.userId === currentUserId);
   const isAdmin =
     currentUser?.role === "admin" || currentUser?.role === "owner";
@@ -218,8 +292,31 @@ const GroupMembersList: React.FC<GroupMembersListProps> = ({
     return roleOrder[a.role] - roleOrder[b.role];
   });
 
+  const handleToggleActions = (userId: string) => {
+    setActiveMenuUserId(activeMenuUserId === userId ? null : userId);
+  };
+
+  // 点击外部区域关闭菜单
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setActiveMenuUserId(null);
+      }
+    };
+
+    if (activeMenuUserId) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [activeMenuUserId]);
+
   return (
-    <div className={cn("bg-white rounded-lg", className)}>
+    <div ref={containerRef} className={cn("bg-white rounded-lg", className)}>
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <h3 className="text-lg font-medium text-gray-900">
           群成员 ({participants.length})
@@ -256,6 +353,8 @@ const GroupMembersList: React.FC<GroupMembersListProps> = ({
             isAdmin={isAdmin}
             onRoleChange={onRoleChange}
             onRemoveMember={onRemoveMember}
+            showActions={activeMenuUserId === participant.userId}
+            onToggleActions={() => handleToggleActions(participant.userId)}
           />
         ))}
       </div>

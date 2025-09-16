@@ -11,6 +11,7 @@ import Header from "@/components/layout/Header";
 import ComponentShowcase from "@/components/ComponentShowcase";
 import { devConfig } from "@/config/dev.config";
 import { Icon } from "@/components/ui";
+import Toast from "@/components/ui/Toast";
 import "./App.css";
 
 const Layout = () => {
@@ -162,6 +163,9 @@ const Layout = () => {
           )}
         </nav>
       )}
+      
+      {/* Toast组件 */}
+      <Toast />
     </div>
   );
 };

@@ -57,6 +57,10 @@ export interface Conversation {
   isMuted: boolean;
   isPinned?: boolean; // 是否置顶
   pinnedAt?: Date; // 置顶时间，用于排序
+  isDismissed?: boolean; // 群聊是否已解散
+  dismissedAt?: Date; // 解散时间
+  dismissedBy?: string; // 解散人的用户ID
+  activityId?: string; // 关联的活动ID（仅活动群聊）
   settings: ConversationSettings;
 }
 

@@ -8,6 +8,7 @@ export const mockConversations: Conversation[] = [
     title: "周末户外徒步活动",
     description: "一起去香山爬山，享受大自然的美好！适合所有水平的户外爱好者。",
     avatar: "https://picsum.photos/80/80?random=activity1",
+    activityId: "1", // 关联活动ID
     participants: [
       {
         userId: "1",
@@ -126,6 +127,7 @@ export const mockConversations: Conversation[] = [
     title: "周三瑜伽晨练",
     description: "每周三早上的瑜伽练习，适合初学者和有经验的练习者",
     avatar: "https://picsum.photos/80/80?random=activity2",
+    activityId: "3", // 关联活动ID
     participants: [
       {
         userId: "4",

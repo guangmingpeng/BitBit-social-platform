@@ -15,6 +15,7 @@ interface GroupMemberItemProps {
   onRemoveMember?: (userId: string) => void;
   showActions: boolean;
   onToggleActions: () => void;
+  isGroupDismissed?: boolean;
   className?: string;
 }
 
@@ -26,10 +27,11 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
   onRemoveMember,
   showActions,
   onToggleActions,
+  isGroupDismissed = false,
   className,
 }) => {
   const isCurrentUser = participant.userId === currentUserId;
-  const canManage = isAdmin && !isCurrentUser;
+  const canManage = isAdmin && !isCurrentUser && !isGroupDismissed;
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [menuPosition, setMenuPosition] = useState<"bottom" | "top">("bottom");
 
@@ -267,7 +269,7 @@ interface GroupMembersListProps {
   currentUserId: string;
   onRoleChange?: (userId: string, newRole: ParticipantRole) => void;
   onRemoveMember?: (userId: string) => void;
-  onInviteMembers?: () => void;
+  isGroupDismissed?: boolean;
   className?: string;
 }
 
@@ -276,7 +278,7 @@ const GroupMembersList: React.FC<GroupMembersListProps> = ({
   currentUserId,
   onRoleChange,
   onRemoveMember,
-  onInviteMembers,
+  isGroupDismissed = false,
   className,
 }) => {
   const [activeMenuUserId, setActiveMenuUserId] = useState<string | null>(null);
@@ -317,31 +319,10 @@ const GroupMembersList: React.FC<GroupMembersListProps> = ({
 
   return (
     <div ref={containerRef} className={cn("bg-white rounded-lg", className)}>
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
+      <div className="p-4 border-b border-gray-200">
         <h3 className="text-lg font-medium text-gray-900">
           群成员 ({participants.length})
         </h3>
-        {isAdmin && onInviteMembers && (
-          <button
-            onClick={onInviteMembers}
-            className="flex items-center gap-1 px-3 py-1.5 bg-primary-500 text-white text-sm rounded-lg hover:bg-primary-600 transition-colors"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-            邀请成员
-          </button>
-        )}
       </div>
 
       <div className="max-h-80 overflow-y-auto">
@@ -355,6 +336,7 @@ const GroupMembersList: React.FC<GroupMembersListProps> = ({
             onRemoveMember={onRemoveMember}
             showActions={activeMenuUserId === participant.userId}
             onToggleActions={() => handleToggleActions(participant.userId)}
+            isGroupDismissed={isGroupDismissed}
           />
         ))}
       </div>

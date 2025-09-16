@@ -7,6 +7,7 @@ interface UiState {
     show: boolean;
     message: string;
     type: "success" | "error" | "info" | "warning";
+    position?: { x: number; y: number };
   };
 }
 
@@ -17,6 +18,7 @@ const initialState: UiState = {
     show: false,
     message: "",
     type: "info",
+    position: undefined,
   },
 };
 

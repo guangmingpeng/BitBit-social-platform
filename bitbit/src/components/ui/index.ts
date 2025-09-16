@@ -18,6 +18,7 @@ export type { TagProps } from "./Tag/index";
 export { default as Icon } from "./Icon";
 export { default as Input } from "./Input";
 export type { InputProps } from "./Input/index";
+export { default as Toast } from "./Toast";
 
 export { default as DateTimePicker } from "./DateTimePicker";
 

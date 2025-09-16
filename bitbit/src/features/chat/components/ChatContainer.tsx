@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import ConversationList from "./ConversationList";
 import ChatHeader from "./ChatHeader";
 import ChatMain from "./ChatMain";
@@ -13,6 +14,8 @@ import UnreadMessagesBadge from "./UnreadMessagesBadge";
 import { useChatState } from "@/features/chat/hooks";
 import { mockUsers } from "@/features/chat/mock/users";
 import { cn } from "@/shared/utils/cn";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/store/slices/uiSlice";
 
 interface ChatContainerProps {
   className?: string;
@@ -35,6 +38,8 @@ export interface ChatContainerRef {
 const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
   ({ className }, ref) => {
     const currentUserId = "4"; // 当前用户是Diana
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     // 本地状态
     const [isUserAtBottom, setIsUserAtBottom] = useState(true);
@@ -76,6 +81,8 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       handleToggleNotifications,
       handleMemberRoleChange,
       handleRemoveMember,
+      handleDismissGroup,
+      handleClearChatHistory,
 
       // 会话管理方法
       handleTogglePin,
@@ -95,6 +102,72 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       setPresetMessage,
       switchToConversation,
     }));
+
+    // 处理查看活动详情
+    const handleViewActivityDetails = () => {
+      console.log("handleViewActivityDetails called in ChatContainer");
+      if (activeConversation?.activityId) {
+        console.log("Navigate with activityId:", activeConversation.activityId);
+
+        // 获取当前用户在当前群组的角色
+        const currentUserId = "1"; // 模拟当前用户ID
+        const currentParticipant = activeConversation.participants.find(
+          (p) => p.userId === currentUserId
+        );
+        const isCreator = currentParticipant?.role === "owner";
+
+        // 根据角色设置对应的状态
+        const userStatus = isCreator ? "organized" : "joined";
+
+        navigate(`/activities/${activeConversation.activityId}`, {
+          state: {
+            fromSource: "chat",
+            userStatus: userStatus,
+            returnToConversationId: activeConversation.id, // 添加返回会话ID
+          },
+        });
+      }
+    }; // 处理邀请参加活动
+    const handleInviteToActivity = useCallback(
+      (activityId: string, event?: React.MouseEvent) => {
+        console.log(
+          "handleInviteToActivity called with activityId:",
+          activityId
+        );
+        // 生成活动链接
+        const activityUrl = `${window.location.origin}/activities/${activityId}`;
+        console.log("Generated URL:", activityUrl);
+
+        // 获取点击位置
+        const clickPosition = event ? { x: event.clientX, y: event.clientY } : undefined;
+
+        // 复制到剪贴板
+        navigator.clipboard
+          .writeText(activityUrl)
+          .then(() => {
+            // 显示成功提示
+            dispatch(
+              showToast({
+                message: "活动链接已复制，去粘贴给好友吧！",
+                type: "success",
+                position: clickPosition,
+              })
+            );
+          })
+          .catch((error) => {
+            console.error("Clipboard write failed:", error);
+            // 如果复制失败，使用备用方案
+            dispatch(
+              showToast({
+                message: "复制失败，请手动分享活动链接",
+                type: "error",
+                position: clickPosition,
+              })
+            );
+          });
+      },
+      [dispatch]
+    );
 
     // 当用户滚动到底部时，清除新消息提示
     useEffect(() => {
@@ -323,6 +396,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
                       messages={getCurrentMessages()}
                       users={mockUsers}
                       currentUserId={currentUserId}
+                      conversation={activeConversation}
                       lastReadMessageId={lastReadMessageId || undefined}
                       firstNewMessageId={firstNewMessageId || undefined}
                       presetMessage={presetMessage}
@@ -378,7 +452,14 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
                             handleRemoveMember(activeConversation.id, userId)
                           }
                           onLeaveGroup={() => console.log("Leave group")}
-                          onDismissGroup={() => console.log("Dismiss group")}
+                          onDismissGroup={() =>
+                            handleDismissGroup(activeConversation.id)
+                          }
+                          onClearChatHistory={() =>
+                            handleClearChatHistory(activeConversation.id)
+                          }
+                          onViewActivityDetails={handleViewActivityDetails}
+                          onInviteToActivity={handleInviteToActivity}
                         />
                       </div>
                     )}

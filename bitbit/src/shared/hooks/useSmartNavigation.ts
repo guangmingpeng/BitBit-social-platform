@@ -171,6 +171,37 @@ export const useSmartNavigation = () => {
         return;
       }
 
+      // 处理从聊天群设置跳转的情况
+      if (fromSource === "chat") {
+        console.log("→ 从活动详情页返回聊天页面");
+        const returnToConversationId = location.state?.returnToConversationId;
+
+        if (returnToConversationId) {
+          console.log("→ 返回到指定会话:", returnToConversationId);
+          navigate("/chat", {
+            state: { conversationId: returnToConversationId },
+            replace: true,
+          });
+        } else {
+          // 从栈中查找聊天页面记录以获取原始参数
+          const chatEntry = stack
+            .slice()
+            .reverse()
+            .find((entry) => entry.pathname.startsWith("/chat"));
+
+          if (chatEntry && chatEntry.pathname !== "/chat") {
+            // 如果找到带参数的聊天页面，返回到该页面
+            console.log("→ 返回到带参数的聊天页面:", chatEntry.pathname);
+            navigate(chatEntry.pathname, { replace: true });
+          } else {
+            // 否则返回到通用聊天页面（这种情况可能仍会出错）
+            console.log("→ 返回到通用聊天页面");
+            navigate("/chat", { replace: true });
+          }
+        }
+        return;
+      }
+
       // 处理直接来源
       if (fromSource === "home") {
         console.log("→ 详情页直接返回首页");

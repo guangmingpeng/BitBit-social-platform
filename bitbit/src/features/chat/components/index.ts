@@ -18,6 +18,7 @@ export { default as ConversationListHeader } from "./ConversationListHeader";
 // 群聊相关组件
 export { default as GroupSettings } from "./GroupSettings";
 export { default as GroupMembersList } from "./GroupMembersList";
+export { default as GroupDismissedNotice } from "./GroupDismissedNotice";
 export { default as GroupChatHeader } from "./GroupChatHeader";
 export { default as CreateGroupChat } from "./CreateGroupChat";
 

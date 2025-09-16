@@ -67,6 +67,8 @@ export interface UseChatStateReturn {
     newRole: string
   ) => void;
   handleRemoveMember: (conversationId: string, userId: string) => void;
+  handleDismissGroup: (conversationId: string) => void;
+  handleClearChatHistory: (conversationId: string) => void;
 
   // 会话管理方法
   handleTogglePin: (conversationId: string) => void;
@@ -883,6 +885,53 @@ export function useChatState({
     []
   );
 
+  // 解散群聊
+  const handleDismissGroup = useCallback(
+    (conversationId: string) => {
+      setConversations((prev) =>
+        prev.map((conv) => {
+          if (conv.id === conversationId) {
+            return {
+              ...conv,
+              isDismissed: true,
+              dismissedAt: new Date(),
+              dismissedBy: currentUserId,
+            };
+          }
+          return conv;
+        })
+      );
+    },
+    [currentUserId]
+  );
+
+  // 清空聊天记录
+  const handleClearChatHistory = useCallback((conversationId: string) => {
+    // 删除该会话的所有消息
+    setMessages((prev) =>
+      prev.filter((message) => message.conversationId !== conversationId)
+    );
+
+    // 清空实时新消息
+    setRealtimeNewMessages((prev) =>
+      prev.filter((message) => message.conversationId !== conversationId)
+    );
+
+    // 更新会话的最后消息为undefined
+    setConversations((prev) =>
+      prev.map((conv) => {
+        if (conv.id === conversationId) {
+          return {
+            ...conv,
+            lastMessage: undefined,
+            unreadCount: 0,
+          };
+        }
+        return conv;
+      })
+    );
+  }, []);
+
   // 获取当前会话的消息
   const getCurrentMessages = useCallback(() => {
     return messages.filter((m) => m.conversationId === activeConversationId);
@@ -929,6 +978,8 @@ export function useChatState({
     handleToggleNotifications,
     handleMemberRoleChange,
     handleRemoveMember,
+    handleDismissGroup,
+    handleClearChatHistory,
 
     // 会话管理方法
     handleTogglePin,

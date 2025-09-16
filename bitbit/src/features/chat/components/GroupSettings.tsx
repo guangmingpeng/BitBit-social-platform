@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import type { Conversation } from "@/features/chat/types";
 import { Switch } from "@/components/ui/Switch";
-import UserCardPopover from "@/shared/components/UserCardPopover";
 import GroupMembersList from "./GroupMembersList";
+import { ConfirmClearDialog } from "@/components/common";
 import { cn } from "@/shared/utils/cn";
 
 interface GroupSettingsProps {
@@ -21,6 +21,12 @@ interface GroupSettingsProps {
   onRemoveMember?: (userId: string) => void;
   onLeaveGroup?: () => void;
   onDismissGroup?: () => void;
+  onClearChatHistory?: () => void;
+  onViewActivityDetails?: (
+    activityId: string,
+    userRole: "owner" | "admin" | "member"
+  ) => void;
+  onInviteToActivity?: (activityId: string, event?: React.MouseEvent) => void;
   className?: string;
 }
 
@@ -37,6 +43,9 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
   onRemoveMember,
   onLeaveGroup,
   onDismissGroup,
+  onClearChatHistory,
+  onViewActivityDetails,
+  onInviteToActivity,
   className,
 }) => {
   const [isEditingName, setIsEditingName] = useState(false);
@@ -45,6 +54,10 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
   const [newDescription, setNewDescription] = useState(
     conversation.description || ""
   );
+  const [showDismissDialog, setShowDismissDialog] = useState(false);
+  const [isDismissing, setIsDismissing] = useState(false);
+  const [showClearHistoryDialog, setShowClearHistoryDialog] = useState(false);
+  const [isClearing, setIsClearing] = useState(false);
 
   const currentUser = conversation.participants.find(
     (p) => p.userId === currentUserId
@@ -52,6 +65,9 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
   const isOwner = currentUser?.role === "owner";
   const isAdmin =
     currentUser?.role === "admin" || currentUser?.role === "owner";
+
+  // 检查群聊是否已解散
+  const isGroupDismissed = conversation.isDismissed;
 
   const handleNameSave = () => {
     if (newName.trim() && onUpdateGroupName) {
@@ -71,6 +87,71 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
     const file = event.target.files?.[0];
     if (file && onUpdateGroupAvatar) {
       onUpdateGroupAvatar(file);
+    }
+  };
+
+  const handleDismissGroup = () => {
+    setShowDismissDialog(true);
+  };
+
+  const handleConfirmDismiss = async () => {
+    setIsDismissing(true);
+    try {
+      if (onDismissGroup) {
+        await onDismissGroup();
+      }
+      setShowDismissDialog(false);
+    } catch (error) {
+      console.error("解散群聊失败:", error);
+    } finally {
+      setIsDismissing(false);
+    }
+  };
+
+  const handleCloseDismissDialog = () => {
+    if (!isDismissing) {
+      setShowDismissDialog(false);
+    }
+  };
+
+  const handleClearHistory = () => {
+    setShowClearHistoryDialog(true);
+  };
+
+  const handleConfirmClearHistory = async () => {
+    setIsClearing(true);
+    try {
+      if (onClearChatHistory) {
+        await onClearChatHistory();
+      }
+      setShowClearHistoryDialog(false);
+    } catch (error) {
+      console.error("清空聊天记录失败:", error);
+    } finally {
+      setIsClearing(false);
+    }
+  };
+
+  const handleCloseClearHistoryDialog = () => {
+    if (!isClearing) {
+      setShowClearHistoryDialog(false);
+    }
+  };
+
+  const handleViewActivityDetails = () => {
+    if (conversation.activityId && onViewActivityDetails) {
+      const userRole = currentUser?.role || "member";
+      onViewActivityDetails(conversation.activityId, userRole);
+    }
+  };
+
+  const handleInviteToActivity = (event: React.MouseEvent) => {
+    console.log("handleInviteToActivity called", {
+      activityId: conversation.activityId,
+      onInviteToActivity,
+    });
+    if (conversation.activityId && onInviteToActivity) {
+      onInviteToActivity(conversation.activityId, event);
     }
   };
 
@@ -112,7 +193,7 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
                 </div>
               )}
             </div>
-            {isAdmin && (
+            {isAdmin && !isGroupDismissed && (
               <label className="absolute bottom-0 right-0 w-6 h-6 bg-primary-500 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-primary-600 transition-colors">
                 <svg
                   className="w-3 h-3"
@@ -165,7 +246,7 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
                   <h2 className="text-xl font-semibold text-gray-900">
                     {conversation.title || "未命名群聊"}
                   </h2>
-                  {isAdmin && (
+                  {isAdmin && !isGroupDismissed && (
                     <button
                       onClick={() => setIsEditingName(true)}
                       className="p-1 text-gray-400 hover:text-gray-600"
@@ -232,7 +313,7 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
                   <p className="text-sm text-gray-400 italic">暂无群聊描述</p>
                 )}
               </div>
-              {isAdmin && (
+              {isAdmin && !isGroupDismissed && (
                 <button
                   onClick={() => setIsEditingDescription(true)}
                   className="p-1 text-gray-400 hover:text-gray-600"
@@ -258,7 +339,7 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
       </div>
 
       {/* 群设置选项 */}
-      {isAdmin && (
+      {isAdmin && !isGroupDismissed && (
         <div className="p-4 border-b border-gray-200">
           <h3 className="text-sm font-medium text-gray-900 mb-3">群聊设置</h3>
 
@@ -322,7 +403,7 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
           currentUserId={currentUserId}
           onRoleChange={onMemberRoleChange}
           onRemoveMember={onRemoveMember}
-          onInviteMembers={() => console.log("Invite members")}
+          isGroupDismissed={isGroupDismissed}
         />
       </div>
 
@@ -334,12 +415,12 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
           {/* 查看活动详情 - 仅活动群聊显示 */}
           {conversation.type === "activity" && (
             <button
-              onClick={() => console.log("View activity details")}
-              className="w-full px-4 py-3 text-left text-sm text-primary-700 hover:bg-primary-50 rounded-lg transition-colors border border-primary-200"
+              onClick={handleViewActivityDetails}
+              className="w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200"
             >
               <div className="flex items-center gap-3">
                 <svg
-                  className="w-4 h-4 text-primary-500"
+                  className="w-4 h-4 text-gray-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -353,7 +434,7 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
                 </svg>
                 <div>
                   <div className="font-medium">查看活动详情</div>
-                  <div className="text-xs text-primary-500">
+                  <div className="text-xs text-gray-500">
                     查看完整的活动信息和安排
                   </div>
                 </div>
@@ -363,7 +444,11 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
 
           {/* 分享群聊 */}
           <button
-            onClick={() => console.log("Share group")}
+            onClick={
+              conversation.type === "activity"
+                ? handleInviteToActivity
+                : () => console.log("Share group")
+            }
             className="w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200"
           >
             <div className="flex items-center gap-3">
@@ -425,7 +510,7 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
 
           {/* 清空聊天记录 */}
           <button
-            onClick={() => console.log("Clear chat history")}
+            onClick={handleClearHistory}
             className="w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200"
           >
             <div className="flex items-center gap-3">
@@ -479,9 +564,9 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
             </button>
           )}
 
-          {isOwner && onDismissGroup && (
+          {isOwner && onDismissGroup && !isGroupDismissed && (
             <button
-              onClick={onDismissGroup}
+              onClick={handleDismissGroup}
               className="w-full px-4 py-3 text-left text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-200"
             >
               <div className="flex items-center gap-3">
@@ -505,8 +590,81 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
               </div>
             </button>
           )}
+
+          {/* 已解散群聊状态显示 */}
+          {isGroupDismissed && (
+            <div className="w-full px-4 py-3 bg-gray-50 rounded-lg border border-gray-200">
+              <div className="flex items-center gap-3">
+                <svg
+                  className="w-5 h-5 text-gray-500 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900">群聊已解散</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {conversation.dismissedAt && (
+                      <>
+                        解散时间：
+                        {new Date(conversation.dismissedAt).toLocaleString(
+                          "zh-CN"
+                        )}
+                        {conversation.dismissedBy && (
+                          <span className="ml-2">
+                            解散人：
+                            {conversation.participants.find(
+                              (p) => p.userId === conversation.dismissedBy
+                            )?.user.username || "未知用户"}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    聊天记录已保留，但无法再进行群聊管理操作
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* 解散群聊确认弹窗 */}
+      <ConfirmClearDialog
+        isOpen={showDismissDialog}
+        onClose={handleCloseDismissDialog}
+        onConfirm={handleConfirmDismiss}
+        title="确认解散群聊"
+        content={`您确定要解散群聊"${
+          conversation.title || "未命名群聊"
+        }"吗？解散后，所有成员将无法再发送消息，但聊天记录会被保留。此操作不可恢复。`}
+        confirmText="确认解散"
+        cancelText="取消"
+        isLoading={isDismissing}
+      />
+
+      {/* 清空聊天记录确认弹窗 */}
+      <ConfirmClearDialog
+        isOpen={showClearHistoryDialog}
+        onClose={handleCloseClearHistoryDialog}
+        onConfirm={handleConfirmClearHistory}
+        title="确认清空聊天记录"
+        content={`您确定要清空"${
+          conversation.title || "未命名群聊"
+        }"的聊天记录吗？此操作将删除您本地的所有聊天记录，但不会影响其他成员。此操作不可恢复。`}
+        confirmText="确认清空"
+        cancelText="取消"
+        isLoading={isClearing}
+      />
     </div>
   );
 };

@@ -32,6 +32,7 @@ interface ProfileActivity {
 
 interface LocationState {
   fromProfile?: boolean;
+  fromChat?: boolean; // 从聊天群设置跳转
   profileData?: {
     activities?: ProfileActivity[];
   };

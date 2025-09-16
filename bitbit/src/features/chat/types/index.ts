@@ -56,6 +56,7 @@ export interface Conversation {
   isArchived: boolean;
   isMuted: boolean;
   isPinned?: boolean; // 是否置顶
+  pinnedAt?: Date; // 置顶时间，用于排序
   settings: ConversationSettings;
 }
 

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import type {
   Conversation,
   Message,
@@ -68,6 +68,11 @@ export interface UseChatStateReturn {
   ) => void;
   handleRemoveMember: (conversationId: string, userId: string) => void;
 
+  // 会话管理方法
+  handleTogglePin: (conversationId: string) => void;
+  handleToggleReadStatus: (conversationId: string) => void;
+  handleDeleteConversation: (conversationId: string) => void;
+
   // 获取消息的方法
   getCurrentMessages: () => Message[];
   getConversationUnreadCount: (conversation: Conversation) => number;
@@ -91,6 +96,11 @@ export function useChatState({
   const [realtimeNewMessages, setRealtimeNewMessages] = useState<Message[]>([]);
   const [isUserAtBottom, setIsUserAtBottom] = useState<boolean>(true);
   const lastMessageCountRef = useRef<number>(0);
+
+  // 跟踪最后一次操作类型，用于控制排序行为
+  const [lastOperationType, setLastOperationType] = useState<
+    "message" | "pin" | "read-status" | "delete" | null
+  >(null);
 
   const activeConversation = conversations.find(
     (c) => c.id === activeConversationId
@@ -190,30 +200,17 @@ export function useChatState({
     [currentUserId, messages]
   );
 
-  // 获取更新后的会话列表（带有正确的未读计数）
-  const getUpdatedConversations = useCallback(() => {
-    const updated = conversations.map((conv) => ({
-      ...conv,
-      unreadCount: getConversationUnreadCount(conv),
-    }));
-
-    // 排序：置顶的在前，然后按最新消息时间排序
-    return updated.sort((a, b) => {
-      // 置顶优先
-      if (a.isPinned && !b.isPinned) return -1;
-      if (!a.isPinned && b.isPinned) return 1;
-
-      // 时间排序，最新的在前
-      return (
-        new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime()
-      );
-    });
-  }, [conversations, getConversationUnreadCount]);
-
   const unreadMessages = getUnreadMessages();
   const hasUnreadMessages = unreadMessages.length > 0;
   const lastReadMessageId = getLastReadMessageId();
-  const updatedConversations = getUpdatedConversations();
+
+  // 计算带有未读计数的会话列表，但不强制排序
+  const conversationsWithUnreadCount = useMemo(() => {
+    return conversations.map((conv) => ({
+      ...conv,
+      unreadCount: getConversationUnreadCount(conv),
+    }));
+  }, [conversations, getConversationUnreadCount]);
 
   // 计算实时新消息（用户在当前会话中，且不在底部时收到的新消息）
   const hasRealtimeNewMessages = realtimeNewMessages.length > 0;
@@ -252,6 +249,36 @@ export function useChatState({
     lastMessageCountRef.current = newMessageCount;
   }, [messages, activeConversationId, currentUserId, isUserAtBottom]);
 
+  // 重置操作类型，防止一直保持某种排序行为
+  useEffect(() => {
+    if (lastOperationType === "read-status") {
+      // 对于标记已读/未读操作，立即重置，确保下次排序时正常排序
+      const timer = setTimeout(() => {
+        console.log("🔄 重置操作类型:", lastOperationType, "-> null");
+        setLastOperationType(null);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+
+    if (lastOperationType === "pin") {
+      // 对于置顶操作，延迟一点重置，确保排序完成
+      const timer = setTimeout(() => {
+        console.log("🔄 重置操作类型:", lastOperationType, "-> null");
+        setLastOperationType(null);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+
+    if (lastOperationType) {
+      // 对于其他操作，稍后重置
+      const timer = setTimeout(() => {
+        console.log("🔄 重置操作类型:", lastOperationType, "-> null");
+        setLastOperationType(null);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [lastOperationType]);
+
   // 用户滚动状态更新方法
   const setUserAtBottom = useCallback((atBottom: boolean) => {
     setIsUserAtBottom(atBottom);
@@ -268,11 +295,11 @@ export function useChatState({
 
   // 计算总未读消息数
   const getTotalUnreadCount = useCallback(() => {
-    return updatedConversations.reduce(
-      (total, conv) => total + conv.unreadCount,
+    return conversationsWithUnreadCount.reduce(
+      (total: number, conv) => total + conv.unreadCount,
       0
     );
-  }, [updatedConversations]);
+  }, [conversationsWithUnreadCount]);
 
   // 标记会话为已读
   const markConversationAsRead = useCallback(
@@ -353,7 +380,7 @@ export function useChatState({
 
       const messageType: "text" | "image" = type === "emoji" ? "text" : type;
 
-      let messageContent = content;
+      const messageContent = content;
       let attachments: Array<{
         id: string;
         type: "image" | "file";
@@ -377,10 +404,7 @@ export function useChatState({
             mimeType: imageFile.type,
           },
         ];
-        // 如果没有文字内容，设置默认内容
-        if (!content.trim()) {
-          messageContent = "[图片]";
-        }
+        // 图片消息不需要默认文本，保持原有内容（可能为空）
       }
 
       const newMessage: Message = {
@@ -394,16 +418,59 @@ export function useChatState({
         ...(attachments.length > 0 && { attachments }),
       };
 
+      setLastOperationType("message");
       setMessages((prev) => [...prev, newMessage]);
 
-      // 更新会话的最后消息
-      setConversations((prev) =>
-        prev.map((conv) =>
-          conv.id === activeConversationId
-            ? { ...conv, lastMessage: newMessage, lastActivity: new Date() }
-            : conv
-        )
-      );
+      // 更新会话的最后消息并重新排序
+      setConversations((prev) => {
+        const updated = prev.map((conv) => {
+          if (conv.id === activeConversationId) {
+            const now = new Date();
+            return {
+              ...conv,
+              lastMessage: newMessage,
+              lastActivity: now,
+              // 如果是置顶会话，也更新置顶时间，确保有新消息的置顶会话排在最前面
+              ...(conv.isPinned && { pinnedAt: now }),
+            };
+          }
+          return conv;
+        });
+
+        // 对置顶会话进行排序：有新消息的置顶会话应该排在最前面
+        const sorted = updated.sort((a, b) => {
+          const aIsPinned = a.isPinned;
+          const bIsPinned = b.isPinned;
+
+          // 置顶优先
+          if (aIsPinned && !bIsPinned) return -1;
+          if (!aIsPinned && bIsPinned) return 1;
+
+          if (aIsPinned && bIsPinned) {
+            // 两个都是置顶的情况：按最新消息时间排序（最新的在前）
+            return (
+              new Date(b.lastActivity).getTime() -
+              new Date(a.lastActivity).getTime()
+            );
+          }
+
+          // 都不是置顶：按最新消息时间排序
+          return (
+            new Date(b.lastActivity).getTime() -
+            new Date(a.lastActivity).getTime()
+          );
+        });
+
+        console.log(
+          "📨 发送消息后排序:",
+          sorted.map((c) => ({
+            id: c.id,
+            isPinned: c.isPinned,
+            lastActivity: c.lastActivity,
+          }))
+        );
+        return sorted;
+      });
     },
     [activeConversationId, currentUserId]
   );
@@ -428,16 +495,60 @@ export function useChatState({
         status: "delivered",
       };
 
+      setLastOperationType("message");
       setMessages((prev) => [...prev, newMessage]);
 
-      // 更新会话的最后消息
-      setConversations((prev) =>
-        prev.map((conv) =>
-          conv.id === (activeConversationId || "conv1")
-            ? { ...conv, lastMessage: newMessage, lastActivity: new Date() }
-            : conv
-        )
-      );
+      // 更新会话的最后消息并重新排序
+      setConversations((prev) => {
+        const updated = prev.map((conv) => {
+          const targetConvId = activeConversationId || "conv1";
+          if (conv.id === targetConvId) {
+            const now = new Date();
+            return {
+              ...conv,
+              lastMessage: newMessage,
+              lastActivity: now,
+              // 如果是置顶会话，也更新置顶时间，确保有新消息的置顶会话排在最前面
+              ...(conv.isPinned && { pinnedAt: now }),
+            };
+          }
+          return conv;
+        });
+
+        // 对置顶会话进行排序：有新消息的置顶会话应该排在最前面
+        const sorted = updated.sort((a, b) => {
+          const aIsPinned = a.isPinned;
+          const bIsPinned = b.isPinned;
+
+          // 置顶优先
+          if (aIsPinned && !bIsPinned) return -1;
+          if (!aIsPinned && bIsPinned) return 1;
+
+          if (aIsPinned && bIsPinned) {
+            // 两个都是置顶的情况：按最新消息时间排序（最新的在前）
+            return (
+              new Date(b.lastActivity).getTime() -
+              new Date(a.lastActivity).getTime()
+            );
+          }
+
+          // 都不是置顶：按最新消息时间排序
+          return (
+            new Date(b.lastActivity).getTime() -
+            new Date(a.lastActivity).getTime()
+          );
+        });
+
+        console.log(
+          "🎭 模拟消息后排序:",
+          sorted.map((c) => ({
+            id: c.id,
+            isPinned: c.isPinned,
+            lastActivity: c.lastActivity,
+          }))
+        );
+        return sorted;
+      });
     },
     [activeConversationId, currentUserId]
   );
@@ -613,6 +724,129 @@ export function useChatState({
     );
   }, []);
 
+  // 处理置顶/取消置顶
+  const handleTogglePin = useCallback((conversationId: string) => {
+    console.log("📌 置顶操作开始:", conversationId);
+    setLastOperationType("pin");
+    setConversations((prev) => {
+      // 更新会话状态
+      const updated = prev.map((conv) => {
+        if (conv.id === conversationId) {
+          const isPinned = conv.isPinned;
+          const newConv = {
+            ...conv,
+            isPinned: !isPinned,
+            pinnedAt: !isPinned ? new Date() : undefined,
+          };
+          console.log("📌 会话状态更新:", {
+            id: conversationId,
+            wasPinned: isPinned,
+            nowPinned: !isPinned,
+          });
+          return newConv;
+        }
+        return conv;
+      });
+
+      // 立即进行排序：置顶的会话应该立即排到最前面
+      const sorted = updated.sort((a, b) => {
+        const aIsPinned = a.isPinned;
+        const bIsPinned = b.isPinned;
+
+        // 置顶优先
+        if (aIsPinned && !bIsPinned) return -1;
+        if (!aIsPinned && bIsPinned) return 1;
+
+        if (aIsPinned && bIsPinned) {
+          // 两个都是置顶的情况：按置顶时间排序（最近置顶的在前）
+          const aPinnedAt = a.pinnedAt ? new Date(a.pinnedAt).getTime() : 0;
+          const bPinnedAt = b.pinnedAt ? new Date(b.pinnedAt).getTime() : 0;
+          return bPinnedAt - aPinnedAt;
+        }
+
+        // 都不是置顶：按最新消息时间排序
+        return (
+          new Date(b.lastActivity).getTime() -
+          new Date(a.lastActivity).getTime()
+        );
+      });
+
+      console.log(
+        "📌 置顶操作完成，排序后会话列表:",
+        sorted.map((c) => ({
+          id: c.id,
+          isPinned: c.isPinned,
+          pinnedAt: c.pinnedAt,
+        }))
+      );
+      return sorted;
+    });
+  }, []);
+
+  // 处理标记已读/未读
+  const handleToggleReadStatus = useCallback(
+    (conversationId: string) => {
+      setLastOperationType("read-status");
+      setConversations((prev) =>
+        prev.map((conv) => {
+          if (conv.id === conversationId) {
+            const isUnread = conv.unreadCount > 0;
+            if (isUnread) {
+              // 标记为已读
+              const updatedParticipants = conv.participants.map((p) => {
+                if (p.userId === currentUserId) {
+                  return { ...p, lastReadAt: new Date() };
+                }
+                return p;
+              });
+              return {
+                ...conv,
+                unreadCount: 0,
+                participants: updatedParticipants,
+              };
+            } else {
+              // 标记为未读 - 通过调整用户的最后阅读时间来实现
+              const updatedParticipants = conv.participants.map((p) => {
+                if (p.userId === currentUserId) {
+                  // 将最后阅读时间设置为比最后一条消息早一点，这样就会计算出未读消息
+                  const lastMessageTime = conv.lastMessage?.timestamp
+                    ? new Date(conv.lastMessage.timestamp)
+                    : new Date();
+                  const earlierTime = new Date(
+                    lastMessageTime.getTime() - 1000
+                  ); // 早一秒
+                  return { ...p, lastReadAt: earlierTime };
+                }
+                return p;
+              });
+              return {
+                ...conv,
+                participants: updatedParticipants,
+              };
+            }
+          }
+          return conv;
+        })
+      );
+    },
+    [currentUserId]
+  );
+
+  // 处理删除会话
+  const handleDeleteConversation = useCallback(
+    (conversationId: string) => {
+      setLastOperationType("delete");
+      setConversations((prev) =>
+        prev.filter((conv) => conv.id !== conversationId)
+      );
+      // 如果删除的是当前活跃会话，清空活跃会话
+      if (activeConversationId === conversationId) {
+        setActiveConversationId(null);
+      }
+    },
+    [activeConversationId]
+  );
+
   const handleMemberRoleChange = useCallback(
     (conversationId: string, userId: string, newRole: string) => {
       setConversations((prev) =>
@@ -667,7 +901,7 @@ export function useChatState({
     unreadMessages,
     hasUnreadMessages,
     lastReadMessageId,
-    updatedConversations,
+    updatedConversations: conversationsWithUnreadCount,
 
     // 实时新消息相关
     realtimeNewMessages,
@@ -695,6 +929,11 @@ export function useChatState({
     handleToggleNotifications,
     handleMemberRoleChange,
     handleRemoveMember,
+
+    // 会话管理方法
+    handleTogglePin,
+    handleToggleReadStatus,
+    handleDeleteConversation,
 
     // 获取消息的方法
     getCurrentMessages,

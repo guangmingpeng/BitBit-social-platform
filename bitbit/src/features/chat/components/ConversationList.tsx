@@ -135,8 +135,16 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({
     <div
       onClick={onClick}
       className={cn(
-        "group flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-200 relative hover:bg-gray-50",
+        "group flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-200 relative",
+        // 基础悬停样式
+        "hover:bg-gray-50",
+        // 活跃状态
         isActive && "bg-blue-50 border-r-2 border-blue-500",
+        // 置顶背景色
+        conversation.isPinned && !isActive && "bg-amber-50/50",
+        conversation.isPinned &&
+          isActive &&
+          "bg-gradient-to-r from-amber-50/30 to-blue-50",
         className
       )}
     >
@@ -326,85 +334,82 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({
 
         {/* 下拉菜单 */}
         {showMenu && (
-          <div className="absolute right-0 top-8 w-40 bg-white rounded-lg shadow-xl border border-gray-200 z-[1000] overflow-visible">
+          <div className="absolute right-0 top-8 w-40 bg-white rounded-lg shadow-xl border border-gray-200 z-[1000] overflow-visible min-h-[80px]">
             <div className="py-1">
-              {onTogglePin && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onTogglePin(conversation.id);
-                    setShowMenu(false);
-                  }}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+              {/* 置顶功能 - 总是显示 */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTogglePin?.(conversation.id);
+                  setShowMenu(false);
+                }}
+                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                    />
-                  </svg>
-                  {conversation.isPinned ? "取消置顶" : "置顶对话"}
-                </button>
-              )}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                  />
+                </svg>
+                {conversation.isPinned ? "取消置顶" : "置顶对话"}
+              </button>
 
-              {onToggleReadStatus && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleReadStatus(conversation.id);
-                    setShowMenu(false);
-                  }}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+              {/* 已读/未读状态 - 总是显示 */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleReadStatus?.(conversation.id);
+                  setShowMenu(false);
+                }}
+                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  {conversation.unreadCount > 0 ? "标为已读" : "标为未读"}
-                </button>
-              )}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                {conversation.unreadCount > 0 ? "标为已读" : "标为未读"}
+              </button>
 
-              {onDelete && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete(conversation.id);
-                    setShowMenu(false);
-                  }}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 text-red-600 flex items-center gap-2"
+              {/* 删除功能 - 总是显示 */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete?.(conversation.id);
+                  setShowMenu(false);
+                }}
+                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 text-red-600 flex items-center gap-2"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
-                  删除对话
-                </button>
-              )}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 7l-.867 12.142A2 2 0 0016.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+                删除对话
+              </button>
             </div>
           </div>
         )}

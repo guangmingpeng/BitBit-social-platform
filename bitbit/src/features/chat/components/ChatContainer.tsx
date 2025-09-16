@@ -77,6 +77,11 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       handleMemberRoleChange,
       handleRemoveMember,
 
+      // 会话管理方法
+      handleTogglePin,
+      handleToggleReadStatus,
+      handleDeleteConversation,
+
       // 获取消息的方法
       getCurrentMessages,
       getTotalUnreadCount,
@@ -288,6 +293,9 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
               headerTitle="消息"
               unreadCount={totalUnreadCount}
               onMarkAllAsRead={markAllAsRead}
+              onTogglePin={handleTogglePin}
+              onToggleReadStatus={handleToggleReadStatus}
+              onDelete={handleDeleteConversation}
             />
           </div>
 

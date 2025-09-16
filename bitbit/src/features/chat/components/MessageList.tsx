@@ -45,15 +45,24 @@ const MessageList: React.FC<MessageListProps> = ({
   const scrollToBottom = useCallback((force = false) => {
     if (!scrollContainerRef.current) return;
 
-    const { scrollTop, scrollHeight, clientHeight } =
-      scrollContainerRef.current;
-    const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
-
-    if (force || (!isUserScrolling.current && isNearBottom)) {
+    if (force) {
+      // 强制滚动时（用户发送消息），立即滚动到底部
       scrollContainerRef.current.scrollTo({
-        top: scrollHeight,
-        behavior: force ? "auto" : "smooth",
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: "smooth",
       });
+    } else {
+      // 非强制滚动时，考虑用户滚动状态和位置
+      const { scrollTop, scrollHeight, clientHeight } =
+        scrollContainerRef.current;
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+
+      if (!isUserScrolling.current && isNearBottom) {
+        scrollContainerRef.current.scrollTo({
+          top: scrollHeight,
+          behavior: "smooth",
+        });
+      }
     }
   }, []);
 
@@ -169,17 +178,42 @@ const MessageList: React.FC<MessageListProps> = ({
     }
   }, [hasMore, onLoadMore, isLoading, onScrollStateChange]);
 
-  // 新消息时自动滚动到底部
+  // 使用ref跟踪消息数量变化
+  const previousMessageCountRef = useRef(messages.length);
+
+  // 新消息时自动滚动到底部（仅在新增消息时触发，且考虑用户滚动状态）
   useEffect(() => {
-    if (messages.length > 0) {
+    const currentMessageCount = messages.length;
+    const hasNewMessages =
+      currentMessageCount > previousMessageCountRef.current;
+
+    if (hasNewMessages && messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
-      // 如果是当前用户发送的消息，强制滚动到底部
+
+      // 如果是当前用户发送的消息，总是强制滚动到底部
       if (lastMessage.senderId === currentUserId) {
-        scrollToBottom(true);
+        // 暂时重置用户滚动状态，确保能够滚动
+        const wasUserScrolling = isUserScrolling.current;
+        isUserScrolling.current = false;
+
+        // 延迟一点时间确保消息已经渲染
+        setTimeout(() => {
+          scrollToBottom(true);
+          // 短暂延迟后恢复滚动状态
+          setTimeout(() => {
+            isUserScrolling.current = wasUserScrolling;
+          }, 100);
+        }, 50);
       } else {
-        scrollToBottom();
+        // 如果是其他用户的消息，只有在用户没有主动滚动时才自动滚动
+        if (!isUserScrolling.current) {
+          scrollToBottom();
+        }
       }
     }
+
+    // 更新消息数量记录
+    previousMessageCountRef.current = currentMessageCount;
   }, [messages, currentUserId, scrollToBottom]);
 
   // 组件挂载时或会话切换时智能滚动

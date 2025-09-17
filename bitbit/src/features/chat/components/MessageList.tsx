@@ -109,17 +109,11 @@ const MessageList: React.FC<MessageListProps> = ({
     // 滚动到元素位置，留出一些顶部边距
     const offsetTop = Math.max(0, elementTop - 100);
 
-    console.log("🎯 滚动到实时新消息位置:", {
-      elementTop,
-      offsetTop,
-      firstNewMessageId,
-    });
-
     container.scrollTo({
       top: offsetTop,
       behavior: "smooth",
     });
-  }, [firstNewMessageId]);
+  }, []);
 
   // 智能滚动：根据未读消息状态决定滚动位置
   const smartScroll = useCallback(() => {
@@ -166,13 +160,6 @@ const MessageList: React.FC<MessageListProps> = ({
 
     // 检测用户是否在底部
     const isAtBottom = scrollHeight - scrollTop - clientHeight < 50;
-    console.log("📊 滚动状态检测:", {
-      scrollTop,
-      scrollHeight,
-      clientHeight,
-      isAtBottom,
-      threshold: scrollHeight - scrollTop - clientHeight,
-    });
     if (onScrollStateChange) {
       onScrollStateChange(isAtBottom);
     }
@@ -205,10 +192,22 @@ const MessageList: React.FC<MessageListProps> = ({
           }, 100);
         }, 50);
       } else {
-        // 如果是其他用户的消息，只有在用户没有主动滚动时才自动滚动
-        if (!isUserScrolling.current) {
-          scrollToBottom();
-        }
+        // 如果是其他用户的消息，延迟检查用户是否在底部附近
+        setTimeout(() => {
+          if (scrollContainerRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } =
+              scrollContainerRef.current;
+            const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+
+            // 如果用户在底部附近（100px内）且没有在主动滚动，则自动滚动
+            if (distanceFromBottom <= 100 && !isUserScrolling.current) {
+              console.log("📨 自动滚动到新消息");
+              scrollToBottom(true);
+            } else {
+              console.log("📨 不自动滚动 (距离:", distanceFromBottom + "px)");
+            }
+          }
+        }, 100); // 延迟确保DOM已更新
       }
     }
 
@@ -226,27 +225,13 @@ const MessageList: React.FC<MessageListProps> = ({
   // 处理滚动到未读消息的触发
   useEffect(() => {
     if (shouldScrollToUnread) {
-      console.log("🔥 触发滚动 [详细]:", {
-        shouldScrollToUnread,
-        firstNewMessageId,
-        hasFirstNewMessageRef: !!firstNewMessageRef.current,
-        hasFirstUnreadMessageRef: !!firstUnreadMessageRef.current,
-        messages: messages.map((m) => ({
-          id: m.id,
-          content: m.content.slice(0, 20),
-        })),
-      });
-
       // 如果有实时新消息ID，优先滚动到实时新消息
       if (firstNewMessageId && firstNewMessageRef.current) {
-        console.log("🎯 滚动到实时新消息:", firstNewMessageId);
-        console.log("🎯 实时新消息元素存在:", !!firstNewMessageRef.current);
+        console.log("🎯 滚动到新消息:", firstNewMessageId);
         scrollToFirstNewMessage();
       } else if (firstUnreadMessageRef.current) {
-        console.log("🎯 滚动到历史未读消息");
+        console.log("🎯 滚动到未读消息");
         scrollToFirstUnreadMessage();
-      } else {
-        console.log("❌ 没有找到可滚动的目标元素");
       }
       onScrollToUnreadComplete?.();
     }
@@ -489,32 +474,14 @@ const MessageList: React.FC<MessageListProps> = ({
 
                 <div
                   ref={(() => {
-                    let refToUse = undefined;
-                    let refType = "none";
-
                     if (message.id === firstNewMessageId) {
-                      refToUse = firstNewMessageRef;
-                      refType = "firstNewMessage";
+                      return firstNewMessageRef;
                     } else if (isFirstUnreadMessage) {
-                      refToUse = firstUnreadMessageRef;
-                      refType = "firstUnread";
+                      return firstUnreadMessageRef;
                     } else if (globalIndex === messages.length - 1) {
-                      refToUse = lastMessageRef;
-                      refType = "lastMessage";
+                      return lastMessageRef;
                     }
-
-                    if (refToUse) {
-                      console.log("📌 分配ref:", {
-                        messageId: message.id,
-                        content: message.content.slice(0, 20),
-                        refType,
-                        firstNewMessageId,
-                        isFirstUnreadMessage,
-                        isLastMessage: globalIndex === messages.length - 1,
-                      });
-                    }
-
-                    return refToUse;
+                    return undefined;
                   })()}
                 >
                   <MessageBubble

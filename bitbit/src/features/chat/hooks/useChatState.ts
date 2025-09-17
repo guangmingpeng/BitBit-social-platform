@@ -88,8 +88,32 @@ export function useChatState({
   const [activeConversationId, setActiveConversationId] = useState<
     string | null
   >(initialConversationId);
-  const [conversations, setConversations] =
-    useState<Conversation[]>(mockConversations);
+
+  // 初始化时对conversations按最后活动时间排序
+  const [conversations, setConversations] = useState<Conversation[]>(() => {
+    return [...mockConversations].sort((a, b) => {
+      // 置顶的对话始终在前面
+      if (a.isPinned && !b.isPinned) return -1;
+      if (!a.isPinned && b.isPinned) return 1;
+
+      // 都置顶的话，按置顶时间排序（最近置顶的在前）
+      if (a.isPinned && b.isPinned) {
+        const aPinnedTime = a.pinnedAt ? new Date(a.pinnedAt).getTime() : 0;
+        const bPinnedTime = b.pinnedAt ? new Date(b.pinnedAt).getTime() : 0;
+        return bPinnedTime - aPinnedTime;
+      }
+
+      // 都不置顶的话，按最后活动时间排序（最新的在前）
+      const aTime = a.lastMessage
+        ? new Date(a.lastMessage.timestamp).getTime()
+        : new Date(a.lastActivity).getTime();
+      const bTime = b.lastMessage
+        ? new Date(b.lastMessage.timestamp).getTime()
+        : new Date(b.lastActivity).getTime();
+
+      return bTime - aTime; // 最新的在前
+    });
+  });
   const [messages, setMessages] = useState<Message[]>(mockMessages);
   const [showSettings, setShowSettings] = useState(false);
   const [presetMessage, setPresetMessageState] = useState<string>("");

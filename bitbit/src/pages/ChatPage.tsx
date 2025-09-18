@@ -35,12 +35,21 @@ const ChatPage: React.FC = () => {
         stateParams?.conversationType ||
         urlParams.conversationType ||
         "private",
-      sourceFrom: stateParams?.sourceContext?.from || urlParams.sourceFrom,
+      sourceFrom:
+        stateParams?.sourceContext?.from ||
+        urlParams.sourceFrom ||
+        stateParams?.fromSource,
       sourceItemId:
         stateParams?.sourceContext?.itemId || urlParams.sourceItemId,
       sourceItemTitle:
         stateParams?.sourceContext?.itemTitle || urlParams.sourceItemTitle,
       presetMessage: stateParams?.presetMessage || urlParams.presetMessage,
+      // 聚合消息通知相关
+      messageNotification: stateParams?.messageNotification,
+      isListMode: !!(
+        stateParams?.fromSource === "notifications" &&
+        stateParams?.messageNotification
+      ),
     }),
     [
       stateParams?.userId,
@@ -61,6 +70,8 @@ const ChatPage: React.FC = () => {
       urlParams.sourceItemTitle,
       stateParams?.presetMessage,
       urlParams.presetMessage,
+      stateParams?.fromSource,
+      stateParams?.messageNotification,
     ]
   );
 
@@ -117,14 +128,35 @@ const ChatPage: React.FC = () => {
   }, [chatParams]);
 
   useEffect(() => {
-    if (!isInitialized && (chatParams.userId || chatParams.conversationId)) {
-      initializeChat();
+    if (
+      !isInitialized &&
+      (chatParams.userId || chatParams.conversationId || chatParams.isListMode)
+    ) {
+      if (chatParams.userId || chatParams.conversationId) {
+        initializeChat();
+      }
       setIsInitialized(true);
     }
   }, [chatParams, isInitialized, initializeChat]);
 
   // 设置上下文信息显示
   useEffect(() => {
+    // 处理聚合消息通知
+    if (chatParams.isListMode && chatParams.messageNotification) {
+      setContextInfo({
+        show: true,
+        title: "新消息通知",
+        subtitle: `${chatParams.messageNotification.totalCount}个联系人发来了消息`,
+      });
+
+      // 5秒后自动隐藏上下文信息
+      const timer = setTimeout(() => {
+        setContextInfo((prev) => ({ ...prev, show: false }));
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+
     if (chatParams.sourceFrom && chatParams.sourceItemTitle) {
       let contextTitle = "";
       let contextSubtitle = "";
@@ -195,8 +227,12 @@ const ChatPage: React.FC = () => {
     }
   };
 
-  // 如果没有必要的参数，显示错误页面
-  if (!chatParams.userId && !chatParams.conversationId) {
+  // 如果没有必要的参数且不是列表模式，显示错误页面
+  if (
+    !chatParams.userId &&
+    !chatParams.conversationId &&
+    !chatParams.isListMode
+  ) {
     return (
       <Container size="lg" className="py-6">
         <div className="text-center py-12">

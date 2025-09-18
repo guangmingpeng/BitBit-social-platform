@@ -9,6 +9,21 @@ export interface Notification {
   actionUrl?: string;
   createdAt: string;
   updatedAt?: string;
+  // 消息通知聚合相关字段
+  messageData?: {
+    senders: Array<{
+      userId: string;
+      userName: string;
+      userAvatar?: string;
+      lastMessage: string;
+      timestamp: string;
+    }>;
+    totalCount: number;
+    lastSenderName: string;
+    lastMessage: string;
+    lastSenderId: string;
+    lastSenderAvatar?: string;
+  };
 }
 
 export type NotificationType = "all" | "activity" | "social" | "system";

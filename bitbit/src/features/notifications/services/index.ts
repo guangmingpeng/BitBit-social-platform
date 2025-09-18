@@ -31,13 +31,59 @@ const mockNotifications: Notification[] = [
   {
     id: "3",
     type: "message",
-    title: "收到新消息",
-    content: "李四: 今天的摄影活动怎么样？",
-    time: "1天前",
-    isRead: true,
-    avatar: "https://picsum.photos/40/40?random=2",
-    actionUrl: "/messages/chat/lisi",
-    createdAt: "2025-01-07T12:00:00Z",
+    title: "新消息",
+    content: "", // 将在构造函数中动态生成
+    time: "30分钟前",
+    isRead: false,
+    avatar: "https://picsum.photos/60/60?random=7",
+    actionUrl: "/messages/chat/7", // 最新消息发送者的聊天链接
+    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30分钟前
+    messageData: {
+      senders: [
+        {
+          userId: "7",
+          userName: "Grace Wu",
+          userAvatar: "https://picsum.photos/60/60?random=7",
+          lastMessage:
+            "很好的开始！建议你先保持现有的距离，重点关注跑步姿势和呼吸节奏。",
+          timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30分钟前
+        },
+        {
+          userId: "9",
+          userName: "Iris Yang",
+          userAvatar: "https://picsum.photos/60/60?random=9",
+          lastMessage: "什么时候开始呢？我很期待！",
+          timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(), // 45分钟前
+        },
+        {
+          userId: "10",
+          userName: "Jack Chen",
+          userAvatar: "https://picsum.photos/60/60?random=10",
+          lastMessage: "最近在研究新的算法，想和大家分享一下。",
+          timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString(), // 1小时前
+        },
+        {
+          userId: "8",
+          userName: "Henry Xu",
+          userAvatar: "https://picsum.photos/60/60?random=8",
+          lastMessage: "我也想参加这个讨论。",
+          timestamp: new Date(Date.now() - 1000 * 60 * 75).toISOString(), // 1小时15分钟前
+        },
+        {
+          userId: "6",
+          userName: "Fiona Liu",
+          userAvatar: "https://picsum.photos/60/60?random=6",
+          lastMessage: "太棒了，这个想法很不错！",
+          timestamp: new Date(Date.now() - 1000 * 60 * 90).toISOString(), // 1小时30分钟前
+        },
+      ],
+      totalCount: 5,
+      lastSenderName: "Grace Wu",
+      lastMessage:
+        "很好的开始！建议你先保持现有的距离，重点关注跑步姿势和呼吸节奏。",
+      lastSenderId: "7",
+      lastSenderAvatar: "https://picsum.photos/60/60?random=7",
+    },
   },
   {
     id: "4",
@@ -75,8 +121,50 @@ const mockNotifications: Notification[] = [
 ];
 
 class NotificationService {
-  private notifications: Notification[] = [...mockNotifications];
+  private notifications: Notification[] = [];
   private listeners: Set<() => void> = new Set();
+
+  constructor() {
+    // 初始化通知数据并生成动态标题和内容
+    this.notifications = mockNotifications.map((notification) => {
+      if (notification.type === "message" && notification.messageData) {
+        return {
+          ...notification,
+          title: this.generateMessageNotificationContent(
+            notification.messageData
+          ), // 将动态内容设为标题
+          content: notification.messageData.lastMessage, // 内容显示最新消息
+        };
+      }
+      return notification;
+    });
+  }
+
+  // 生成聚合消息通知的内容
+  private generateMessageNotificationContent(messageData: {
+    senders?: { userName: string }[];
+    totalCount?: number;
+  }): string {
+    const { senders, totalCount } = messageData;
+    const maxDisplayNames = 3;
+
+    if (!senders || senders.length === 0) {
+      return `收到${totalCount || 1}条新消息`;
+    }
+
+    if (senders.length <= maxDisplayNames) {
+      // 如果发送者数量不超过最大显示数量，用顿号分隔
+      const names = senders.map((sender) => sender.userName).join("、");
+      return `${names} 发来${totalCount}条新消息`;
+    } else {
+      // 如果超过最大显示数量，显示前几个名称 + "等"
+      const displayNames = senders
+        .slice(0, maxDisplayNames)
+        .map((sender) => sender.userName);
+      const namesStr = displayNames.join("、");
+      return `${namesStr}等 发来${totalCount}条新消息`;
+    }
+  }
 
   // 获取所有通知
   getNotifications(): Notification[] {

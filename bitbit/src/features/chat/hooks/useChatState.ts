@@ -189,13 +189,6 @@ export function useChatState({
 
     const result = lastReadMessage ? lastReadMessage.id : null;
 
-    // 只在切换会话时输出关键信息
-    if (result) {
-      console.log(`💬 会话${activeConversationId}: 最后已读消息 ${result}`);
-    } else {
-      console.log(`💬 会话${activeConversationId}: 没有已读消息`);
-    }
-
     return result;
   }, [activeConversation, activeConversationId, currentUserId, messages]);
 
@@ -206,22 +199,26 @@ export function useChatState({
         (p) => p.userId === currentUserId
       );
 
+      const conversationMessages = messages.filter(
+        (m) =>
+          m.conversationId === conversation.id && m.senderId !== currentUserId
+      );
+
       if (!currentUserParticipant?.lastReadAt) {
         // 如果没有阅读记录，计算所有非自己发送的消息
-        return messages.filter(
-          (m) =>
-            m.conversationId === conversation.id && m.senderId !== currentUserId
-        ).length;
+        return conversationMessages.length;
       }
 
       // 计算最后阅读时间之后的非自己发送的消息
-      return messages.filter(
+      const unreadMessages = messages.filter(
         (m) =>
           m.conversationId === conversation.id &&
           new Date(m.timestamp) >
             new Date(currentUserParticipant.lastReadAt!) &&
           m.senderId !== currentUserId
-      ).length;
+      );
+
+      return unreadMessages.length;
     },
     [currentUserId, messages]
   );
@@ -280,7 +277,6 @@ export function useChatState({
     if (lastOperationType === "read-status") {
       // 对于标记已读/未读操作，立即重置，确保下次排序时正常排序
       const timer = setTimeout(() => {
-        console.log("🔄 重置操作类型:", lastOperationType, "-> null");
         setLastOperationType(null);
       }, 50);
       return () => clearTimeout(timer);
@@ -289,7 +285,6 @@ export function useChatState({
     if (lastOperationType === "pin") {
       // 对于置顶操作，延迟一点重置，确保排序完成
       const timer = setTimeout(() => {
-        console.log("🔄 重置操作类型:", lastOperationType, "-> null");
         setLastOperationType(null);
       }, 500);
       return () => clearTimeout(timer);
@@ -298,7 +293,6 @@ export function useChatState({
     if (lastOperationType) {
       // 对于其他操作，稍后重置
       const timer = setTimeout(() => {
-        console.log("🔄 重置操作类型:", lastOperationType, "-> null");
         setLastOperationType(null);
       }, 1000);
       return () => clearTimeout(timer);
@@ -346,7 +340,6 @@ export function useChatState({
 
             return {
               ...conv,
-              unreadCount: 0,
               participants: updatedParticipants,
             };
           }
@@ -374,7 +367,6 @@ export function useChatState({
 
         return {
           ...conv,
-          unreadCount: 0,
           participants: updatedParticipants,
         };
       })
@@ -487,14 +479,6 @@ export function useChatState({
           );
         });
 
-        console.log(
-          "📨 发送消息后排序:",
-          sorted.map((c) => ({
-            id: c.id,
-            isPinned: c.isPinned,
-            lastActivity: c.lastActivity,
-          }))
-        );
         return sorted;
       });
     },
@@ -565,14 +549,6 @@ export function useChatState({
           );
         });
 
-        console.log(
-          "🎭 模拟消息后排序:",
-          sorted.map((c) => ({
-            id: c.id,
-            isPinned: c.isPinned,
-            lastActivity: c.lastActivity,
-          }))
-        );
         return sorted;
       });
     },
@@ -582,7 +558,6 @@ export function useChatState({
   // 模拟多条新消息
   const simulateMultipleMessages = useCallback(
     (count = 5) => {
-      console.log("🚀 开始模拟", count, "条新消息");
       const otherUsers = ["1", "2", "3", "5", "6"].filter(
         (id) => id !== currentUserId
       );
@@ -604,10 +579,6 @@ export function useChatState({
       selectedMessages.forEach((content, index) => {
         setTimeout(() => {
           const senderId = otherUsers[index % otherUsers.length];
-          console.log(`📨 模拟消息 ${index + 1}/${count}:`, {
-            senderId,
-            content,
-          });
           simulateNewMessage(senderId, content);
         }, (index + 1) * 800);
       });
@@ -752,7 +723,6 @@ export function useChatState({
 
   // 处理置顶/取消置顶
   const handleTogglePin = useCallback((conversationId: string) => {
-    console.log("📌 置顶操作开始:", conversationId);
     setLastOperationType("pin");
     setConversations((prev) => {
       // 更新会话状态
@@ -764,11 +734,6 @@ export function useChatState({
             isPinned: !isPinned,
             pinnedAt: !isPinned ? new Date() : undefined,
           };
-          console.log("📌 会话状态更新:", {
-            id: conversationId,
-            wasPinned: isPinned,
-            nowPinned: !isPinned,
-          });
           return newConv;
         }
         return conv;
@@ -797,14 +762,6 @@ export function useChatState({
         );
       });
 
-      console.log(
-        "📌 置顶操作完成，排序后会话列表:",
-        sorted.map((c) => ({
-          id: c.id,
-          isPinned: c.isPinned,
-          pinnedAt: c.pinnedAt,
-        }))
-      );
       return sorted;
     });
   }, []);
@@ -813,49 +770,80 @@ export function useChatState({
   const handleToggleReadStatus = useCallback(
     (conversationId: string) => {
       setLastOperationType("read-status");
+
       setConversations((prev) =>
         prev.map((conv) => {
           if (conv.id === conversationId) {
-            const isUnread = conv.unreadCount > 0;
-            if (isUnread) {
-              // 标记为已读
-              const updatedParticipants = conv.participants.map((p) => {
-                if (p.userId === currentUserId) {
-                  return { ...p, lastReadAt: new Date() };
-                }
-                return p;
-              });
-              return {
-                ...conv,
-                unreadCount: 0,
-                participants: updatedParticipants,
-              };
-            } else {
-              // 标记为未读 - 通过调整用户的最后阅读时间来实现
-              const updatedParticipants = conv.participants.map((p) => {
-                if (p.userId === currentUserId) {
-                  // 将最后阅读时间设置为比最后一条消息早一点，这样就会计算出未读消息
-                  const lastMessageTime = conv.lastMessage?.timestamp
-                    ? new Date(conv.lastMessage.timestamp)
-                    : new Date();
-                  const earlierTime = new Date(
-                    lastMessageTime.getTime() - 1000
-                  ); // 早一秒
-                  return { ...p, lastReadAt: earlierTime };
-                }
-                return p;
-              });
-              return {
-                ...conv,
-                participants: updatedParticipants,
-              };
+            const currentUserParticipant = conv.participants.find(
+              (p) => p.userId === currentUserId
+            );
+
+            if (!currentUserParticipant) {
+              return conv;
             }
+
+            // 使用动态计算的未读数来判断当前状态
+            const currentUnreadCount = getConversationUnreadCount(conv);
+            const isCurrentlyUnread = currentUnreadCount > 0;
+
+            // 更新参与者的最后阅读时间
+            const updatedParticipants = conv.participants.map((p) => {
+              if (p.userId === currentUserId) {
+                if (isCurrentlyUnread) {
+                  // 标记为已读：将最后阅读时间设置为当前时间
+                  return { ...p, lastReadAt: new Date() };
+                } else {
+                  // 标记为未读：需要找到一个合适的时间点来制造未读状态
+                  const conversationMessages = messages.filter(
+                    (m) =>
+                      m.conversationId === conversationId &&
+                      m.senderId !== currentUserId
+                  );
+
+                  if (conversationMessages.length > 0) {
+                    // 将最后阅读时间设置为倒数第二条其他人的消息时间（如果存在）
+                    // 这样最后一条消息就会变成未读
+                    const sortedMessages = conversationMessages.sort(
+                      (a, b) =>
+                        new Date(a.timestamp).getTime() -
+                        new Date(b.timestamp).getTime()
+                    );
+
+                    let targetTime: Date;
+                    if (sortedMessages.length >= 2) {
+                      // 有至少2条消息，设置为倒数第二条消息的时间
+                      targetTime = new Date(
+                        sortedMessages[sortedMessages.length - 2].timestamp
+                      );
+                    } else {
+                      // 只有1条消息，设置为比这条消息早1秒
+                      targetTime = new Date(
+                        sortedMessages[0].timestamp.getTime() - 1000
+                      );
+                    }
+
+                    return { ...p, lastReadAt: targetTime };
+                  } else {
+                    // 没有其他人的消息，无法标记为未读
+                    return p;
+                  }
+                }
+              }
+              return p;
+            });
+
+            // 只更新participants，移除unreadCount的直接设置
+            // 让动态计算来处理未读数显示
+            return {
+              ...conv,
+              participants: updatedParticipants,
+            };
           }
           return conv;
         })
       );
     },
-    [currentUserId]
+    [currentUserId, getConversationUnreadCount, messages]
   );
 
   // 处理删除会话

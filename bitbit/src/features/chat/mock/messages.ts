@@ -97,9 +97,9 @@ export const mockMessages: Message[] = [
     content: "明天徒步活动记得带相机哦！",
     senderId: "2",
     conversationId: "conv2",
-    timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1小时前
+    timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30分钟前
     type: "text",
-    status: "read",
+    status: "sent",
   },
   // conv3的消息 - 瑜伽晨练
   {

@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { routes } from "@/shared/config/routes";
 import Header from "@/components/layout/Header";
+import SearchBar from "@/components/ui/SearchBar";
 import ComponentShowcase from "@/components/ComponentShowcase";
 import { devConfig } from "@/config/dev.config";
 import { Icon } from "@/components/ui";
@@ -17,13 +18,17 @@ import "./App.css";
 const Layout = () => {
   const location = useLocation();
   const isChatPage = location.pathname.startsWith("/chat");
+  const isHomePage = location.pathname === "/";
 
   return (
     <div className="app-container bg-gray-50 min-h-screen">
       {/* 固定顶部header - 聊天页面时隐藏 */}
       {!isChatPage && <Header />}
+      {isHomePage && <SearchBar />}
 
-      <main className={`container-main ${!isChatPage ? "pt-16 pb-20" : ""}`}>
+      <main
+        className={`main-content flex-1 ${!isChatPage ? "pt-16 pb-20" : ""}`}
+      >
         <Suspense
           fallback={
             <div className="container-main py-8 text-center text-body text-text-secondary">
@@ -73,14 +78,14 @@ const Layout = () => {
                 </div>
               </NavLink>
               <NavLink
-                to="/chat"
+                to="/exchange"
                 className={({ isActive }) =>
                   `nav-tab-item ${isActive ? "nav-tab-active" : ""}`
                 }
               >
                 <div className="flex flex-col items-center">
-                  <Icon name="comment" size="lg" className="mb-1" />
-                  <span className="text-xs">聊天</span>
+                  <Icon name="exchange" size="lg" className="mb-1" />
+                  <span className="text-xs">二手</span>
                 </div>
               </NavLink>
               <NavLink
@@ -163,7 +168,7 @@ const Layout = () => {
           )}
         </nav>
       )}
-      
+
       {/* Toast组件 */}
       <Toast />
     </div>

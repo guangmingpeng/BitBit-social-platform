@@ -134,7 +134,54 @@ export function useChatState({
   const [shouldHideUnreadDivider, setShouldHideUnreadDivider] =
     useState<boolean>(false);
 
-  const activeConversation = conversations.find(
+  // 数据一致性检查和修复函数
+  const validateAndFixConversationData = useCallback(
+    (conversations: Conversation[], messages: Message[]) => {
+      const fixedConversations = conversations.map((conversation) => {
+        if (!conversation.lastMessage) return conversation;
+
+        // 查找对应的消息数据
+        const actualMessage = messages.find(
+          (m) => m.id === conversation.lastMessage!.id
+        );
+
+        if (
+          actualMessage &&
+          conversation.lastMessage.timestamp.getTime() !==
+            actualMessage.timestamp.getTime()
+        ) {
+          console.warn(
+            `数据不一致检测: 会话 ${conversation.id} 的 lastMessage 时间戳不匹配，已自动修复`
+          );
+          console.warn(
+            `Conversation时间戳: ${conversation.lastMessage.timestamp}`
+          );
+          console.warn(`Message时间戳: ${actualMessage.timestamp}`);
+
+          return {
+            ...conversation,
+            lastMessage: {
+              ...conversation.lastMessage,
+              timestamp: actualMessage.timestamp, // 以messages.ts中的时间戳为准
+              status: actualMessage.status, // 同时同步状态
+            },
+          };
+        }
+
+        return conversation;
+      });
+
+      return fixedConversations;
+    },
+    []
+  );
+
+  // 应用数据一致性检查
+  const validatedConversations = useMemo(() => {
+    return validateAndFixConversationData(conversations, messages);
+  }, [conversations, messages, validateAndFixConversationData]);
+
+  const activeConversation = validatedConversations.find(
     (c) => c.id === activeConversationId
   );
 
@@ -235,11 +282,11 @@ export function useChatState({
 
   // 计算带有未读计数的会话列表，但不强制排序
   const conversationsWithUnreadCount = useMemo(() => {
-    return conversations.map((conv) => ({
+    return validatedConversations.map((conv) => ({
       ...conv,
       unreadCount: getConversationUnreadCount(conv),
     }));
-  }, [conversations, getConversationUnreadCount]);
+  }, [validatedConversations, getConversationUnreadCount]);
 
   // 计算实时新消息（用户在当前会话中，且不在底部时收到的新消息）
   const hasRealtimeNewMessages = realtimeNewMessages.length > 0;
@@ -694,7 +741,9 @@ export function useChatState({
   // 切换到指定对话
   const switchToConversation = useCallback(
     (conversationId: string) => {
-      const conversation = conversations.find((c) => c.id === conversationId);
+      const conversation = validatedConversations.find(
+        (c) => c.id === conversationId
+      );
 
       if (conversation) {
         console.log("切换到会话:", {
@@ -721,7 +770,7 @@ export function useChatState({
 
       setActiveConversationId(conversationId);
     },
-    [conversations, messages]
+    [validatedConversations, messages]
   );
 
   // 设置预设消息
@@ -1015,7 +1064,7 @@ export function useChatState({
 
   return {
     // 状态
-    conversations,
+    conversations: validatedConversations, // 返回验证后的数据
     messages,
     activeConversationId,
     showSettings,

@@ -3,6 +3,7 @@ import type {
   NotificationStats,
   NotificationType,
 } from "../types";
+import ChatNotificationService from "./chatNotificationService";
 
 // 模拟数据
 const mockNotifications: Notification[] = [
@@ -125,45 +126,33 @@ class NotificationService {
   private listeners: Set<() => void> = new Set();
 
   constructor() {
-    // 初始化通知数据并生成动态标题和内容
-    this.notifications = mockNotifications.map((notification) => {
-      if (notification.type === "message" && notification.messageData) {
-        return {
-          ...notification,
-          title: this.generateMessageNotificationContent(
-            notification.messageData
-          ), // 将动态内容设为标题
-          content: notification.messageData.lastMessage, // 内容显示最新消息
-        };
-      }
-      return notification;
-    });
+    // 初始化静态通知数据
+    this.notifications = mockNotifications
+      .filter((notification) => notification.type !== "message") // 排除静态消息通知
+      .map((notification) => ({ ...notification }));
+
+    // 动态生成消息通知
+    this.updateMessageNotifications();
   }
 
-  // 生成聚合消息通知的内容
-  private generateMessageNotificationContent(messageData: {
-    senders?: { userName: string }[];
-    totalCount?: number;
-  }): string {
-    const { senders, totalCount } = messageData;
-    const maxDisplayNames = 3;
+  // 动态更新消息通知
+  private updateMessageNotifications(currentUserId: string = "4") {
+    // 移除旧的消息通知
+    this.notifications = this.notifications.filter((n) => n.type !== "message");
 
-    if (!senders || senders.length === 0) {
-      return `收到${totalCount || 1}条新消息`;
-    }
+    // 生成新的动态消息通知
+    const dynamicMessageNotification =
+      ChatNotificationService.generateAggregatedNotification(currentUserId);
 
-    if (senders.length <= maxDisplayNames) {
-      // 如果发送者数量不超过最大显示数量，用顿号分隔
-      const names = senders.map((sender) => sender.userName).join("、");
-      return `${names} 发来${totalCount}条新消息`;
-    } else {
-      // 如果超过最大显示数量，显示前几个名称 + "等"
-      const displayNames = senders
-        .slice(0, maxDisplayNames)
-        .map((sender) => sender.userName);
-      const namesStr = displayNames.join("、");
-      return `${namesStr}等 发来${totalCount}条新消息`;
+    if (dynamicMessageNotification) {
+      this.notifications.unshift(dynamicMessageNotification); // 添加到最前面
     }
+  }
+
+  // 刷新消息通知
+  refreshMessageNotifications(currentUserId: string = "4"): void {
+    this.updateMessageNotifications(currentUserId);
+    this.notifyListeners();
   }
 
   // 获取所有通知

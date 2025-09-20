@@ -64,7 +64,7 @@ export const mockConversations: Conversation[] = [
       content: "太好了！Evan的提议很棒，安全第一。我会带相机记录这次旅行。",
       senderId: "6",
       conversationId: "conv1",
-      timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1小时前，比Bob Wang的消息早
+      timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5分钟前，与messages.ts保持一致
       type: "text",
       status: "sent",
     },
@@ -201,9 +201,9 @@ export const mockConversations: Conversation[] = [
       id: "msg_conv4_4",
       content:
         "很好的开始！建议你先保持现有的距离，重点关注跑步姿势和呼吸节奏。",
-      senderId: "7", // 修正为Grace Wu的用户ID
+      senderId: "3", // 与messages.ts保持一致
       conversationId: "conv4",
-      timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30分钟前，与通知时间一致
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 5), // 5小时前，与messages.ts保持一致
       type: "text",
       status: "delivered",
     },
@@ -287,7 +287,7 @@ export const mockConversations: Conversation[] = [
       content: "什么时候开始呢？我很期待！",
       senderId: "9",
       conversationId: "conv6",
-      timestamp: new Date(Date.now() - 1000 * 60 * 45), // 45分钟前，与通知时间对应
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2小时前，与messages.ts保持一致
       type: "text",
       status: "delivered",
     },
@@ -326,10 +326,10 @@ export const mockConversations: Conversation[] = [
     ],
     lastMessage: {
       id: "msg_conv7_3",
-      content: "最近在研究新的算法，想和大家分享一下。",
-      senderId: "10", // 修正为Jack Chen的用户ID
+      content: "太好了！我会准时参加的。",
+      senderId: "4", // 与messages.ts保持一致
       conversationId: "conv7",
-      timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1小时前，与通知时间对应
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 8), // 8小时前，与messages.ts保持一致
       type: "text",
       status: "delivered",
     },
@@ -539,7 +539,7 @@ export const mockConversations: Conversation[] = [
       content: "营养计划制定好了，我发给你看看",
       senderId: "15",
       conversationId: "conv12",
-      timestamp: new Date(Date.now() - 1000 * 60 * 180), // 3小时前
+      timestamp: new Date(Date.now() - 1000 * 60 * 20), // 20分钟前，与messages.ts保持一致
       type: "text",
       status: "delivered",
     },

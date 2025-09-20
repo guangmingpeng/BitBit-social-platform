@@ -38,7 +38,26 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
 
     // 特殊处理消息类型的通知
     if (notification.type === "message" && notification.actionUrl) {
-      // 处理聚合消息通知或单个用户消息通知
+      // 处理会话消息通知 (群聊/活动聊天)
+      const conversationMatch = notification.actionUrl.match(
+        /\/messages\/conversation\/(.+)/
+      );
+      if (conversationMatch) {
+        const conversationId = conversationMatch[1];
+
+        // 根据通知内容判断会话类型
+        const isGroupMessage =
+          notification.content.includes("发来") &&
+          !notification.content.match(/^[^:]+:/);
+
+        navigateToChatFromNotification(navigate, {
+          conversationId,
+          type: isGroupMessage ? "group" : "activity",
+        });
+        return;
+      }
+
+      // 处理私聊消息通知
       const chatUserMatch = notification.actionUrl.match(
         /\/messages\/chat\/(.+)/
       );

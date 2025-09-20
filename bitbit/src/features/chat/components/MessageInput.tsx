@@ -255,15 +255,18 @@ const MessageInput: React.FC<MessageInputProps> = ({
         className
       )}
     >
-      {/* 表情选择器 */}
+      {/* 表情选择器 - 响应式网格 */}
       {showEmojiPicker && (
         <div className="border-b border-gray-200 p-3 bg-gray-50 max-h-40 overflow-y-auto">
-          <div className="grid grid-cols-8 gap-2">
+          <div className="grid grid-cols-6 md:grid-cols-8 gap-2">
             {commonEmojis.map((emoji, index) => (
               <button
                 key={index}
                 onClick={() => handleEmojiSelect(emoji)}
-                className="text-xl hover:bg-gray-200 rounded p-1 transition-colors"
+                className={cn(
+                  "hover:bg-gray-200 rounded transition-colors",
+                  "text-xl p-2 md:text-xl md:p-1" // 移动端更大的触摸区域
+                )}
                 title={emoji}
               >
                 {emoji}
@@ -305,16 +308,17 @@ const MessageInput: React.FC<MessageInputProps> = ({
         </div>
       )}
 
-      {/* 输入区域 */}
-      <div className="flex items-end gap-2 p-4">
-        {/* 功能按钮区 */}
+      {/* 输入区域 - 响应式边距 */}
+      <div className="flex items-end gap-2 p-3 md:p-4">
+        {/* 功能按钮区 - 响应式尺寸 */}
         <div className="flex gap-1 mb-2">
           {/* 表情按钮 */}
           <button
             type="button"
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
             className={cn(
-              "flex items-center justify-center w-8 h-8 rounded-lg transition-colors",
+              "flex items-center justify-center rounded-lg transition-colors",
+              "w-9 h-9 md:w-8 md:h-8", // 移动端略大一些，便于触摸
               showEmojiPicker
                 ? "bg-primary-100 text-primary-600"
                 : "text-gray-500 hover:bg-gray-100"
@@ -340,7 +344,10 @@ const MessageInput: React.FC<MessageInputProps> = ({
           <button
             type="button"
             onClick={handleImageSelect}
-            className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+            className={cn(
+              "flex items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 transition-colors",
+              "w-9 h-9 md:w-8 md:h-8" // 移动端略大一些，便于触摸
+            )}
             aria-label="选择图片"
           >
             <svg
@@ -353,7 +360,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
           </button>
@@ -381,10 +388,11 @@ const MessageInput: React.FC<MessageInputProps> = ({
             disabled={disabled}
             rows={2}
             className={cn(
-              "w-full resize-none border border-gray-300 rounded-lg px-3 py-3 pr-16",
+              "w-full resize-none border border-gray-300 rounded-lg transition-colors",
               "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent",
-              "text-sm leading-relaxed",
-              "min-h-[60px] max-h-[150px]",
+              "text-sm leading-relaxed min-h-[60px] max-h-[150px]",
+              // 响应式内边距
+              "px-3 py-3 pr-16 md:px-3 md:py-3",
               disabled && "bg-gray-100 cursor-not-allowed"
             )}
             style={{ height: "auto" }}
@@ -398,13 +406,14 @@ const MessageInput: React.FC<MessageInputProps> = ({
           )}
         </div>
 
-        {/* 发送按钮 */}
+        {/* 发送按钮 - 响应式尺寸 */}
         <button
           type="button"
           onClick={handleSend}
           disabled={!canSend}
           className={cn(
-            "flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 mb-2",
+            "flex items-center justify-center rounded-lg transition-all duration-200 mb-2",
+            "w-11 h-11 md:w-10 md:h-10", // 移动端略大一些，便于触摸
             canSend
               ? "bg-primary-500 text-white hover:bg-primary-600 active:scale-95"
               : "bg-gray-200 text-gray-400 cursor-not-allowed"

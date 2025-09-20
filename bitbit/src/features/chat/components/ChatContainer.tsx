@@ -16,9 +16,11 @@ import { mockUsers } from "@/features/chat/mock/users";
 import { cn } from "@/shared/utils/cn";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/store/slices/uiSlice";
+import { useIsMediumAndUp } from "@/shared/hooks/useMediaQuery";
 
 interface ChatContainerProps {
   className?: string;
+  onActiveConversationChange?: (conversationId: string | null) => void; // 新增：活跃对话变化回调
 }
 
 export interface ChatContainerRef {
@@ -36,10 +38,11 @@ export interface ChatContainerRef {
 }
 
 const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
-  ({ className }, ref) => {
+  ({ className, onActiveConversationChange }, ref) => {
     const currentUserId = "4"; // 当前用户是Diana
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const isMediumAndUp = useIsMediumAndUp(); // 检测是否为平板/桌面端
 
     // 本地状态
     const [isUserAtBottom, setIsUserAtBottom] = useState(true);
@@ -68,6 +71,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       // 操作方法
       setShowSettings,
       handleConversationClick,
+      markConversationAsRead,
       markAllAsRead,
       handleSendMessage,
       simulateNewMessage,
@@ -94,6 +98,29 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       getCurrentMessages,
       getTotalUnreadCount,
     } = useChatState({ currentUserId });
+
+    // 通知父组件活跃对话变化
+    useEffect(() => {
+      if (onActiveConversationChange) {
+        onActiveConversationChange(activeConversationId);
+      }
+    }, [activeConversationId, onActiveConversationChange]);
+
+    // 移动端返回到会话列表的处理
+    const handleBackToConversationList = useCallback(() => {
+      // 在移动端返回时，先标记当前对话为已读，然后切换到列表视图
+      if (!isMediumAndUp && activeConversationId) {
+        // 1. 先标记当前对话为已读
+        markConversationAsRead(activeConversationId);
+        // 2. 然后切换到无活跃对话状态，显示会话列表
+        switchToConversation("");
+      }
+    }, [
+      isMediumAndUp,
+      activeConversationId,
+      switchToConversation,
+      markConversationAsRead,
+    ]);
 
     // 使用useImperativeHandle来暴露方法给父组件
     useImperativeHandle(ref, () => ({
@@ -355,10 +382,27 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
 
     return (
       <div className={cn("flex h-full bg-gray-50", className)}>
-        {/* 整体容器，响应式边距设计，左侧为悬浮返回按钮留出充足空间 */}
-        <div className="flex w-full h-full pl-8 sm:pl-16 md:pl-24 lg:pl-32 pr-4 sm:pr-6 md:pr-8 lg:pr-10 py-2 sm:py-4 gap-3 sm:gap-4 md:gap-6">
-          {/* 左侧会话列表 */}
-          <div className="w-72 sm:w-80 lg:w-96 flex-shrink-0 bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col overflow-hidden">
+        {/* 整体容器，响应式边距设计 */}
+        <div
+          className={cn(
+            "flex w-full h-full gap-2",
+            // 移动端：减少边距，只留出返回按钮空间
+            "pl-4 pr-2 py-1",
+            // 平板/桌面端：保持原有边距设计
+            "md:pl-16 md:pr-6 md:py-4 md:gap-4 lg:pl-24 lg:pr-8 lg:gap-6"
+          )}
+        >
+          {/* 会话列表 - 响应式显示 */}
+          <div
+            className={cn(
+              "bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col overflow-hidden",
+              isMediumAndUp
+                ? "w-80 lg:w-96 flex-shrink-0" // 平板/桌面端：固定宽度侧边栏
+                : activeConversationId
+                ? "hidden" // 移动端：有活跃对话时隐藏列表
+                : "flex-1" // 移动端：无活跃对话时全宽显示
+            )}
+          >
             <ConversationList
               conversations={updatedConversations}
               users={mockUsers}
@@ -375,8 +419,17 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
             />
           </div>
 
-          {/* 右侧聊天区域 */}
-          <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col min-h-0 overflow-hidden">
+          {/* 聊天区域 - 响应式显示 */}
+          <div
+            className={cn(
+              "bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col min-h-0 overflow-hidden",
+              isMediumAndUp
+                ? "flex-1" // 平板/桌面端：占据剩余空间
+                : activeConversationId
+                ? "flex-1" // 移动端：有活跃对话时全宽显示
+                : "hidden" // 移动端：无活跃对话时隐藏
+            )}
+          >
             {activeConversation ? (
               <>
                 {/* 聊天头部 */}
@@ -389,6 +442,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
                   onToggleSettings={() => setShowSettings(!showSettings)}
                   onSimulateMessages={simulateMultipleMessages}
                   onTestNewMessageButton={handleForceShowNewMessageButton}
+                  onBackToList={handleBackToConversationList}
                 />
 
                 {/* 聊天内容区域 - 可伸缩，包含消息列表和设置面板 */}

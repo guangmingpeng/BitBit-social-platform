@@ -314,11 +314,18 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({
             e.stopPropagation();
             setShowMenu(!showMenu);
           }}
-          className="p-1 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-gray-200 transition-all"
+          className={cn(
+            "rounded-lg transition-all",
+            // 移动端更大的触摸目标，桌面端保持原尺寸
+            "p-2 md:p-1",
+            // 移动端始终可见，桌面端hover时显示
+            "opacity-100 md:opacity-0 md:group-hover:opacity-100",
+            "hover:bg-gray-200 active:bg-gray-300"
+          )}
           aria-label="会话管理"
         >
           <svg
-            className="w-4 h-4 text-gray-500"
+            className="w-5 h-5 md:w-4 md:h-4 text-gray-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -332,9 +339,9 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({
           </svg>
         </button>
 
-        {/* 下拉菜单 */}
+        {/* 下拉菜单 - 响应式尺寸 */}
         {showMenu && (
-          <div className="absolute right-0 top-8 w-40 bg-white rounded-lg shadow-xl border border-gray-200 z-[1000] overflow-visible min-h-[80px]">
+          <div className="absolute right-0 top-10 md:top-8 w-44 md:w-40 bg-white rounded-lg shadow-xl border border-gray-200 z-[1000] overflow-visible min-h-[80px]">
             <div className="py-1">
               {/* 置顶功能 - 总是显示 */}
               <button
@@ -343,7 +350,7 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({
                   onTogglePin?.(conversation.id);
                   setShowMenu(false);
                 }}
-                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                className="w-full text-left px-4 py-3 md:px-3 md:py-2 text-sm hover:bg-gray-100 active:bg-gray-200 flex items-center gap-2"
               >
                 <svg
                   className="w-4 h-4"
@@ -368,7 +375,7 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({
                   onToggleReadStatus?.(conversation.id);
                   setShowMenu(false);
                 }}
-                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                className="w-full text-left px-4 py-3 md:px-3 md:py-2 text-sm hover:bg-gray-100 active:bg-gray-200 flex items-center gap-2"
               >
                 <svg
                   className="w-4 h-4"
@@ -393,7 +400,7 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({
                   onDelete?.(conversation.id);
                   setShowMenu(false);
                 }}
-                className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 text-red-600 flex items-center gap-2"
+                className="w-full text-left px-4 py-3 md:px-3 md:py-2 text-sm hover:bg-gray-100 active:bg-gray-200 text-red-600 flex items-center gap-2"
               >
                 <svg
                   className="w-4 h-4"

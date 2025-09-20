@@ -31,11 +31,11 @@ const ConversationListHeader: React.FC<ConversationListHeaderProps> = ({
         )}
       </div>
 
-      {/* 右侧：一键已读按钮 */}
+      {/* 右侧：一键已读按钮 - 移动端优化 */}
       {unreadCount > 0 && onMarkAllAsRead && (
         <button
           onClick={onMarkAllAsRead}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 md:px-3 md:py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-all duration-200"
         >
           <svg
             className="w-4 h-4"

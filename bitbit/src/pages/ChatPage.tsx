@@ -12,6 +12,7 @@ import { ChatContainer } from "@/features/chat/components";
 import type { ChatContainerRef } from "@/features/chat/components/ChatContainer";
 import { parseChatUrlParams } from "@/features/chat/utils";
 import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
+import { useIsSmallAndDown } from "@/shared/hooks/useMediaQuery";
 
 const ChatPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +20,10 @@ const ChatPage: React.FC = () => {
   const location = useLocation();
   const { smartGoBack } = useSmartNavigation();
   const chatContainerRef = useRef<ChatContainerRef>(null);
+  const isMobile = useIsSmallAndDown(); // 检测是否为移动端
+  const [activeConversationId, setActiveConversationId] = useState<
+    string | null
+  >(null); // 跟踪活跃对话
 
   // 解析URL参数
   const urlParams = parseChatUrlParams(searchParams);
@@ -282,24 +287,32 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-gray-50 flex flex-col z-50 overflow-hidden pb-16">
-      {/* 返回按钮 - 绝对定位在左上角 */}
-      <div className="absolute top-4 left-4 z-[60]">
-        <FloatingBackButton
-          text="返回上页"
-          variant="elegant"
-          size="md"
-          onClick={handleGoBack}
-        />
-      </div>
+      {/* 返回按钮 - 在移动端有活跃对话时隐藏，避免与聊天界面内的返回按钮冲突 */}
+      {!(isMobile && activeConversationId) && (
+        <div className="absolute top-2 left-2 md:top-4 md:left-4 z-[60]">
+          <FloatingBackButton
+            text="返回上页"
+            variant="elegant"
+            size="md"
+            onClick={handleGoBack}
+          />
+        </div>
+      )}
 
-      {/* 上下文信息条 - 固定顶部 */}
+      {/* 上下文信息条 - 固定顶部，响应式边距，根据悬浮按钮显示状态调整边距 */}
       {contextInfo.show && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200 px-4 py-3 flex-shrink-0 z-[55]">
-          <div className="flex items-center justify-between max-w-4xl mx-auto ml-16">
-            <div className="flex items-center gap-3">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200 px-2 md:px-4 py-2 md:py-3 flex-shrink-0 z-[55]">
+          <div
+            className={`flex items-center justify-between max-w-4xl mx-auto ${
+              !(isMobile && activeConversationId)
+                ? "ml-12 md:ml-16"
+                : "ml-2 md:ml-16"
+            }`}
+          >
+            <div className="flex items-center gap-2 md:gap-3">
               <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
               <div>
-                <p className="text-sm font-medium text-blue-800">
+                <p className="text-xs md:text-sm font-medium text-blue-800">
                   {contextInfo.title}
                 </p>
                 {contextInfo.subtitle && (
@@ -329,7 +342,11 @@ const ChatPage: React.FC = () => {
 
       {/* 聊天容器 - 占满整个剩余空间 */}
       <div className="flex-1 min-h-0">
-        <ChatContainer ref={chatContainerRef} className="h-full" />
+        <ChatContainer
+          ref={chatContainerRef}
+          className="h-full"
+          onActiveConversationChange={setActiveConversationId}
+        />
       </div>
 
       {/* 调试信息（开发环境） - 不影响布局 */}

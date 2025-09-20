@@ -1,6 +1,7 @@
 import React from "react";
 import type { Conversation } from "@/features/chat/types";
 import { cn } from "@/shared/utils/cn";
+import { useIsSmallAndDown } from "@/shared/hooks/useMediaQuery";
 
 interface ChatHeaderProps {
   activeConversation: Conversation | undefined;
@@ -11,6 +12,7 @@ interface ChatHeaderProps {
   onToggleSettings: () => void;
   onSimulateMessages?: (count: number) => void;
   onTestNewMessageButton?: () => void; // 新增：测试新消息按钮的回调
+  onBackToList?: () => void; // 新增：移动端返回列表的回调
   className?: string;
 }
 
@@ -23,8 +25,10 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
   onToggleSettings,
   onSimulateMessages,
   onTestNewMessageButton,
+  onBackToList,
   className,
 }) => {
+  const isMobile = useIsSmallAndDown(); // 检测是否为移动端
   if (!activeConversation) return null;
 
   // 获取对方用户信息（私聊时）
@@ -69,6 +73,29 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3 min-w-0 flex-1">
+          {/* 移动端返回按钮 */}
+          {isMobile && onBackToList && (
+            <button
+              onClick={onBackToList}
+              className="flex-shrink-0 p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              aria-label="返回消息列表"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+          )}
+
           {/* 头像 */}
           <div className="relative flex-shrink-0">
             <img

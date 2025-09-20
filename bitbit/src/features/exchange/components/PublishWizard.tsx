@@ -14,11 +14,13 @@ import {
 interface PublishWizardProps {
   initialData?: Partial<PublishFormData>;
   onSubmit?: (data: PublishFormData) => Promise<void>;
+  onChange?: (data: PublishFormData) => void;
 }
 
 const PublishWizard: React.FC<PublishWizardProps> = ({
   initialData,
   onSubmit,
+  onChange,
 }) => {
   const navigate = useNavigate();
 
@@ -69,6 +71,11 @@ const PublishWizard: React.FC<PublishWizardProps> = ({
       }
     }
   }, [initialData]);
+
+  // 当表单数据变化时通知父组件
+  useEffect(() => {
+    onChange?.(formData);
+  }, [formData, onChange]);
 
   const [currentStep, setCurrentStep] = useState<PublishStep>(1);
   const [publishStatus, setPublishStatus] = useState<

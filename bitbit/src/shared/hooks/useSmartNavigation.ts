@@ -422,7 +422,65 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 8. 其他页面的通用返回逻辑
+    // 8. 处理发布页面的返回
+    const isPublishPage =
+      currentPath === "/publish-activity" ||
+      currentPath === "/community/publish" ||
+      currentPath.startsWith("/exchange/publish");
+
+    if (isPublishPage) {
+      if (fromSource === "home") {
+        console.log("→ 发布页面返回首页");
+        navigate("/", { replace: true });
+        return;
+      } else if (fromSource === "activities") {
+        console.log("→ 发布页面返回活动列表");
+        navigate("/activities", { replace: true });
+        return;
+      } else if (fromSource === "community") {
+        console.log("→ 发布页面返回社区");
+        navigate("/community", { replace: true });
+        return;
+      } else if (fromSource === "exchange") {
+        console.log("→ 发布页面返回交换页面");
+        navigate("/exchange", { replace: true });
+        return;
+      } else if (fromSource === "profile") {
+        console.log("→ 发布页面返回个人资料");
+        const profileTab = location.state?.profileTab || "activities";
+        navigate(`/profile/${profileTab}`, { replace: true });
+        return;
+      }
+
+      // 兜底：从栈中查找前一个页面
+      const currentIndex = stack.findIndex(
+        (entry) => entry.pathname === currentPath
+      );
+      if (currentIndex > 0) {
+        const previousEntry = stack[currentIndex - 1];
+        console.log("→ 发布页面返回栈中前一个页面:", previousEntry.pathname);
+        navigate(previousEntry.pathname, { replace: true });
+        return;
+      }
+
+      // 最终兜底：根据页面类型返回对应的列表页
+      if (currentPath === "/publish-activity") {
+        console.log("→ 发布活动页面最终兜底返回活动列表");
+        navigate("/activities", { replace: true });
+      } else if (currentPath === "/community/publish") {
+        console.log("→ 发布帖子页面最终兜底返回社区");
+        navigate("/community", { replace: true });
+      } else if (currentPath.startsWith("/exchange/publish")) {
+        console.log("→ 发布商品页面最终兜底返回交换页面");
+        navigate("/exchange", { replace: true });
+      } else {
+        console.log("→ 发布页面最终兜底返回首页");
+        navigate("/", { replace: true });
+      }
+      return;
+    }
+
+    // 9. 其他页面的通用返回逻辑
     if (stack.length > 1) {
       const previousEntry = stack[stack.length - 2];
       console.log("→ 通用返回逻辑，返回:", previousEntry.pathname);

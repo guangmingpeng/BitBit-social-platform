@@ -5,6 +5,7 @@ import type {
 } from "@/features/chat/types";
 import type { User } from "@/types";
 import UserCardPopover from "@/shared/components/UserCardPopover";
+import { useChatNavigation } from "@/shared/hooks/useChatNavigation";
 import { cn } from "@/shared/utils/cn";
 
 interface GroupMemberItemProps {
@@ -30,6 +31,7 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
   isGroupDismissed = false,
   className,
 }) => {
+  const { navigateToUserChat } = useChatNavigation();
   const isCurrentUser = participant.userId === currentUserId;
   const canManage = isAdmin && !isCurrentUser && !isGroupDismissed;
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -146,7 +148,15 @@ const GroupMemberItem: React.FC<GroupMemberItemProps> = ({
         user={convertUserForPopover(participant.user)}
         placement="left"
         onFollow={() => console.log("Follow user:", participant.userId)}
-        onMessage={() => console.log("Message user:", participant.userId)}
+        onMessage={() => {
+          // 不能给自己发私信
+          if (!isCurrentUser) {
+            navigateToUserChat(participant.userId, {
+              name: getDisplayName(participant.user),
+              avatar: participant.user.avatar,
+            });
+          }
+        }}
         onViewProfile={() => console.log("View profile:", participant.userId)}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0 cursor-pointer">

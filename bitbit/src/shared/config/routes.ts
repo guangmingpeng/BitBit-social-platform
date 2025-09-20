@@ -42,6 +42,7 @@ const UserCardPopoverDemo = lazy(
   () => import("@/examples/UserCardPopoverDemo")
 );
 const ButtonVariantsDemo = lazy(() => import("@/examples/ButtonVariantsDemo"));
+
 // 路由配置
 export const routes = [
   {
@@ -164,6 +165,7 @@ export const routes = [
     path: "/test/chat-demo",
     element: ChatDemo,
   },
+
   {
     path: "/test/navigation-demo",
     element: NavigationDemo,

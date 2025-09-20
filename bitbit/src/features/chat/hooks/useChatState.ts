@@ -592,16 +592,23 @@ export function useChatState({
       userId: string,
       userInfo?: { name: string; avatar?: string }
     ): Promise<string> => {
-      // 检查是否已存在与该用户的私聊对话
+      console.log("查找或创建与用户的会话:", { userId, userInfo });
+
+      // 严格检查是否已存在与该用户的私聊对话
       const existingConversation = conversations.find(
         (conv) =>
           conv.type === "private" &&
-          conv.participants.some((p) => p.userId === userId)
+          conv.participants.length === 2 && // 确保只有两个参与者
+          conv.participants.some((p) => p.userId === currentUserId) && // 包含当前用户
+          conv.participants.some((p) => p.userId === userId) // 包含目标用户
       );
 
       if (existingConversation) {
+        console.log("找到已存在的会话:", existingConversation.id);
         return existingConversation.id;
       }
+
+      console.log("创建新会话，目标用户:", userId);
 
       // 获取用户信息
       const targetUser = mockUsers[userId] || {
@@ -619,8 +626,13 @@ export function useChatState({
 
       const currentUser = mockUsers[currentUserId];
 
-      // 创建新的私聊对话
-      const newConversationId = `conv_${Date.now()}_${userId}`;
+      // 创建新的私聊对话 - 使用更唯一的ID生成算法
+      const timestamp = Date.now();
+      const randomSuffix = Math.random().toString(36).substring(2, 8);
+      const newConversationId = `private_${currentUserId}_${userId}_${timestamp}_${randomSuffix}`;
+
+      console.log("生成新会话ID:", newConversationId);
+
       const newConversation: Conversation = {
         id: newConversationId,
         type: "private",
@@ -655,15 +667,54 @@ export function useChatState({
       };
 
       setConversations((prev) => [newConversation, ...prev]);
+
+      console.log("新会话已创建:", {
+        conversationId: newConversationId,
+        participants: newConversation.participants.map((p) => ({
+          id: p.userId,
+          name: p.user.name,
+        })),
+        isNewConversation: true,
+        hasHistoryMessages: false,
+      });
+
       return newConversationId;
     },
     [conversations, currentUserId]
   );
 
   // 切换到指定对话
-  const switchToConversation = useCallback((conversationId: string) => {
-    setActiveConversationId(conversationId);
-  }, []);
+  const switchToConversation = useCallback(
+    (conversationId: string) => {
+      const conversation = conversations.find((c) => c.id === conversationId);
+
+      if (conversation) {
+        console.log("切换到会话:", {
+          conversationId,
+          type: conversation.type,
+          title: conversation.title,
+          participantCount: conversation.participants.length,
+          lastMessage: conversation.lastMessage?.content || "暂无消息",
+          hasHistory: !!conversation.lastMessage,
+        });
+
+        // 检查是否是历史会话（有lastMessage）还是新会话
+        const isHistoryConversation = !!conversation.lastMessage;
+        const messageCount = messages.filter(
+          (m) => m.conversationId === conversationId
+        ).length;
+
+        console.log(
+          `会话状态: ${
+            isHistoryConversation ? "历史会话" : "新会话"
+          }, 消息数量: ${messageCount}`
+        );
+      }
+
+      setActiveConversationId(conversationId);
+    },
+    [conversations, messages]
+  );
 
   // 设置预设消息
   const setPresetMessage = useCallback((message: string) => {

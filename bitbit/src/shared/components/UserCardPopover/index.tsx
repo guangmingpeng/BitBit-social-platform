@@ -138,9 +138,18 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
   };
 
   const handleMessage = () => {
+    console.log("UserCardPopover handleMessage:", {
+      userId: user.id,
+      hasCustomCallback: !!onMessage,
+    });
+
     if (onMessage) {
+      // 如果有自定义回调，只执行回调，不执行默认导航
+      console.log("执行自定义onMessage回调:", user.id);
       onMessage(user.id);
     } else {
+      // 默认行为：导航到聊天页面
+      console.log("使用默认聊天导航:", { userId: user.id, name: user.name });
       navigateToChatFromUserCard(navigate, user.id, {
         name: user.name,
         avatar: user.avatar,

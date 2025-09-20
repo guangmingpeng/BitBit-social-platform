@@ -25,8 +25,8 @@ const ChatPage: React.FC = () => {
   const stateParams = location.state;
 
   // 组合参数（state优先于URL参数）
-  const chatParams = useMemo(
-    () => ({
+  const chatParams = useMemo(() => {
+    const params = {
       userId: stateParams?.userId || urlParams.userId,
       userName: stateParams?.userName || urlParams.userName,
       userAvatar: stateParams?.userAvatar || urlParams.userAvatar,
@@ -50,62 +50,67 @@ const ChatPage: React.FC = () => {
         stateParams?.fromSource === "notifications" &&
         stateParams?.messageNotification
       ),
-    }),
-    [
-      stateParams?.userId,
-      urlParams.userId,
-      stateParams?.userName,
-      urlParams.userName,
-      stateParams?.userAvatar,
-      urlParams.userAvatar,
-      stateParams?.conversationId,
-      urlParams.conversationId,
-      stateParams?.conversationType,
-      urlParams.conversationType,
-      stateParams?.sourceContext?.from,
-      urlParams.sourceFrom,
-      stateParams?.sourceContext?.itemId,
-      urlParams.sourceItemId,
-      stateParams?.sourceContext?.itemTitle,
-      urlParams.sourceItemTitle,
-      stateParams?.presetMessage,
-      urlParams.presetMessage,
-      stateParams?.fromSource,
-      stateParams?.messageNotification,
-    ]
-  );
+    };
+
+    return params;
+  }, [
+    stateParams?.userId,
+    urlParams.userId,
+    stateParams?.userName,
+    urlParams.userName,
+    stateParams?.userAvatar,
+    urlParams.userAvatar,
+    stateParams?.conversationId,
+    urlParams.conversationId,
+    stateParams?.conversationType,
+    urlParams.conversationType,
+    stateParams?.sourceContext?.from,
+    urlParams.sourceFrom,
+    stateParams?.sourceContext?.itemId,
+    urlParams.sourceItemId,
+    stateParams?.sourceContext?.itemTitle,
+    urlParams.sourceItemTitle,
+    stateParams?.presetMessage,
+    urlParams.presetMessage,
+    stateParams?.fromSource,
+    stateParams?.messageNotification,
+  ]);
 
   const [isInitialized, setIsInitialized] = useState(false);
+  const initializationInProgress = useRef(false);
   const [contextInfo, setContextInfo] = useState<{
     show: boolean;
     title: string;
     subtitle?: string;
   }>({ show: false, title: "" });
 
+  // 使用 useRef 保存稳定的参数引用，避免不必要的重新执行
+  const chatParamsRef = useRef(chatParams);
+  chatParamsRef.current = chatParams;
+
   // 初始化聊天会话
   const initializeChat = useCallback(async () => {
+    const params = chatParamsRef.current;
     try {
-      if (chatParams.conversationId) {
+      if (params.conversationId) {
         // 如果有会话ID，直接加载该会话
-        console.log("加载现有会话:", chatParams.conversationId);
-        chatContainerRef.current?.switchToConversation(
-          chatParams.conversationId
-        );
-      } else if (chatParams.userId) {
+        console.log("加载现有会话:", params.conversationId);
+        chatContainerRef.current?.switchToConversation(params.conversationId);
+      } else if (params.userId) {
         // 如果有用户ID，创建或查找与该用户的私聊会话
         console.log("创建/查找与用户的私聊:", {
-          userId: chatParams.userId,
-          userName: chatParams.userName,
-          userAvatar: chatParams.userAvatar,
+          userId: params.userId,
+          userName: params.userName,
+          userAvatar: params.userAvatar,
         });
 
         // 创建或查找与该用户的对话
         const conversationId =
           await chatContainerRef.current?.createOrFindConversationWithUser(
-            chatParams.userId,
+            params.userId,
             {
-              name: chatParams.userName || `用户${chatParams.userId}`,
-              avatar: chatParams.userAvatar,
+              name: params.userName || `用户${params.userId}`,
+              avatar: params.userAvatar,
             }
           );
 
@@ -114,30 +119,39 @@ const ChatPage: React.FC = () => {
           chatContainerRef.current?.switchToConversation(conversationId);
 
           // 如果有预设消息，设置到输入框中
-          if (chatParams.presetMessage) {
-            chatContainerRef.current?.setPresetMessage(
-              chatParams.presetMessage
-            );
-            console.log("设置预设消息:", chatParams.presetMessage);
+          if (params.presetMessage) {
+            chatContainerRef.current?.setPresetMessage(params.presetMessage);
+            console.log("设置预设消息:", params.presetMessage);
           }
         }
       }
     } catch (error) {
       console.error("初始化聊天失败:", error);
     }
-  }, [chatParams]);
+  }, []); // 移除 chatParams 依赖，使用 ref 访问最新值
 
   useEffect(() => {
     if (
       !isInitialized &&
+      !initializationInProgress.current &&
       (chatParams.userId || chatParams.conversationId || chatParams.isListMode)
     ) {
+      initializationInProgress.current = true;
+
       if (chatParams.userId || chatParams.conversationId) {
-        initializeChat();
+        initializeChat().finally(() => {
+          initializationInProgress.current = false;
+        });
       }
       setIsInitialized(true);
     }
-  }, [chatParams, isInitialized, initializeChat]);
+  }, [
+    chatParams.userId,
+    chatParams.conversationId,
+    chatParams.isListMode,
+    isInitialized,
+    initializeChat,
+  ]); // 只监听关键参数
 
   // 设置上下文信息显示
   useEffect(() => {
@@ -147,6 +161,25 @@ const ChatPage: React.FC = () => {
         show: true,
         title: "新消息通知",
         subtitle: `${chatParams.messageNotification.totalCount}个联系人发来了消息`,
+      });
+
+      // 5秒后自动隐藏上下文信息
+      const timer = setTimeout(() => {
+        setContextInfo((prev) => ({ ...prev, show: false }));
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+
+    // 检查是否是从用户卡片发起的私聊，并添加会话状态提示
+    if (chatParams.sourceFrom === "userCard" && chatParams.userId) {
+      // 这里可以添加检查历史会话的逻辑
+      const isNewConversation = !chatParams.conversationId; // 简化判断逻辑
+
+      setContextInfo({
+        show: true,
+        title: isNewConversation ? "📱 开始新对话" : "💬 继续对话",
+        subtitle: `与 ${chatParams.userName || "用户"} 的私聊`,
       });
 
       // 5秒后自动隐藏上下文信息
@@ -169,9 +202,6 @@ const ChatPage: React.FC = () => {
         case "activity":
           contextTitle = "活动群聊";
           contextSubtitle = chatParams.sourceItemTitle;
-          break;
-        case "userCard":
-          contextTitle = "来自用户资料";
           break;
         case "notification":
           contextTitle = "来自通知消息";
@@ -255,7 +285,7 @@ const ChatPage: React.FC = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-gray-50 flex flex-col z-50 overflow-hidden">
+    <div className="fixed inset-0 bg-gray-50 flex flex-col z-50 overflow-hidden pb-16">
       {/* 返回按钮 - 绝对定位在左上角 */}
       <div className="absolute top-4 left-4 z-[60]">
         <FloatingBackButton

@@ -78,7 +78,6 @@ export const navigateToChat = (
   navigate(chatUrl, {
     state: {
       ...params,
-      timestamp: Date.now(),
     },
   });
 };

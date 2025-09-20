@@ -381,7 +381,7 @@ const Profile: FC = () => {
     switch (activeTab) {
       case "activities":
         return (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* 活动筛选 */}
             <ActivityFilter
               activeFilter={activeFilter}
@@ -389,7 +389,7 @@ const Profile: FC = () => {
             />
 
             {/* 活动列表 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
               {activitiesPagination.currentData.length > 0 ? (
                 (
                   activitiesPagination.currentData as typeof adaptedActivities
@@ -408,8 +408,8 @@ const Profile: FC = () => {
                   />
                 ))
               ) : (
-                <div className="text-center py-12">
-                  <p className="text-gray-500">
+                <div className="col-span-full text-center py-8 sm:py-12">
+                  <p className="text-gray-500 text-sm sm:text-base">
                     {activeFilter === "all" ? "暂无活动" : "暂无符合条件的活动"}
                   </p>
                 </div>
@@ -446,7 +446,7 @@ const Profile: FC = () => {
             />
 
             {/* 帖子网格 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
               {(postsPagination.currentData as typeof adaptedPosts).map(
                 (post) => (
                   <PostCard
@@ -465,11 +465,13 @@ const Profile: FC = () => {
 
             {/* 空状态 */}
             {postsPagination.currentData.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-gray-500 mb-4">暂无帖子内容</p>
+              <div className="text-center py-8 sm:py-12">
+                <p className="text-gray-500 mb-4 text-sm sm:text-base">
+                  暂无帖子内容
+                </p>
                 <button
                   onClick={navigation.navigateToPublishPost}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm sm:text-base min-h-[44px]"
                 >
                   发布第一篇帖子
                 </button>
@@ -510,7 +512,7 @@ const Profile: FC = () => {
               <h3 className="text-lg font-semibold text-gray-900">
                 我发布的商品
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
                 {(exchangePagination.currentData as typeof myExchangeItems).map(
                   (item) => (
                     <ExchangeCard
@@ -568,11 +570,13 @@ const Profile: FC = () => {
             {/* 空状态 */}
             {exchangePagination.currentData.length === 0 &&
               ordersPagination.currentData.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-gray-500 mb-4">暂无交易记录</p>
+                <div className="text-center py-8 sm:py-12">
+                  <p className="text-gray-500 mb-4 text-sm sm:text-base">
+                    暂无交易记录
+                  </p>
                   <button
                     onClick={navigation.navigateToPublishItem}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm sm:text-base min-h-[44px]"
                   >
                     发布第一个商品
                   </button>
@@ -630,7 +634,7 @@ const Profile: FC = () => {
 
             {favoritesPagination.currentData.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
                   {(
                     favoritesPagination.currentData as typeof filteredFavorites
                   ).map((favorite, index) => (
@@ -665,8 +669,10 @@ const Profile: FC = () => {
                 )}
               </>
             ) : (
-              <div className="text-center py-12">
-                <p className="text-gray-500">暂无收藏内容</p>
+              <div className="text-center py-8 sm:py-12">
+                <p className="text-gray-500 text-sm sm:text-base">
+                  暂无收藏内容
+                </p>
               </div>
             )}
           </div>
@@ -743,8 +749,8 @@ const Profile: FC = () => {
                 )}
               </>
             ) : (
-              <div className="text-center py-12">
-                <p className="text-gray-500">暂无草稿</p>
+              <div className="text-center py-8 sm:py-12">
+                <p className="text-gray-500 text-sm sm:text-base">暂无草稿</p>
               </div>
             )}
           </div>
@@ -757,8 +763,8 @@ const Profile: FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="space-y-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6">
+        <div className="space-y-3 sm:space-y-4 lg:space-y-6">
           {/* 用户资料 */}
           <UserProfile
             user={profileData.user}
@@ -769,7 +775,7 @@ const Profile: FC = () => {
           <ProfileTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
           {/* 内容区域 */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-3 sm:p-4 lg:p-6">
             <div key={activeTab}>{renderTabContent()}</div>
           </div>
 

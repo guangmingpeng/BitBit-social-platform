@@ -6,7 +6,6 @@ interface CommunityHeaderProps {
 }
 
 const CommunityHeader: React.FC<CommunityHeaderProps> = ({ className }) => {
-
   const breadcrumbItems = [
     { label: "首页", href: "/" },
     { label: "社区", current: true },

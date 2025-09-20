@@ -29,27 +29,29 @@ export const ProfileTabs: React.FC<ProfileTabsProps> = ({
   const isPublicView = visibleTabs !== undefined;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm">
-      <div className="flex items-center border-b border-gray-100">
-        {tabsToShow.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => onTabChange(tab.key)}
-            className={`
-              px-6 py-4 font-medium text-base relative transition-colors
-              ${
-                activeTab === tab.key
-                  ? "text-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }
-            `}
-          >
-            {isPublicView ? tab.publicLabel : tab.label}
-            {activeTab === tab.key && (
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded-t-full" />
-            )}
-          </button>
-        ))}
+    <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm">
+      <div className="overflow-x-auto">
+        <div className="flex items-center border-b border-gray-100 min-w-max">
+          {tabsToShow.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => onTabChange(tab.key)}
+              className={`
+                px-4 sm:px-6 py-3 sm:py-4 font-medium text-sm sm:text-base relative transition-colors whitespace-nowrap min-h-[44px] flex items-center
+                ${
+                  activeTab === tab.key
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-gray-900"
+                }
+              `}
+            >
+              {isPublicView ? tab.publicLabel : tab.label}
+              {activeTab === tab.key && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 sm:w-12 h-1 bg-blue-600 rounded-t-full" />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

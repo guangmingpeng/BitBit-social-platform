@@ -339,11 +339,11 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
         )}
         onClick={onClick}
       >
-        <CardContent className="p-6">
-          <div className="flex gap-6">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6">
             {/* 左侧图片 */}
-            <div className="w-32 h-32 flex-shrink-0 relative">
-              <div className="w-full h-full bg-gray-100 rounded-lg flex items-center justify-center text-2xl overflow-hidden">
+            <div className="w-full sm:w-24 sm:h-24 lg:w-32 lg:h-32 h-48 flex-shrink-0 relative">
+              <div className="w-full h-full bg-gray-100 rounded-lg flex items-center justify-center text-xl sm:text-2xl overflow-hidden">
                 {image ? (
                   <img
                     src={image}
@@ -368,11 +368,11 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
             {/* 中间内容 */}
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between mb-2">
-                <h3 className="text-lg font-semibold text-text-primary line-clamp-2">
+                <h3 className="text-base sm:text-lg font-semibold text-text-primary line-clamp-2 pr-2">
                   {title}
                 </h3>
                 <button
-                  className="ml-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                  className="ml-2 sm:ml-4 p-1.5 sm:p-2 rounded-full hover:bg-gray-100 transition-colors flex-shrink-0"
                   onClick={(e) => {
                     e.stopPropagation();
                     onLike?.();
@@ -388,15 +388,15 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                 </button>
               </div>
 
-              <p className="text-text-secondary mb-3">
+              <p className="text-sm text-text-secondary mb-3">
                 {condition} | {category}
                 {location && ` | ${location}`}
               </p>
 
               {/* 价格和统计 */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-primary-500">
+                  <span className="text-xl sm:text-2xl font-bold text-primary-500">
                     ¥{price.toLocaleString()}
                   </span>
                   {originalPrice && originalPrice > price && (
@@ -407,7 +407,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                 </div>
 
                 {stats && (
-                  <div className="flex items-center gap-4 text-sm text-text-tertiary">
+                  <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-text-tertiary">
                     <span className="flex items-center gap-1">
                       👁 {stats.views}
                     </span>
@@ -419,7 +419,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
               </div>
 
               {/* 底部信息和操作 */}
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-3">
                 {seller && (
                   <div className="flex items-center gap-2">
                     <Avatar
@@ -428,8 +428,8 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                       fallback={seller.initials || seller.name.charAt(0)}
                       size="sm"
                     />
-                    <div>
-                      <span className="text-sm font-medium text-text-primary">
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm font-medium text-text-primary block truncate">
                         {seller.name}
                       </span>
                       {seller.rating && (
@@ -447,11 +447,11 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                 <div className="flex gap-2">
                   {mode === "owner" ? (
                     // 自己发布的商品：显示编辑、下架、删除按钮
-                    <div className="flex gap-2 w-full">
+                    <div className="flex flex-col sm:flex-row gap-2 w-full">
                       <Button
                         size="sm"
                         variant="outline"
-                        className="flex-1"
+                        className="flex-1 min-h-[44px]"
                         onClick={(e) => {
                           e.stopPropagation();
                           onEdit?.();
@@ -462,7 +462,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                       <Button
                         size="sm"
                         variant="secondary"
-                        className="flex-1"
+                        className="flex-1 min-h-[44px]"
                         onClick={(e) => {
                           e.stopPropagation();
                           onToggleStatus?.();
@@ -474,7 +474,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                         <Button
                           size="sm"
                           variant="outline"
-                          className="text-red-600 hover:text-red-700 hover:border-red-300"
+                          className="flex-1 min-h-[44px] text-red-600 hover:text-red-700 hover:border-red-300"
                           onClick={(e) => {
                             e.stopPropagation();
                             onDelete?.();
@@ -486,11 +486,11 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                     </div>
                   ) : (
                     // 其他人发布的商品：显示联系和交换按钮
-                    <>
+                    <div className="flex flex-col sm:flex-row gap-2 w-full">
                       <Button
                         size="sm"
                         variant="outline"
-                        className="flex-1"
+                        className="flex-1 min-h-[44px]"
                         onClick={(e) => {
                           e.stopPropagation();
                           onContact?.();
@@ -501,7 +501,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                       <Button
                         size="sm"
                         variant="primary"
-                        className="flex-1"
+                        className="flex-1 min-h-[44px]"
                         onClick={(e) => {
                           e.stopPropagation();
                           onExchange?.();
@@ -510,7 +510,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                       >
                         立即交换
                       </Button>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
@@ -525,15 +525,15 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
   return (
     <Card
       className={cn(
-        "w-full min-h-[460px] overflow-hidden hover:shadow-modal hover:-translate-y-1 transition-all duration-250 cursor-pointer",
+        "w-full min-h-[400px] sm:min-h-[460px] overflow-hidden hover:shadow-modal hover:-translate-y-1 transition-all duration-250 cursor-pointer",
         className
       )}
       onClick={onClick}
     >
       <CardContent className="p-0 h-full flex flex-col">
         {/* 图片区域 */}
-        <div className="relative p-4 pb-0 flex-shrink-0">
-          <div className="w-full h-[200px] bg-gray-100 rounded-lg flex items-center justify-center text-3xl overflow-hidden">
+        <div className="relative p-3 sm:p-4 pb-0 flex-shrink-0">
+          <div className="w-full h-[150px] sm:h-[200px] bg-gray-100 rounded-lg flex items-center justify-center text-2xl sm:text-3xl overflow-hidden">
             {image ? (
               <img
                 src={image}
@@ -547,7 +547,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
 
           {/* 收藏按钮 */}
           <button
-            className="absolute top-6 right-6 w-7 h-7 bg-white/90 rounded-full flex items-center justify-center shadow-light hover:shadow-card transition-all duration-250"
+            className="absolute top-4 sm:top-6 right-4 sm:right-6 w-6 h-6 sm:w-7 sm:h-7 bg-white/90 rounded-full flex items-center justify-center shadow-light hover:shadow-card transition-all duration-250"
             onClick={(e) => {
               e.stopPropagation();
               onLike?.();
@@ -563,7 +563,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
           {/* 状态标签 */}
           <div
             className={cn(
-              "absolute top-6 left-6 px-2 py-1 rounded-lg text-[10px] font-medium",
+              "absolute top-4 sm:top-6 left-4 sm:left-6 px-2 py-1 rounded-lg text-[10px] font-medium",
               statusStyle.color
             )}
           >
@@ -572,21 +572,21 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
         </div>
 
         {/* 内容区域 */}
-        <div className="p-4 flex-1 flex flex-col min-h-0">
-          <h3 className="text-lg font-semibold text-text-primary line-clamp-2 mb-2 leading-tight">
+        <div className="p-3 sm:p-4 flex-1 flex flex-col min-h-0">
+          <h3 className="text-base sm:text-lg font-semibold text-text-primary line-clamp-2 mb-2 leading-tight">
             {title}
           </h3>
-          <p className="text-sm text-text-secondary mb-3 flex-shrink-0">
+          <p className="text-xs sm:text-sm text-text-secondary mb-3 flex-shrink-0">
             {condition} | {category}
           </p>
 
           {/* 价格区域 */}
-          <div className="flex items-baseline gap-2 mb-4 flex-shrink-0">
-            <span className="text-xl font-bold text-primary-500">
+          <div className="flex items-baseline gap-2 mb-3 sm:mb-4 flex-shrink-0">
+            <span className="text-lg sm:text-xl font-bold text-primary-500">
               ¥{price.toLocaleString()}
             </span>
             {originalPrice && originalPrice > price && (
-              <span className="text-sm text-text-tertiary line-through">
+              <span className="text-xs sm:text-sm text-text-tertiary line-through">
                 ¥{originalPrice.toLocaleString()}
               </span>
             )}
@@ -594,7 +594,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
 
           {/* 统计信息 */}
           {stats && (
-            <div className="flex items-center gap-4 mb-4 text-sm text-text-tertiary flex-shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm text-text-tertiary flex-shrink-0">
               <span className="flex items-center gap-1">👁 {stats.views}</span>
               <span className="flex items-center gap-1">❤ {stats.likes}</span>
               <span className="flex items-center gap-1">
@@ -604,7 +604,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
           )}
 
           {/* 发布者和操作按钮 */}
-          <div className="mt-auto space-y-3 flex-shrink-0">
+          <div className="mt-auto space-y-2 sm:space-y-3 flex-shrink-0">
             {seller && (
               <div className="flex items-center gap-2">
                 <Avatar
@@ -613,11 +613,11 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                   fallback={seller.initials || seller.name.charAt(0)}
                   size="sm"
                 />
-                <span className="text-sm text-text-secondary truncate">
+                <span className="text-xs sm:text-sm text-text-secondary truncate flex-1">
                   {seller.name}
                 </span>
                 {seller.rating && (
-                  <div className="flex items-center gap-1 ml-auto">
+                  <div className="flex items-center gap-1">
                     <span className="text-xs text-sunflower-500">⭐</span>
                     <span className="text-xs text-text-tertiary">
                       {seller.rating.toFixed(1)}
@@ -628,14 +628,14 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
             )}
 
             {/* 操作按钮 */}
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               {mode === "owner" ? (
                 // 自己发布的商品：显示编辑、下架、删除按钮
-                <div className="flex gap-2 w-full">
+                <>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 min-h-[44px]"
                     onClick={(e) => {
                       e.stopPropagation();
                       onEdit?.();
@@ -646,7 +646,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                   <Button
                     size="sm"
                     variant="secondary"
-                    className="flex-1"
+                    className="flex-1 min-h-[44px]"
                     onClick={(e) => {
                       e.stopPropagation();
                       onToggleStatus?.();
@@ -658,7 +658,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                     <Button
                       size="sm"
                       variant="outline"
-                      className="text-red-600 hover:text-red-700 hover:border-red-300"
+                      className="flex-1 min-h-[44px] text-red-600 hover:text-red-700 hover:border-red-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         onDelete?.();
@@ -667,14 +667,14 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                       删除
                     </Button>
                   )}
-                </div>
+                </>
               ) : (
                 // 其他人发布的商品：显示联系和交换按钮
                 <>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 min-h-[44px]"
                     onClick={(e) => {
                       e.stopPropagation();
                       onContact?.();
@@ -685,7 +685,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                   <Button
                     size="sm"
                     variant="primary"
-                    className="flex-1"
+                    className="flex-1 min-h-[44px]"
                     onClick={(e) => {
                       e.stopPropagation();
                       onExchange?.();

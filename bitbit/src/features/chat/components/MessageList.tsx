@@ -12,6 +12,7 @@ interface MessageListProps {
   hasMore?: boolean;
   onLoadMore?: () => void;
   lastReadMessageId?: string; // 最后阅读的消息ID
+  shouldHideUnreadDivider?: boolean; // 是否应该隐藏未读分隔线（用于"标为未读"操作后）
   firstNewMessageId?: string; // 实时新消息的第一条消息ID
   onScrollStateChange?: (isAtBottom: boolean) => void; // 滚动状态变化回调
   shouldScrollToUnread?: boolean; // 是否应该滚动到未读消息
@@ -27,6 +28,7 @@ const MessageList: React.FC<MessageListProps> = ({
   hasMore = false,
   onLoadMore,
   lastReadMessageId,
+  shouldHideUnreadDivider,
   firstNewMessageId,
   onScrollStateChange,
   shouldScrollToUnread,
@@ -395,6 +397,10 @@ const MessageList: React.FC<MessageListProps> = ({
 
               // 如果当前消息是自己发送的，不显示分隔线
               if (message.senderId === currentUserId) return false;
+
+              // 如果被标记为应该隐藏分隔线（通常在"标为未读"操作后），不显示分隔线
+              // 分隔线只应该在真正的新消息到达或切换到有历史未读消息的会话时显示
+              if (shouldHideUnreadDivider) return false;
 
               // 找到最后阅读消息的索引
               const lastReadIndex = messages.findIndex(

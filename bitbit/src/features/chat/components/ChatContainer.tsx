@@ -62,6 +62,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       unreadMessages,
       hasUnreadMessages,
       lastReadMessageId,
+      shouldHideUnreadDivider,
       updatedConversations,
 
       // 操作方法
@@ -139,7 +140,9 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
         console.log("Generated URL:", activityUrl);
 
         // 获取点击位置
-        const clickPosition = event ? { x: event.clientX, y: event.clientY } : undefined;
+        const clickPosition = event
+          ? { x: event.clientX, y: event.clientY }
+          : undefined;
 
         // 复制到剪贴板
         navigator.clipboard
@@ -398,6 +401,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
                       currentUserId={currentUserId}
                       conversation={activeConversation}
                       lastReadMessageId={lastReadMessageId || undefined}
+                      shouldHideUnreadDivider={shouldHideUnreadDivider}
                       firstNewMessageId={firstNewMessageId || undefined}
                       presetMessage={presetMessage}
                       onSendMessage={handleSendMessage}

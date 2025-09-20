@@ -11,6 +11,7 @@ interface ChatMainProps {
   currentUserId: string;
   conversation?: Conversation;
   lastReadMessageId?: string;
+  shouldHideUnreadDivider?: boolean;
   firstNewMessageId?: string; // 实时新消息的第一条消息ID
   presetMessage?: string;
   onSendMessage: (
@@ -30,6 +31,7 @@ const ChatMain: React.FC<ChatMainProps> = ({
   currentUserId,
   conversation,
   lastReadMessageId,
+  shouldHideUnreadDivider,
   firstNewMessageId,
   presetMessage,
   onSendMessage,
@@ -64,6 +66,7 @@ const ChatMain: React.FC<ChatMainProps> = ({
           users={users}
           currentUserId={currentUserId}
           lastReadMessageId={lastReadMessageId}
+          shouldHideUnreadDivider={shouldHideUnreadDivider}
           firstNewMessageId={firstNewMessageId}
           onScrollStateChange={onScrollStateChange}
           shouldScrollToUnread={shouldScrollToUnread}

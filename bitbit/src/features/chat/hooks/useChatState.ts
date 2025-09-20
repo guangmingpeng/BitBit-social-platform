@@ -28,6 +28,8 @@ export interface UseChatStateReturn {
   unreadMessages: Message[];
   hasUnreadMessages: boolean;
   lastReadMessageId: string | null;
+  lastOperationType: "message" | "pin" | "read-status" | "delete" | null;
+  shouldHideUnreadDivider: boolean;
   updatedConversations: Conversation[];
 
   // 实时新消息相关
@@ -127,6 +129,10 @@ export function useChatState({
   const [lastOperationType, setLastOperationType] = useState<
     "message" | "pin" | "read-status" | "delete" | null
   >(null);
+
+  // 跟踪是否应该隐藏未读分隔线（用于"标为未读"操作后）
+  const [shouldHideUnreadDivider, setShouldHideUnreadDivider] =
+    useState<boolean>(false);
 
   const activeConversation = conversations.find(
     (c) => c.id === activeConversationId
@@ -244,6 +250,8 @@ export function useChatState({
     lastMessageCountRef.current = messages.filter(
       (m) => m.conversationId === activeConversationId
     ).length;
+    // 切换会话时重置分隔线隐藏状态，允许新会话显示分隔线
+    setShouldHideUnreadDivider(false);
   }, [activeConversationId, messages]);
 
   // 检测新消息到达
@@ -822,6 +830,11 @@ export function useChatState({
     (conversationId: string) => {
       setLastOperationType("read-status");
 
+      // 如果是当前活跃会话被标记为未读，隐藏分隔线
+      if (conversationId === activeConversationId) {
+        setShouldHideUnreadDivider(true);
+      }
+
       setConversations((prev) =>
         prev.map((conv) => {
           if (conv.id === conversationId) {
@@ -894,7 +907,7 @@ export function useChatState({
         })
       );
     },
-    [currentUserId, getConversationUnreadCount, messages]
+    [currentUserId, getConversationUnreadCount, messages, activeConversationId]
   );
 
   // 处理删除会话
@@ -1013,6 +1026,8 @@ export function useChatState({
     unreadMessages,
     hasUnreadMessages,
     lastReadMessageId,
+    lastOperationType,
+    shouldHideUnreadDivider,
     updatedConversations: conversationsWithUnreadCount,
 
     // 实时新消息相关

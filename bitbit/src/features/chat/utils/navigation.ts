@@ -17,7 +17,15 @@ export interface ChatNavigationParams {
 
   // 上下文信息
   sourceContext?: {
-    from: "userCard" | "exchange" | "notification" | "activity" | "profile";
+    from:
+      | "userCard"
+      | "exchange"
+      | "notification"
+      | "activity"
+      | "profile"
+      | "following"
+      | "followers"
+      | "community";
     itemId?: string; // 商品ID、活动ID等
     itemTitle?: string; // 商品标题、活动标题等
   };
@@ -78,6 +86,8 @@ export const navigateToChat = (
   navigate(chatUrl, {
     state: {
       ...params,
+      // 确保 fromSource 被正确设置，供 smartGoBack 使用
+      fromSource: params.sourceContext?.from,
     },
   });
 };
@@ -91,15 +101,44 @@ export const navigateToChatFromUserCard = (
   userInfo?: {
     name?: string;
     avatar?: string;
-  }
+  },
+  currentPathname?: string // 新增：当前页面路径
 ) => {
+  // 根据当前页面路径动态确定来源
+  let fromSource:
+    | "userCard"
+    | "following"
+    | "followers"
+    | "community"
+    | "profile" = "userCard";
+
+  if (currentPathname) {
+    if (
+      currentPathname === "/profile/following" ||
+      (currentPathname.includes("/user/") &&
+        currentPathname.includes("/following"))
+    ) {
+      fromSource = "following";
+    } else if (
+      currentPathname === "/profile/followers" ||
+      (currentPathname.includes("/user/") &&
+        currentPathname.includes("/followers"))
+    ) {
+      fromSource = "followers";
+    } else if (currentPathname.includes("/community")) {
+      fromSource = "community";
+    } else if (currentPathname.includes("/profile")) {
+      fromSource = "profile";
+    }
+  }
+
   navigateToChat(navigate, {
     userId,
     userName: userInfo?.name,
     userAvatar: userInfo?.avatar,
     conversationType: "private",
     sourceContext: {
-      from: "userCard",
+      from: fromSource,
     },
   });
 };

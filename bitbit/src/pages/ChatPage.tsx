@@ -228,7 +228,8 @@ const ChatPage: React.FC = () => {
   }, [chatParams]);
 
   const handleGoBack = () => {
-    // 根据来源智能返回
+    // 对于需要特定参数的返回场景，保留原有逻辑
+    // 其他场景统一使用 smartGoBack 处理
     switch (chatParams.sourceFrom) {
       case "exchange":
         if (chatParams.sourceItemId) {
@@ -244,14 +245,9 @@ const ChatPage: React.FC = () => {
           navigate("/activities");
         }
         break;
-      case "notification":
-        navigate("/notifications");
-        break;
-      case "userCard":
-      case "profile":
-        navigate("/profile");
-        break;
       default:
+        // 统一使用 smartGoBack 处理所有其他返回逻辑
+        // 包括 notification、userCard、profile、following、followers、community 等
         smartGoBack();
         break;
     }

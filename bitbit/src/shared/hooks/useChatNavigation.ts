@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { navigateToChatFromUserCard } from "@/features/chat/utils";
 import { useChatState } from "@/features/chat/hooks/useChatState";
 
@@ -9,6 +9,7 @@ import { useChatState } from "@/features/chat/hooks/useChatState";
  */
 export const useChatNavigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { conversations } = useChatState({ currentUserId: "4" }); // 使用当前用户ID
 
   /**
@@ -17,10 +18,10 @@ export const useChatNavigation = () => {
    */
   const navigateToUserChat = useCallback(
     (userId: string, userInfo?: { name?: string; avatar?: string }) => {
-      // 使用标准的聊天导航函数
-      navigateToChatFromUserCard(navigate, userId, userInfo);
+      // 使用标准的聊天导航函数，传递当前路径信息
+      navigateToChatFromUserCard(navigate, userId, userInfo, location.pathname);
     },
-    [navigate]
+    [navigate, location.pathname]
   );
 
   /**

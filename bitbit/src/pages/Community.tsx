@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container } from "@/components/ui";
 import {
   CommunityHeader,
@@ -7,9 +8,11 @@ import {
   CommunitySidebar,
   PostList,
 } from "@/features/community/components";
+import { FloatingBackButton } from "@/components/common";
 import { useCommunity } from "@/features/community/hooks";
 
 const Community: FC = () => {
+  const navigate = useNavigate();
   const {
     searchTerm,
     selectedCategory,
@@ -69,6 +72,14 @@ const Community: FC = () => {
           onTagChange={handleTagChange}
         />
       </div>
+
+      {/* 返回首页浮动按钮 */}
+      <FloatingBackButton
+        text="返回首页"
+        onClick={() => navigate("/")}
+        variant="elegant"
+        size="md"
+      />
     </Container>
   );
 };

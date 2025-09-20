@@ -617,7 +617,7 @@ const ExchangeDetail: FC = () => {
 
             {/* 相关推荐 */}
             <Card>
-              <CardContent className="p-6 space-y-4">
+              <CardContent className="p-4 space-y-3">
                 <h3 className="text-lg font-semibold text-text-primary">
                   相关推荐
                 </h3>
@@ -627,7 +627,7 @@ const ExchangeDetail: FC = () => {
                   💡 提示: Ctrl+点击可在新窗口打开，或使用右上角的 ↗ 按钮
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {recommendedItems.map((item) => (
                     <div key={item.id} className="relative group">
                       {/* 为了处理键盘修饰符，我们用一个包装div */}

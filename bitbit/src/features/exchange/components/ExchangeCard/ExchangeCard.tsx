@@ -81,7 +81,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
     return (
       <Card
         className={cn(
-          "w-full h-[120px] overflow-hidden hover:shadow-modal transition-all duration-250 cursor-pointer",
+          "w-full h-[130px] overflow-hidden hover:shadow-modal transition-all duration-250 cursor-pointer",
           className
         )}
         onClick={onClick}
@@ -119,7 +119,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
             <p className="text-xs text-text-secondary mb-2">
               {condition} | {category}
             </p>
-            <div className="text-sm font-bold text-primary-500 mb-2">
+            <div className="text-sm font-bold text-primary-500 mb-1">
               ¥{price.toLocaleString()}
             </div>
 

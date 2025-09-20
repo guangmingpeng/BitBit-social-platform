@@ -23,6 +23,7 @@ import { TabFilter } from "../shared/components";
 import { ActivityCard, PostCard } from "../components/ui/cards";
 import { ExchangeCard } from "../features/exchange/components";
 import { OrderCard, FavoriteCard, DraftCard } from "../components/ui";
+import { FloatingBackButton } from "@/components/common";
 import {
   myPosts,
   myExchangeItems,
@@ -782,6 +783,14 @@ const Profile: FC = () => {
           <QuickAccess items={profileData.quickAccessItems} />
         </div>
       </div>
+
+      {/* 返回首页浮动按钮 */}
+      <FloatingBackButton
+        text="返回首页"
+        onClick={() => navigate("/")}
+        variant="elegant"
+        size="md"
+      />
 
       {/* 活动通知弹窗 */}
       <ActivityNotificationModal

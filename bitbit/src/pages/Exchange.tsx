@@ -9,6 +9,7 @@ import {
   PurchaseModal,
 } from "@/components/ui";
 import { ExchangeCard } from "@/features/exchange";
+import { FloatingBackButton } from "@/components/common";
 import { navigateToChatFromExchange } from "@/features/chat/utils";
 import { useNavigationFilters } from "@/shared/hooks/useNavigationStore";
 import {
@@ -144,15 +145,6 @@ const Exchange: FC = () => {
       {/* 面包屑导航 */}
       <div className="flex items-center justify-between">
         <Breadcrumb items={breadcrumbItems} />
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => navigate("/")}
-          className="flex items-center gap-2"
-        >
-          <Icon name="arrow-left" size="sm" />
-          返回首页
-        </Button>
       </div>
 
       {/* 页面标题和描述 */}
@@ -390,6 +382,14 @@ const Exchange: FC = () => {
           }}
         />
       )}
+
+      {/* 返回首页浮动按钮 */}
+      <FloatingBackButton
+        text="返回首页"
+        onClick={() => navigate("/")}
+        variant="elegant"
+        size="md"
+      />
     </Container>
   );
 };

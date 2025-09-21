@@ -1,4 +1,4 @@
-import { type FC, useState, useEffect, useMemo } from "react";
+import { type FC, useState, useEffect, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   UserProfile,
@@ -23,7 +23,10 @@ import { TabFilter } from "../shared/components";
 import { ActivityCard, PostCard } from "../components/ui/cards";
 import { ExchangeCard } from "../features/exchange/components";
 import { OrderCard, FavoriteCard, DraftCard } from "../components/ui";
-import { FloatingBackButton } from "@/components/common";
+import { FloatingBackButton, ConfirmActionDialog } from "@/components/common";
+import { useExchangeActions } from "@/shared/hooks";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/store/slices/uiSlice";
 import {
   myPosts,
   myExchangeItems,
@@ -35,11 +38,70 @@ import {
 const Profile: FC = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { profileData, loading, error } = useProfile();
   const { activeTab, handleTabChange } = useProfileTabs();
 
   // 简化的收藏筛选状态 - 使用key强制组件重新渲染
   const [favoritesTypeFilter, setFavoritesTypeFilter] = useState<string>("");
+
+  // 本地商品状态管理
+  const [localMyExchangeItems, setLocalMyExchangeItems] =
+    useState(myExchangeItems);
+  const lastOperationRef = useRef<{
+    itemId: string;
+    newStatus: "available" | "hidden";
+    oldStatus?: string;
+  } | null>(null);
+
+  // 商品操作逻辑
+  const exchangeActions = useExchangeActions({
+    onToggleStatus: async (
+      itemId: string,
+      newStatus: "available" | "hidden"
+    ) => {
+      console.log(`商品 ${itemId} 状态变更为: ${newStatus}`);
+      // 模拟API调用
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // 立即更新本地状态
+      setLocalMyExchangeItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === itemId ? { ...item, status: newStatus } : item
+        )
+      );
+
+      // 存储操作信息供成功回调使用
+      lastOperationRef.current = {
+        itemId,
+        newStatus,
+        oldStatus: localMyExchangeItems.find((item) => item.id === itemId)
+          ?.status,
+      };
+    },
+    onSuccess: () => {
+      const operation = lastOperationRef.current;
+      const actionText = operation?.newStatus === "hidden" ? "下架" : "上架";
+      dispatch(
+        showToast({
+          type: "success",
+          message: `商品${actionText}成功！`,
+        })
+      );
+      // 清理临时数据
+      lastOperationRef.current = null;
+    },
+    onError: (_action, error) => {
+      dispatch(
+        showToast({
+          type: "error",
+          message: `商品操作失败: ${error}`,
+        })
+      );
+      // 清理临时数据
+      lastOperationRef.current = null;
+    },
+  });
 
   // 当activeTab改变时，立即重置筛选状态
   useEffect(() => {
@@ -283,7 +345,7 @@ const Profile: FC = () => {
   });
 
   const tradesFilter = useContentFilter({
-    data: myExchangeItems,
+    data: localMyExchangeItems,
     page: "trades",
   });
 
@@ -524,8 +586,13 @@ const Profile: FC = () => {
                         navigation.navigateToExchangeDetail(item.id)
                       }
                       onEdit={() => navigation.navigateToEditExchange(item.id)}
-                      onToggleStatus={() => console.log("下架商品", item.id)}
-                      onDelete={() => console.log("删除商品", item.id)}
+                      onToggleStatus={() =>
+                        exchangeActions.showToggleStatusDialog(
+                          item.id,
+                          item.title,
+                          item.status === "available" ? "available" : "hidden"
+                        )
+                      }
                       onLike={() => console.log("点赞商品", item.id)}
                     />
                   )
@@ -805,6 +872,29 @@ const Profile: FC = () => {
         onSend={handleSendNotification}
         activityTitle={notificationModal.activityTitle || ""}
         participantCount={notificationModal.participantCount || 0}
+      />
+
+      {/* 商品操作确认弹窗 */}
+      <ConfirmActionDialog
+        isOpen={exchangeActions.confirmDialog.isOpen}
+        onClose={exchangeActions.closeDialog}
+        onConfirm={exchangeActions.confirmAction}
+        actionType="toggle-status"
+        isLoading={exchangeActions.isLoading}
+        config={{
+          title:
+            exchangeActions.confirmDialog.currentStatus === "available"
+              ? "确认下架商品"
+              : "确认上架商品",
+          content:
+            exchangeActions.confirmDialog.currentStatus === "available"
+              ? `确定要下架商品「${exchangeActions.confirmDialog.itemTitle}」吗？下架后商品将不会在市场中显示，您可以随时重新上架。`
+              : `确定要上架商品「${exchangeActions.confirmDialog.itemTitle}」吗？上架后商品将在市场中正常显示。`,
+          confirmText:
+            exchangeActions.confirmDialog.currentStatus === "available"
+              ? "确认下架"
+              : "确认上架",
+        }}
       />
     </div>
   );

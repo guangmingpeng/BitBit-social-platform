@@ -6,7 +6,9 @@ import { cn } from "@/shared/utils/cn";
 
 const Toast: React.FC = () => {
   const dispatch = useDispatch();
-  const { show, message, type, position } = useSelector((state: RootState) => state.ui.toast);
+  const { show, message, type } = useSelector(
+    (state: RootState) => state.ui.toast
+  );
 
   useEffect(() => {
     if (show) {
@@ -46,57 +48,21 @@ const Toast: React.FC = () => {
     }
   };
 
-  // 计算Toast的位置
-  const getToastPosition = () => {
-    if (position) {
-      // 确保Toast不会超出屏幕边界
-      const toastWidth = 300;
-      const toastHeight = 60;
-      const padding = 20;
-      
-      let x = position.x;
-      let y = position.y + 10; // 在点击位置下方10px
-      
-      // 检查右边界
-      if (x + toastWidth > window.innerWidth - padding) {
-        x = window.innerWidth - toastWidth - padding;
-      }
-      
-      // 检查左边界
-      if (x < padding) {
-        x = padding;
-      }
-      
-      // 检查下边界
-      if (y + toastHeight > window.innerHeight - padding) {
-        y = position.y - toastHeight - 10; // 在点击位置上方
-      }
-      
-      // 检查上边界
-      if (y < padding) {
-        y = padding;
-      }
-      
-      return { left: x, top: y };
-    }
-    
-    // 默认位置：右上角
-    return { right: 16, top: 16 };
+  // Toast 居中显示
+  const toastPosition = {
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
   };
 
-  const toastPosition = getToastPosition();
-
   return (
-    <div 
-      className="fixed z-[9999] pointer-events-none"
-      style={toastPosition}
-    >
+    <div className="fixed z-[9999] pointer-events-none" style={toastPosition}>
       <div
         className={cn(
           "flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg min-w-[300px] max-w-[400px] transform transition-all duration-300 ease-out pointer-events-auto",
           getStyles(),
-          show 
-            ? "scale-100 opacity-100 translate-y-0" 
+          show
+            ? "scale-100 opacity-100 translate-y-0"
             : "scale-95 opacity-0 -translate-y-2"
         )}
       >

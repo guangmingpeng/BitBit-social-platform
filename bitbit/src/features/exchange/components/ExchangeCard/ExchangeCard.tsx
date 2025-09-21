@@ -11,7 +11,14 @@ export interface ExchangeCardProps {
   originalPrice?: number;
   image?: string;
   icon?: string;
-  status?: "available" | "reserved" | "sold" | "hot" | "urgent" | "new";
+  status?:
+    | "available"
+    | "reserved"
+    | "sold"
+    | "hot"
+    | "urgent"
+    | "new"
+    | "hidden";
   seller?: {
     name: string;
     avatar?: string;
@@ -47,6 +54,10 @@ const statusConfig = {
   hot: { label: "火热", color: "bg-sunflower-100 text-sunflower-500" },
   urgent: { label: "急售", color: "bg-lavender-100 text-lavender-500" },
   new: { label: "新品", color: "bg-mint-100 text-mint-500" },
+  hidden: {
+    label: "已下架",
+    color: "bg-red-100 text-red-600 border border-red-200",
+  },
 };
 
 export const ExchangeCard: React.FC<ExchangeCardProps> = ({
@@ -161,6 +172,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
       <Card
         className={cn(
           "w-[280px] h-[395px] overflow-hidden hover:shadow-modal hover:-translate-y-1 transition-all duration-250 cursor-pointer flex-shrink-0",
+          status === "hidden" ? "opacity-75" : "",
           className
         )}
         onClick={onClick}
@@ -259,7 +271,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                   <div className="flex gap-2 w-full">
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="primary"
                       className="flex-1"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -277,7 +289,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                         onToggleStatus?.();
                       }}
                     >
-                      下架
+                      {status === "available" ? "下架" : "重新上架"}
                     </Button>
                     {onDelete && (
                       <Button
@@ -335,6 +347,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
       <Card
         className={cn(
           "w-full overflow-hidden hover:shadow-modal transition-all duration-250 cursor-pointer",
+          status === "hidden" ? "opacity-75" : "",
           className
         )}
         onClick={onClick}
@@ -450,7 +463,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                     <div className="flex flex-col sm:flex-row gap-2 w-full">
                       <Button
                         size="sm"
-                        variant="outline"
+                        variant="primary"
                         className="flex-1 min-h-[44px]"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -468,7 +481,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                           onToggleStatus?.();
                         }}
                       >
-                        下架
+                        {status === "available" ? "下架" : "重新上架"}
                       </Button>
                       {onDelete && (
                         <Button
@@ -526,6 +539,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
     <Card
       className={cn(
         "w-full min-h-[400px] sm:min-h-[460px] overflow-hidden hover:shadow-modal hover:-translate-y-1 transition-all duration-250 cursor-pointer",
+        status === "hidden" ? "opacity-75" : "",
         className
       )}
       onClick={onClick}
@@ -634,7 +648,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                 <>
                   <Button
                     size="sm"
-                    variant="outline"
+                    variant="primary"
                     className="flex-1 min-h-[44px]"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -652,7 +666,7 @@ export const ExchangeCard: React.FC<ExchangeCardProps> = ({
                       onToggleStatus?.();
                     }}
                   >
-                    下架
+                    {status === "available" ? "下架" : "重新上架"}
                   </Button>
                   {onDelete && (
                     <Button

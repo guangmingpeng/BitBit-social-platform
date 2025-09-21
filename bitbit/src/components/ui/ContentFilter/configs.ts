@@ -157,6 +157,7 @@ const tradesConfig = {
         { key: "all", label: "全部" },
         { key: "available", label: "在售" },
         { key: "sold", label: "已售" },
+        { key: "hidden", label: "已下架" },
         { key: "hot", label: "热门" },
       ],
       showCount: true,

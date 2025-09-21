@@ -23,8 +23,9 @@ import { TabFilter } from "../shared/components";
 import { ActivityCard, PostCard } from "../components/ui/cards";
 import { ExchangeCard } from "../features/exchange/components";
 import { OrderCard, FavoriteCard, DraftCard } from "../components/ui";
-import { FloatingBackButton, ConfirmActionDialog } from "@/components/common";
-import { useExchangeActions } from "@/shared/hooks";
+import { FavoritesHeader } from "../components/ui/FavoritesHeader";
+import { FloatingBackButton, ConfirmActionDialog, PublishStatus } from "@/components/common";
+import { useExchangeActions, usePublishStatus } from "@/shared/hooks";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/store/slices/uiSlice";
 import {
@@ -45,6 +46,30 @@ const Profile: FC = () => {
   // 简化的收藏筛选状态 - 使用key强制组件重新渲染
   const [favoritesTypeFilter, setFavoritesTypeFilter] = useState<string>("");
 
+  // 本地收藏数据状态管理
+  const [localMyFavorites, setLocalMyFavorites] = useState(myFavorites);
+
+  // 收藏多选模式相关状态
+  const [isFavoritesSelectionMode, setIsFavoritesSelectionMode] =
+    useState(false);
+  const [selectedFavoriteIds, setSelectedFavoriteIds] = useState<string[]>([]);
+  const [showFavoritesConfirmDialog, setShowFavoritesConfirmDialog] =
+    useState(false);
+  const [isBatchRemovingFavorites, setIsBatchRemovingFavorites] =
+    useState(false);
+
+  // 单个收藏取消确认弹窗相关状态
+  const [singleFavoriteConfirmDialog, setSingleFavoriteConfirmDialog] =
+    useState<{
+      isOpen: boolean;
+      favoriteId: string;
+      favoriteType: string;
+    }>({
+      isOpen: false,
+      favoriteId: "",
+      favoriteType: "",
+    });
+
   // 本地商品状态管理
   const [localMyExchangeItems, setLocalMyExchangeItems] =
     useState(myExchangeItems);
@@ -53,6 +78,55 @@ const Profile: FC = () => {
     newStatus: "available" | "hidden";
     oldStatus?: string;
   } | null>(null);
+
+  // 草稿本地状态管理
+  const [localMyDrafts, setLocalMyDrafts] = useState(myDrafts);
+  
+  // 草稿发布状态管理
+  const [currentPublishingDraft, setCurrentPublishingDraft] = useState<{
+    id: string;
+    title: string;
+    type: string;
+  } | null>(null);
+
+  // 草稿发布的 usePublishStatus hook
+  const {
+    publishStatus: draftPublishStatus,
+    publishError: draftPublishError,
+    publishedItemId: publishedDraftId,
+    handleSubmit: submitDraftPublish,
+    handleRetry: retryDraftPublish,
+    handleReset: resetDraftPublish,
+    setPublishData,
+  } = usePublishStatus<{id: string; title: string; type: string}>({
+    onSubmit: async (draftData) => {
+      // 模拟发布API调用
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log(`发布草稿 "${draftData.title}" 成功！`);
+      
+      // 发布成功后从草稿列表中移除
+      setLocalMyDrafts(prevDrafts => 
+        prevDrafts.filter(d => d.id !== draftData.id)
+      );
+    },
+    onSuccess: () => {
+      // 发布成功后的额外处理
+      console.log("草稿发布成功！");
+    },
+  });
+
+  // 草稿删除确认弹窗状态
+  const [draftDeleteConfirmDialog, setDraftDeleteConfirmDialog] = useState<{
+    isOpen: boolean;
+    draftId: string;
+    draftTitle: string;
+    draftType: string;
+  }>({
+    isOpen: false,
+    draftId: '',
+    draftTitle: '',
+    draftType: ''
+  });
 
   // 商品操作逻辑
   const exchangeActions = useExchangeActions({
@@ -300,14 +374,157 @@ const Profile: FC = () => {
   // 适配帖子数据
   const adaptedPosts = myPosts.map(adaptPostData);
 
+  // 单个取消收藏功能
+  const handleRemoveFavorite = (favoriteId: string, favoriteType: string) => {
+    // 设置待删除的收藏项并显示确认弹窗
+    setSingleFavoriteConfirmDialog({
+      isOpen: true,
+      favoriteId,
+      favoriteType,
+    });
+  };
+
+  // 确认单个收藏取消
+  const handleConfirmSingleRemoveFavorite = () => {
+    if (singleFavoriteConfirmDialog.favoriteId) {
+      setLocalMyFavorites((prevFavorites) =>
+        prevFavorites.filter(
+          (item) =>
+            !(
+              item.id === singleFavoriteConfirmDialog.favoriteId &&
+              item.type === singleFavoriteConfirmDialog.favoriteType
+            )
+        )
+      );
+    }
+    setSingleFavoriteConfirmDialog({
+      isOpen: false,
+      favoriteId: "",
+      favoriteType: "",
+    });
+  };
+
+  // 取消单个收藏确认
+  const handleCancelSingleRemoveFavorite = () => {
+    setSingleFavoriteConfirmDialog({
+      isOpen: false,
+      favoriteId: "",
+      favoriteType: "",
+    });
+  };
+
+  // 多选模式相关处理函数
+  const handleToggleFavoritesSelectionMode = () => {
+    setIsFavoritesSelectionMode(!isFavoritesSelectionMode);
+    setSelectedFavoriteIds([]); // 清空选择
+  };
+
+  const handleToggleFavoriteSelection = (id: string, type: string) => {
+    const uniqueId = `${type}-${id}`;
+    setSelectedFavoriteIds((prev) =>
+      prev.includes(uniqueId)
+        ? prev.filter((selectedId) => selectedId !== uniqueId)
+        : [...prev, uniqueId]
+    );
+  };
+
+  const handleSelectAllFavorites = () => {
+    setSelectedFavoriteIds(
+      filteredFavorites.map((favorite) => `${favorite.type}-${favorite.id}`)
+    );
+  };
+
+  const handleClearFavoriteSelection = () => {
+    setSelectedFavoriteIds([]);
+    setIsFavoritesSelectionMode(false);
+  };
+
+  const handleBatchRemoveFavorites = () => {
+    setShowFavoritesConfirmDialog(true);
+  };
+
+  const handleConfirmBatchRemoveFavorites = async () => {
+    setIsBatchRemovingFavorites(true);
+    try {
+      // 批量删除选中的收藏
+      setLocalMyFavorites((prevFavorites) =>
+        prevFavorites.filter(
+          (item) => !selectedFavoriteIds.includes(`${item.type}-${item.id}`)
+        )
+      );
+      setSelectedFavoriteIds([]);
+      setIsFavoritesSelectionMode(false);
+      setShowFavoritesConfirmDialog(false);
+    } catch (error) {
+      console.error("批量取消收藏失败:", error);
+    } finally {
+      setIsBatchRemovingFavorites(false);
+    }
+  };
+
+  const handleCloseFavoritesConfirmDialog = () => {
+    if (!isBatchRemovingFavorites) {
+      setShowFavoritesConfirmDialog(false);
+    }
+  };
+
+  // 草稿相关处理函数
+  const handleDraftPublish = async (draftId: string, draftTitle: string, draftType: string) => {
+    // 设置当前发布的草稿信息并启动发布流程
+    const draftInfo = { id: draftId, title: draftTitle, type: draftType };
+    setCurrentPublishingDraft(draftInfo);
+    setPublishData(draftInfo);
+    
+    // 使用 setTimeout 确保状态更新完成后再调用提交
+    setTimeout(async () => {
+      await submitDraftPublish();
+    }, 0);
+  };
+
+  const handleDraftDelete = (draftId: string, draftTitle: string, draftType: string) => {
+    setDraftDeleteConfirmDialog({
+      isOpen: true,
+      draftId,
+      draftTitle,
+      draftType
+    });
+  };
+
+  const handleConfirmDraftDelete = () => {
+    if (draftDeleteConfirmDialog.draftId) {
+      // 从列表中删除草稿
+      setLocalMyDrafts(prevDrafts => 
+        prevDrafts.filter(draft => draft.id !== draftDeleteConfirmDialog.draftId)
+      );
+      
+      // 显示成功提示（这里可以集成Toast）
+      console.log(`草稿"${draftDeleteConfirmDialog.draftTitle}"删除成功！`);
+    }
+    setDraftDeleteConfirmDialog({
+      isOpen: false,
+      draftId: '',
+      draftTitle: '',
+      draftType: ''
+    });
+  };
+
+  const handleCancelDraftDelete = () => {
+    setDraftDeleteConfirmDialog({
+      isOpen: false,
+      draftId: '',
+      draftTitle: '',
+      draftType: ''
+    });
+  };
+
   // 简化的收藏筛选逻辑
   const filteredFavorites = useMemo(() => {
     console.log("=== 收藏筛选逻辑执行 ===");
     console.log("favoritesTypeFilter:", favoritesTypeFilter);
-    console.log("myFavorites 原始数据:", myFavorites);
+    console.log("localMyFavorites 原始数据:", localMyFavorites);
     console.log(
-      "myFavorites 中的type值:",
-      myFavorites.map((item) => ({
+      "localMyFavorites 中的type值:",
+      localMyFavorites.map((item) => ({
         id: item.id,
         type: item.type,
         title: item.title,
@@ -319,11 +536,11 @@ const Profile: FC = () => {
       favoritesTypeFilter === "all" ||
       favoritesTypeFilter === ""
     ) {
-      console.log("返回所有数据，数量:", myFavorites.length);
-      return myFavorites;
+      console.log("返回所有数据，数量:", localMyFavorites.length);
+      return localMyFavorites;
     }
 
-    const filtered = myFavorites.filter((item) => {
+    const filtered = localMyFavorites.filter((item) => {
       const itemType = String(item.type);
       const filterType = String(favoritesTypeFilter);
       const matches = itemType === filterType;
@@ -336,7 +553,7 @@ const Profile: FC = () => {
     console.log("筛选后结果:", filtered);
     console.log("筛选后数量:", filtered.length);
     return filtered;
-  }, [favoritesTypeFilter]);
+  }, [favoritesTypeFilter, localMyFavorites]);
 
   const postsFilter = useContentFilter({
     data: adaptedPosts,
@@ -350,7 +567,7 @@ const Profile: FC = () => {
   });
 
   const draftsFilter = useContentFilter({
-    data: myDrafts,
+    data: localMyDrafts,
     page: "drafts",
   });
 
@@ -658,46 +875,54 @@ const Profile: FC = () => {
             className="space-y-4"
             key={`favorites-${favoritesTypeFilter}-${filteredFavorites.length}`}
           >
-            {/* 使用Tab筛选组件 */}
-            <TabFilter
-              label="类型:"
-              options={[
-                { key: "", label: "全部", count: myFavorites.length },
-                {
-                  key: "activity",
-                  label: "活动",
-                  count: myFavorites.filter((item) => item.type === "activity")
-                    .length,
-                },
-                {
-                  key: "post",
-                  label: "帖子",
-                  count: myFavorites.filter((item) => item.type === "post")
-                    .length,
-                },
-                {
-                  key: "exchange",
-                  label: "商品",
-                  count: myFavorites.filter((item) => item.type === "exchange")
-                    .length,
-                },
-              ]}
-              value={favoritesTypeFilter}
-              onChange={(value) => {
-                console.log("=== TabFilter 筛选按钮点击事件 ===");
-                console.log("点击的筛选类型:", value);
-                console.log("点击前的筛选状态:", favoritesTypeFilter);
-                setFavoritesTypeFilter(value);
-              }}
+            {/* 收藏头部 - 包含多选功能 */}
+            <FavoritesHeader
+              totalCount={filteredFavorites.length}
+              isSelectionMode={isFavoritesSelectionMode}
+              selectedCount={selectedFavoriteIds.length}
+              onToggleSelectionMode={handleToggleFavoritesSelectionMode}
+              onRemoveSelected={handleBatchRemoveFavorites}
+              onSelectAll={handleSelectAllFavorites}
+              onClearSelection={handleClearFavoriteSelection}
             />
 
-            {/* 调试信息 */}
-            <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
-              当前tab: {activeTab} | 当前筛选: '{favoritesTypeFilter}' |
-              原始数据: {myFavorites.length} | 筛选后:{" "}
-              {filteredFavorites.length} | 分页数据:{" "}
-              {favoritesPagination.currentData.length}
-            </div>
+            {/* 在选择模式下隐藏筛选组件 */}
+            {!isFavoritesSelectionMode && (
+              <TabFilter
+                label="类型:"
+                options={[
+                  { key: "", label: "全部", count: localMyFavorites.length },
+                  {
+                    key: "activity",
+                    label: "活动",
+                    count: localMyFavorites.filter(
+                      (item) => item.type === "activity"
+                    ).length,
+                  },
+                  {
+                    key: "post",
+                    label: "帖子",
+                    count: localMyFavorites.filter(
+                      (item) => item.type === "post"
+                    ).length,
+                  },
+                  {
+                    key: "exchange",
+                    label: "商品",
+                    count: localMyFavorites.filter(
+                      (item) => item.type === "exchange"
+                    ).length,
+                  },
+                ]}
+                value={favoritesTypeFilter}
+                onChange={(value) => {
+                  console.log("=== TabFilter 筛选按钮点击事件 ===");
+                  console.log("点击的筛选类型:", value);
+                  console.log("点击前的筛选状态:", favoritesTypeFilter);
+                  setFavoritesTypeFilter(value);
+                }}
+              />
+            )}
 
             {favoritesPagination.currentData.length > 0 ? (
               <>
@@ -709,19 +934,35 @@ const Profile: FC = () => {
                       key={`${favorite.type}-${favorite.id}-${index}`}
                       favorite={favorite}
                       onClick={() => {
-                        switch (favorite.type) {
-                          case "activity":
-                            navigation.navigateToActivityDetail(favorite.id);
-                            break;
-                          case "post":
-                            navigation.navigateToPostDetail(favorite.id);
-                            break;
-                          case "exchange":
-                            navigation.navigateToExchangeDetail(favorite.id);
-                            break;
+                        // 在选择模式下，点击卡片切换选择状态
+                        if (isFavoritesSelectionMode) {
+                          handleToggleFavoriteSelection(
+                            favorite.id,
+                            favorite.type
+                          );
+                        } else {
+                          // 在非选择模式下执行导航
+                          switch (favorite.type) {
+                            case "activity":
+                              navigation.navigateToActivityDetail(favorite.id);
+                              break;
+                            case "post":
+                              navigation.navigateToPostDetail(favorite.id);
+                              break;
+                            case "exchange":
+                              navigation.navigateToExchangeDetail(favorite.id);
+                              break;
+                          }
                         }
                       }}
-                      onRemove={() => console.log("取消收藏", favorite.id)}
+                      onRemove={() =>
+                        handleRemoveFavorite(favorite.id, favorite.type)
+                      }
+                      isSelectionMode={isFavoritesSelectionMode}
+                      isSelected={selectedFavoriteIds.includes(
+                        `${favorite.type}-${favorite.id}`
+                      )}
+                      onToggleSelection={handleToggleFavoriteSelection}
                     />
                   ))}
                 </div>
@@ -748,25 +989,78 @@ const Profile: FC = () => {
       case "drafts":
         return (
           <div className="space-y-4">
-            {/* 筛选和排序组件 */}
-            <ContentFilter
-              filterConfigs={draftsFilter.config.filters}
-              sortConfig={draftsFilter.config.sort}
-              searchConfig={draftsFilter.config.search}
-              activeFilters={draftsFilter.activeFilters}
-              activeSort={draftsFilter.activeSort}
-              searchQuery={draftsFilter.searchQuery}
-              onFilterChange={draftsFilter.handleFilterChange}
-              onSortChange={draftsFilter.handleSortChange}
-              onSearchChange={draftsFilter.handleSearchChange}
-              showFilterCount={true}
-              showClearButton={true}
-            />
+            {/* 根据发布状态显示不同内容 */}
+            {draftPublishStatus === "loading" ||
+            draftPublishStatus === "success" ||
+            draftPublishStatus === "error" ? (
+              <PublishStatus
+                status={draftPublishStatus}
+                error={draftPublishError}
+                onRetry={retryDraftPublish}
+                onReset={resetDraftPublish}
+                loadingConfig={{
+                  title: "正在发布草稿...",
+                  description: `正在发布"${currentPublishingDraft?.title}"，请稍候`,
+                }}
+                successConfig={{
+                  title: "草稿发布成功！",
+                  description: `您的${
+                    currentPublishingDraft?.type === 'activity' ? '活动' :
+                    currentPublishingDraft?.type === 'post' ? '帖子' :
+                    currentPublishingDraft?.type === 'exchange' ? '商品' : '内容'
+                  }"${currentPublishingDraft?.title}"已成功发布到平台上`,
+                  publishedItemId: publishedDraftId || undefined,
+                  previewData: {
+                    title: currentPublishingDraft?.title || "草稿",
+                    category: currentPublishingDraft?.type || "content",
+                    type: (currentPublishingDraft?.type === "exchange" ? "item" : currentPublishingDraft?.type || "post") as "activity" | "post" | "item",
+                  },
+                  actions: {
+                    primary: {
+                      label: "查看发布内容",
+                      generateHref: (id: string) => {
+                        const type = currentPublishingDraft?.type;
+                        return type === 'activity' ? `/activities/${id}` :
+                               type === 'post' ? `/community/${id}` :
+                               type === 'exchange' ? `/exchange/${id}` : '/';
+                      },
+                    },
+                    secondary: {
+                      label: "继续管理草稿",
+                      href: "/profile?tab=drafts",
+                    },
+                    tertiary: {
+                      label: "创建新内容",
+                      onClick: () => {
+                        resetDraftPublish();
+                        setCurrentPublishingDraft(null);
+                        // 这里可以导航到对应的创建页面
+                      },
+                    },
+                  },
+                }}
+              />
+            ) : (
+              <>
+                {/* 筛选和排序组件 */}
+                <ContentFilter
+                  filterConfigs={draftsFilter.config.filters}
+                  sortConfig={draftsFilter.config.sort}
+                  searchConfig={draftsFilter.config.search}
+                  activeFilters={draftsFilter.activeFilters}
+                  activeSort={draftsFilter.activeSort}
+                  searchQuery={draftsFilter.searchQuery}
+                  onFilterChange={draftsFilter.handleFilterChange}
+                  onSortChange={draftsFilter.handleSortChange}
+                  onSearchChange={draftsFilter.handleSearchChange}
+                  showFilterCount={true}
+                  showClearButton={true}
+                />
 
-            {draftsPagination.currentData.length > 0 ? (
+                {draftsPagination.currentData.length > 0 ? (
               <>
                 <div className="space-y-3">
-                  {(draftsPagination.currentData as typeof myDrafts).map(
+                  {(draftsPagination.currentData as typeof localMyDrafts).map(
                     (draft) => (
                       <DraftCard
                         key={draft.id}
@@ -799,8 +1093,8 @@ const Profile: FC = () => {
                               break;
                           }
                         }}
-                        onPublish={() => console.log("发布草稿", draft.id)}
-                        onDelete={() => console.log("删除草稿", draft.id)}
+                        onPublish={() => handleDraftPublish(draft.id, draft.title, draft.type)}
+                        onDelete={() => handleDraftDelete(draft.id, draft.title, draft.type)}
                       />
                     )
                   )}
@@ -815,10 +1109,12 @@ const Profile: FC = () => {
                   />
                 )}
               </>
-            ) : (
-              <div className="text-center py-8 sm:py-12">
-                <p className="text-gray-500 text-sm sm:text-base">暂无草稿</p>
-              </div>
+                ) : (
+                  <div className="text-center py-8 sm:py-12">
+                    <p className="text-gray-500 text-sm sm:text-base">暂无草稿</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         );
@@ -894,6 +1190,60 @@ const Profile: FC = () => {
             exchangeActions.confirmDialog.currentStatus === "available"
               ? "确认下架"
               : "确认上架",
+        }}
+      />
+
+      {/* 单个取消收藏确认弹窗 */}
+      <ConfirmActionDialog
+        isOpen={singleFavoriteConfirmDialog.isOpen}
+        onClose={handleCancelSingleRemoveFavorite}
+        onConfirm={handleConfirmSingleRemoveFavorite}
+        actionType="warning"
+        config={{
+          title: "确认取消收藏",
+          content: `确定要取消收藏这个${
+            singleFavoriteConfirmDialog.favoriteType === "activity"
+              ? "活动"
+              : singleFavoriteConfirmDialog.favoriteType === "post"
+              ? "帖子"
+              : singleFavoriteConfirmDialog.favoriteType === "exchange"
+              ? "商品"
+              : "内容"
+          }吗？`,
+          confirmText: "确认取消收藏",
+          cancelText: "取消",
+          variant: "warning",
+        }}
+      />
+
+      {/* 批量取消收藏确认弹窗 */}
+      <ConfirmActionDialog
+        isOpen={showFavoritesConfirmDialog}
+        onClose={handleCloseFavoritesConfirmDialog}
+        onConfirm={handleConfirmBatchRemoveFavorites}
+        actionType="warning"
+        isLoading={isBatchRemovingFavorites}
+        config={{
+          title: "确认取消收藏",
+          content: `确定要取消收藏选中的 ${selectedFavoriteIds.length} 个项目吗？此操作不可撤销。`,
+          confirmText: "确认取消收藏",
+          cancelText: "取消",
+          variant: "warning",
+        }}
+      />
+
+      {/* 草稿删除确认弹窗 */}
+      <ConfirmActionDialog
+        isOpen={draftDeleteConfirmDialog.isOpen}
+        onClose={handleCancelDraftDelete}
+        onConfirm={handleConfirmDraftDelete}
+        actionType="warning"
+        config={{
+          title: "确认删除草稿",
+          content: `确定要删除草稿"${draftDeleteConfirmDialog.draftTitle}"吗？删除后将无法恢复。`,
+          confirmText: "确认删除",
+          cancelText: "取消",
+          variant: "warning"
         }}
       />
     </div>

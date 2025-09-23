@@ -18,6 +18,7 @@ export type { TagProps } from "./Tag/index";
 export { default as Icon } from "./Icon";
 export { default as Input } from "./Input";
 export type { InputProps } from "./Input/index";
+export { default as Toast } from "./Toast";
 
 export { default as DateTimePicker } from "./DateTimePicker";
 
@@ -135,3 +136,10 @@ export { default as DraftCard } from "./DraftCard/index";
 
 // 通用筛选组件
 export * from "./ContentFilter/exports";
+
+// 认证相关组件
+export { default as GradientBackground } from "./GradientBackground";
+export { default as FormInput } from "./FormInput";
+export { default as LoadingButton } from "./LoadingButton";
+export { default as InterestTags } from "./InterestTags";
+export { default as VerificationCodeInput } from "./VerificationCodeInput";

@@ -11,6 +11,7 @@ import {
   useUserNavigation,
   createUserProfileHandler,
 } from "@/shared/utils/userNavigation";
+import { useChatNavigation } from "@/shared/hooks/useChatNavigation";
 import type { User } from "@/components/ui/cards/UserCard/types";
 
 interface FollowListProps {
@@ -161,6 +162,7 @@ const mockFollowersUsers: User[] = [
 export const FollowList: React.FC<FollowListProps> = ({ type, userId }) => {
   const navigate = useNavigate();
   const userNavigation = useUserNavigation();
+  const { navigateToUserChat } = useChatNavigation();
   const handleViewProfile = createUserProfileHandler(userNavigation);
 
   // 根据类型获取对应数据
@@ -182,8 +184,15 @@ export const FollowList: React.FC<FollowListProps> = ({ type, userId }) => {
   };
 
   const handleSendMessage = (userId: string) => {
-    console.log("发送私信给", userId);
-    // 这里应该打开私信对话框
+    const user = users.find((u) => u.id === userId);
+    if (user) {
+      navigateToUserChat(userId, {
+        name: user.username || user.name,
+        avatar: user.avatar,
+      });
+    } else {
+      console.error("未找到用户信息:", userId);
+    }
   };
 
   // 使用 useMemo 缓存随机生成的用户统计数据，避免重复渲染时数据闪烁

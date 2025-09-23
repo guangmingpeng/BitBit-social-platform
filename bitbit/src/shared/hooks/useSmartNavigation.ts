@@ -171,6 +171,37 @@ export const useSmartNavigation = () => {
         return;
       }
 
+      // 处理从聊天群设置跳转的情况
+      if (fromSource === "chat") {
+        console.log("→ 从活动详情页返回聊天页面");
+        const returnToConversationId = location.state?.returnToConversationId;
+
+        if (returnToConversationId) {
+          console.log("→ 返回到指定会话:", returnToConversationId);
+          navigate("/chat", {
+            state: { conversationId: returnToConversationId },
+            replace: true,
+          });
+        } else {
+          // 从栈中查找聊天页面记录以获取原始参数
+          const chatEntry = stack
+            .slice()
+            .reverse()
+            .find((entry) => entry.pathname.startsWith("/chat"));
+
+          if (chatEntry && chatEntry.pathname !== "/chat") {
+            // 如果找到带参数的聊天页面，返回到该页面
+            console.log("→ 返回到带参数的聊天页面:", chatEntry.pathname);
+            navigate(chatEntry.pathname, { replace: true });
+          } else {
+            // 否则返回到通用聊天页面（这种情况可能仍会出错）
+            console.log("→ 返回到通用聊天页面");
+            navigate("/chat", { replace: true });
+          }
+        }
+        return;
+      }
+
       // 处理直接来源
       if (fromSource === "home") {
         console.log("→ 详情页直接返回首页");
@@ -267,7 +298,86 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 6. 处理通知页面的返回
+    // 6. 处理聊天页面的返回
+    if (currentPath === "/chat" || currentPath.startsWith("/chat")) {
+      if (fromSource === "following") {
+        console.log("→ 聊天页面返回关注列表");
+        // 从栈中查找原来的 following 页面路径，可能是 /profile/following 或 /user/:userId/following
+        const currentIndex = stack.findIndex(
+          (entry) => entry.pathname === currentPath
+        );
+        if (currentIndex > 0) {
+          const previousEntry = stack[currentIndex - 1];
+          if (previousEntry.pathname.includes("/following")) {
+            navigate(previousEntry.pathname, { replace: true });
+          } else {
+            navigate("/profile/following", { replace: true });
+          }
+        } else {
+          navigate("/profile/following", { replace: true });
+        }
+        return;
+      } else if (fromSource === "followers") {
+        console.log("→ 聊天页面返回粉丝列表");
+        // 从栈中查找原来的 followers 页面路径，可能是 /profile/followers 或 /user/:userId/followers
+        const currentIndex = stack.findIndex(
+          (entry) => entry.pathname === currentPath
+        );
+        if (currentIndex > 0) {
+          const previousEntry = stack[currentIndex - 1];
+          if (previousEntry.pathname.includes("/followers")) {
+            navigate(previousEntry.pathname, { replace: true });
+          } else {
+            navigate("/profile/followers", { replace: true });
+          }
+        } else {
+          navigate("/profile/followers", { replace: true });
+        }
+        return;
+      } else if (fromSource === "community") {
+        console.log("→ 聊天页面返回社区");
+        navigate("/community", { replace: true });
+        return;
+      } else if (fromSource === "profile") {
+        console.log("→ 聊天页面返回个人资料");
+        const profileTab = location.state?.profileTab || "activities";
+        navigate(`/profile/${profileTab}`, { replace: true });
+        return;
+      } else if (fromSource === "notification") {
+        console.log("→ 聊天页面返回通知页面");
+        navigate("/notifications", { replace: true });
+        return;
+      } else if (fromSource === "userCard") {
+        // 兜底：如果是用户卡片但没有指定具体来源，从栈中查找前一个页面
+        const currentIndex = stack.findIndex(
+          (entry) => entry.pathname === currentPath
+        );
+        if (currentIndex > 0) {
+          const previousEntry = stack[currentIndex - 1];
+          console.log("→ 聊天页面返回栈中前一个页面:", previousEntry.pathname);
+          navigate(previousEntry.pathname, { replace: true });
+          return;
+        }
+      }
+
+      // 兜底：从栈中查找前一个页面
+      const currentIndex = stack.findIndex(
+        (entry) => entry.pathname === currentPath
+      );
+      if (currentIndex > 0) {
+        const previousEntry = stack[currentIndex - 1];
+        console.log("→ 聊天页面返回栈中前一个页面:", previousEntry.pathname);
+        navigate(previousEntry.pathname, { replace: true });
+        return;
+      }
+
+      // 最终兜底：返回首页
+      console.log("→ 聊天页面最终兜底返回首页");
+      navigate("/", { replace: true });
+      return;
+    }
+
+    // 7. 处理通知页面的返回
     if (currentPath === "/notifications") {
       if (fromSource) {
         // 根据来源页面返回
@@ -312,7 +422,65 @@ export const useSmartNavigation = () => {
       return;
     }
 
-    // 7. 其他页面的通用返回逻辑
+    // 8. 处理发布页面的返回
+    const isPublishPage =
+      currentPath === "/publish-activity" ||
+      currentPath === "/community/publish" ||
+      currentPath.startsWith("/exchange/publish");
+
+    if (isPublishPage) {
+      if (fromSource === "home") {
+        console.log("→ 发布页面返回首页");
+        navigate("/", { replace: true });
+        return;
+      } else if (fromSource === "activities") {
+        console.log("→ 发布页面返回活动列表");
+        navigate("/activities", { replace: true });
+        return;
+      } else if (fromSource === "community") {
+        console.log("→ 发布页面返回社区");
+        navigate("/community", { replace: true });
+        return;
+      } else if (fromSource === "exchange") {
+        console.log("→ 发布页面返回交换页面");
+        navigate("/exchange", { replace: true });
+        return;
+      } else if (fromSource === "profile") {
+        console.log("→ 发布页面返回个人资料");
+        const profileTab = location.state?.profileTab || "activities";
+        navigate(`/profile/${profileTab}`, { replace: true });
+        return;
+      }
+
+      // 兜底：从栈中查找前一个页面
+      const currentIndex = stack.findIndex(
+        (entry) => entry.pathname === currentPath
+      );
+      if (currentIndex > 0) {
+        const previousEntry = stack[currentIndex - 1];
+        console.log("→ 发布页面返回栈中前一个页面:", previousEntry.pathname);
+        navigate(previousEntry.pathname, { replace: true });
+        return;
+      }
+
+      // 最终兜底：根据页面类型返回对应的列表页
+      if (currentPath === "/publish-activity") {
+        console.log("→ 发布活动页面最终兜底返回活动列表");
+        navigate("/activities", { replace: true });
+      } else if (currentPath === "/community/publish") {
+        console.log("→ 发布帖子页面最终兜底返回社区");
+        navigate("/community", { replace: true });
+      } else if (currentPath.startsWith("/exchange/publish")) {
+        console.log("→ 发布商品页面最终兜底返回交换页面");
+        navigate("/exchange", { replace: true });
+      } else {
+        console.log("→ 发布页面最终兜底返回首页");
+        navigate("/", { replace: true });
+      }
+      return;
+    }
+
+    // 9. 其他页面的通用返回逻辑
     if (stack.length > 1) {
       const previousEntry = stack[stack.length - 2];
       console.log("→ 通用返回逻辑，返回:", previousEntry.pathname);

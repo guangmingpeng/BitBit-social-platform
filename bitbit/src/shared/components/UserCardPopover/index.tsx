@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui";
+import { navigateToChatFromUserCard } from "@/features/chat/utils";
 
 // 通用用户信息接口
 export interface UserInfo {
@@ -48,6 +50,7 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
   onViewProfile,
   className = "",
 }) => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -135,8 +138,22 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
   };
 
   const handleMessage = () => {
+    console.log("UserCardPopover handleMessage:", {
+      userId: user.id,
+      hasCustomCallback: !!onMessage,
+    });
+
     if (onMessage) {
+      // 如果有自定义回调，只执行回调，不执行默认导航
+      console.log("执行自定义onMessage回调:", user.id);
       onMessage(user.id);
+    } else {
+      // 默认行为：导航到聊天页面
+      console.log("使用默认聊天导航:", { userId: user.id, name: user.name });
+      navigateToChatFromUserCard(navigate, user.id, {
+        name: user.name,
+        avatar: user.avatar,
+      });
     }
   };
 
@@ -254,6 +271,10 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
       }}
       onMouseEnter={handlePopoverMouseEnter}
       onMouseLeave={handlePopoverMouseLeave}
+      onClick={(e) => {
+        // 阻止popover内的点击关闭popover
+        e.stopPropagation();
+      }}
     >
       {/* 头部区域 - 头像和基本信息 */}
       <div className="p-4 pb-3 border-b border-gray-100">
@@ -263,24 +284,40 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
 
           {/* 用户信息 */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <h4
-                className="text-title-4 text-text-primary cursor-pointer hover:text-primary-500 transition-colors font-semibold"
-                onClick={handleViewProfile}
-                title={user.name} // 添加 tooltip
-                style={{
-                  maxWidth: "180px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {user.name}
-              </h4>
-              {user.isOrganizer && (
-                <span className="bg-sunflower-500 text-white text-caption px-2 py-0.5 rounded-full font-medium flex-shrink-0">
-                  组织者
-                </span>
+            {/* 用户名和关注按钮 - 优化布局 */}
+            <div className="flex items-start justify-between mb-1">
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <h4
+                  className="text-title-4 text-text-primary cursor-pointer hover:text-primary-500 transition-colors font-semibold"
+                  onClick={handleViewProfile}
+                  title={user.name}
+                  style={{
+                    maxWidth: "140px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {user.name}
+                </h4>
+
+                {user.isOrganizer && (
+                  <span className="bg-sunflower-500 text-white text-caption px-2 py-0.5 rounded-full font-medium flex-shrink-0">
+                    组织者
+                  </span>
+                )}
+              </div>
+
+              {/* 关注按钮 - 独立区域，避免挤压用户名 - 使用primary突出显示 */}
+              {showActions && (
+                <Button
+                  variant={user.isFollowed ? "secondary" : "primary"}
+                  size="sm"
+                  onClick={handleFollow}
+                  className="flex-shrink-0 font-medium ml-2"
+                >
+                  {user.isFollowed ? "已关注" : "关注"}
+                </Button>
               )}
             </div>
 
@@ -402,50 +439,59 @@ const UserCardPopover: React.FC<UserCardPopoverProps> = ({
             </div>
           )}
         </div>
-        {/* 操作按钮区域 - 固定在底部 */}
+        {/* 操作按钮区域 - 默认显示两个按钮：查看主页 + 发私信 */}
         {showActions && (
-          <div className="flex-shrink-0 p-4 pt-2 border-t border-gray-100">
-            <div className="flex gap-2">
-              {/* 进入主页按钮 - 更明显的主要操作 */}
+          <div className="flex-shrink-0 p-4 pt-3 border-t border-gray-100">
+            <div className="grid grid-cols-2 gap-3">
+              {/* 查看主页按钮 - 使用secondary作为默认高亮 */}
               <Button
-                variant="primary"
+                variant="secondary"
                 size="sm"
                 onClick={handleViewProfile}
-                className="flex-1 font-medium text-sm h-8"
+                leftIcon={
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                }
+                fullWidth
               >
-                <svg
-                  className="w-4 h-4 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-                进入主页
+                查看主页
               </Button>
+
+              {/* 私信按钮 - 使用outline作为次要操作 */}
               <Button
-                variant={user.isFollowed ? "secondary" : "outline"}
+                variant="outline"
                 size="sm"
-                onClick={handleFollow}
-                className="flex-shrink-0 font-medium text-sm h-8 px-3"
+                onClick={handleMessage}
+                leftIcon={
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z"
+                    />
+                  </svg>
+                }
+                fullWidth
               >
-                {user.isFollowed ? "已关注" : "关注"}
+                发私信
               </Button>
-              {onMessage && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleMessage}
-                  className="flex-shrink-0 text-sm h-8 px-3"
-                >
-                  💬
-                </Button>
-              )}
             </div>
           </div>
         )}

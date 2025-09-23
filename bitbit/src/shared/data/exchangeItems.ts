@@ -11,7 +11,14 @@ export interface ExchangeItemData {
   originalPrice?: number;
   image?: string;
   images?: string[];
-  status: "available" | "reserved" | "sold" | "hot" | "urgent" | "new";
+  status:
+    | "available"
+    | "reserved"
+    | "sold"
+    | "hot"
+    | "urgent"
+    | "new"
+    | "hidden";
   seller: {
     name: string;
     avatar?: string;

@@ -3,6 +3,7 @@ import type {
   NotificationStats,
   NotificationType,
 } from "../types";
+import ChatNotificationService from "./chatNotificationService";
 
 // 模拟数据
 const mockNotifications: Notification[] = [
@@ -31,13 +32,59 @@ const mockNotifications: Notification[] = [
   {
     id: "3",
     type: "message",
-    title: "收到新消息",
-    content: "李四: 今天的摄影活动怎么样？",
-    time: "1天前",
-    isRead: true,
-    avatar: "https://picsum.photos/40/40?random=2",
-    actionUrl: "/messages/chat/lisi",
-    createdAt: "2025-01-07T12:00:00Z",
+    title: "新消息",
+    content: "", // 将在构造函数中动态生成
+    time: "30分钟前",
+    isRead: false,
+    avatar: "https://picsum.photos/60/60?random=7",
+    actionUrl: "/messages/chat/7", // 最新消息发送者的聊天链接
+    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30分钟前
+    messageData: {
+      senders: [
+        {
+          userId: "7",
+          userName: "Grace Wu",
+          userAvatar: "https://picsum.photos/60/60?random=7",
+          lastMessage:
+            "很好的开始！建议你先保持现有的距离，重点关注跑步姿势和呼吸节奏。",
+          timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30分钟前
+        },
+        {
+          userId: "9",
+          userName: "Iris Yang",
+          userAvatar: "https://picsum.photos/60/60?random=9",
+          lastMessage: "什么时候开始呢？我很期待！",
+          timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(), // 45分钟前
+        },
+        {
+          userId: "10",
+          userName: "Jack Chen",
+          userAvatar: "https://picsum.photos/60/60?random=10",
+          lastMessage: "最近在研究新的算法，想和大家分享一下。",
+          timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString(), // 1小时前
+        },
+        {
+          userId: "8",
+          userName: "Henry Xu",
+          userAvatar: "https://picsum.photos/60/60?random=8",
+          lastMessage: "我也想参加这个讨论。",
+          timestamp: new Date(Date.now() - 1000 * 60 * 75).toISOString(), // 1小时15分钟前
+        },
+        {
+          userId: "6",
+          userName: "Fiona Liu",
+          userAvatar: "https://picsum.photos/60/60?random=6",
+          lastMessage: "太棒了，这个想法很不错！",
+          timestamp: new Date(Date.now() - 1000 * 60 * 90).toISOString(), // 1小时30分钟前
+        },
+      ],
+      totalCount: 5,
+      lastSenderName: "Grace Wu",
+      lastMessage:
+        "很好的开始！建议你先保持现有的距离，重点关注跑步姿势和呼吸节奏。",
+      lastSenderId: "7",
+      lastSenderAvatar: "https://picsum.photos/60/60?random=7",
+    },
   },
   {
     id: "4",
@@ -75,8 +122,38 @@ const mockNotifications: Notification[] = [
 ];
 
 class NotificationService {
-  private notifications: Notification[] = [...mockNotifications];
+  private notifications: Notification[] = [];
   private listeners: Set<() => void> = new Set();
+
+  constructor() {
+    // 初始化静态通知数据
+    this.notifications = mockNotifications
+      .filter((notification) => notification.type !== "message") // 排除静态消息通知
+      .map((notification) => ({ ...notification }));
+
+    // 动态生成消息通知
+    this.updateMessageNotifications();
+  }
+
+  // 动态更新消息通知
+  private updateMessageNotifications(currentUserId: string = "4") {
+    // 移除旧的消息通知
+    this.notifications = this.notifications.filter((n) => n.type !== "message");
+
+    // 生成新的动态消息通知
+    const dynamicMessageNotification =
+      ChatNotificationService.generateAggregatedNotification(currentUserId);
+
+    if (dynamicMessageNotification) {
+      this.notifications.unshift(dynamicMessageNotification); // 添加到最前面
+    }
+  }
+
+  // 刷新消息通知
+  refreshMessageNotifications(currentUserId: string = "4"): void {
+    this.updateMessageNotifications(currentUserId);
+    this.notifyListeners();
+  }
 
   // 获取所有通知
   getNotifications(): Notification[] {

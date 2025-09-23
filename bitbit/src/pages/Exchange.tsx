@@ -9,6 +9,8 @@ import {
   PurchaseModal,
 } from "@/components/ui";
 import { ExchangeCard } from "@/features/exchange";
+import { FloatingBackButton } from "@/components/common";
+import { navigateToChatFromExchange } from "@/features/chat/utils";
 import { useNavigationFilters } from "@/shared/hooks/useNavigationStore";
 import {
   getAllExchangeItems,
@@ -99,6 +101,23 @@ const Exchange: FC = () => {
 
   const exchangeItems = getFilteredItems();
 
+  // 处理联系卖家
+  const handleContact = (item: (typeof exchangeItems)[0]) => {
+    const sellerId = `seller-${item.id}`;
+    navigateToChatFromExchange(
+      navigate,
+      sellerId,
+      {
+        name: item.seller.name,
+        avatar: item.seller.avatar,
+      },
+      {
+        id: item.id,
+        title: item.title,
+      }
+    );
+  };
+
   // 处理交换
   const handleExchange = (item: (typeof exchangeItems)[0]) => {
     setSelectedItem({
@@ -126,15 +145,6 @@ const Exchange: FC = () => {
       {/* 面包屑导航 */}
       <div className="flex items-center justify-between">
         <Breadcrumb items={breadcrumbItems} />
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => navigate("/")}
-          className="flex items-center gap-2"
-        >
-          <Icon name="arrow-left" size="sm" />
-          返回首页
-        </Button>
       </div>
 
       {/* 页面标题和描述 */}
@@ -291,6 +301,7 @@ const Exchange: FC = () => {
               layout={layout}
               onClick={() => navigate(`/exchange/${item.id}`)}
               onExchange={() => handleExchange(item)}
+              onContact={() => handleContact(item)}
               onLike={() => console.log(`收藏商品: ${item.title}`)}
             />
           ))
@@ -371,6 +382,14 @@ const Exchange: FC = () => {
           }}
         />
       )}
+
+      {/* 返回首页浮动按钮 */}
+      <FloatingBackButton
+        text="返回首页"
+        onClick={() => navigate("/")}
+        variant="elegant"
+        size="md"
+      />
     </Container>
   );
 };

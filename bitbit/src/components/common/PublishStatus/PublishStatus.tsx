@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui";
 import ActivityPreview from "@/features/activities/components/ActivityPreview";
 import PostPreview from "@/features/community/components/PostPreview";
+import { ItemPreview } from "@/components/ui/ItemPreview";
 import type { PublishStatusProps } from "./types";
 import type { ActivityFormData } from "@/features/activities/components/ActivityForm";
 import type { CommunityPostFormData } from "@/features/community/components/CommunityPostForm";
+import type { PublishFormData } from "@/features/exchange/types/types";
 
 const PublishStatus = <T,>({
   status,
@@ -81,8 +83,36 @@ const PublishStatus = <T,>({
                 className="shadow-none border-0"
               />
             )}
-            {previewData.type === "item" && (
-              // 保持商品的简单预览，因为没有完整的预览组件
+            {previewData.type === "item" && fullPreviewData && (
+              <ItemPreview
+                formData={fullPreviewData as unknown as PublishFormData}
+                conditions={[
+                  { id: "new", name: "全新", description: "商品从未使用过" },
+                  {
+                    id: "like-new",
+                    name: "几乎全新",
+                    description: "商品使用很少，无明显磨损",
+                  },
+                  {
+                    id: "good",
+                    name: "良好",
+                    description: "商品使用正常，有轻微磨损",
+                  },
+                  {
+                    id: "fair",
+                    name: "一般",
+                    description: "商品有明显磨损但功能正常",
+                  },
+                  {
+                    id: "poor",
+                    name: "较差",
+                    description: "商品磨损严重但仍可使用",
+                  },
+                ]}
+              />
+            )}
+            {previewData.type === "item" && !fullPreviewData && (
+              // 如果没有完整数据，回退到简单预览
               <div className="p-4 flex gap-4">
                 <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden">
                   {previewData.image ? (

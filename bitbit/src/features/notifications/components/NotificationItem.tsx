@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/shared/utils/cn";
+import { navigateToChatFromNotification } from "@/features/chat/utils";
 import type { Notification } from "../types";
 
 interface NotificationItemProps {
@@ -33,6 +34,61 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     // 如果未读，先标记为已读
     if (!notification.isRead) {
       onMarkAsRead(notification.id);
+    }
+
+    // 特殊处理消息类型的通知
+    if (notification.type === "message" && notification.actionUrl) {
+      // 处理会话消息通知 (群聊/活动聊天)
+      const conversationMatch = notification.actionUrl.match(
+        /\/messages\/conversation\/(.+)/
+      );
+      if (conversationMatch) {
+        const conversationId = conversationMatch[1];
+
+        // 根据通知内容判断会话类型
+        const isGroupMessage =
+          notification.content.includes("发来") &&
+          !notification.content.match(/^[^:]+:/);
+
+        navigateToChatFromNotification(navigate, {
+          conversationId,
+          type: isGroupMessage ? "group" : "activity",
+        });
+        return;
+      }
+
+      // 处理私聊消息通知
+      const chatUserMatch = notification.actionUrl.match(
+        /\/messages\/chat\/(.+)/
+      );
+      if (chatUserMatch) {
+        const userId = chatUserMatch[1];
+
+        // 如果是聚合消息通知，使用最新消息发送者的信息
+        if (notification.messageData) {
+          navigateToChatFromNotification(navigate, {
+            userId: notification.messageData.lastSenderId,
+            userName: notification.messageData.lastSenderName,
+            userAvatar: notification.messageData.lastSenderAvatar,
+            type: "private",
+          });
+          return;
+        }
+
+        // 处理单个用户的消息通知
+        const userNameMatch = notification.content.match(/^([^:]+):/);
+        const userName = userNameMatch ? userNameMatch[1] : userId;
+
+        navigateToChatFromNotification(navigate, {
+          userId,
+          userName,
+          userAvatar: notification.avatar?.startsWith("http")
+            ? notification.avatar
+            : undefined,
+          type: "private",
+        });
+        return;
+      }
     }
 
     // 如果有跳转链接，进行导航
@@ -116,7 +172,41 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
 
         {/* 头像/图标 */}
         <div className="flex-shrink-0 relative">
-          {notification.avatar?.startsWith("http") ? (
+          {/* 聚合消息通知显示多个头像 */}
+          {notification.type === "message" && notification.messageData ? (
+            <div className="w-10 h-10 relative">
+              {/* 显示最多3个用户头像 */}
+              {notification.messageData.senders
+                .slice(0, 3)
+                .map((sender, index) => (
+                  <div
+                    key={sender.userId}
+                    className={cn(
+                      "absolute w-6 h-6 rounded-full border-2 border-white overflow-hidden",
+                      index === 0 && "top-0 left-0 z-30",
+                      index === 1 && "top-0 right-0 z-20",
+                      index === 2 &&
+                        "bottom-0 left-1/2 transform -translate-x-1/2 z-10"
+                    )}
+                  >
+                    <img
+                      src={
+                        sender.userAvatar ||
+                        "https://picsum.photos/24/24?random=" + index
+                      }
+                      alt={sender.userName}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              {/* 如果超过3个用户，显示数量 */}
+              {notification.messageData.totalCount > 3 && (
+                <div className="absolute bottom-0 right-0 w-4 h-4 bg-gray-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
+                  {notification.messageData.totalCount - 3}+
+                </div>
+              )}
+            </div>
+          ) : notification.avatar?.startsWith("http") ? (
             <img
               src={notification.avatar}
               alt=""
@@ -129,14 +219,16 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
           )}
 
           {/* 类型指示器 */}
-          <div
-            className={cn(
-              "absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-white flex items-center justify-center text-xs shadow-sm",
-              getTypeColor()
-            )}
-          >
-            {getTypeIcon()}
-          </div>
+          {!(notification.type === "message" && notification.messageData) && (
+            <div
+              className={cn(
+                "absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-white flex items-center justify-center text-xs shadow-sm",
+                getTypeColor()
+              )}
+            >
+              {getTypeIcon()}
+            </div>
+          )}
         </div>
 
         {/* 内容 */}
@@ -151,10 +243,45 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
                     : "text-text-secondary"
                 )}
               >
-                {notification.title}
+                {/* 特殊处理消息通知标题 */}
+                {notification.type === "message" && notification.messageData ? (
+                  <span>
+                    {notification.messageData.senders
+                      .slice(0, 3)
+                      .map((sender, index) => {
+                        const totalShown = Math.min(
+                          notification.messageData!.senders.length,
+                          3
+                        );
+                        return (
+                          <span key={sender.userId}>
+                            <span className="text-primary-600 font-semibold">
+                              {sender.userName}
+                            </span>
+                            {index < totalShown - 1 && (
+                              <span className="text-text-tertiary mx-1">
+                                、
+                              </span>
+                            )}
+                          </span>
+                        );
+                      })}
+                    {notification.messageData.senders.length > 3 && (
+                      <span className="text-text-tertiary">等</span>
+                    )}
+                    <span className="text-text-secondary ml-1">
+                      发来{notification.messageData.totalCount}条新消息
+                    </span>
+                  </span>
+                ) : (
+                  notification.title
+                )}
               </h4>
               <p className="text-body text-text-tertiary mb-2 line-clamp-2">
-                {notification.content}
+                {/* 聚合消息显示最新消息内容 */}
+                {notification.type === "message" && notification.messageData
+                  ? `${notification.messageData.lastSenderName}: ${notification.messageData.lastMessage}`
+                  : notification.content}
               </p>
               <div className="flex items-center gap-3">
                 <span className="text-caption text-text-tertiary">

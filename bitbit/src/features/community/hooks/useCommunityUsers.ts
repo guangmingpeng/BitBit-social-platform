@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useChatNavigation } from "@/shared/hooks/useChatNavigation";
 import type { UserInfo } from "@/shared/components";
 import { UserNavigation } from "@/shared/utils/userNavigation";
 
@@ -91,6 +92,7 @@ const mockActiveUsers: CommunityUser[] = [
 
 export const useCommunityUsers = () => {
   const navigate = useNavigate();
+  const { navigateToUserChat } = useChatNavigation();
   const [users, setUsers] = useState<CommunityUser[]>(mockActiveUsers);
   const [loading, setLoading] = useState(false);
 
@@ -157,10 +159,22 @@ export const useCommunityUsers = () => {
   );
 
   // 发送私信
-  const sendMessage = useCallback(async (userId: string) => {
-    console.log("发送私信给用户:", userId);
-    // 这里可以打开私信对话框或跳转到消息页面
-  }, []);
+  const sendMessage = useCallback(
+    (userId: string) => {
+      console.log("发送私信给用户:", userId);
+
+      // 找到对应的用户信息
+      const user = users.find((u) => u.id === userId);
+      if (user) {
+        // 使用统一的聊天导航钩子
+        navigateToUserChat(userId, {
+          name: user.name,
+          avatar: user.avatar,
+        });
+      }
+    },
+    [users, navigateToUserChat]
+  );
 
   // 查看用户资料
   const viewProfile = useCallback(

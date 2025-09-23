@@ -1,11 +1,15 @@
 {
   "name": "bitbit",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:debug": "VITE_SHOW_DEBUG_COMPONENTS=true vite",
+    "dev:clean": "VITE_SHOW_DEBUG_COMPONENTS=false vite",
     "build": "vite build",
+    "build:dev": "VITE_SHOW_DEBUG_COMPONENTS=true vite build",
+    "build:prod": "VITE_SHOW_DEBUG_COMPONENTS=false vite build",
     "build:with-types": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -19,6 +23,7 @@
     "react": "^19.1.1",
     "react-day-picker": "^9.9.0",
     "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^6.30.1",
     "tailwind-merge": "^3.3.1"
   },

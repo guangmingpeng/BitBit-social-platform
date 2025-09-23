@@ -6,6 +6,7 @@ import FloatingBackButton from "../components/common/FloatingBackButton";
 import { getActivityById } from "@/shared/data/activities";
 import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
 import { getActivityParticipationInfo } from "@/shared/utils/activityUtils";
+import { navigateToChatFromActivity } from "@/features/chat/utils";
 import type { Activity } from "@/shared/types";
 import {
   ActivityHeader,
@@ -31,6 +32,7 @@ interface ProfileActivity {
 
 interface LocationState {
   fromProfile?: boolean;
+  fromChat?: boolean; // 从聊天群设置跳转
   profileData?: {
     activities?: ProfileActivity[];
   };
@@ -161,6 +163,20 @@ const ActivityDetail: FC = () => {
     navigateWithSource("activity-detail")("/publish-activity");
   };
 
+  // 处理加入聊天群
+  const handleJoinChat = () => {
+    if (activityData) {
+      // 导航到活动群聊
+      const conversationId = `activity-chat-${activityData.id}`;
+      navigateToChatFromActivity(
+        navigate,
+        activityData.id,
+        activityData.title,
+        conversationId
+      );
+    }
+  };
+
   const handleViewLocationDetails = () => {
     console.log("查看详细地址");
   };
@@ -240,6 +256,7 @@ const ActivityDetail: FC = () => {
                 onLeave={handleLeave}
                 onComment={handleComment}
                 onCreateSimilar={handleCreateSimilar}
+                onJoinChat={handleJoinChat}
               />
             </CardContent>
           </Card>

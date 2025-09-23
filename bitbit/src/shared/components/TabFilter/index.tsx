@@ -34,33 +34,33 @@ export const TabFilter: React.FC<TabFilterProps> = ({
   className = "",
 }) => {
   return (
-    <div className={`flex gap-2 flex-wrap items-center ${className}`}>
-      {label && (
-        <span className="text-sm font-medium text-gray-700 self-center">
-          {label}
-        </span>
-      )}
-      {options.map((option) => (
-        <button
-          key={option.key}
-          onClick={() => onChange(option.key)}
-          className={`
-            px-4 py-2 rounded-full text-body font-medium transition-all duration-200
-            ${
-              value === option.key
-                ? "bg-primary-100 text-primary-600 border border-primary-200"
-                : "border border-gray-200 text-text-tertiary hover:bg-gray-50 hover:text-text-secondary"
-            }
-          `}
-        >
-          {option.label}
-          {showCount && option.count !== undefined && (
-            <span className="ml-1 text-caption opacity-75">
-              ({option.count})
-            </span>
-          )}
-        </button>
-      ))}
+    <div className="overflow-x-auto">
+      <div className={`flex gap-2 items-center pb-2 min-w-max ${className}`}>
+        {label && (
+          <span className="text-xs sm:text-sm font-medium text-gray-700 self-center whitespace-nowrap flex-shrink-0">
+            {label}
+          </span>
+        )}
+        {options.map((option) => (
+          <button
+            key={option.key}
+            onClick={() => onChange(option.key)}
+            className={`
+              px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap min-h-[44px] flex items-center
+              ${
+                value === option.key
+                  ? "bg-primary-100 text-primary-600 border border-primary-200"
+                  : "border border-gray-200 text-text-tertiary hover:bg-gray-50 hover:text-text-secondary active:bg-gray-100"
+              }
+            `}
+          >
+            {option.label}
+            {showCount && option.count !== undefined && (
+              <span className="ml-1 text-xs opacity-75">({option.count})</span>
+            )}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

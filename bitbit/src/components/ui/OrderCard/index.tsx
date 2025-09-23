@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Tag } from "@/components/ui";
+import { Card, CardContent } from "@/components/ui";
 import { cn } from "@/shared/utils/cn";
 import type { Order } from "@/shared/data/profileMockData";
 
@@ -51,10 +51,10 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick, className }) => {
       )}
       onClick={onClick}
     >
-      <CardContent className="p-4">
-        <div className="flex gap-4">
+      <CardContent className="p-3 sm:p-4">
+        <div className="flex gap-3 sm:gap-4">
           {/* 商品图片 */}
-          <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
             <img
               src={order.itemImage}
               alt={order.itemTitle}
@@ -64,28 +64,40 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onClick, className }) => {
 
           {/* 订单信息 */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between mb-2">
-              <h3 className="font-medium text-gray-900 line-clamp-1">
+            <div className="flex items-start justify-between mb-2 gap-2">
+              <h3 className="font-medium text-gray-900 line-clamp-1 text-sm sm:text-base">
                 {order.itemTitle}
               </h3>
-              <Tag className={statusConfig.color}>{statusConfig.label}</Tag>
+              <div
+                className={cn(
+                  "px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0",
+                  statusConfig.color
+                )}
+              >
+                {statusConfig.label}
+              </div>
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
-              <span className={typeConfig.color}>
-                {typeConfig.icon} {typeConfig.label}
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-1">
+              <span className={cn("flex items-center gap-1", typeConfig.color)}>
+                <span>{typeConfig.icon}</span>
+                <span className="whitespace-nowrap">{typeConfig.label}</span>
               </span>
               {order.type !== "exchange" && (
-                <span className="font-medium">¥{order.price}</span>
+                <span className="font-medium whitespace-nowrap">
+                  ¥{order.price}
+                </span>
               )}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-gray-500">
-              <span>{order.otherParty.name}</span>
-              <span>{order.createTime}</span>
+            <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+              <span className="truncate pr-2">{order.otherParty.name}</span>
+              <span className="whitespace-nowrap flex-shrink-0">
+                {order.createTime}
+              </span>
             </div>
 
-            <div className="text-xs text-gray-400 mt-1">
+            <div className="text-xs text-gray-400 truncate">
               订单号: {order.orderNumber}
             </div>
           </div>

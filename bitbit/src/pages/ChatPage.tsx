@@ -1,0 +1,355 @@
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import { Container } from "@/components/ui";
+import FloatingBackButton from "@/components/common/FloatingBackButton";
+import { ChatContainer } from "@/features/chat/components";
+import type { ChatContainerRef } from "@/features/chat/components/ChatContainer";
+import { parseChatUrlParams } from "@/features/chat/utils";
+import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
+import { useIsSmallAndDown } from "@/shared/hooks/useMediaQuery";
+
+const ChatPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const { smartGoBack } = useSmartNavigation();
+  const chatContainerRef = useRef<ChatContainerRef>(null);
+  const isMobile = useIsSmallAndDown(); // 检测是否为移动端
+  const [activeConversationId, setActiveConversationId] = useState<
+    string | null
+  >(null); // 跟踪活跃对话
+
+  // 解析URL参数
+  const urlParams = parseChatUrlParams(searchParams);
+  const stateParams = location.state;
+
+  // 组合参数（state优先于URL参数）
+  const chatParams = useMemo(() => {
+    const params = {
+      userId: stateParams?.userId || urlParams.userId,
+      userName: stateParams?.userName || urlParams.userName,
+      userAvatar: stateParams?.userAvatar || urlParams.userAvatar,
+      conversationId: stateParams?.conversationId || urlParams.conversationId,
+      conversationType:
+        stateParams?.conversationType ||
+        urlParams.conversationType ||
+        "private",
+      sourceFrom:
+        stateParams?.sourceContext?.from ||
+        urlParams.sourceFrom ||
+        stateParams?.fromSource,
+      sourceItemId:
+        stateParams?.sourceContext?.itemId || urlParams.sourceItemId,
+      sourceItemTitle:
+        stateParams?.sourceContext?.itemTitle || urlParams.sourceItemTitle,
+      presetMessage: stateParams?.presetMessage || urlParams.presetMessage,
+      // 聚合消息通知相关
+      messageNotification: stateParams?.messageNotification,
+      isListMode: !!(
+        stateParams?.fromSource === "notifications" &&
+        stateParams?.messageNotification
+      ),
+    };
+
+    return params;
+  }, [
+    stateParams?.userId,
+    urlParams.userId,
+    stateParams?.userName,
+    urlParams.userName,
+    stateParams?.userAvatar,
+    urlParams.userAvatar,
+    stateParams?.conversationId,
+    urlParams.conversationId,
+    stateParams?.conversationType,
+    urlParams.conversationType,
+    stateParams?.sourceContext?.from,
+    urlParams.sourceFrom,
+    stateParams?.sourceContext?.itemId,
+    urlParams.sourceItemId,
+    stateParams?.sourceContext?.itemTitle,
+    urlParams.sourceItemTitle,
+    stateParams?.presetMessage,
+    urlParams.presetMessage,
+    stateParams?.fromSource,
+    stateParams?.messageNotification,
+  ]);
+
+  const [isInitialized, setIsInitialized] = useState(false);
+  const initializationInProgress = useRef(false);
+  const [contextInfo, setContextInfo] = useState<{
+    show: boolean;
+    title: string;
+    subtitle?: string;
+  }>({ show: false, title: "" });
+
+  // 使用 useRef 保存稳定的参数引用，避免不必要的重新执行
+  const chatParamsRef = useRef(chatParams);
+  chatParamsRef.current = chatParams;
+
+  // 初始化聊天会话
+  const initializeChat = useCallback(async () => {
+    const params = chatParamsRef.current;
+    try {
+      if (params.conversationId) {
+        // 如果有会话ID，直接加载该会话
+        console.log("加载现有会话:", params.conversationId);
+        chatContainerRef.current?.switchToConversation(params.conversationId);
+      } else if (params.userId) {
+        // 如果有用户ID，创建或查找与该用户的私聊会话
+        console.log("创建/查找与用户的私聊:", {
+          userId: params.userId,
+          userName: params.userName,
+          userAvatar: params.userAvatar,
+        });
+
+        // 创建或查找与该用户的对话
+        const conversationId =
+          await chatContainerRef.current?.createOrFindConversationWithUser(
+            params.userId,
+            {
+              name: params.userName || `用户${params.userId}`,
+              avatar: params.userAvatar,
+            }
+          );
+
+        if (conversationId) {
+          // 切换到该会话
+          chatContainerRef.current?.switchToConversation(conversationId);
+
+          // 如果有预设消息，设置到输入框中
+          if (params.presetMessage) {
+            chatContainerRef.current?.setPresetMessage(params.presetMessage);
+            console.log("设置预设消息:", params.presetMessage);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("初始化聊天失败:", error);
+    }
+  }, []); // 移除 chatParams 依赖，使用 ref 访问最新值
+
+  useEffect(() => {
+    if (
+      !isInitialized &&
+      !initializationInProgress.current &&
+      (chatParams.userId || chatParams.conversationId || chatParams.isListMode)
+    ) {
+      initializationInProgress.current = true;
+
+      if (chatParams.userId || chatParams.conversationId) {
+        initializeChat().finally(() => {
+          initializationInProgress.current = false;
+        });
+      }
+      setIsInitialized(true);
+    }
+  }, [
+    chatParams.userId,
+    chatParams.conversationId,
+    chatParams.isListMode,
+    isInitialized,
+    initializeChat,
+  ]); // 只监听关键参数
+
+  // 设置上下文信息显示
+  useEffect(() => {
+    // 处理聚合消息通知
+    if (chatParams.isListMode && chatParams.messageNotification) {
+      setContextInfo({
+        show: true,
+        title: "新消息通知",
+        subtitle: `${chatParams.messageNotification.totalCount}个联系人发来了消息`,
+      });
+
+      // 5秒后自动隐藏上下文信息
+      const timer = setTimeout(() => {
+        setContextInfo((prev) => ({ ...prev, show: false }));
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+
+    // 检查是否是从用户卡片发起的私聊，并添加会话状态提示
+    if (chatParams.sourceFrom === "userCard" && chatParams.userId) {
+      // 这里可以添加检查历史会话的逻辑
+      const isNewConversation = !chatParams.conversationId; // 简化判断逻辑
+
+      setContextInfo({
+        show: true,
+        title: isNewConversation ? "📱 开始新对话" : "💬 继续对话",
+        subtitle: `与 ${chatParams.userName || "用户"} 的私聊`,
+      });
+
+      // 5秒后自动隐藏上下文信息
+      const timer = setTimeout(() => {
+        setContextInfo((prev) => ({ ...prev, show: false }));
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+
+    if (chatParams.sourceFrom && chatParams.sourceItemTitle) {
+      let contextTitle = "";
+      let contextSubtitle = "";
+
+      switch (chatParams.sourceFrom) {
+        case "exchange":
+          contextTitle = "关于商品咨询";
+          contextSubtitle = chatParams.sourceItemTitle;
+          break;
+        case "activity":
+          contextTitle = "活动群聊";
+          contextSubtitle = chatParams.sourceItemTitle;
+          break;
+        case "notification":
+          contextTitle = "来自通知消息";
+          break;
+        default:
+          break;
+      }
+
+      if (contextTitle) {
+        setContextInfo({
+          show: true,
+          title: contextTitle,
+          subtitle: contextSubtitle,
+        });
+
+        // 5秒后自动隐藏上下文信息
+        const timer = setTimeout(() => {
+          setContextInfo((prev) => ({ ...prev, show: false }));
+        }, 5000);
+
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [chatParams]);
+
+  const handleGoBack = () => {
+    // 对于需要特定参数的返回场景，保留原有逻辑
+    // 其他场景统一使用 smartGoBack 处理
+    switch (chatParams.sourceFrom) {
+      case "exchange":
+        if (chatParams.sourceItemId) {
+          navigate(`/exchange/${chatParams.sourceItemId}`);
+        } else {
+          navigate("/exchange");
+        }
+        break;
+      case "activity":
+        if (chatParams.sourceItemId) {
+          navigate(`/activities/${chatParams.sourceItemId}`);
+        } else {
+          navigate("/activities");
+        }
+        break;
+      default:
+        // 统一使用 smartGoBack 处理所有其他返回逻辑
+        // 包括 notification、userCard、profile、following、followers、community 等
+        smartGoBack();
+        break;
+    }
+  };
+
+  // 如果没有必要的参数且不是列表模式，显示错误页面
+  if (
+    !chatParams.userId &&
+    !chatParams.conversationId &&
+    !chatParams.isListMode
+  ) {
+    return (
+      <Container size="lg" className="py-6">
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">💬</div>
+          <h1 className="text-2xl font-bold text-text-primary mb-4">
+            无法打开聊天
+          </h1>
+          <p className="text-text-secondary mb-6">
+            缺少必要的聊天参数，请从正确的入口进入聊天页面
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-primary-500 text-white px-6 py-2 rounded-lg hover:bg-primary-600 transition-colors"
+          >
+            返回首页
+          </button>
+        </div>
+      </Container>
+    );
+  }
+
+  return (
+    <div className="fixed inset-0 bg-gray-50 flex flex-col z-50 overflow-hidden pb-16">
+      {/* 返回按钮 - 在移动端有活跃对话时隐藏，避免与聊天界面内的返回按钮冲突 */}
+      {!(isMobile && activeConversationId) && (
+        <div className="absolute top-2 left-2 md:top-4 md:left-4 z-[60]">
+          <FloatingBackButton
+            text="返回上页"
+            variant="elegant"
+            size="md"
+            onClick={handleGoBack}
+          />
+        </div>
+      )}
+
+      {/* 上下文信息条 - 固定顶部，响应式边距，根据悬浮按钮显示状态调整边距 */}
+      {contextInfo.show && (
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200 px-2 md:px-4 py-2 md:py-3 flex-shrink-0 z-[55]">
+          <div
+            className={`flex items-center justify-between max-w-4xl mx-auto ${
+              !(isMobile && activeConversationId)
+                ? "ml-12 md:ml-20 lg:ml-28"
+                : "ml-2 md:ml-20 lg:ml-28"
+            }`}
+          >
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+              <div>
+                <p className="text-xs md:text-sm font-medium text-blue-800">
+                  {contextInfo.title}
+                </p>
+                {contextInfo.subtitle && (
+                  <p className="text-xs text-blue-600 truncate max-w-xs">
+                    {contextInfo.subtitle}
+                  </p>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={() =>
+                setContextInfo((prev) => ({ ...prev, show: false }))
+              }
+              className="text-blue-600 hover:text-blue-800 p-1"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 聊天容器 - 占满整个剩余空间 */}
+      <div className="flex-1 min-h-0">
+        <ChatContainer
+          ref={chatContainerRef}
+          className="h-full"
+          onActiveConversationChange={setActiveConversationId}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ChatPage;

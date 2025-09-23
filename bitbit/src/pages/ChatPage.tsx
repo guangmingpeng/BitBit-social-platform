@@ -305,8 +305,8 @@ const ChatPage: React.FC = () => {
           <div
             className={`flex items-center justify-between max-w-4xl mx-auto ${
               !(isMobile && activeConversationId)
-                ? "ml-12 md:ml-16"
-                : "ml-2 md:ml-16"
+                ? "ml-12 md:ml-20 lg:ml-28"
+                : "ml-2 md:ml-20 lg:ml-28"
             }`}
           >
             <div className="flex items-center gap-2 md:gap-3">
@@ -348,20 +348,6 @@ const ChatPage: React.FC = () => {
           onActiveConversationChange={setActiveConversationId}
         />
       </div>
-
-      {/* 调试信息（开发环境） - 不影响布局 */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="fixed bottom-20 right-4 bg-gray-800 text-white p-3 rounded-lg text-xs max-w-sm opacity-75 hover:opacity-100 transition-opacity z-40">
-          <p className="font-bold mb-1">Chat Debug Info:</p>
-          <p>User ID: {chatParams.userId || "N/A"}</p>
-          <p>Conversation ID: {chatParams.conversationId || "N/A"}</p>
-          <p>Type: {chatParams.conversationType || "N/A"}</p>
-          <p>From: {chatParams.sourceFrom || "N/A"}</p>
-          {chatParams.presetMessage && (
-            <p>Preset: {chatParams.presetMessage.slice(0, 30)}...</p>
-          )}
-        </div>
-      )}
     </div>
   );
 };

@@ -386,10 +386,10 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
         <div
           className={cn(
             "flex w-full h-full gap-2",
-            // 移动端：减少边距，只留出返回按钮空间
-            "pl-4 pr-2 py-1",
-            // 平板/桌面端：保持原有边距设计
-            "md:pl-16 md:pr-6 md:py-4 md:gap-4 lg:pl-24 lg:pr-8 lg:gap-6"
+            // 移动端：恢复原始边距，因为有活跃对话时返回按钮会隐藏
+            "pl-2 pr-2 py-1",
+            // 平板/桌面端：调整左边距，确保与返回按钮有足够间距
+            "md:pl-20 md:pr-6 md:py-4 md:gap-4 lg:pl-28 lg:pr-8 lg:gap-6"
           )}
         >
           {/* 会话列表 - 响应式显示 */}

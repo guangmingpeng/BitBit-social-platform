@@ -11,7 +11,6 @@ interface ChatHeaderProps {
   showSettings: boolean;
   onToggleSettings: () => void;
   onSimulateMessages?: (count: number) => void;
-  onTestNewMessageButton?: () => void; // 新增：测试新消息按钮的回调
   onBackToList?: () => void; // 新增：移动端返回列表的回调
   className?: string;
 }
@@ -24,7 +23,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
   showSettings,
   onToggleSettings,
   onSimulateMessages,
-  onTestNewMessageButton,
   onBackToList,
   className,
 }) => {
@@ -179,16 +177,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
               >
                 发送5条
               </button>
-
-              {onTestNewMessageButton && (
-                <button
-                  onClick={onTestNewMessageButton}
-                  className="px-3 py-1 text-xs bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
-                  title="强制显示新消息按钮"
-                >
-                  显示按钮
-                </button>
-              )}
             </>
           )}
 

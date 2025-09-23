@@ -24,8 +24,8 @@ import { ActivityCard, PostCard } from "../components/ui/cards";
 import { ExchangeCard } from "../features/exchange/components";
 import { OrderCard, FavoriteCard, DraftCard } from "../components/ui";
 import { FavoritesHeader } from "../components/ui/FavoritesHeader";
-import { FloatingBackButton, ConfirmActionDialog, PublishStatus } from "@/components/common";
-import { useExchangeActions, usePublishStatus } from "@/shared/hooks";
+import { FloatingBackButton, ConfirmActionDialog } from "@/components/common";
+import { useExchangeActions } from "@/shared/hooks";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/store/slices/uiSlice";
 import {
@@ -78,55 +78,6 @@ const Profile: FC = () => {
     newStatus: "available" | "hidden";
     oldStatus?: string;
   } | null>(null);
-
-  // 草稿本地状态管理
-  const [localMyDrafts, setLocalMyDrafts] = useState(myDrafts);
-  
-  // 草稿发布状态管理
-  const [currentPublishingDraft, setCurrentPublishingDraft] = useState<{
-    id: string;
-    title: string;
-    type: string;
-  } | null>(null);
-
-  // 草稿发布的 usePublishStatus hook
-  const {
-    publishStatus: draftPublishStatus,
-    publishError: draftPublishError,
-    publishedItemId: publishedDraftId,
-    handleSubmit: submitDraftPublish,
-    handleRetry: retryDraftPublish,
-    handleReset: resetDraftPublish,
-    setPublishData,
-  } = usePublishStatus<{id: string; title: string; type: string}>({
-    onSubmit: async (draftData) => {
-      // 模拟发布API调用
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log(`发布草稿 "${draftData.title}" 成功！`);
-      
-      // 发布成功后从草稿列表中移除
-      setLocalMyDrafts(prevDrafts => 
-        prevDrafts.filter(d => d.id !== draftData.id)
-      );
-    },
-    onSuccess: () => {
-      // 发布成功后的额外处理
-      console.log("草稿发布成功！");
-    },
-  });
-
-  // 草稿删除确认弹窗状态
-  const [draftDeleteConfirmDialog, setDraftDeleteConfirmDialog] = useState<{
-    isOpen: boolean;
-    draftId: string;
-    draftTitle: string;
-    draftType: string;
-  }>({
-    isOpen: false,
-    draftId: '',
-    draftTitle: '',
-    draftType: ''
-  });
 
   // 商品操作逻辑
   const exchangeActions = useExchangeActions({
@@ -468,55 +419,6 @@ const Profile: FC = () => {
     }
   };
 
-  // 草稿相关处理函数
-  const handleDraftPublish = async (draftId: string, draftTitle: string, draftType: string) => {
-    // 设置当前发布的草稿信息并启动发布流程
-    const draftInfo = { id: draftId, title: draftTitle, type: draftType };
-    setCurrentPublishingDraft(draftInfo);
-    setPublishData(draftInfo);
-    
-    // 使用 setTimeout 确保状态更新完成后再调用提交
-    setTimeout(async () => {
-      await submitDraftPublish();
-    }, 0);
-  };
-
-  const handleDraftDelete = (draftId: string, draftTitle: string, draftType: string) => {
-    setDraftDeleteConfirmDialog({
-      isOpen: true,
-      draftId,
-      draftTitle,
-      draftType
-    });
-  };
-
-  const handleConfirmDraftDelete = () => {
-    if (draftDeleteConfirmDialog.draftId) {
-      // 从列表中删除草稿
-      setLocalMyDrafts(prevDrafts => 
-        prevDrafts.filter(draft => draft.id !== draftDeleteConfirmDialog.draftId)
-      );
-      
-      // 显示成功提示（这里可以集成Toast）
-      console.log(`草稿"${draftDeleteConfirmDialog.draftTitle}"删除成功！`);
-    }
-    setDraftDeleteConfirmDialog({
-      isOpen: false,
-      draftId: '',
-      draftTitle: '',
-      draftType: ''
-    });
-  };
-
-  const handleCancelDraftDelete = () => {
-    setDraftDeleteConfirmDialog({
-      isOpen: false,
-      draftId: '',
-      draftTitle: '',
-      draftType: ''
-    });
-  };
-
   // 简化的收藏筛选逻辑
   const filteredFavorites = useMemo(() => {
     console.log("=== 收藏筛选逻辑执行 ===");
@@ -567,7 +469,7 @@ const Profile: FC = () => {
   });
 
   const draftsFilter = useContentFilter({
-    data: localMyDrafts,
+    data: myDrafts,
     page: "drafts",
   });
 
@@ -989,78 +891,25 @@ const Profile: FC = () => {
       case "drafts":
         return (
           <div className="space-y-4">
-            {/* 根据发布状态显示不同内容 */}
-            {draftPublishStatus === "loading" ||
-            draftPublishStatus === "success" ||
-            draftPublishStatus === "error" ? (
-              <PublishStatus
-                status={draftPublishStatus}
-                error={draftPublishError}
-                onRetry={retryDraftPublish}
-                onReset={resetDraftPublish}
-                loadingConfig={{
-                  title: "正在发布草稿...",
-                  description: `正在发布"${currentPublishingDraft?.title}"，请稍候`,
-                }}
-                successConfig={{
-                  title: "草稿发布成功！",
-                  description: `您的${
-                    currentPublishingDraft?.type === 'activity' ? '活动' :
-                    currentPublishingDraft?.type === 'post' ? '帖子' :
-                    currentPublishingDraft?.type === 'exchange' ? '商品' : '内容'
-                  }"${currentPublishingDraft?.title}"已成功发布到平台上`,
-                  publishedItemId: publishedDraftId || undefined,
-                  previewData: {
-                    title: currentPublishingDraft?.title || "草稿",
-                    category: currentPublishingDraft?.type || "content",
-                    type: (currentPublishingDraft?.type === "exchange" ? "item" : currentPublishingDraft?.type || "post") as "activity" | "post" | "item",
-                  },
-                  actions: {
-                    primary: {
-                      label: "查看发布内容",
-                      generateHref: (id: string) => {
-                        const type = currentPublishingDraft?.type;
-                        return type === 'activity' ? `/activities/${id}` :
-                               type === 'post' ? `/community/${id}` :
-                               type === 'exchange' ? `/exchange/${id}` : '/';
-                      },
-                    },
-                    secondary: {
-                      label: "继续管理草稿",
-                      href: "/profile?tab=drafts",
-                    },
-                    tertiary: {
-                      label: "创建新内容",
-                      onClick: () => {
-                        resetDraftPublish();
-                        setCurrentPublishingDraft(null);
-                        // 这里可以导航到对应的创建页面
-                      },
-                    },
-                  },
-                }}
-              />
-            ) : (
-              <>
-                {/* 筛选和排序组件 */}
-                <ContentFilter
-                  filterConfigs={draftsFilter.config.filters}
-                  sortConfig={draftsFilter.config.sort}
-                  searchConfig={draftsFilter.config.search}
-                  activeFilters={draftsFilter.activeFilters}
-                  activeSort={draftsFilter.activeSort}
-                  searchQuery={draftsFilter.searchQuery}
-                  onFilterChange={draftsFilter.handleFilterChange}
-                  onSortChange={draftsFilter.handleSortChange}
-                  onSearchChange={draftsFilter.handleSearchChange}
-                  showFilterCount={true}
-                  showClearButton={true}
-                />
+            {/* 筛选和排序组件 */}
+            <ContentFilter
+              filterConfigs={draftsFilter.config.filters}
+              sortConfig={draftsFilter.config.sort}
+              searchConfig={draftsFilter.config.search}
+              activeFilters={draftsFilter.activeFilters}
+              activeSort={draftsFilter.activeSort}
+              searchQuery={draftsFilter.searchQuery}
+              onFilterChange={draftsFilter.handleFilterChange}
+              onSortChange={draftsFilter.handleSortChange}
+              onSearchChange={draftsFilter.handleSearchChange}
+              showFilterCount={true}
+              showClearButton={true}
+            />
 
-                {draftsPagination.currentData.length > 0 ? (
+            {draftsPagination.currentData.length > 0 ? (
               <>
                 <div className="space-y-3">
-                  {(draftsPagination.currentData as typeof localMyDrafts).map(
+                  {(draftsPagination.currentData as typeof myDrafts).map(
                     (draft) => (
                       <DraftCard
                         key={draft.id}
@@ -1093,8 +942,8 @@ const Profile: FC = () => {
                               break;
                           }
                         }}
-                        onPublish={() => handleDraftPublish(draft.id, draft.title, draft.type)}
-                        onDelete={() => handleDraftDelete(draft.id, draft.title, draft.type)}
+                        onPublish={() => console.log("发布草稿", draft.id)}
+                        onDelete={() => console.log("删除草稿", draft.id)}
                       />
                     )
                   )}
@@ -1109,12 +958,10 @@ const Profile: FC = () => {
                   />
                 )}
               </>
-                ) : (
-                  <div className="text-center py-8 sm:py-12">
-                    <p className="text-gray-500 text-sm sm:text-base">暂无草稿</p>
-                  </div>
-                )}
-              </>
+            ) : (
+              <div className="text-center py-8 sm:py-12">
+                <p className="text-gray-500 text-sm sm:text-base">暂无草稿</p>
+              </div>
             )}
           </div>
         );
@@ -1229,21 +1076,6 @@ const Profile: FC = () => {
           confirmText: "确认取消收藏",
           cancelText: "取消",
           variant: "warning",
-        }}
-      />
-
-      {/* 草稿删除确认弹窗 */}
-      <ConfirmActionDialog
-        isOpen={draftDeleteConfirmDialog.isOpen}
-        onClose={handleCancelDraftDelete}
-        onConfirm={handleConfirmDraftDelete}
-        actionType="warning"
-        config={{
-          title: "确认删除草稿",
-          content: `确定要删除草稿"${draftDeleteConfirmDialog.draftTitle}"吗？删除后将无法恢复。`,
-          confirmText: "确认删除",
-          cancelText: "取消",
-          variant: "warning"
         }}
       />
     </div>

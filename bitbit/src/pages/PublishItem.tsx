@@ -3,8 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import { Container, Breadcrumb } from "@/components/ui";
 import { PublishWizard } from "@/features/exchange";
 import type { PublishFormData } from "@/features/exchange";
-import { FloatingBackButton, ConfirmExitDialog } from "@/components/common";
-import { useConfirmExit } from "@/shared/hooks";
+import {
+  FloatingBackButton,
+  ConfirmExitDialog,
+  PublishStatus,
+} from "@/components/common";
+import { useConfirmExit, usePublishStatus } from "@/shared/hooks";
 
 import { myDrafts } from "@/shared/data/profileMockData";
 import {
@@ -65,10 +69,55 @@ const PublishItem: React.FC = () => {
 
   // 保存草稿函数
   const handleSaveDraft = async (data: PublishFormData) => {
-    console.log("保存商品草稿:", data);
-    // 这里应该调用实际的API保存草稿
+    const progress = calculateExchangeProgress(data);
+    console.log("保存商品草稿:", data, "完成度:", progress);
+
+    // 如果是编辑模式，更新现有草稿；否则创建新草稿
+    const draftData = {
+      id: editDraftId || `draft-${Date.now()}`,
+      type: "exchange" as const,
+      title: data.title || "未命名商品",
+      content: data.description || "",
+      lastEditTime: new Date().toLocaleString("zh-CN"),
+      images: data.images.map(
+        (_, index) =>
+          `https://picsum.photos/300/200?random=exchange-draft-${
+            editDraftId || Date.now()
+          }-${index}`
+      ),
+      progress,
+    };
+
+    localStorage.setItem("exchangeDraft", JSON.stringify(draftData));
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };
+
+  // 发布商品函数
+  const handlePublishSubmit = async (data: PublishFormData) => {
+    // 模拟API调用
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    console.log("发布商品:", data);
+
+    // 清除草稿
+    localStorage.removeItem("exchangeDraft");
+  };
+
+  // 使用发布状态hook
+  const {
+    publishStatus,
+    publishError,
+    publishedItemId,
+    handleSubmit: submitPublish,
+    handleRetry,
+    handleReset,
+    setPublishData,
+  } = usePublishStatus<PublishFormData>({
+    onSubmit: handlePublishSubmit,
+    onSuccess: () => {
+      // 发布成功后的额外处理
+      console.log("商品发布成功！");
+    },
+  });
 
   // 使用确认退出 hook
   const {
@@ -77,6 +126,7 @@ const PublishItem: React.FC = () => {
     handleBackClick,
     handleConfirmExit,
     handleSaveAndExit,
+    closeConfirmDialog,
     setCurrentFormData,
   } = useConfirmExit<PublishFormData>({
     onSaveDraft: handleSaveDraft,
@@ -84,10 +134,11 @@ const PublishItem: React.FC = () => {
     defaultBackPath: "/exchange",
   });
 
-  // 当表单数据变化时更新确认退出hook中的数据
+  // 当表单数据变化时更新hook中的数据
   useEffect(() => {
     setCurrentFormData(formData);
-  }, [formData, setCurrentFormData]);
+    setPublishData(formData);
+  }, [formData, setCurrentFormData, setPublishData]);
 
   // 自定义返回处理函数
   const handleCustomBack = () => {
@@ -114,18 +165,8 @@ const PublishItem: React.FC = () => {
   ];
 
   const handleSubmit = async (data: PublishFormData) => {
-    // 这里应该调用实际的API
-    console.log("发布商品数据:", data);
-
-    // 模拟API调用
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // 模拟随机成功或失败 (90% 成功率)
-    if (Math.random() > 0.1) {
-      return Promise.resolve();
-    } else {
-      throw new Error("网络错误，请稍后重试");
-    }
+    setPublishData(data);
+    await submitPublish();
   };
 
   return (
@@ -141,7 +182,7 @@ const PublishItem: React.FC = () => {
       {/* 确认退出对话框 */}
       <ConfirmExitDialog
         isOpen={showConfirmDialog}
-        onClose={handleConfirmExit}
+        onClose={closeConfirmDialog}
         onConfirmExit={handleConfirmExit}
         onSaveAndExit={handleSaveAndExit}
         title="确认退出编辑"
@@ -194,12 +235,86 @@ const PublishItem: React.FC = () => {
           )}
         </div>
 
-        {/* 发布向导 */}
-        <PublishWizard
-          initialData={initialData}
-          onSubmit={handleSubmit}
-          onChange={setFormData}
-        />
+        {/* 根据发布状态显示不同内容 */}
+        {publishStatus === "loading" ||
+        publishStatus === "success" ||
+        publishStatus === "error" ? (
+          <PublishStatus
+            status={publishStatus}
+            error={publishError}
+            onRetry={handleRetry}
+            onReset={handleReset}
+            loadingConfig={{
+              title: "正在发布商品...",
+              description: "请稍候，正在上传商品信息",
+            }}
+            successConfig={{
+              title: "商品发布成功！",
+              description: "你的商品已成功发布，买家很快就能看到了",
+              publishedItemId: publishedItemId || undefined,
+              previewData: {
+                title: formData.title,
+                category: formData.category,
+                condition: formData.condition,
+                price: formData.price,
+                image: formData.images[0],
+                type: "item",
+              },
+              fullPreviewData: formData,
+              actions: {
+                primary: {
+                  label: "查看我的商品",
+                  href: "/exchange?newItem=true",
+                },
+                secondary: {
+                  label: "继续逛逛",
+                  href: "/exchange",
+                },
+                tertiary: {
+                  label: "再发一个商品",
+                  onClick: () => {
+                    handleReset();
+                    setFormData({
+                      title: "",
+                      category: "",
+                      condition: "new",
+                      price: 0,
+                      originalPrice: 0,
+                      description: "",
+                      location: "",
+                      images: [],
+                      specifications: [],
+                      exchangePreferences: [],
+                      contactMethod: "platform",
+                      contactInfo: "",
+                      deliveryOptions: {
+                        shipping: false,
+                        freeShipping: false,
+                        pickup: false,
+                        meetup: false,
+                        localOnly: false,
+                      },
+                      paymentMethods: {
+                        cash: false,
+                        bankTransfer: false,
+                        wechatPay: false,
+                        alipay: false,
+                      },
+                      paymentQRCodes: [],
+                    });
+                  },
+                },
+              },
+            }}
+          />
+        ) : (
+          /* 发布向导 */
+          <PublishWizard
+            initialData={initialData}
+            onSubmit={handleSubmit}
+            onChange={setFormData}
+          />
+        )}
       </Container>
     </div>
   );

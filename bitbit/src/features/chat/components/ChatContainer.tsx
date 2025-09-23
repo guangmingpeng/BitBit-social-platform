@@ -157,7 +157,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       }
     }; // 处理邀请参加活动
     const handleInviteToActivity = useCallback(
-      (activityId: string, event?: React.MouseEvent) => {
+      (activityId: string) => {
         console.log(
           "handleInviteToActivity called with activityId:",
           activityId
@@ -166,10 +166,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
         const activityUrl = `${window.location.origin}/activities/${activityId}`;
         console.log("Generated URL:", activityUrl);
 
-        // 获取点击位置
-        const clickPosition = event
-          ? { x: event.clientX, y: event.clientY }
-          : undefined;
+
 
         // 复制到剪贴板
         navigator.clipboard
@@ -180,7 +177,6 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
               showToast({
                 message: "活动链接已复制，去粘贴给好友吧！",
                 type: "success",
-                position: clickPosition,
               })
             );
           })
@@ -191,7 +187,6 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
               showToast({
                 message: "复制失败，请手动分享活动链接",
                 type: "error",
-                position: clickPosition,
               })
             );
           });
@@ -227,14 +222,7 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       setNewMessagesCount(0);
     };
 
-    // 测试函数：强制显示新消息按钮
-    const handleForceShowNewMessageButton = () => {
-      console.log("🧪 强制显示新消息按钮进行测试");
-      setIsUserAtBottom(false);
-      setHasNewMessages(true);
-      // 如果当前已经有新消息数量，就保持不变，否则设置为3用于测试
-      setNewMessagesCount((prev) => (prev > 0 ? prev : 3));
-    };
+
 
     // 处理滚动状态变化
     const handleScrollStateChange = useCallback(
@@ -441,7 +429,6 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
                   showSettings={showSettings}
                   onToggleSettings={() => setShowSettings(!showSettings)}
                   onSimulateMessages={simulateMultipleMessages}
-                  onTestNewMessageButton={handleForceShowNewMessageButton}
                   onBackToList={handleBackToConversationList}
                 />
 

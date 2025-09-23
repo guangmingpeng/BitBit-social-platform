@@ -37,6 +37,10 @@ export interface PostCardProps
   onTagClick?: (tag: string) => void;
   onViewDetail?: () => void;
 
+  // 管理相关回调（仅对自己的帖子显示）
+  onEdit?: () => void;
+  onDelete?: () => void;
+
   // 显示控制
   showAuthor?: boolean;
   showImages?: boolean;
@@ -44,4 +48,5 @@ export interface PostCardProps
   showTags?: boolean;
   showPublishTime?: boolean;
   showInteractionStats?: boolean;
+  showManagementActions?: boolean; // 是否显示编辑和删除按钮
 }

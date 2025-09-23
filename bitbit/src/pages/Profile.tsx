@@ -70,6 +70,38 @@ const Profile: FC = () => {
       favoriteType: "",
     });
 
+  // 草稿删除确认弹窗相关状态
+  const [draftDeleteConfirmDialog, setDraftDeleteConfirmDialog] = useState<{
+    isOpen: boolean;
+    draftId: string;
+    draftTitle: string;
+    draftType: string;
+  }>({
+    isOpen: false,
+    draftId: "",
+    draftTitle: "",
+    draftType: "",
+  });
+  const [isDeletingDraft, setIsDeletingDraft] = useState(false);
+
+  // 本地草稿数据状态管理
+  const [localMyDrafts, setLocalMyDrafts] = useState(myDrafts);
+
+  // 帖子删除确认弹窗相关状态
+  const [postDeleteConfirmDialog, setPostDeleteConfirmDialog] = useState<{
+    isOpen: boolean;
+    postId: string;
+    postTitle: string;
+  }>({
+    isOpen: false,
+    postId: "",
+    postTitle: "",
+  });
+  const [isDeletingPost, setIsDeletingPost] = useState(false);
+
+  // 本地帖子数据状态管理
+  const [localMyPosts, setLocalMyPosts] = useState(myPosts);
+
   // 本地商品状态管理
   const [localMyExchangeItems, setLocalMyExchangeItems] =
     useState(myExchangeItems);
@@ -323,7 +355,7 @@ const Profile: FC = () => {
   // 适配活动数据
   const adaptedActivities = filteredActivities.map(adaptActivityData);
   // 适配帖子数据
-  const adaptedPosts = myPosts.map(adaptPostData);
+  const adaptedPosts = localMyPosts.map(adaptPostData);
 
   // 单个取消收藏功能
   const handleRemoveFavorite = (favoriteId: string, favoriteType: string) => {
@@ -419,6 +451,133 @@ const Profile: FC = () => {
     }
   };
 
+  // 草稿删除相关处理函数
+  const handleDraftDelete = (
+    draftId: string,
+    draftTitle: string,
+    draftType: string
+  ) => {
+    setDraftDeleteConfirmDialog({
+      isOpen: true,
+      draftId,
+      draftTitle,
+      draftType,
+    });
+  };
+
+  const handleConfirmDraftDelete = async () => {
+    if (draftDeleteConfirmDialog.draftId) {
+      setIsDeletingDraft(true);
+      try {
+        // 模拟API删除操作
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // 从本地状态中删除草稿
+        setLocalMyDrafts((prevDrafts) =>
+          prevDrafts.filter(
+            (draft) => draft.id !== draftDeleteConfirmDialog.draftId
+          )
+        );
+
+        // 显示成功提示
+        dispatch(
+          showToast({
+            type: "success",
+            message: `草稿「${draftDeleteConfirmDialog.draftTitle}」已删除`,
+          })
+        );
+
+        // 关闭确认弹窗
+        setDraftDeleteConfirmDialog({
+          isOpen: false,
+          draftId: "",
+          draftTitle: "",
+          draftType: "",
+        });
+      } catch (error) {
+        console.error("删除草稿失败:", error);
+        dispatch(
+          showToast({
+            type: "error",
+            message: "删除草稿失败，请重试",
+          })
+        );
+      } finally {
+        setIsDeletingDraft(false);
+      }
+    }
+  };
+
+  const handleCancelDraftDelete = () => {
+    if (!isDeletingDraft) {
+      setDraftDeleteConfirmDialog({
+        isOpen: false,
+        draftId: "",
+        draftTitle: "",
+        draftType: "",
+      });
+    }
+  };
+
+  // 帖子删除相关处理函数
+  const handlePostDelete = (postId: string, postTitle: string) => {
+    setPostDeleteConfirmDialog({
+      isOpen: true,
+      postId,
+      postTitle,
+    });
+  };
+
+  const handleConfirmPostDelete = async () => {
+    if (postDeleteConfirmDialog.postId) {
+      setIsDeletingPost(true);
+      try {
+        // 模拟API删除操作
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // 从本地状态中删除帖子
+        setLocalMyPosts((prevPosts) =>
+          prevPosts.filter((post) => post.id !== postDeleteConfirmDialog.postId)
+        );
+
+        // 显示成功提示
+        dispatch(
+          showToast({
+            type: "success",
+            message: `帖子「${postDeleteConfirmDialog.postTitle}」已删除`,
+          })
+        );
+
+        // 关闭确认弹窗
+        setPostDeleteConfirmDialog({
+          isOpen: false,
+          postId: "",
+          postTitle: "",
+        });
+      } catch (error) {
+        console.error("删除帖子失败:", error);
+        dispatch(
+          showToast({
+            type: "error",
+            message: "删除帖子失败，请重试",
+          })
+        );
+      } finally {
+        setIsDeletingPost(false);
+      }
+    }
+  };
+
+  const handleCancelPostDelete = () => {
+    if (!isDeletingPost) {
+      setPostDeleteConfirmDialog({
+        isOpen: false,
+        postId: "",
+        postTitle: "",
+      });
+    }
+  };
+
   // 简化的收藏筛选逻辑
   const filteredFavorites = useMemo(() => {
     console.log("=== 收藏筛选逻辑执行 ===");
@@ -469,7 +628,7 @@ const Profile: FC = () => {
   });
 
   const draftsFilter = useContentFilter({
-    data: myDrafts,
+    data: localMyDrafts,
     page: "drafts",
   });
 
@@ -639,6 +798,14 @@ const Profile: FC = () => {
                     onComment={() => console.log("评论帖子", post.id)}
                     onShare={() => console.log("分享帖子", post.id)}
                     onBookmark={() => console.log("收藏帖子", post.id)}
+                    // 管理功能 - 已发布的帖子只支持删除，不支持编辑
+                    showManagementActions={true}
+                    onDelete={() =>
+                      handlePostDelete(
+                        post.id,
+                        post.content.slice(0, 20) + "..."
+                      )
+                    }
                   />
                 )
               )}
@@ -943,7 +1110,9 @@ const Profile: FC = () => {
                           }
                         }}
                         onPublish={() => console.log("发布草稿", draft.id)}
-                        onDelete={() => console.log("删除草稿", draft.id)}
+                        onDelete={() =>
+                          handleDraftDelete(draft.id, draft.title, draft.type)
+                        }
                       />
                     )
                   )}
@@ -1074,6 +1243,38 @@ const Profile: FC = () => {
           title: "确认取消收藏",
           content: `确定要取消收藏选中的 ${selectedFavoriteIds.length} 个项目吗？此操作不可撤销。`,
           confirmText: "确认取消收藏",
+          cancelText: "取消",
+          variant: "warning",
+        }}
+      />
+
+      {/* 草稿删除确认弹窗 */}
+      <ConfirmActionDialog
+        isOpen={draftDeleteConfirmDialog.isOpen}
+        onClose={handleCancelDraftDelete}
+        onConfirm={handleConfirmDraftDelete}
+        actionType="warning"
+        isLoading={isDeletingDraft}
+        config={{
+          title: "确认删除草稿",
+          content: `确定要删除草稿「${draftDeleteConfirmDialog.draftTitle}」吗？此操作不可撤销。`,
+          confirmText: "确认删除",
+          cancelText: "取消",
+          variant: "warning",
+        }}
+      />
+
+      {/* 帖子删除确认弹窗 */}
+      <ConfirmActionDialog
+        isOpen={postDeleteConfirmDialog.isOpen}
+        onClose={handleCancelPostDelete}
+        onConfirm={handleConfirmPostDelete}
+        actionType="warning"
+        isLoading={isDeletingPost}
+        config={{
+          title: "确认删除帖子",
+          content: `确定要删除帖子「${postDeleteConfirmDialog.postTitle}」吗？此操作不可撤销。`,
+          confirmText: "确认删除",
           cancelText: "取消",
           variant: "warning",
         }}

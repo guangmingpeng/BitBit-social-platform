@@ -21,6 +21,10 @@ export const PostCard: React.FC<PostCardProps> = ({
   onViewDetail,
   onClick,
 
+  // 管理相关回调
+  onEdit, // 保留接口但不使用，已发布的帖子不支持编辑
+  onDelete,
+
   // 显示控制
   showAuthor = true,
   showImages = true,
@@ -29,9 +33,13 @@ export const PostCard: React.FC<PostCardProps> = ({
   showPublishTime = true,
   showInteractionStats = true,
   showActions = true,
+  showManagementActions = false,
 
   ...baseProps
 }) => {
+  // 避免 eslint 警告，已发布的帖子不支持编辑
+  void onEdit;
+
   const [showFullContent, setShowFullContent] = useState(false);
 
   const {
@@ -299,23 +307,40 @@ export const PostCard: React.FC<PostCardProps> = ({
           </button>
         </div>
 
-        {onBookmark && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onBookmark();
-            }}
-            className={cn(
-              "text-sm transition-colors",
-              isBookmarked
-                ? "text-yellow-500 hover:text-yellow-600"
-                : "text-gray-500 hover:text-gray-700"
-            )}
-            title={isBookmarked ? "取消收藏" : "收藏"}
-          >
-            {isBookmarked ? "⭐" : "☆"}
-          </button>
-        )}
+        <div className="flex items-center space-x-2">
+          {/* 管理按钮（仅对自己的帖子） */}
+          {showManagementActions && onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              className="text-xs px-2 py-1 text-red-500 hover:text-red-600 border border-red-200 hover:border-red-300 rounded transition-colors"
+              title="删除帖子"
+            >
+              删除
+            </button>
+          )}
+
+          {/* 收藏按钮 */}
+          {onBookmark && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onBookmark();
+              }}
+              className={cn(
+                "text-sm transition-colors",
+                isBookmarked
+                  ? "text-yellow-500 hover:text-yellow-600"
+                  : "text-gray-500 hover:text-gray-700"
+              )}
+              title={isBookmarked ? "取消收藏" : "收藏"}
+            >
+              {isBookmarked ? "⭐" : "☆"}
+            </button>
+          )}
+        </div>
       </div>
     );
   };

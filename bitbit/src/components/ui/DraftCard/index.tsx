@@ -16,10 +16,12 @@ const DraftCard: React.FC<DraftCardProps> = ({
   draft,
   onClick,
   onDelete,
-  onPublish,
+  onPublish, // 保留接口以便后续开发
   onEdit,
   className,
 }) => {
+  // 避免 eslint 警告，暂时不使用 onPublish
+  void onPublish;
   const getTypeConfig = (type: Draft["type"]) => {
     switch (type) {
       case "activity":
@@ -95,6 +97,7 @@ const DraftCard: React.FC<DraftCardProps> = ({
                 >
                   继续编辑
                 </Button>
+                {/* 暂时移除发布按钮，保留接口以便后续开发
                 <Button
                   size="sm"
                   variant="outline"
@@ -106,6 +109,7 @@ const DraftCard: React.FC<DraftCardProps> = ({
                 >
                   发布
                 </Button>
+                */}
                 <Button
                   size="sm"
                   variant="outline"

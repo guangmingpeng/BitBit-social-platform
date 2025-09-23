@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Avatar } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { useNotifications } from "@/features/notifications";
+import { UserAvatar } from "@/features/auth/components";
 
 const Header = () => {
   const location = useLocation();
@@ -103,14 +104,7 @@ const Header = () => {
             </div>
 
             {/* 用户头像 */}
-            <Avatar
-              src=""
-              fallback="ZL"
-              size="md"
-              className="cursor-pointer hover:ring-2 hover:ring-primary-200 transition-all"
-              onClick={() => navigate("/profile")}
-              title="个人中心"
-            />
+            <UserAvatar />
           </div>
         </div>
       </div>

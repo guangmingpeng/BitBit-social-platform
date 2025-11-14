@@ -166,8 +166,6 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
         const activityUrl = `${window.location.origin}/activities/${activityId}`;
         console.log("Generated URL:", activityUrl);
 
-
-
         // 复制到剪贴板
         navigator.clipboard
           .writeText(activityUrl)
@@ -221,8 +219,6 @@ const ChatContainer = forwardRef<ChatContainerRef, ChatContainerProps>(
       setHasNewMessages(false);
       setNewMessagesCount(0);
     };
-
-
 
     // 处理滚动状态变化
     const handleScrollStateChange = useCallback(
